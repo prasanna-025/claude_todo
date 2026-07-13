@@ -208,8 +208,14 @@ function setupMobileMenu() {
   document.body.appendChild(overlay);
 
   toggle?.addEventListener('click', () => {
-    sidebar.classList.toggle('open');
-    overlay.classList.toggle('show');
+    if (window.innerWidth > 900) {
+      if (typeof toggleSidebarCollapse === 'function') {
+        toggleSidebarCollapse();
+      }
+    } else {
+      sidebar.classList.toggle('open');
+      overlay.classList.toggle('show');
+    }
   });
 
   overlay.addEventListener('click', closeSidebar);

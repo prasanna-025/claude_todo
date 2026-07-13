@@ -1067,3 +1067,80 @@ body::after {
   100% { transform: translate(8vw, 5vw) scale(1.15) rotate(360deg); }
 }
 
+/* ── COLLAPSIBLE SIDEBAR SUPPORT ── */
+.sidebar {
+  transition: transform 0.3s cubic-bezier(.4,0,.2,1);
+}
+
+.topbar {
+  transition: left 0.3s cubic-bezier(.4,0,.2,1);
+}
+
+.main-content {
+  transition: margin-left 0.3s cubic-bezier(.4,0,.2,1);
+}
+
+/* Sidebar Collapse Toggle Button */
+.sidebar-collapse-btn {
+  position: absolute;
+  top: 18px;
+  right: -14px;
+  width: 28px;
+  height: 28px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  color: var(--text2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1000;
+  transition: all 0.3s cubic-bezier(.4,0,.2,1);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+
+.sidebar-collapse-btn:hover {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+/* top-header on DSA tracker page */
+.top-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(11, 13, 20, 0.6);
+  backdrop-filter: blur(12px);
+  margin-left: var(--sidebar-w);
+  transition: margin-left 0.3s cubic-bezier(.4,0,.2,1);
+}
+
+/* Desktop Collapsed State Styles (> 900px) */
+@media (min-width: 901px) {
+  html.sidebar-collapsed .sidebar {
+    transform: translateX(-100%);
+  }
+  html.sidebar-collapsed .topbar {
+    left: 0;
+  }
+  html.sidebar-collapsed .main-content {
+    margin-left: 0;
+  }
+  html.sidebar-collapsed .top-header {
+    margin-left: 0;
+  }
+  html.sidebar-collapsed .sidebar-collapse-btn {
+    transform: translateX(var(--sidebar-w)) rotate(180deg);
+  }
+}
+
+@media (max-width: 900px) {
+  .sidebar-collapse-btn {
+    display: none !important;
+  }
+}
+
