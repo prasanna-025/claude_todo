@@ -105,6 +105,13 @@ function syncPull(isManual = false) {
             if (typeof S !== 'undefined') {
               Object.assign(S, parsedServer);
             }
+
+            // Sync wallpaper to local storage if present in cloud backup
+            if (parsedServer.wallpaper) {
+              localStorage.setItem('placementos_wallpaper', parsedServer.wallpaper);
+            } else {
+              localStorage.removeItem('placementos_wallpaper');
+            }
             
             if (isLocalEmpty) {
               location.reload();

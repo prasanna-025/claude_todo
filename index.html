@@ -8,9 +8,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   <!-- Placement OS Vercel Deploy Trigger -->
+  <script src="default_wallpaper.js"></script>
   <script>
     (function() {
-      const wallpaper = localStorage.getItem('placementos_wallpaper');
+      const wallpaper = localStorage.getItem('placementos_wallpaper') || window.DEFAULT_WALLPAPER;
       if (wallpaper) {
         const style = document.createElement('style');
         style.id = 'dynamic-wallpaper-style';
