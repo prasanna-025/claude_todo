@@ -79,7 +79,8 @@ function syncPull(isManual = false) {
       const localUpdatedAt = localState.updatedAt || 0;
       
       if (serverUpdatedAt > localUpdatedAt) {
-        if (confirm("🔄 Cloud has newer progress. Sync and update this device?")) {
+        const isLocalEmpty = !localState || !localState.dsa || localState.dsa.length === 0;
+        if (isLocalEmpty || confirm("🔄 Cloud has newer progress. Sync and update this device?")) {
           console.log("Server data is newer. Syncing server data to local...");
           try {
             const parsedServer = JSON.parse(serverData.data);
@@ -91,8 +92,12 @@ function syncPull(isManual = false) {
               Object.assign(S, parsedServer);
             }
             
-            alert("🔄 Sync complete! Page will reload to apply synced data.");
-            location.reload();
+            if (isLocalEmpty) {
+              location.reload();
+            } else {
+              alert("🔄 Sync complete! Page will reload to apply synced data.");
+              location.reload();
+            }
           } catch (e) {
             console.error("Failed to parse server sync data:", e);
           }
