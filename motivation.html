@@ -6,6 +6,25 @@
   <title>The Comeback — Motivation</title>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <script>
+    (function() {
+      const wallpaper = localStorage.getItem('placementos_wallpaper');
+      if (wallpaper) {
+        const style = document.createElement('style');
+        style.id = 'dynamic-wallpaper-style';
+        style.innerHTML = `
+          body {
+            background-image: linear-gradient(rgba(10, 15, 30, 0.85), rgba(10, 15, 30, 0.85)), url(${wallpaper}) !important;
+            background-size: cover !important;
+            background-position: center !important;
+            background-attachment: fixed !important;
+            background-repeat: no-repeat !important;
+          }
+        `;
+        document.head.appendChild(style);
+      }
+    })();
+  </script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 

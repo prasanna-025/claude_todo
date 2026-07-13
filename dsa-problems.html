@@ -7,6 +7,25 @@
   <link rel="stylesheet" href="style.css"/>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <script>
+    (function() {
+      const wallpaper = localStorage.getItem('placementos_wallpaper');
+      if (wallpaper) {
+        const style = document.createElement('style');
+        style.id = 'dynamic-wallpaper-style';
+        style.innerHTML = `
+          body {
+            background-image: linear-gradient(rgba(10, 15, 30, 0.85), rgba(10, 15, 30, 0.85)), url(${wallpaper}) !important;
+            background-size: cover !important;
+            background-position: center !important;
+            background-attachment: fixed !important;
+            background-repeat: no-repeat !important;
+          }
+        `;
+        document.head.appendChild(style);
+      }
+    })();
+  </script>
   <style>
     .dsa-container {
       display: grid;
@@ -339,6 +358,7 @@
     <a href="index.html" class="nav-item" data-section="analytics"><i class="fas fa-chart-line"></i><span>Analytics</span></a>
     <a href="focus-todo.html" class="nav-item"><i class="fas fa-hourglass-half"></i><span>Focus Timer</span></a>
     <a href="motivation.html" class="nav-item"><i class="fas fa-fire"></i><span>Grind Motivation</span></a>
+    <a href="#" class="nav-item" onclick="openWallpaperModal(); return false;"><i class="fas fa-image"></i><span>Change Wallpaper</span></a>
   </nav>
 </aside>
 
@@ -1460,5 +1480,95 @@ window.handleQuickLinkInput = handleQuickLinkInput;
   <div id="lightboxCaption" style="margin:20px auto 0; text-align:center; color:#e8eaf0; font-size:13px; font-weight:600; font-family:var(--font); letter-spacing:0.5px; background:rgba(0,0,0,0.6); padding:6px 16px; border-radius:99px; border:1px solid rgba(255,255,255,0.1);"></div>
 </div>
 
+<!-- WALLPAPER MODAL -->
+<div class="modal-overlay" id="wallpaper-modal-overlay" onclick="closeWallpaperModal()">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-icon">🖼️</div>
+    <h3>Custom Wallpaper</h3>
+    <p>Choose a custom background wallpaper for your dashboard and tracker.</p>
+    <div class="modal-btns" style="display:flex; flex-direction:column; gap:8px; width:100%; margin-top: 15px;">
+      <button class="btn btn-primary" onclick="document.getElementById('wallpaperInput').click()" style="background:var(--accent); border-color:var(--accent-d); justify-content:center;"><i class="fas fa-upload"></i> Upload Wallpaper</button>
+      <button class="btn btn-danger-solid" onclick="doRemoveWallpaper()" style="justify-content:center;"><i class="fas fa-trash-alt"></i> Remove Wallpaper</button>
+    </div>
+    <button class="btn btn-sm" onclick="closeWallpaperModal()" style="margin-top:16px; width:100%;">Cancel</button>
+  </div>
+</div>
+<input type="file" id="wallpaperInput" accept="image/*" style="display:none;" onchange="handleWallpaperUpload(event)">
+
+<script>
+function openWallpaperModal() {
+  document.getElementById('wallpaper-modal-overlay').classList.add('show');
+}
+function closeWallpaperModal() {
+  document.getElementById('wallpaper-modal-overlay').classList.remove('show');
+}
+function setWallpaper(base64) {
+  localStorage.setItem('placementos_wallpaper', base64);
+  
+  // Apply immediately to current page
+  let style = document.getElementById('dynamic-wallpaper-style');
+  if (!style) {
+    style = document.createElement('style');
+    style.id = 'dynamic-wallpaper-style';
+    document.head.appendChild(style);
+  }
+  style.innerHTML = `
+    body {
+      background-image: linear-gradient(rgba(10, 15, 30, 0.85), rgba(10, 15, 30, 0.85)), url(${base64}) !important;
+      background-size: cover !important;
+      background-position: center !important;
+      background-attachment: fixed !important;
+      background-repeat: no-repeat !important;
+    }
+  `;
+}
+function doRemoveWallpaper() {
+  localStorage.removeItem('placementos_wallpaper');
+  const style = document.getElementById('dynamic-wallpaper-style');
+  if (style) style.remove();
+  closeWallpaperModal();
+  if (typeof toast === 'function') toast('Wallpaper removed');
+  else if (typeof showToast === 'function') showToast('Wallpaper removed');
+}
+function handleWallpaperUpload(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function(event) {
+    const img = new Image();
+    img.onload = function() {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      const maxDim = 1920;
+      let width = img.width;
+      let height = img.height;
+      
+      if (width > maxDim || height > maxDim) {
+        if (width > height) {
+          height = Math.round((height * maxDim) / width);
+          width = maxDim;
+        } else {
+          width = Math.round((width * maxDim) / height);
+          height = maxDim;
+        }
+      }
+      
+      canvas.width = width;
+      canvas.height = height;
+      ctx.drawImage(img, 0, 0, width, height);
+      
+      const compressedBase64 = canvas.toDataURL('image/jpeg', 0.7);
+      setWallpaper(compressedBase64);
+      closeWallpaperModal();
+      if (typeof toast === 'function') toast('Wallpaper updated!');
+      else if (typeof showToast === 'function') showToast('Wallpaper updated!');
+    };
+    img.src = event.target.result;
+  };
+  reader.readAsDataURL(file);
+  e.target.value = '';
+}
+</script>
 </body>
 </html>
