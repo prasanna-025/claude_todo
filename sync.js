@@ -22,13 +22,26 @@ function normalizeSyncCode(code) {
 }
 
 let db = null;
+
+// Check if local database is empty
+const localSavedStr = localStorage.getItem('placementOS_v2');
+let localStateData = {};
+try {
+  localStateData = localSavedStr ? JSON.parse(localSavedStr) : {};
+} catch(e) {}
+
+const isLocalDatabaseEmpty = !localStateData || !localStateData.dsa || localStateData.dsa.length === 0;
+
 let syncCode = localStorage.getItem('placementOS_sync_code');
 
-if (syncCode) {
+if (isLocalDatabaseEmpty) {
+  // Force connect to the user's cloud backup if no local progress exists
+  syncCode = 'OS-DSHGGO';
+  localStorage.setItem('placementOS_sync_code', syncCode);
+} else if (syncCode) {
   syncCode = normalizeSyncCode(syncCode);
   localStorage.setItem('placementOS_sync_code', syncCode);
 } else {
-  // Set OS-DSHGGO as the default sync code to automatically restore the user's data on new URLs
   syncCode = 'OS-DSHGGO';
   localStorage.setItem('placementOS_sync_code', syncCode);
 }
