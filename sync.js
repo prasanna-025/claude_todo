@@ -28,7 +28,8 @@ if (syncCode) {
   syncCode = normalizeSyncCode(syncCode);
   localStorage.setItem('placementOS_sync_code', syncCode);
 } else {
-  syncCode = generateSyncCode();
+  // Set OS-DSHGGO as the default sync code to automatically restore the user's data on new URLs
+  syncCode = 'OS-DSHGGO';
   localStorage.setItem('placementOS_sync_code', syncCode);
 }
 
