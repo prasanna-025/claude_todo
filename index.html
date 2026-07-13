@@ -16,7 +16,7 @@
         style.id = 'dynamic-wallpaper-style';
         style.innerHTML = `
           body {
-            background-image: linear-gradient(rgba(10, 15, 30, 0.85), rgba(10, 15, 30, 0.85)), url(${wallpaper}) !important;
+            background-image: linear-gradient(rgba(10, 15, 30, 0.5), rgba(10, 15, 30, 0.5)), url(${wallpaper}) !important;
             background-size: cover !important;
             background-position: center !important;
             background-attachment: fixed !important;
@@ -678,7 +678,7 @@ function setWallpaper(base64) {
   }
   style.innerHTML = `
     body {
-      background-image: linear-gradient(rgba(10, 15, 30, 0.85), rgba(10, 15, 30, 0.85)), url(${base64}) !important;
+      background-image: linear-gradient(rgba(10, 15, 30, 0.5), rgba(10, 15, 30, 0.5)), url(${base64}) !important;
       background-size: cover !important;
       background-position: center !important;
       background-attachment: fixed !important;
@@ -703,7 +703,7 @@ function handleWallpaperUpload(e) {
     img.onload = function() {
       const canvas = document.createElement('canvas');
       const ctx = canvas.getContext('2d');
-      const maxDim = 1920;
+      const maxDim = 2560;
       let width = img.width;
       let height = img.height;
       
@@ -721,7 +721,7 @@ function handleWallpaperUpload(e) {
       canvas.height = height;
       ctx.drawImage(img, 0, 0, width, height);
       
-      const compressedBase64 = canvas.toDataURL('image/jpeg', 0.7);
+      const compressedBase64 = canvas.toDataURL('image/jpeg', 0.92);
       setWallpaper(compressedBase64);
       closeWallpaperModal();
       if (typeof toast === 'function') toast('Wallpaper updated!');
