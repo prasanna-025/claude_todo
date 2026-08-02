@@ -321,9 +321,55 @@
       </div>
     </div>
 
+    <!-- View Switcher Tabs -->
+    <div style="display: flex; gap: 8px; border-bottom: 1px solid var(--border); padding-bottom: 12px; margin-bottom: -8px; margin-top: -8px;">
+      <button id="tab-text" class="btn btn-primary" onclick="switchTab('text')" style="font-size:12px; padding: 8px 14px;">
+        <i class="fas fa-keyboard"></i> Type Notes
+      </button>
+      <button id="tab-draw" class="btn" onclick="switchTab('draw')" style="font-size:12px; padding: 8px 14px;">
+        <i class="fas fa-signature"></i> Touch Draw (Finger/Stylus)
+      </button>
+    </div>
+
     <!-- The Notepad Leaf -->
-    <div class="notepad-leaf">
+    <div class="notepad-leaf" id="text-leaf-container">
       <textarea id="notepad-text" class="notepad-textarea" placeholder="Start typing your structured notes here...&#10;Everything you write is saved automatically to PlacementOS!"></textarea>
+    </div>
+
+    <!-- The Drawing Board Leaf -->
+    <div id="drawing-area" class="notepad-leaf" style="display: none; padding: 0; min-height: 480px; flex-direction: column;">
+      <!-- Canvas Toolbar -->
+      <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.05); padding: 8px 12px; border-bottom: 1.5px solid rgba(0,0,0,0.08); border-top-left-radius: 8px; border-top-right-radius: 8px; flex-wrap: wrap; gap: 8px;">
+        <!-- Pen Colors -->
+        <div style="display: flex; align-items: center; gap: 6px;">
+          <span style="font-size: 11px; font-weight: 700; color: #2d3436; margin-right: 4px; text-transform: uppercase;">Color:</span>
+          <button class="color-btn" data-color="#2d3436" style="background:#2d3436; width:22px; height:22px; border-radius:50%; border:2px solid #fff; cursor:pointer; box-shadow:0 0 4px rgba(0,0,0,0.2); outline: none;" onclick="setPenColor(this)"></button>
+          <button class="color-btn" data-color="#0984e3" style="background:#0984e3; width:22px; height:22px; border-radius:50%; border:2px solid transparent; cursor:pointer; outline: none;" onclick="setPenColor(this)"></button>
+          <button class="color-btn" data-color="#d63031" style="background:#d63031; width:22px; height:22px; border-radius:50%; border:2px solid transparent; cursor:pointer; outline: none;" onclick="setPenColor(this)"></button>
+          <button class="color-btn" data-color="#00b894" style="background:#00b894; width:22px; height:22px; border-radius:50%; border:2px solid transparent; cursor:pointer; outline: none;" onclick="setPenColor(this)"></button>
+        </div>
+        <!-- Pen Sizes -->
+        <div style="display: flex; align-items: center; gap: 6px;">
+          <span style="font-size: 11px; font-weight: 700; color: #2d3436; margin-right: 4px; text-transform: uppercase;">Brush:</span>
+          <button class="size-btn" data-size="4" style="background:transparent; border:1px solid #2d3436; color:#2d3436; font-size:11px; font-weight:600; padding:2px 8px; border-radius:4px; cursor:pointer; outline: none;" onclick="setPenSize(this)">Thin</button>
+          <button class="size-btn" data-size="8" style="background:transparent; border:1px solid transparent; color:#636e72; font-size:11px; font-weight:600; padding:2px 8px; border-radius:4px; cursor:pointer; outline: none;" onclick="setPenSize(this)">Medium</button>
+          <button class="size-btn" data-size="14" style="background:transparent; border:1px solid transparent; color:#636e72; font-size:11px; font-weight:600; padding:2px 8px; border-radius:4px; cursor:pointer; outline: none;" onclick="setPenSize(this)">Thick</button>
+        </div>
+        <!-- Actions -->
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <button id="eraser-btn" class="btn" style="padding: 4px 10px; font-size: 11px; color:#2d3436; border-color: rgba(0,0,0,0.15); background: transparent; transition: none;" onclick="toggleEraser()">
+            <i class="fas fa-eraser"></i> Eraser
+          </button>
+          <button class="btn" style="padding: 4px 10px; font-size: 11px; color:#d63031; border-color: rgba(214,48,49,0.2); background: rgba(214,48,49,0.05);" onclick="clearCanvas()">
+            <i class="fas fa-trash-alt"></i> Clear
+          </button>
+        </div>
+      </div>
+      
+      <!-- Canvas Wrapper (Responsive + Styled lined background matching notepad paper) -->
+      <div style="position: relative; flex: 1; min-height: 410px; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px; overflow: hidden; background: #fffcf0;">
+        <canvas id="notepad-canvas" style="display: block; width: 100%; height: 100%; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px; touch-action: none; cursor: crosshair; background: transparent;"></canvas>
+      </div>
     </div>
 
     <!-- ChatGPT Study Link -->
@@ -354,8 +400,23 @@
     const textareaEl = document.getElementById('notepad-text');
     const linkEl = document.getElementById('chat-link');
     const saveStatusEl = document.getElementById('save-status');
+    const canvas = document.getElementById('notepad-canvas');
+    const ctx = canvas?.getContext('2d');
 
     let S = {};
+    let isDrawing = false;
+    let lastX = 0;
+    let lastY = 0;
+    let penColor = '#2d3436';
+    let penSize = 4;
+    let isEraser = false;
+    let canvasInitialized = false;
+
+    // Set canvas dimensions once
+    if (canvas) {
+      canvas.width = 800;
+      canvas.height = 500;
+    }
 
     // Load state
     function loadState() {
@@ -365,12 +426,204 @@
       }
       if (!S.roadmapNotes) S.roadmapNotes = {};
       if (!S.roadmapLinks) S.roadmapLinks = {};
+      if (!S.roadmapDrawings) S.roadmapDrawings = {};
     }
 
     // Save state
     function saveState() {
       S.updatedAt = Date.now();
       localStorage.setItem('placementOS_v2', JSON.stringify(S));
+    }
+
+    // Switch View Tabs (Text vs Draw)
+    function switchTab(mode) {
+      const tabText = document.getElementById('tab-text');
+      const tabDraw = document.getElementById('tab-draw');
+      const textLeaf = document.getElementById('text-leaf-container');
+      const drawingArea = document.getElementById('drawing-area');
+      
+      if (mode === 'text') {
+        tabText.classList.add('btn-primary');
+        tabDraw.classList.remove('btn-primary');
+        textLeaf.style.display = 'flex';
+        drawingArea.style.display = 'none';
+      } else {
+        tabDraw.classList.add('btn-primary');
+        tabText.classList.remove('btn-primary');
+        textLeaf.style.display = 'none';
+        drawingArea.style.display = 'flex';
+        setupCanvas();
+      }
+    }
+    window.switchTab = switchTab;
+
+    // Get touch or mouse coordinates scaled relative to canvas internal 800x500 resolution
+    function getCoords(e) {
+      if (!canvas) return { x: 0, y: 0 };
+      const rect = canvas.getBoundingClientRect();
+      let clientX, clientY;
+      
+      if (e.touches && e.touches.length > 0) {
+        clientX = e.touches[0].clientX;
+        clientY = e.touches[0].clientY;
+      } else {
+        clientX = e.clientX;
+        clientY = e.clientY;
+      }
+      
+      return {
+        x: ((clientX - rect.left) / rect.width) * canvas.width,
+        y: ((clientY - rect.top) / rect.height) * canvas.height
+      };
+    }
+
+    function startDrawing(e) {
+      isDrawing = true;
+      const coords = getCoords(e);
+      lastX = coords.x;
+      lastY = coords.y;
+      
+      // Draw a single dot on initial tap/click
+      ctx.beginPath();
+      ctx.arc(lastX, lastY, penSize / 2, 0, Math.PI * 2);
+      ctx.fillStyle = isEraser ? '#fffcf0' : penColor;
+      
+      if (isEraser) {
+        ctx.globalCompositeOperation = 'destination-out';
+        ctx.arc(lastX, lastY, penSize, 0, Math.PI * 2);
+        ctx.fill();
+      } else {
+        ctx.globalCompositeOperation = 'source-over';
+        ctx.fill();
+      }
+      
+      if (e.cancelable) e.preventDefault();
+    }
+
+    function draw(e) {
+      if (!isDrawing) return;
+      const coords = getCoords(e);
+      const currentX = coords.x;
+      const currentY = coords.y;
+
+      ctx.beginPath();
+      ctx.moveTo(lastX, lastY);
+      ctx.lineTo(currentX, currentY);
+      
+      ctx.lineWidth = penSize;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      
+      if (isEraser) {
+        ctx.globalCompositeOperation = 'destination-out';
+        ctx.strokeStyle = 'rgba(0,0,0,1)';
+      } else {
+        ctx.globalCompositeOperation = 'source-over';
+        ctx.strokeStyle = penColor;
+      }
+      
+      ctx.stroke();
+
+      lastX = currentX;
+      lastY = currentY;
+      
+      if (e.cancelable) e.preventDefault();
+    }
+
+    function stopDrawing() {
+      if (isDrawing) {
+        isDrawing = false;
+        autoSaveDrawing();
+      }
+    }
+
+    // Set active pen color and automatically deactivate eraser
+    function setPenColor(btn) {
+      if (isEraser) {
+        toggleEraser();
+      }
+      document.querySelectorAll('.color-btn').forEach(b => {
+        b.style.borderColor = 'transparent';
+      });
+      btn.style.borderColor = '#fff';
+      penColor = btn.getAttribute('data-color');
+    }
+    window.setPenColor = setPenColor;
+
+    // Set brush thickness
+    function setPenSize(btn) {
+      document.querySelectorAll('.size-btn').forEach(b => {
+        b.style.borderColor = 'transparent';
+        b.style.color = '#636e72';
+      });
+      btn.style.borderColor = '#2d3436';
+      btn.style.color = '#2d3436';
+      penSize = parseInt(btn.getAttribute('data-size'));
+    }
+    window.setPenSize = setPenSize;
+
+    // Toggle Eraser state
+    function toggleEraser() {
+      isEraser = !isEraser;
+      const eraserBtn = document.getElementById('eraser-btn');
+      if (isEraser) {
+        eraserBtn.style.background = 'var(--accent)';
+        eraserBtn.style.color = '#fff';
+        eraserBtn.style.borderColor = 'var(--accent)';
+      } else {
+        eraserBtn.style.background = 'transparent';
+        eraserBtn.style.color = '#2d3436';
+        eraserBtn.style.borderColor = 'rgba(0,0,0,0.15)';
+      }
+    }
+    window.toggleEraser = toggleEraser;
+
+    // Clear Canvas
+    function clearCanvas() {
+      if (confirm("Are you sure you want to clear your drawing?")) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        autoSaveDrawing();
+        showToast("Drawing cleared!");
+      }
+    }
+    window.clearCanvas = clearCanvas;
+
+    // Setup Event Listeners and load existing image into canvas
+    function setupCanvas() {
+      if (canvasInitialized) return;
+      canvasInitialized = true;
+
+      // Mouse events
+      canvas.addEventListener('mousedown', startDrawing);
+      canvas.addEventListener('mousemove', draw);
+      canvas.addEventListener('mouseup', stopDrawing);
+      canvas.addEventListener('mouseout', stopDrawing);
+
+      // Touch events (Finger/Stylus)
+      canvas.addEventListener('touchstart', startDrawing, { passive: false });
+      canvas.addEventListener('touchmove', draw, { passive: false });
+      canvas.addEventListener('touchend', stopDrawing);
+      canvas.addEventListener('touchcancel', stopDrawing);
+
+      // Set default selected color & brush thickness visually
+      const defaultColorBtn = document.querySelector('.color-btn[data-color="#2d3436"]');
+      if (defaultColorBtn) defaultColorBtn.style.borderColor = '#fff';
+      
+      const defaultSizeBtn = document.querySelector('.size-btn[data-size="4"]');
+      if (defaultSizeBtn) {
+        defaultSizeBtn.style.borderColor = '#2d3436';
+        defaultSizeBtn.style.color = '#2d3436';
+      }
+
+      // Load existing drawing from state
+      if (S.roadmapDrawings && S.roadmapDrawings[stateKey]) {
+        const img = new Image();
+        img.onload = function() {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          ctx.drawImage(img, 0, 0);
+        };
+        img.src = S.roadmapDrawings[stateKey];
+      }
     }
 
     // Initialize layout
@@ -383,7 +636,7 @@
       textareaEl.value = S.roadmapNotes[stateKey] || '';
       linkEl.value = S.roadmapLinks[stateKey] || '';
 
-      // Setup auto-save listener
+      // Setup auto-save listener for typed notes
       let autoSaveTimer;
       textareaEl.addEventListener('input', () => {
         saveStatusEl.innerHTML = `<i class="fas fa-spinner fa-spin" style="color: var(--accent);"></i> Saving...`;
@@ -392,6 +645,16 @@
           autoSaveNote();
         }, 1000);
       });
+
+      // Switch to Drawing tab by default if there's a drawing and no typed note
+      const hasDrawing = S.roadmapDrawings && S.roadmapDrawings[stateKey];
+      const hasText = S.roadmapNotes && S.roadmapNotes[stateKey] && S.roadmapNotes[stateKey].trim();
+      
+      if (hasDrawing && !hasText) {
+        switchTab('draw');
+      } else {
+        switchTab('text');
+      }
     }
 
     // Auto-save note
@@ -402,10 +665,23 @@
       saveStatusEl.innerHTML = `<i class="fas fa-check-circle" style="color: var(--accent2);"></i> Auto-saved`;
     }
 
-    // Manual Save Note
+    // Auto-save drawing
+    function autoSaveDrawing() {
+      loadState();
+      if (!S.roadmapDrawings) S.roadmapDrawings = {};
+      S.roadmapDrawings[stateKey] = canvas.toDataURL('image/png');
+      saveState();
+      saveStatusEl.innerHTML = `<i class="fas fa-check-circle" style="color: var(--accent2);"></i> Auto-saved`;
+    }
+
+    // Manual Save Note (Saves both Text and Drawing)
     function saveNote() {
       loadState();
       S.roadmapNotes[stateKey] = textareaEl.value;
+      if (canvasInitialized) {
+        if (!S.roadmapDrawings) S.roadmapDrawings = {};
+        S.roadmapDrawings[stateKey] = canvas.toDataURL('image/png');
+      }
       saveState();
       saveStatusEl.innerHTML = `<i class="fas fa-check-circle" style="color: var(--accent2);"></i> Saved & Synced`;
       showToast("Notes saved and synced!");
@@ -418,15 +694,19 @@
       saveState();
       showToast("ChatGPT link updated!");
     }
+    window.saveChatLink = saveChatLink;
 
     // Toast notification helper
     function showToast(msg) {
       const toast = document.getElementById('toast');
-      document.getElementById('toast-text').textContent = msg;
-      toast.classList.add('show');
-      setTimeout(() => {
-        toast.classList.remove('show');
-      }, 2500);
+      const toastText = document.getElementById('toast-text');
+      if (toastText) toastText.textContent = msg;
+      if (toast) {
+        toast.classList.add('show');
+        setTimeout(() => {
+          toast.classList.remove('show');
+        }, 2500);
+      }
     }
 
     // Copy AI tutor prompt

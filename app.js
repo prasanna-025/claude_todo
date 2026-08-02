@@ -2600,7 +2600,8 @@ function renderRoadmap() {
           ${topics.map(topic => {
             const key = `${category}_${topic}`;
             const isChecked = !!S.roadmapChecks[key];
-            const notes = S.roadmapNotes[key] || '';
+            const hasNotes = (S.roadmapNotes && S.roadmapNotes[key] && S.roadmapNotes[key].trim()) || 
+                             (S.roadmapDrawings && S.roadmapDrawings[key]);
             const link = S.roadmapLinks[key] || '';
 
             return `
@@ -2612,8 +2613,8 @@ function renderRoadmap() {
                   </label>
                   
                   <div style="display: flex; gap: 4px;">
-                    <button class="btn btn-sm" onclick="openRoadmapNotepad('${category.replace(/'/g, "\\'")}', '${topic.replace(/'/g, "\\'")}')" style="padding: 3px 6px; font-size: 10px; ${notes ? 'border-color: var(--accent2); color: var(--accent2); background: rgba(0, 212, 170, 0.05);' : ''}" title="Open Notepad in New Tab">
-                      <i class="fas fa-edit"></i> ${notes ? 'Notes ✓' : 'Notes ↗'}
+                    <button class="btn btn-sm" onclick="openRoadmapNotepad('${category.replace(/'/g, "\\'")}', '${topic.replace(/'/g, "\\'")}')" style="padding: 3px 6px; font-size: 10px; ${hasNotes ? 'border-color: var(--accent2); color: var(--accent2); background: rgba(0, 212, 170, 0.05);' : ''}" title="Open Notepad in New Tab">
+                      <i class="fas fa-edit"></i> ${hasNotes ? 'Notes ✓' : 'Notes ↗'}
                     </button>
                     <button class="btn btn-sm" onclick="editRoadmapTopicLink('${category.replace(/'/g, "\\'")}', '${topic.replace(/'/g, "\\'")}')" style="padding: 3px 6px; font-size: 10px; ${link ? 'border-color: var(--accent2); color: var(--accent2); background: rgba(0, 212, 170, 0.05);' : ''}" title="Link ChatGPT">
                       <i class="fas fa-link"></i> ${link ? 'Linked 🚀' : 'Link'}
