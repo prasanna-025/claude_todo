@@ -645,6 +645,7 @@ function toggleStopwatch() {
 function updateStopwatchUI(isRunning, hasAccumulated = false) {
   const startBtn = document.getElementById('sw-start-btn');
   const stopBtn = document.getElementById('sw-stop-btn');
+  const clearBtn = document.getElementById('sw-clear-btn');
   if (!startBtn || !stopBtn) return;
 
   if (isRunning) {
@@ -681,7 +682,46 @@ function updateStopwatchUI(isRunning, hasAccumulated = false) {
       stopBtn.style.color = 'var(--text2)';
     }
   }
+
+  // Update clear button
+  if (clearBtn) {
+    if (isRunning || hasAccumulated) {
+      clearBtn.disabled = false;
+      clearBtn.style.opacity = '1';
+      clearBtn.style.cursor = 'pointer';
+      clearBtn.style.background = 'rgba(255, 118, 117, 0.12)';
+      clearBtn.style.borderColor = 'rgba(255, 118, 117, 0.35)';
+      clearBtn.style.color = '#ff7675';
+    } else {
+      clearBtn.disabled = true;
+      clearBtn.style.opacity = '0.5';
+      clearBtn.style.cursor = 'not-allowed';
+      clearBtn.style.background = 'var(--bg3)';
+      clearBtn.style.borderColor = 'var(--border)';
+      clearBtn.style.color = 'var(--text2)';
+    }
+  }
 }
+
+function clearStopwatch() {
+  if (confirm("⚠️ Are you sure you want to discard this timer session? It will NOT be logged to your study hours.")) {
+    clearInterval(swInterval);
+    swInterval = null;
+    
+    localStorage.removeItem('placementOS_sw_start');
+    localStorage.removeItem('placementOS_sw_accum');
+    
+    swRunning = false;
+    
+    updateStopwatchDisplay(0);
+    const display = document.getElementById('stopwatch-display');
+    if (display) display.style.animation = 'none';
+    
+    updateStopwatchUI(false, false);
+    toast("⏱️ Timer reset — session discarded.");
+  }
+}
+window.clearStopwatch = clearStopwatch;
 
 function stopStopwatch() {
   clearInterval(swInterval);
