@@ -180,7 +180,11 @@
         </div>
 
         <div class="hours-display" style="margin-top: 10px; border-top: 1px solid var(--border); padding-top: 12px;">
-          <div class="hours-stat"><div id="hours-today">0h</div><small>Today</small></div>
+          <div class="hours-stat" style="display: flex; flex-direction: column; align-items: center;">
+            <div id="hours-today">0h</div>
+            <small style="margin-bottom: 2px;">Today</small>
+            <button onclick="resetTodayHours()" style="border: none; background: transparent; color: #ff7675; cursor: pointer; font-size: 9.5px; padding: 2px 4px; border-radius: 4px; display: inline-flex; align-items: center; gap: 3px; font-family: inherit; font-weight: 500;" title="Reset Today's Hours"><i class="fas fa-undo"></i> Reset</button>
+          </div>
           <div class="hours-stat"><div id="hours-week">0h</div><small>This Week</small></div>
           <div class="hours-stat"><div id="hours-total">0h</div><small>All Time</small></div>
         </div>

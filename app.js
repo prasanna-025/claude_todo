@@ -723,6 +723,19 @@ function clearStopwatch() {
 }
 window.clearStopwatch = clearStopwatch;
 
+function resetTodayHours() {
+  if (confirm("⚠️ Are you sure you want to reset today's logged study hours to 0?")) {
+    S.hours[TODAY_KEY] = 0;
+    save();
+    renderDashboard();
+    if (typeof syncPush === 'function') {
+      syncPush(S);
+    }
+    toast("🗑️ Today's study hours have been reset to 0.");
+  }
+}
+window.resetTodayHours = resetTodayHours;
+
 function stopStopwatch() {
   clearInterval(swInterval);
   swInterval = null;
