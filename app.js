@@ -188,6 +188,10 @@ function switchSection(sec) {
     window.location.href = 'dsa-problems.html';
     return;
   }
+  if (sec === 'array-plan') {
+    window.location.href = 'array-plan.html';
+    return;
+  }
   
   document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
   document.querySelector(`.nav-item[data-section="${sec}"]`)?.classList.add('active');

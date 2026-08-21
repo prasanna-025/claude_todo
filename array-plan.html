@@ -1,0 +1,1275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>12-Day Array Master Plan — PlacementOS</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  
+  <!-- Wallpaper Fallback -->
+  <script src="default_wallpaper.js"></script>
+  <script>
+    (function() {
+      const wallpaper = localStorage.getItem('placementos_wallpaper') || window.DEFAULT_WALLPAPER;
+      if (wallpaper) {
+        const style = document.createElement('style');
+        style.id = 'dynamic-wallpaper-style';
+        style.innerHTML = `
+          body {
+            background-image: url(${wallpaper}) !important;
+            background-size: cover !important;
+            background-position: center !important;
+            background-attachment: fixed !important;
+            background-repeat: no-repeat !important;
+          }
+        `;
+        document.head.appendChild(style);
+      }
+    })();
+  </script>
+
+  <style>
+    /* Styling extension for array plan specific controls */
+    .day-selector-card {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: 12px;
+      overflow-y: auto;
+      max-height: calc(100vh - 120px);
+    }
+    
+    .day-btn {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      color: var(--text2);
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      transition: all 0.2s ease;
+    }
+    
+    .day-btn:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.15);
+      transform: translateY(-1px);
+    }
+    
+    .day-btn.active {
+      background: rgba(108, 99, 255, 0.1);
+      border-color: var(--accent);
+      color: #fff;
+    }
+    
+    .day-btn .day-title {
+      font-weight: 600;
+      font-size: 13px;
+    }
+    
+    .day-btn .day-progress {
+      font-size: 10.5px;
+      color: var(--accent2);
+    }
+
+    .learn-card {
+      background: rgba(0, 212, 170, 0.03);
+      border: 1.5px dashed rgba(0, 212, 170, 0.2);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 20px;
+    }
+
+    .problem-card {
+      background: rgba(16, 19, 28, 0.55);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      margin-bottom: 12px;
+      padding: 16px;
+      transition: all 0.2s ease;
+    }
+
+    .problem-card.solved {
+      border-color: rgba(0, 212, 170, 0.25);
+      background: rgba(0, 212, 170, 0.015);
+    }
+
+    .problem-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .problem-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .problem-title-wrap input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--accent2);
+      cursor: pointer;
+    }
+
+    .problem-title {
+      font-size: 14.5px;
+      font-weight: 600;
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .problem-title:hover {
+      color: var(--accent2);
+    }
+
+    .problem-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .badge-diff {
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 10.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    
+    .badge-diff.easy { background: rgba(0, 212, 170, 0.1); color: var(--accent2); }
+    .badge-diff.medium { background: rgba(247, 201, 72, 0.1); color: var(--yellow); }
+    .badge-diff.hard { background: rgba(255, 107, 107, 0.1); color: var(--red); }
+
+    .btn-toggle-editor {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+      color: var(--text2);
+      padding: 6px 12px;
+      font-size: 11px;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.2s;
+    }
+
+    .btn-toggle-editor:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+    }
+
+    .btn-toggle-editor.active {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(108, 99, 255, 0.08);
+    }
+
+    .editor-panel {
+      margin-top: 16px;
+      border-top: 1px solid var(--border);
+      padding-top: 16px;
+      display: none;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .editor-cols {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .editor-col {
+      flex: 1;
+      min-width: 280px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .editor-col label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text2);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .editor-textarea {
+      width: 100%;
+      height: 160px;
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: #fff;
+      padding: 10px;
+      font-size: 12.5px;
+      outline: none;
+      resize: vertical;
+      font-family: inherit;
+    }
+
+    .editor-textarea:focus {
+      border-color: var(--accent2);
+    }
+
+    .editor-textarea.code {
+      font-family: var(--mono);
+      color: #00d4aa;
+      font-size: 11.5px;
+    }
+
+    /* Screenshot Dropzone */
+    .screenshot-dropzone {
+      border: 1.5px dashed rgba(108, 99, 255, 0.25);
+      border-radius: 8px;
+      height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(108, 99, 255, 0.02);
+      cursor: pointer;
+      transition: all 0.2s;
+      outline: none;
+      text-align: center;
+      padding: 10px;
+      box-sizing: border-box;
+      font-size: 11.5px;
+      color: var(--text2);
+      position: relative;
+    }
+
+    .screenshot-dropzone:hover {
+      background: rgba(108, 99, 255, 0.05);
+      border-color: var(--accent);
+    }
+
+    .screenshot-dropzone.has-img {
+      border: none;
+      background: none;
+      height: auto;
+      min-height: 120px;
+      padding: 0;
+    }
+    
+    .screenshot-preview-img {
+      max-width: 100%;
+      max-height: 250px;
+      border-radius: 6px;
+      object-fit: contain;
+      cursor: zoom-in;
+    }
+
+    .overall-progress-card {
+      background: rgba(16, 19, 28, 0.65);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 20px;
+    }
+
+    .progress-track {
+      height: 8px;
+      background: rgba(255, 255, 255, 0.04);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-top: 6px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent) 0%, var(--accent2) 100%);
+      transition: width 0.3s ease;
+      width: 0%;
+    }
+
+    .random-picker-btn {
+      background: rgba(0, 212, 170, 0.1);
+      border: 1px solid rgba(0, 212, 170, 0.25);
+      color: var(--accent2);
+      padding: 8px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .random-picker-btn:hover {
+      background: rgba(0, 212, 170, 0.2);
+      transform: translateY(-1px);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating Auroras -->
+  <div class="aurora" style="background: var(--accent); top: -10vw; left: -10vw; opacity: 0.08;"></div>
+  <div class="aurora" style="background: var(--accent2); bottom: -10vw; right: -10vw; opacity: 0.08;"></div>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <button class="sidebar-collapse-btn" id="sidebarCollapseBtn" onclick="toggleSidebarCollapse()"><i class="fas fa-chevron-left"></i></button>
+    <div class="sidebar-logo">
+      <span class="logo-icon">⚡</span>
+      <span class="logo-text">PlacementOS</span>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="index.html" class="nav-item" data-section="dashboard"><i class="fas fa-th-large"></i><span>Dashboard</span></a>
+      <a href="dsa-problems.html" class="nav-item" data-section="dsa"><i class="fas fa-code"></i><span>DSA Tracker</span></a>
+      <a href="#" class="nav-item active" data-section="array-plan"><i class="fas fa-list-ol"></i><span>Array Plan</span></a>
+      <a href="index.html" class="nav-item" data-section="core-subjects"><i class="fas fa-book"></i><span>Core Subjects</span></a>
+      <a href="index.html" class="nav-item" data-section="communication"><i class="fas fa-comments"></i><span>Communication</span></a>
+      <a href="index.html" class="nav-item" data-section="softskills"><i class="fas fa-brain"></i><span>Soft Skills</span></a>
+      <a href="index.html" class="nav-item" data-section="projects"><i class="fas fa-folder-open"></i><span>Projects</span></a>
+      <a href="index.html" class="nav-item" data-section="placement"><i class="fas fa-briefcase"></i><span>Placement</span></a>
+      <a href="index.html" class="nav-item" data-section="roadmap"><i class="fas fa-map-signs"></i><span>8-Month Roadmap</span></a>
+      <a href="index.html" class="nav-item" data-section="extraskills"><i class="fas fa-cloud"></i><span>Cloud &amp; Extra Skills</span></a>
+      <a href="index.html" class="nav-item" data-section="analytics"><i class="fas fa-chart-line"></i><span>Analytics</span></a>
+      <a href="focus-todo.html" class="nav-item"><i class="fas fa-hourglass-half"></i><span>Focus Timer</span></a>
+      <a href="motivation.html" class="nav-item"><i class="fas fa-fire"></i><span>Grind Motivation</span></a>
+      <a href="#" class="nav-item" onclick="openWallpaperModal(); return false;"><i class="fas fa-image"></i><span>Change Wallpaper</span></a>
+    </nav>
+    <div class="sidebar-bottom">
+      <div class="xp-bar-wrap">
+        <div class="xp-label">
+          <span>⚔️ Level <span id="sb-level">1</span></span>
+          <span id="sb-xp">0 XP</span>
+        </div>
+        <div class="xp-bar"><div class="xp-fill" id="sb-xp-fill"></div></div>
+        <div class="xp-next" id="sb-xp-next">100 XP to next level</div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- MAIN BODY -->
+  <div class="main-content">
+    
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <div class="topbar-title" id="topbar-title">🚀 12-Day Array Plan</div>
+      <div style="display:flex; align-items:center; gap: 14px;">
+        <span class="save-indicator" id="sync-status" style="font-size:12.5px; color:var(--text2); display:flex; align-items:center; gap:6px;">
+          <i class="fas fa-cloud"></i> Synced
+        </span>
+        <div class="streak-badge">
+          <span class="fire-emoji">🔥</span>
+          <span class="streak-text" id="topbar-streak">0 day streak</span>
+        </div>
+      </div>
+    </header>
+
+    <div style="padding: 24px; display: flex; flex-direction: column; gap: 20px;">
+      
+      <!-- Overall Progress Card -->
+      <div class="overall-progress-card">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+          <div>
+            <h2 style="font-size: 16px; font-weight:700;">Your 12-Day Array Master Progress</h2>
+            <p style="font-size:12px; color:var(--text2); margin-top:2px;">Complete all 12 days to build a strong Array foundation.</p>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-size: 18px; font-weight:700; color:var(--accent2);" id="overall-pct">0%</div>
+            <div style="font-size:11px; color:var(--text2);" id="overall-solved-count">0 of 0 Solved</div>
+          </div>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" id="overall-progress-fill"></div>
+        </div>
+      </div>
+
+      <!-- Two-Column Layout -->
+      <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+        
+        <!-- Left Side: Day selector list -->
+        <div style="flex: 1; min-width: 250px; max-width: 320px; display: flex; flex-direction: column; gap: 12px;">
+          <div class="card" style="padding: 12px; display: flex; flex-direction: column; gap: 8px;">
+            <div class="card-header" style="padding-bottom: 8px; border-bottom: 1.5px solid var(--border); font-size:13.5px;"><i class="fas fa-calendar-alt"></i> Timeline Track</div>
+            <div class="day-selector-card" id="day-selector-list">
+              <!-- Dynamically rendered day buttons -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Side: Selected Day details -->
+        <div style="flex: 2.5; min-width: 320px; display: flex; flex-direction: column; gap: 16px;">
+          
+          <!-- Selected Day Title -->
+          <div class="card" style="padding: 20px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+              <div>
+                <h1 style="font-size:22px; font-weight:700; color:#fff;" id="curr-day-title">Day 1 – Basic Traversal</h1>
+                <p style="font-size:12.5px; color:var(--text2); margin-top:4px;" id="curr-day-subtitle">Easy Foundation</p>
+              </div>
+              <div id="day-picker-container">
+                <!-- Picker options (eg mixed picker) -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Learn Card -->
+          <div class="learn-card" id="curr-day-learn-container">
+            <h3 style="font-size:13px; font-weight:700; color:var(--accent2); text-transform:uppercase; letter-spacing:0.5px; display:flex; align-items:center; gap:6px; margin-bottom:8px;"><i class="fas fa-graduation-cap"></i> Core Concepts to Learn Today</h3>
+            <ul style="font-size:13.5px; color:var(--text2); padding-left:20px; display:flex; flex-direction:column; gap:4px;" id="curr-day-learn-list">
+              <!-- Dynamically populated learn list -->
+            </ul>
+          </div>
+
+          <!-- Problems header -->
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:-4px;">
+            <h2 style="font-size: 15px; font-weight:700; color:#fff; display:flex; align-items:center; gap:6px;"><i class="fas fa-list-check"></i> Target LeetCode Problems</h2>
+            <div style="font-size:12px; color:var(--accent2); font-weight:600;" id="day-solved-text">0/0 Solved</div>
+          </div>
+
+          <!-- Problems container -->
+          <div id="problems-container" style="display:flex; flex-direction:column; gap:12px;">
+            <!-- Dynamically populated problem cards -->
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Zoom/Lightbox Modal for Screenshot previews -->
+  <div id="lightboxModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:99999; justify-content:center; align-items:center; padding:20px;" onclick="this.style.display='none'">
+    <img id="lightboxImg" style="max-width:95%; max-height:95%; object-fit:contain; border-radius:8px; box-shadow:0 0 40px rgba(0,0,0,0.5);"/>
+  </div>
+
+  <!-- Wallpaper Upload modal placeholder (required by Change Wallpaper click link) -->
+  <div class="modal-overlay" id="wallpaper-modal-overlay" onclick="closeWallpaperModal()" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:99999; justify-content:center; align-items:center; padding:20px;">
+    <div class="card" style="max-width: 420px; width:100%; padding:24px; display:flex; flex-direction:column; gap:16px;" onclick="event.stopPropagation()">
+      <h3 style="font-weight:700; color:#fff; font-size:17px;"><i class="fas fa-image"></i> Custom Wallpaper</h3>
+      <p style="font-size:12.5px; color:var(--text2); line-height:1.4;">Upload a custom image to apply it as your background globally across all pages.</p>
+      <div style="display:flex; gap:10px;">
+        <button class="btn btn-primary" onclick="document.getElementById('wallpaperInput').click()" style="flex:1; justify-content:center; background:var(--accent);"><i class="fas fa-upload"></i> Upload</button>
+        <button class="btn" onclick="doRemoveWallpaper()" style="flex:1; justify-content:center;"><i class="fas fa-trash-alt"></i> Remove</button>
+      </div>
+      <button class="btn btn-sm" onclick="closeWallpaperModal()" style="margin-top:8px;">Cancel</button>
+      <input type="file" id="wallpaperInput" accept="image/*" style="display:none;" onchange="handleWallpaperUpload(event)"/>
+    </div>
+  </div>
+
+  <!-- Firebase & Sync scripts -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+  <script src="sync.js?v=2"></script>
+  
+  <!-- Plan Data and Interactive JS -->
+  <script>
+    // 12-Day Plan structured data
+    const planData = [
+      {
+        day: 1,
+        title: "Day 1 – Basic Traversal",
+        subtitle: "Easy Foundation",
+        learn: [
+          "Traversing an array (forward and backward)",
+          "Finding maximum and minimum elements",
+          "Counting specific elements",
+          "Building/copying a new array dynamically"
+        ],
+        problems: [
+          { id: "d1_p1", num: 1920, name: "Build Array from Permutation", difficulty: "easy", url: "https://leetcode.com/problems/build-array-from-permutation/" },
+          { id: "d1_p2", num: 1929, name: "Concatenation of Array", difficulty: "easy", url: "https://leetcode.com/problems/concatenation-of-array/" },
+          { id: "d1_p3", num: 1480, name: "Running Sum of 1d Array", difficulty: "easy", url: "https://leetcode.com/problems/running-sum-of-1d-array/" },
+          { id: "d1_p4", num: 1295, name: "Find Numbers with Even Number of Digits", difficulty: "easy", url: "https://leetcode.com/problems/find-numbers-with-even-number-of-digits/" },
+          { id: "d1_p5", num: 485, name: "Max Consecutive Ones", difficulty: "easy", url: "https://leetcode.com/problems/max-consecutive-ones/" },
+          { id: "d1_p6", num: 26, name: "Remove Duplicates from Sorted Array", difficulty: "easy", url: "https://leetcode.com/problems/remove-duplicates-from-sorted-array/" },
+          { id: "d1_p7", num: 27, name: "Remove Element", difficulty: "easy", url: "https://leetcode.com/problems/remove-element/" },
+          { id: "d1_p8", num: 169, name: "Majority Element", difficulty: "medium", url: "https://leetcode.com/problems/majority-element/" },
+          { id: "d1_p9", num: 724, name: "Find Pivot Index", difficulty: "medium", url: "https://leetcode.com/problems/find-pivot-index/" },
+          { id: "d1_p10", num: 238, name: "Product of Array Except Self", difficulty: "medium", url: "https://leetcode.com/problems/product-of-array-except-self/" }
+        ]
+      },
+      {
+        day: 2,
+        title: "Day 2 – Traversal (Advanced)",
+        subtitle: "Matrices & Simulations",
+        learn: [
+          "Diagonal and boundary spiral matrix traversal",
+          "Set/modify matrix properties without duplicate updates",
+          "Game of Life matrix state simulations",
+          "Advanced traversals (Finding third maximums, twice-largest multipliers)"
+        ],
+        problems: [
+          { id: "d2_p1", num: 414, name: "Third Maximum Number", difficulty: "easy", url: "https://leetcode.com/problems/third-maximum-number/" },
+          { id: "d2_p2", num: 747, name: "Largest Number At Least Twice of Others", difficulty: "easy", url: "https://leetcode.com/problems/largest-number-at-least-twice-of-others/" },
+          { id: "d2_p3", num: 54, name: "Spiral Matrix", difficulty: "medium", url: "https://leetcode.com/problems/spiral-matrix/" },
+          { id: "d2_p4", num: 498, name: "Diagonal Traverse", difficulty: "medium", url: "https://leetcode.com/problems/diagonal-traverse/" },
+          { id: "d2_p5", num: 289, name: "Game of Life", difficulty: "medium", url: "https://leetcode.com/problems/game-of-life/" },
+          { id: "d2_p6", num: 59, name: "Spiral Matrix II", difficulty: "medium", url: "https://leetcode.com/problems/spiral-matrix-ii/" },
+          { id: "d2_p7", num: 73, name: "Set Matrix Zeroes", difficulty: "medium", url: "https://leetcode.com/problems/set-matrix-zeroes/" },
+          { id: "d2_p8", num: 41, name: "First Missing Positive", difficulty: "hard", url: "https://leetcode.com/problems/first-missing-positive/" },
+          { id: "d2_p9", num: 42, name: "Trapping Rain Water", difficulty: "hard", url: "https://leetcode.com/problems/trapping-rain-water/" }
+        ]
+      },
+      {
+        day: 3,
+        title: "Day 3 – Hash Table",
+        subtitle: "Fast lookups & Subarray Sums",
+        learn: [
+          "Constant time lookups via HashSets and HashMaps",
+          "Grouping items together based on key frequencies (Anagrams)",
+          "Frequency count buckets (Top K elements)",
+          "Prefix sum matching using Map lookups (Subarray Sums)"
+        ],
+        problems: [
+          { id: "d3_p1", num: 1, name: "Two Sum", difficulty: "easy", url: "https://leetcode.com/problems/two-sum/" },
+          { id: "d3_p2", num: 217, name: "Contains Duplicate", difficulty: "easy", url: "https://leetcode.com/problems/contains-duplicate/" },
+          { id: "d3_p3", num: 219, name: "Contains Duplicate II", difficulty: "easy", url: "https://leetcode.com/problems/contains-duplicate-ii/" },
+          { id: "d3_p4", num: 349, name: "Intersection of Two Arrays", difficulty: "easy", url: "https://leetcode.com/problems/intersection-of-two-arrays/" },
+          { id: "d3_p5", num: 350, name: "Intersection of Two Arrays II", difficulty: "easy", url: "https://leetcode.com/problems/intersection-of-two-arrays-ii/" },
+          { id: "d3_p6", num: 1207, name: "Unique Number of Occurrences", difficulty: "easy", url: "https://leetcode.com/problems/unique-number-of-occurrences/" },
+          { id: "d3_p7", num: 136, name: "Single Number", difficulty: "easy", url: "https://leetcode.com/problems/single-number/" },
+          { id: "d3_p8", num: 49, name: "Group Anagrams", difficulty: "medium", url: "https://leetcode.com/problems/group-anagrams/" },
+          { id: "d3_p9", num: 347, name: "Top K Frequent Elements", difficulty: "medium", url: "https://leetcode.com/problems/top-k-frequent-elements/" },
+          { id: "d3_p10", num: 560, name: "Subarray Sum Equals K", difficulty: "medium", url: "https://leetcode.com/problems/subarray-sum-equals-k/" },
+          { id: "d3_p11", num: 525, name: "Contiguous Array", difficulty: "medium", url: "https://leetcode.com/problems/contiguous-array/" },
+          { id: "d3_p12", num: 128, name: "Longest Consecutive Sequence", difficulty: "medium", url: "https://leetcode.com/problems/longest-consecutive-sequence/" }
+        ]
+      },
+      {
+        day: 4,
+        title: "Day 4 – Two Pointers (Part 1)",
+        subtitle: "In-place Array Modification & Swaps",
+        learn: [
+          "Using two pointers to modify arrays in-place (Move Zeroes)",
+          "Reverse and swap techniques (Reverse String, Array Squares)",
+          "Left & Right pointers converging (Two Sum II, Valid Palindrome)",
+          "Combining two sorted arrays (Merge Sorted Array)"
+        ],
+        problems: [
+          { id: "d4_p1", num: 283, name: "Move Zeroes", difficulty: "easy", url: "https://leetcode.com/problems/move-zeroes/" },
+          { id: "d4_p2", num: 344, name: "Reverse String", difficulty: "easy", url: "https://leetcode.com/problems/reverse-string/" },
+          { id: "d4_p3", num: 977, name: "Squares of a Sorted Array", difficulty: "easy", url: "https://leetcode.com/problems/squares-of-a-sorted-array/" },
+          { id: "d4_p4", num: 125, name: "Valid Palindrome", difficulty: "easy", url: "https://leetcode.com/problems/valid-palindrome/" },
+          { id: "d4_p5", num: 167, name: "Two Sum II - Input Array Is Sorted", difficulty: "easy", url: "https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/" },
+          { id: "d4_p6", num: 88, name: "Merge Sorted Array", difficulty: "easy", url: "https://leetcode.com/problems/merge-sorted-array/" },
+          { id: "d4_p7", num: 392, name: "Is Subsequence", difficulty: "easy", url: "https://leetcode.com/problems/is-subsequence/" },
+          { id: "d4_p8", num: 11, name: "Container With Most Water", difficulty: "medium", url: "https://leetcode.com/problems/container-with-most-water/" },
+          { id: "d4_p9", num: 75, name: "Sort Colors", difficulty: "medium", url: "https://leetcode.com/problems/sort-colors/" },
+          { id: "d4_p10", num: 80, name: "Remove Duplicates from Sorted Array II", difficulty: "medium", url: "https://leetcode.com/problems/remove-duplicates-from-sorted-array-ii/" }
+        ]
+      },
+      {
+        day: 5,
+        title: "Day 5 – Two Pointers (Part 2)",
+        subtitle: "Multi-pointer Search & Subarrays",
+        learn: [
+          "Multi-pointer search (3Sum, 4Sum)",
+          "Three-pointer closest sums",
+          "Pointers representing logical buckets (Boats to Save People)",
+          "Combining pointers with range math (Trapping Rain Water)"
+        ],
+        problems: [
+          { id: "d5_p1", num: 15, name: "3Sum", difficulty: "medium", url: "https://leetcode.com/problems/3sum/" },
+          { id: "d5_p2", num: 18, name: "4Sum", difficulty: "medium", url: "https://leetcode.com/problems/4sum/" },
+          { id: "d5_p3", num: 713, name: "Subarray Product Less Than K", difficulty: "medium", url: "https://leetcode.com/problems/subarray-product-less-than-k/" },
+          { id: "d5_p4", num: 881, name: "Boats to Save People", difficulty: "medium", url: "https://leetcode.com/problems/boats-to-save-people/" },
+          { id: "d5_p5", num: 16, name: "3Sum Closest", difficulty: "medium", url: "https://leetcode.com/problems/3sum-closest/" },
+          { id: "d5_p6", num: 42, name: "Trapping Rain Water", difficulty: "hard", url: "https://leetcode.com/problems/trapping-rain-water/" },
+          { id: "d5_p7", num: 76, name: "Minimum Window Substring", difficulty: "hard", url: "https://leetcode.com/problems/minimum-window-substring/" }
+        ]
+      },
+      {
+        day: 6,
+        title: "Day 6 – Sorting & Binary Search",
+        subtitle: "Divide and conquer on Sorted arrays",
+        learn: [
+          "Standard O(log N) target lookup insert position",
+          "Integer range division (Sqrt(x), Guess number)",
+          "Searching in rotated sorted arrays",
+          "Binary search on multi-dimensional matrices",
+          "Logical binary search ranges (Koko Eating Bananas)"
+        ],
+        problems: [
+          { id: "d6_p1", num: 704, name: "Binary Search", difficulty: "easy", url: "https://leetcode.com/problems/binary-search/" },
+          { id: "d6_p2", num: 35, name: "Search Insert Position", difficulty: "easy", url: "https://leetcode.com/problems/search-insert-position/" },
+          { id: "d6_p3", num: 69, name: "Sqrt(x)", difficulty: "easy", url: "https://leetcode.com/problems/sqrtx/" },
+          { id: "d6_p4", num: 278, name: "First Bad Version", difficulty: "easy", url: "https://leetcode.com/problems/first-bad-version/" },
+          { id: "d6_p5", num: 374, name: "Guess Number Higher or Lower", difficulty: "easy", url: "https://leetcode.com/problems/guess-number-higher-or-lower/" },
+          { id: "d6_p6", num: 561, name: "Array Partition", difficulty: "easy", url: "https://leetcode.com/problems/array-partition/" },
+          { id: "d6_p7", num: 88, name: "Merge Sorted Array", difficulty: "easy", url: "https://leetcode.com/problems/merge-sorted-array/" },
+          { id: "d6_p8", num: 33, name: "Search in Rotated Sorted Array", difficulty: "medium", url: "https://leetcode.com/problems/search-in-rotated-sorted-array/" },
+          { id: "d6_p9", num: 34, name: "Find First and Last Position of Element in Sorted Array", difficulty: "medium", url: "https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/" },
+          { id: "d6_p10", num: 162, name: "Find Peak Element", difficulty: "medium", url: "https://leetcode.com/problems/find-peak-element/" },
+          { id: "d6_p11", num: 74, name: "Search a 2D Matrix", difficulty: "medium", url: "https://leetcode.com/problems/search-a-2d-matrix/" },
+          { id: "d6_p12", num: 875, name: "Koko Eating Bananas", difficulty: "medium", url: "https://leetcode.com/problems/koko-eating-bananas/" }
+        ]
+      },
+      {
+        day: 7,
+        title: "Day 7 – Prefix Sum",
+        subtitle: "Precomputed range sums",
+        learn: [
+          "O(1) Range sum lookup after O(N) pre-processing",
+          "Balanced left/right sums (Pivot indices)",
+          "Remainder prefix hashing (Subarray sum divisibility)",
+          "Subarrays with specific sum targets"
+        ],
+        problems: [
+          { id: "d7_p1", num: 1480, name: "Running Sum of 1d Array", difficulty: "easy", url: "https://leetcode.com/problems/running-sum-of-1d-array/" },
+          { id: "d7_p2", num: 724, name: "Find Pivot Index", difficulty: "easy", url: "https://leetcode.com/problems/find-pivot-index/" },
+          { id: "d7_p3", num: 303, name: "Range Sum Query - Immutable", difficulty: "easy", url: "https://leetcode.com/problems/range-sum-query-immutable/" },
+          { id: "d7_p4", num: 1732, name: "Find the Highest Altitude", difficulty: "easy", url: "https://leetcode.com/problems/find-the-highest-altitude/" },
+          { id: "d7_p5", num: 1991, name: "Find the Middle Index in Array", difficulty: "easy", url: "https://leetcode.com/problems/find-the-middle-index-in-array/" },
+          { id: "d7_p6", num: 2574, name: "Left and Right Sum Differences", difficulty: "easy", url: "https://leetcode.com/problems/left-and-right-sum-differences/" },
+          { id: "d7_p7", num: 2485, name: "Find the Pivot Integer", difficulty: "easy", url: "https://leetcode.com/problems/find-the-pivot-integer/" },
+          { id: "d7_p8", num: 560, name: "Subarray Sum Equals K", difficulty: "medium", url: "https://leetcode.com/problems/subarray-sum-equals-k/" },
+          { id: "d7_p9", num: 974, name: "Subarray Sums Divisible by K", difficulty: "medium", url: "https://leetcode.com/problems/subarray-sums-divisible-by-k/" },
+          { id: "d7_p10", num: 523, name: "Continuous Subarray Sum", difficulty: "medium", url: "https://leetcode.com/problems/continuous-subarray-sum/" },
+          { id: "d7_p11", num: 930, name: "Binary Subarrays With Sum", difficulty: "medium", url: "https://leetcode.com/problems/binary-subarrays-with-sum/" },
+          { id: "d7_p12", num: 238, name: "Product of Array Except Self", difficulty: "medium", url: "https://leetcode.com/problems/product-of-array-except-self/" }
+        ]
+      },
+      {
+        day: 8,
+        title: "Day 8 – Sliding Window",
+        subtitle: "Contiguous subsegments matching",
+        learn: [
+          "Fixed size sliding windows (Average subarray, Max vowels)",
+          "Sliding windows with string matching (Permutations)",
+          "Variable size sliding windows (Longest repeating replacement)",
+          "Binary window flips (Max consecutive ones III)"
+        ],
+        problems: [
+          { id: "d8_p1", num: 643, name: "Maximum Average Subarray I", difficulty: "easy", url: "https://leetcode.com/problems/maximum-average-subarray-i/" },
+          { id: "d8_p2", num: 1456, name: "Maximum Number of Vowels in a Substring of Given Length", difficulty: "easy", url: "https://leetcode.com/problems/maximum-number-of-vowels-in-a-substring-of-given-length/" },
+          { id: "d8_p3", num: 1343, name: "Number of Subarrays of Size K and Average Greater than or Equal to Threshold", difficulty: "easy", url: "https://leetcode.com/problems/number-of-subarrays-of-size-k-and-average-greater-than-or-equal-to-threshold/" },
+          { id: "d8_p4", num: 2379, name: "Minimum Recolors to Get K Consecutive Black Blocks", difficulty: "easy", url: "https://leetcode.com/problems/minimum-recolors-to-get-k-consecutive-black-blocks/" },
+          { id: "d8_p5", num: 1876, name: "Substrings of Size Three with Distinct Characters", difficulty: "easy", url: "https://leetcode.com/problems/substrings-of-size-three-with-distinct-characters/" },
+          { id: "d8_p6", num: 219, name: "Contains Duplicate II", difficulty: "easy", url: "https://leetcode.com/problems/contains-duplicate-ii/" },
+          { id: "d8_p7", num: 1052, name: "Grumpy Bookstore Owner", difficulty: "easy", url: "https://leetcode.com/problems/grumpy-bookstore-owner/" },
+          { id: "d8_p8", num: 3, name: "Longest Substring Without Repeating Characters", difficulty: "medium", url: "https://leetcode.com/problems/longest-substring-without-repeating-characters/" },
+          { id: "d8_p9", num: 209, name: "Minimum Size Subarray Sum", difficulty: "medium", url: "https://leetcode.com/problems/minimum-size-subarray-sum/" },
+          { id: "d8_p10", num: 424, name: "Longest Repeating Character Replacement", difficulty: "medium", url: "https://leetcode.com/problems/longest-repeating-character-replacement/" },
+          { id: "d8_p11", num: 567, name: "Permutation in String", difficulty: "medium", url: "https://leetcode.com/problems/permutation-in-string/" },
+          { id: "d8_p12", num: 1004, name: "Max Consecutive Ones III", difficulty: "medium", url: "https://leetcode.com/problems/max-consecutive-ones-iii/" }
+        ]
+      },
+      {
+        day: 9,
+        title: "Day 9 – Matrix",
+        subtitle: "Multi-dimensional Grid algorithms",
+        learn: [
+          "2D Grid perimeter calculations",
+          "Checking diagonal patterns (Toeplitz)",
+          "Matrix transposing and image flipping in-place",
+          "90-degree matrix rotations in-place",
+          "Advanced simulation cycles (Game of Life, Spiral II)"
+        ],
+        problems: [
+          { id: "d9_p1", num: 463, name: "Island Perimeter", difficulty: "easy", url: "https://leetcode.com/problems/island-perimeter/" },
+          { id: "d9_p2", num: 766, name: "Toeplitz Matrix", difficulty: "easy", url: "https://leetcode.com/problems/toeplitz-matrix/" },
+          { id: "d9_p3", num: 867, name: "Transpose Matrix", difficulty: "easy", url: "https://leetcode.com/problems/transpose-matrix/" },
+          { id: "d9_p4", num: 1572, name: "Matrix Diagonal Sum", difficulty: "easy", url: "https://leetcode.com/problems/matrix-diagonal-sum/" },
+          { id: "d9_p5", num: 566, name: "Reshape the Matrix", difficulty: "easy", url: "https://leetcode.com/problems/reshape-the-matrix/" },
+          { id: "d9_p6", num: 832, name: "Flipping an Image", difficulty: "easy", url: "https://leetcode.com/problems/flipping-an-image/" },
+          { id: "d9_p7", num: 1582, name: "Special Positions in a Binary Matrix", difficulty: "easy", url: "https://leetcode.com/problems/special-positions-in-a-binary-matrix/" },
+          { id: "d9_p8", num: 73, name: "Set Matrix Zeroes", difficulty: "medium", url: "https://leetcode.com/problems/set-matrix-zeroes/" },
+          { id: "d9_p9", num: 54, name: "Spiral Matrix", difficulty: "medium", url: "https://leetcode.com/problems/spiral-matrix/" },
+          { id: "d9_p10", num: 48, name: "Rotate Image", difficulty: "medium", url: "https://leetcode.com/problems/rotate-image/" },
+          { id: "d9_p11", num: 289, name: "Game of Life", difficulty: "medium", url: "https://leetcode.com/problems/game-of-life/" },
+          { id: "d9_p12", num: 498, name: "Diagonal Traverse", difficulty: "medium", url: "https://leetcode.com/problems/diagonal-traverse/" }
+        ]
+      },
+      {
+        day: 10,
+        title: "Day 10 – Mixed Practice",
+        subtitle: "Day 1-9 Review",
+        learn: [
+          "Solve 10 random problems from Days 1-9 without looking at your notes.",
+          "Use the Random Problem Picker to quiz yourself under mock conditions."
+        ],
+        problems: [] // Populated dynamically with a random selection generator
+      },
+      {
+        day: 11,
+        title: "Day 11 – Weak Areas",
+        subtitle: "Reviewing unsolved topics",
+        learn: [
+          "Review and attempt problems you had trouble solving earlier.",
+          "Look at your saved notes/mistakes to refine your algorithms.",
+          "Do not learn new topics today."
+        ],
+        problems: [] // Populated dynamically with user's specific unsolved problems with notes
+      },
+      {
+        day: 12,
+        title: "Day 12 – Mock Interview",
+        subtitle: "Accenture Exam Conditions",
+        learn: [
+          "Solve under strict exam conditions: No hints. No YouTube. No notes.",
+          "Aim for optimal time and space complexity."
+        ],
+        problems: [
+          { id: "d12_p1", num: 283, name: "Move Zeroes", difficulty: "easy", url: "https://leetcode.com/problems/move-zeroes/" },
+          { id: "d12_p2", num: 238, name: "Product of Array Except Self", difficulty: "medium", url: "https://leetcode.com/problems/product-of-array-except-self/" },
+          { id: "d12_p3", num: 1, name: "Two Sum", difficulty: "easy", url: "https://leetcode.com/problems/two-sum/" },
+          { id: "d12_p4", num: 54, name: "Spiral Matrix", difficulty: "medium", url: "https://leetcode.com/problems/spiral-matrix/" },
+          { id: "d12_p5", num: 704, name: "Binary Search", difficulty: "easy", url: "https://leetcode.com/problems/binary-search/" }
+        ]
+      }
+    ];
+
+    // Prefilled notebook template
+    const NOTE_TEMPLATE = `Problem:
+Pattern:
+Idea:
+Time Complexity:
+Space Complexity:
+Mistakes:
+Key Learning:`;
+
+    let S = {};
+    let activeDay = 1;
+
+    // Load state
+    function load() {
+      const saved = localStorage.getItem('placementOS_v2');
+      if (saved) {
+        S = JSON.parse(saved);
+      }
+      if (!S.arrayPlanChecks) S.arrayPlanChecks = {};
+      if (!S.arrayPlanNotes) S.arrayPlanNotes = {};
+      if (!S.arrayPlanCodes) S.arrayPlanCodes = {};
+      if (!S.arrayPlanSelectedRandoms) S.arrayPlanSelectedRandoms = [];
+      
+      // Update sidebar XP
+      const xp = S.xp || 0;
+      const level = S.level || 1;
+      const streak = S.streak || 0;
+      
+      document.getElementById('sb-level').textContent = level;
+      document.getElementById('sb-xp').textContent = `${xp} XP`;
+      document.getElementById('topbar-streak').textContent = `${streak} day streak`;
+      
+      const xpNeeded = level * 100;
+      const pct = Math.min(100, Math.floor((xp / xpNeeded) * 100));
+      const fill = document.getElementById('sb-xp-fill');
+      if (fill) fill.style.width = `${pct}%`;
+      const next = document.getElementById('sb-xp-next');
+      if (next) next.textContent = `${xpNeeded - xp} XP to next level`;
+    }
+
+    // Save state and push
+    function save() {
+      S.updatedAt = Date.now();
+      localStorage.setItem('placementOS_v2', JSON.stringify(S));
+      if (typeof syncPush === 'function') {
+        syncPush(S);
+      }
+      updateGlobalProgress();
+      renderDaysList();
+    }
+
+    // IndexedDB for Code Screenshots
+    const dbName = "PlacementOS_DSA_DB";
+    const storeName = "screenshots";
+    function getDB() {
+      return new Promise((resolve, reject) => {
+        const request = indexedDB.open(dbName, 1);
+        request.onupgradeneeded = (e) => {
+          const db = e.target.result;
+          if (!db.objectStoreNames.contains(storeName)) {
+            db.createObjectStore(storeName, { keyPath: "problemName" });
+          }
+        };
+        request.onsuccess = (e) => resolve(e.target.result);
+        request.onerror = (e) => reject(e.target.error);
+      });
+    }
+
+    async function saveScreenshot(key, base64Data) {
+      const db = await getDB();
+      return new Promise((resolve, reject) => {
+        const transaction = db.transaction(storeName, "readwrite");
+        const store = transaction.objectStore(storeName);
+        const request = store.put({ problemName: `array_plan_${key}`, base64Data });
+        request.onsuccess = () => resolve();
+        request.onerror = (e) => reject(e.target.error);
+      });
+    }
+
+    async function getScreenshot(key) {
+      const db = await getDB();
+      return new Promise((resolve, reject) => {
+        const transaction = db.transaction(storeName, "readonly");
+        const store = transaction.objectStore(storeName);
+        const request = store.get(`array_plan_${key}`);
+        request.onsuccess = (e) => resolve(e.target.result ? e.target.result.base64Data : null);
+        request.onerror = (e) => reject(e.target.error);
+      });
+    }
+
+    async function deleteScreenshot(key) {
+      const db = await getDB();
+      return new Promise((resolve, reject) => {
+        const transaction = db.transaction(storeName, "readwrite");
+        const store = transaction.objectStore(storeName);
+        const request = store.delete(`array_plan_${key}`);
+        request.onsuccess = () => resolve();
+        request.onerror = (e) => reject(e.target.error);
+      });
+    }
+
+    // Calculate progress statistics
+    function getDayProgress(dayNum) {
+      let problems = [];
+      if (dayNum === 10) {
+        problems = getMixedProblemsList();
+      } else if (dayNum === 11) {
+        problems = getWeakProblemsList();
+      } else {
+        problems = planData.find(d => d.day === dayNum).problems;
+      }
+      
+      if (problems.length === 0) return { solved: 0, total: 0, pct: 0 };
+      
+      let solved = 0;
+      problems.forEach(p => {
+        if (S.arrayPlanChecks[p.id]) solved++;
+      });
+      return {
+        solved,
+        total: problems.length,
+        pct: Math.round((solved / problems.length) * 100)
+      };
+    }
+
+    // Update global progress bar
+    function updateGlobalProgress() {
+      let solvedTotal = 0;
+      let problemsTotal = 0;
+      
+      for (let day = 1; day <= 12; day++) {
+        const stat = getDayProgress(day);
+        solvedTotal += stat.solved;
+        problemsTotal += stat.total;
+      }
+      
+      document.getElementById('overall-pct').textContent = `${problemsTotal > 0 ? Math.round((solvedTotal / problemsTotal) * 100) : 0}%`;
+      document.getElementById('overall-solved-count').textContent = `${solvedTotal} of ${problemsTotal} Solved`;
+      document.getElementById('overall-progress-fill').style.width = `${problemsTotal > 0 ? (solvedTotal / problemsTotal) * 100 : 0}%`;
+    }
+
+    // Render left day-selector column
+    function renderDaysList() {
+      const listContainer = document.getElementById('day-selector-list');
+      listContainer.innerHTML = '';
+      
+      planData.forEach(day => {
+        const progress = getDayProgress(day.day);
+        const btn = document.createElement('button');
+        btn.className = `day-btn ${activeDay === day.day ? 'active' : ''}`;
+        btn.onclick = () => selectDay(day.day);
+        
+        btn.innerHTML = `
+          <div style="display:flex; justify-content:space-between; width:100%;">
+            <span class="day-title">${day.title}</span>
+            <span class="day-progress">${progress.solved}/${progress.total}</span>
+          </div>
+          <div style="height:3px; background:rgba(255,255,255,0.03); border-radius:1.5px; width:100%; margin-top:2px; overflow:hidden;">
+            <div style="background:var(--accent2); height:100%; width:${progress.pct}%"></div>
+          </div>
+        `;
+        
+        listContainer.appendChild(btn);
+      });
+    }
+
+    // Load mixed questions picker for Day 10
+    function getMixedProblemsList() {
+      if (S.arrayPlanSelectedRandoms && S.arrayPlanSelectedRandoms.length > 0) {
+        return S.arrayPlanSelectedRandoms;
+      }
+      return [];
+    }
+
+    // Generate random mixed questions for Day 10
+    function generateRandomProblems() {
+      let pool = [];
+      for (let day = 1; day <= 9; day++) {
+        pool = pool.concat(planData[day-1].problems);
+      }
+      
+      const shuffled = [...pool].sort(() => 0.5 - Math.random());
+      const selected = shuffled.slice(0, 10).map((p, idx) => {
+        return {
+          id: `d10_p${idx+1}`,
+          num: p.num,
+          name: `${p.name} (Review)`,
+          difficulty: p.difficulty,
+          url: p.url,
+          originalId: p.id
+        };
+      });
+      
+      S.arrayPlanSelectedRandoms = selected;
+      save();
+      selectDay(10);
+    }
+
+    // Load weak questions for Day 11
+    function getWeakProblemsList() {
+      let pool = [];
+      for (let day = 1; day <= 9; day++) {
+        pool = pool.concat(planData[day-1].problems);
+      }
+      
+      const weak = [];
+      pool.forEach((p) => {
+        const hasNotes = S.arrayPlanNotes[p.id] && S.arrayPlanNotes[p.id].trim();
+        const isSolved = S.arrayPlanChecks[p.id];
+        if (hasNotes && !isSolved) {
+          weak.push({
+            id: `d11_weak_${p.id}`,
+            num: p.num,
+            name: `${p.name} (Re-attempt)`,
+            difficulty: p.difficulty,
+            url: p.url,
+            originalId: p.id
+          });
+        }
+      });
+      return weak;
+    }
+
+    // Select specific day
+    function selectDay(dayNum) {
+      activeDay = dayNum;
+      
+      document.querySelectorAll('.day-btn').forEach((btn, idx) => {
+        if (idx === dayNum - 1) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+      
+      const currDay = planData[dayNum - 1];
+      document.getElementById('curr-day-title').textContent = currDay.title;
+      document.getElementById('curr-day-subtitle').textContent = currDay.subtitle;
+      
+      const learnList = document.getElementById('curr-day-learn-list');
+      learnList.innerHTML = '';
+      currDay.learn.forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = item;
+        learnList.appendChild(li);
+      });
+      
+      const pickerContainer = document.getElementById('day-picker-container');
+      pickerContainer.innerHTML = '';
+      if (dayNum === 10) {
+        const btn = document.createElement('button');
+        btn.className = 'random-picker-btn';
+        btn.onclick = generateRandomProblems;
+        btn.innerHTML = `<i class="fas fa-random"></i> Pick 10 Random Problems`;
+        pickerContainer.appendChild(btn);
+      }
+
+      let problems = [];
+      if (dayNum === 10) {
+        problems = getMixedProblemsList();
+      } else if (dayNum === 11) {
+        problems = getWeakProblemsList();
+      } else {
+        problems = currDay.problems;
+      }
+      
+      const problemsContainer = document.getElementById('problems-container');
+      problemsContainer.innerHTML = '';
+      
+      const progress = getDayProgress(dayNum);
+      document.getElementById('day-solved-text').textContent = `${progress.solved}/${progress.total} Solved`;
+      
+      if (problems.length === 0) {
+        let emptyMsg = "No problems listed.";
+        if (dayNum === 10) emptyMsg = "Click the 'Pick 10 Random Problems' button to generate your mixed review track!";
+        if (dayNum === 11) emptyMsg = "Excellent! You don't have any pending weak areas from Days 1–9. (Any problem you write notes for but leave unsolved will show up here).";
+        
+        problemsContainer.innerHTML = `
+          <div class="card" style="padding:24px; text-align:center; color:var(--text2); font-size:13.5px;">
+            <i class="fas fa-info-circle" style="font-size:20px; color:var(--accent); margin-bottom:8px; display:block;"></i>
+            ${emptyMsg}
+          </div>
+        `;
+        return;
+      }
+      
+      problems.forEach(p => {
+        const isSolved = !!S.arrayPlanChecks[p.id];
+        const card = document.createElement('div');
+        card.id = `problem-card-${p.id}`;
+        card.className = `problem-card ${isSolved ? 'solved' : ''}`;
+        
+        card.innerHTML = `
+          <div class="problem-header">
+            <div class="problem-title-wrap">
+              <input type="checkbox" onchange="toggleProblemSolved('${p.id}', this)" ${isSolved ? 'checked' : ''}/>
+              <a href="${p.url}" target="_blank" class="problem-title">${p.num}. ${p.name} <i class="fas fa-external-link-alt" style="font-size:10px; color:var(--accent2);"></i></a>
+            </div>
+            <div class="problem-meta">
+              <span class="badge-diff ${p.difficulty}">${p.difficulty}</span>
+              <button class="btn-toggle-editor" id="btn-editor-${p.id}" onclick="toggleEditor('${p.id}')"><i class="fas fa-edit"></i> Notes &amp; Code</button>
+            </div>
+          </div>
+          
+          <div class="editor-panel" id="editor-${p.id}">
+            <div class="editor-cols">
+              
+              <div class="editor-col">
+                <label>Notebook Details</label>
+                <textarea class="editor-textarea" id="notes-textarea-${p.id}" onchange="saveProblemNotes('${p.id}', this.value)" placeholder="Write your structured study notes here..."></textarea>
+              </div>
+              
+              <div class="editor-col">
+                <label>Solution Code</label>
+                <textarea class="editor-textarea code" id="code-textarea-${p.id}" onchange="saveProblemCode('${p.id}', this.value)" placeholder="// Paste code snippet here..."></textarea>
+              </div>
+
+              <div class="editor-col">
+                <label>Code Screenshot</label>
+                <div class="screenshot-dropzone" id="dropzone-${p.id}" onpaste="handlePasteScreenshot(event, '${p.id}')" onclick="triggerFileInput('${p.id}')" tabindex="0">
+                  <i class="fas fa-camera" style="font-size:18px; margin-bottom:4px; display:block; color:var(--accent);"></i>
+                  Paste (Ctrl+V) or click to upload
+                </div>
+                <input type="file" id="file-${p.id}" accept="image/*" style="display:none;" onchange="handleUploadScreenshot(event, '${p.id}')"/>
+              </div>
+
+            </div>
+          </div>
+        `;
+        
+        problemsContainer.appendChild(card);
+      });
+    }
+
+    function toggleProblemSolved(problemId, checkbox) {
+      S.arrayPlanChecks[problemId] = checkbox.checked;
+      const card = document.getElementById(`problem-card-${problemId}`);
+      if (checkbox.checked) {
+        card.classList.add('solved');
+        addXP(10);
+      } else {
+        card.classList.remove('solved');
+      }
+      save();
+      
+      const progress = getDayProgress(activeDay);
+      document.getElementById('day-solved-text').textContent = `${progress.solved}/${progress.total} Solved`;
+    }
+
+    async function toggleEditor(problemId) {
+      const panel = document.getElementById(`editor-${problemId}`);
+      const btn = document.getElementById(`btn-editor-${problemId}`);
+      if (!panel) return;
+      
+      const isVisible = panel.style.display === 'flex';
+      
+      document.querySelectorAll('.editor-panel').forEach(p => p.style.display = 'none');
+      document.querySelectorAll('.btn-toggle-editor').forEach(b => b.classList.remove('active'));
+      
+      if (!isVisible) {
+        panel.style.display = 'flex';
+        btn.classList.add('active');
+        
+        const notesArea = document.getElementById(`notes-textarea-${problemId}`);
+        const codeArea = document.getElementById(`code-textarea-${problemId}`);
+        
+        if (notesArea) {
+          notesArea.value = S.arrayPlanNotes[problemId] || NOTE_TEMPLATE;
+        }
+        if (codeArea) {
+          codeArea.value = S.arrayPlanCodes[problemId] || '';
+        }
+        
+        loadDropzoneImage(problemId);
+      }
+    }
+
+    async function loadDropzoneImage(problemId) {
+      const dropzone = document.getElementById(`dropzone-${problemId}`);
+      if (!dropzone) return;
+      
+      try {
+        const base64 = await getScreenshot(problemId);
+        if (base64) {
+          dropzone.className = 'screenshot-dropzone has-img';
+          dropzone.innerHTML = `
+            <img src="${base64}" class="screenshot-preview-img" onclick="event.stopPropagation(); zoomScreenshot('${base64}')"/>
+            <button class="btn btn-sm" onclick="event.stopPropagation(); removeScreenshot('${problemId}')" style="position:absolute; bottom:6px; right:6px; font-size:10px; background:rgba(255,85,85,0.85); color:#fff; border:none; padding:2px 6px; border-radius:4px;"><i class="fas fa-trash-alt"></i> Delete</button>
+          `;
+        } else {
+          dropzone.className = 'screenshot-dropzone';
+          dropzone.innerHTML = `
+            <i class="fas fa-camera" style="font-size:18px; margin-bottom:4px; display:block; color:var(--accent);"></i>
+            Paste (Ctrl+V) or click to upload
+          `;
+        }
+      } catch(e) {
+        console.error(e);
+      }
+    }
+
+    function zoomScreenshot(base64) {
+      const lightbox = document.getElementById('lightboxModal');
+      const img = document.getElementById('lightboxImg');
+      if (lightbox && img) {
+        img.src = base64;
+        lightbox.style.display = 'flex';
+      }
+    }
+    window.zoomScreenshot = zoomScreenshot;
+
+    async function removeScreenshot(problemId) {
+      if (confirm("Discard this screenshot?")) {
+        await deleteScreenshot(problemId);
+        loadDropzoneImage(problemId);
+      }
+    }
+    window.removeScreenshot = removeScreenshot;
+
+    function saveProblemNotes(problemId, value) {
+      S.arrayPlanNotes[problemId] = value;
+      save();
+    }
+    window.saveProblemNotes = saveProblemNotes;
+
+    function saveProblemCode(problemId, value) {
+      S.arrayPlanCodes[problemId] = value;
+      save();
+    }
+    window.saveProblemCode = saveProblemCode;
+
+    function triggerFileInput(problemId) {
+      document.getElementById(`file-${problemId}`).click();
+    }
+    window.triggerFileInput = triggerFileInput;
+
+    function handleUploadScreenshot(e, problemId) {
+      const file = e.target.files[0];
+      if (!file) return;
+      
+      const reader = new FileReader();
+      reader.onload = async function(event) {
+        await saveScreenshot(problemId, event.target.result);
+        loadDropzoneImage(problemId);
+      };
+      reader.readAsDataURL(file);
+    }
+    window.handleUploadScreenshot = handleUploadScreenshot;
+
+    async function handlePasteScreenshot(e, problemId) {
+      const items = (e.clipboardData || e.originalEvent.clipboardData).items;
+      for (const item of items) {
+        if (item.type.indexOf("image") !== -1) {
+          const file = item.getAsFile();
+          const reader = new FileReader();
+          reader.onload = async function(event) {
+            await saveScreenshot(problemId, event.target.result);
+            loadDropzoneImage(problemId);
+          };
+          reader.readAsDataURL(file);
+          e.preventDefault();
+          break;
+        }
+      }
+    }
+    window.handlePasteScreenshot = handlePasteScreenshot;
+
+    function addXP(pts) {
+      S.xp = (S.xp || 0) + pts;
+      const xpNeeded = (S.level || 1) * 100;
+      if (S.xp >= xpNeeded) {
+        S.xp -= xpNeeded;
+        S.level = (S.level || 1) + 1;
+        alert(`🎉 Level Up! You reached Level ${S.level}!`);
+      }
+      load();
+    }
+
+    function toggleSidebarCollapse() {
+      const sidebar = document.getElementById('sidebar');
+      sidebar.classList.toggle('collapsed');
+      const isCollapsed = sidebar.classList.contains('collapsed');
+      localStorage.setItem('sidebar_collapsed', isCollapsed);
+    }
+    
+    function closeSidebar() {
+      document.getElementById('sidebar').classList.remove('active');
+      document.getElementById('sidebarOverlay').classList.remove('active');
+    }
+
+    function openWallpaperModal() {
+      document.getElementById('wallpaper-modal-overlay').style.display = 'flex';
+    }
+    function closeWallpaperModal() {
+      document.getElementById('wallpaper-modal-overlay').style.display = 'none';
+    }
+    function setWallpaper(base64) {
+      localStorage.setItem('placementos_wallpaper', base64);
+      let style = document.getElementById('dynamic-wallpaper-style');
+      if (!style) {
+        style = document.createElement('style');
+        style.id = 'dynamic-wallpaper-style';
+        document.head.appendChild(style);
+      }
+      style.innerHTML = `
+        body {
+          background-image: url(${base64}) !important;
+          background-size: cover !important;
+          background-position: center !important;
+          background-attachment: fixed !important;
+          background-repeat: no-repeat !important;
+        }
+      `;
+    }
+    function doRemoveWallpaper() {
+      localStorage.removeItem('placementos_wallpaper');
+      const style = document.getElementById('dynamic-wallpaper-style');
+      if (style) style.remove();
+      closeWallpaperModal();
+    }
+    function handleWallpaperUpload(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        setWallpaper(event.target.result);
+        closeWallpaperModal();
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function init() {
+      load();
+      updateGlobalProgress();
+      renderDaysList();
+      selectDay(1);
+    }
+
+    init();
+  </script>
+</body>
+</html>
