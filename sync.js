@@ -214,7 +214,6 @@ function changeSyncCode(newCode) {
 }
 
 // Render the sync code in the UI
-// Render the sync code in the UI
 function renderSyncUI() {
   // Try to find a place to render the sync status (e.g. sidebar or footer)
   let sidebar = document.getElementById('sidebar');
@@ -233,7 +232,10 @@ function renderSyncUI() {
         <button onclick="promptSyncCode()" style="background:none; border:none; color:var(--accent2); font-weight:700; font-size:10.5px; cursor:pointer; padding:0;">Link Device</button>
       </div>
       <div style="font-size:10.5px; margin-top:2px;">Sync Code: <b style="color:var(--text); letter-spacing:0.5px;">${syncCode}</b></div>
-      <button onclick="manualSyncTrigger()" style="margin-top:4px; width:100%; border:1px solid rgba(108,99,255,0.3); background:none; color:var(--text); font-size:10px; padding:5px; border-radius:5px; cursor:pointer; font-weight:600; display:flex; align-items:center; justify-content:center; gap:4px;"><i class="fas fa-sync"></i> Sync Now</button>
+      <div style="display:flex; gap:6px; margin-top:6px; width:100%;">
+        <button onclick="manualSyncTrigger()" style="flex:1; border:1px solid rgba(108,99,255,0.3); background:none; color:var(--text); font-size:10px; padding:5px; border-radius:5px; cursor:pointer; font-weight:600; display:flex; align-items:center; justify-content:center; gap:4px;"><i class="fas fa-sync"></i> Sync</button>
+        <button onclick="forceRestoreFromCloud()" style="flex:1; border:1px solid rgba(255,118,117,0.3); background:rgba(255,118,117,0.05); color:#ff7675; font-size:10px; padding:5px; border-radius:5px; cursor:pointer; font-weight:600; display:flex; align-items:center; justify-content:center; gap:4px;" title="Overwrite local data with cloud data"><i class="fas fa-cloud-download-alt"></i> Restore</button>
+      </div>
     `;
   }
 }
@@ -252,8 +254,38 @@ function manualSyncTrigger() {
   syncPull(true);
 }
 
+function forceRestoreFromCloud() {
+  if (confirm("⚠️ This will overwrite your local device progress with the cloud backup. Are you sure you want to download your cloud data?")) {
+    if (!db || !syncCode) {
+      alert("⚠️ Sync offline: Firebase not initialized.");
+      return;
+    }
+    db.collection('sync_states').doc(syncCode).get().then(doc => {
+      if (doc.exists) {
+        const serverData = doc.data();
+        try {
+          const parsedServer = JSON.parse(serverData.data);
+          localStorage.setItem('placementOS_v2', serverData.data);
+          if (parsedServer.wallpaper) {
+            localStorage.setItem('placementos_wallpaper', parsedServer.wallpaper);
+          }
+          alert("✅ Data restored from cloud successfully! The page will reload.");
+          location.reload();
+        } catch (e) {
+          alert("❌ Error parsing cloud data: " + e.message);
+        }
+      } else {
+        alert("❌ No backup found on cloud for code: " + syncCode);
+      }
+    }).catch(err => {
+      alert("❌ Failed to download from cloud: " + err.message);
+    });
+  }
+}
+
 // Expose functions globally
 window.syncPush = syncPush;
 window.syncPull = syncPull;
 window.promptSyncCode = promptSyncCode;
 window.manualSyncTrigger = manualSyncTrigger;
+window.forceRestoreFromCloud = forceRestoreFromCloud;
