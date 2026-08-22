@@ -54,10 +54,16 @@ if (typeof firebase !== 'undefined') {
     console.log("Firebase sync initialized with code:", syncCode);
     
     // Start initial pull
-    window.addEventListener('DOMContentLoaded', () => {
+    const startSyncInit = () => {
       setTimeout(syncPull, 1000); // Pull 1s after load to not block UI
       renderSyncUI();
-    });
+    };
+
+    if (document.readyState === 'loading') {
+      window.addEventListener('DOMContentLoaded', startSyncInit);
+    } else {
+      startSyncInit();
+    }
   } catch (e) {
     console.error("Firebase initialization failed:", e);
   }
