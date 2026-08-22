@@ -104,14 +104,36 @@ function syncPull(isManual = false) {
       const localUpdatedAt = localState.updatedAt || 0;
       
       if (serverUpdatedAt > localUpdatedAt) {
+        let serverState = {};
+        try {
+          serverState = JSON.parse(serverData.data);
+        } catch(e) {}
+        
+        const localSolved = localState.dsa ? localState.dsa.length : 0;
+        const serverSolved = serverState.dsa ? serverState.dsa.length : 0;
+        
         const isLocalEmpty = !localState || !localState.dsa || localState.dsa.length === 0;
-        if (isLocalEmpty || confirm("🔄 Cloud has newer progress. Sync and update this device?")) {
+        
+        let confirmMsg = "🔄 Cloud has newer progress. Update this device from cloud?\n\n";
+        if (localSolved > serverSolved) {
+          confirmMsg = "⚠️ WARNING: The Cloud backup has LESS solved questions than this device!\n" +
+                       "Overwriting will LOSE some progress!\n\n" +
+                       `Device Solved: ${localSolved} | Cloud Solved: ${serverSolved}\n\n` +
+                       "Are you absolutely sure you want to download from the Cloud?";
+        } else {
+          confirmMsg += `Device: Level ${localState.level || 1} (${localSolved} solved)\n` +
+                        `Cloud: Level ${serverState.level || 1} (${serverSolved} solved)\n\n` +
+                        "Sync and update this device?";
+        }
+        
+        if (isLocalEmpty || confirm(confirmMsg)) {
           console.log("Server data is newer. Syncing server data to local...");
           try {
             const parsedServer = JSON.parse(serverData.data);
             
             // Merge server data into local
             localStorage.setItem('placementOS_v2', serverData.data);
+            localStorage.setItem('placementOS_v2_backup', serverData.data);
             
             if (typeof S !== 'undefined') {
               Object.assign(S, parsedServer);
@@ -202,6 +224,7 @@ function changeSyncCode(newCode) {
       if (doc.exists) {
         const serverData = doc.data();
         localStorage.setItem('placementOS_v2', serverData.data);
+        localStorage.setItem('placementOS_v2_backup', serverData.data);
         location.reload();
       } else {
         location.reload();
@@ -269,6 +292,7 @@ function forceBackupToCloud() {
       const stateObj = JSON.parse(saved);
       stateObj.updatedAt = Date.now();
       localStorage.setItem('placementOS_v2', JSON.stringify(stateObj));
+      localStorage.setItem('placementOS_v2_backup', JSON.stringify(stateObj));
       
       syncPush(stateObj).then(() => {
         alert("✅ Cloud backup successfully updated with this device's progress! Now you can reload or click 'Restore' on your other devices to sync.");
@@ -293,6 +317,7 @@ function forceRestoreFromCloud() {
         try {
           const parsedServer = JSON.parse(serverData.data);
           localStorage.setItem('placementOS_v2', serverData.data);
+          localStorage.setItem('placementOS_v2_backup', serverData.data);
           if (parsedServer.wallpaper) {
             localStorage.setItem('placementos_wallpaper', parsedServer.wallpaper);
           }
@@ -324,6 +349,7 @@ function forceBackupToCloudUrl() {
     const stateObj = JSON.parse(saved);
     stateObj.updatedAt = Date.now();
     localStorage.setItem('placementOS_v2', JSON.stringify(stateObj));
+    localStorage.setItem('placementOS_v2_backup', JSON.stringify(stateObj));
     
     const dsaCount = stateObj.dsa ? stateObj.dsa.length : 0;
     const levelVal = stateObj.level || 1;

@@ -19,7 +19,14 @@ const S = {
 
 // ── LOAD ──
 function load() {
-  const saved = localStorage.getItem('placementOS_v2');
+  let saved = localStorage.getItem('placementOS_v2');
+  if (!saved) {
+    saved = localStorage.getItem('placementOS_v2_backup');
+    if (saved) {
+      localStorage.setItem('placementOS_v2', saved);
+      console.log("Local recovery backup successfully restored!");
+    }
+  }
   if (saved) Object.assign(S, JSON.parse(saved));
   if (!S.customSkills) S.customSkills = [];
   if (!S.speakingPracticeMins) S.speakingPracticeMins = 0;
@@ -34,7 +41,9 @@ function load() {
 
 function save() {
   S.updatedAt = Date.now();
-  localStorage.setItem('placementOS_v2', JSON.stringify(S));
+  const stateStr = JSON.stringify(S);
+  localStorage.setItem('placementOS_v2', stateStr);
+  localStorage.setItem('placementOS_v2_backup', stateStr);
   if (typeof window.syncPush === 'function') {
     window.syncPush(S);
   }
