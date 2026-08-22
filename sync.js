@@ -162,7 +162,7 @@ function syncPull(isManual = false) {
 
 // Push data to Firestore
 function syncPush(state) {
-  if (!db || !syncCode || !state) return;
+  if (!db || !syncCode || !state) return Promise.reject("Sync offline");
   
   // Update state timestamp
   state.updatedAt = state.updatedAt || Date.now();
@@ -172,12 +172,13 @@ function syncPush(state) {
     updatedAt: state.updatedAt
   };
   
-  db.collection('sync_states').doc(syncCode).set(payload)
+  return db.collection('sync_states').doc(syncCode).set(payload)
     .then(() => {
       console.log("Successfully pushed state to server sync ID:", syncCode);
     })
     .catch(err => {
       console.warn("Sync push failed (offline or permission issue):", err);
+      throw err;
     });
 }
 
@@ -198,21 +199,8 @@ function changeSyncCode(newCode) {
         localStorage.setItem('placementOS_v2', serverData.data);
         location.reload();
       } else {
-        // If no doc exists on server, push our current local data
-        const localSaved = localStorage.getItem('placementOS_v2');
-        if (localSaved) {
-          try {
-            syncPush(JSON.parse(localSaved));
-            location.reload();
-          } catch(e) {
-            location.reload();
-          }
-        } else {
-          location.reload();
-        }
+        location.reload();
       }
-    }).catch(() => {
-      location.reload();
     });
   } else {
     location.reload();
@@ -240,6 +228,7 @@ function renderSyncUI() {
       <div style="font-size:10.5px; margin-top:2px;">Sync Code: <b style="color:var(--text); letter-spacing:0.5px;">${syncCode}</b></div>
       <div style="display:flex; gap:6px; margin-top:6px; width:100%;">
         <button onclick="manualSyncTrigger()" style="flex:1; border:1px solid rgba(108,99,255,0.3); background:none; color:var(--text); font-size:10px; padding:5px; border-radius:5px; cursor:pointer; font-weight:600; display:flex; align-items:center; justify-content:center; gap:4px;"><i class="fas fa-sync"></i> Sync</button>
+        <button onclick="forceBackupToCloud()" style="flex:1; border:1px solid rgba(46,204,113,0.3); background:rgba(46,204,113,0.05); color:#2ecc71; font-size:10px; padding:5px; border-radius:5px; cursor:pointer; font-weight:600; display:flex; align-items:center; justify-content:center; gap:4px;" title="Upload local progress to cloud backup"><i class="fas fa-cloud-upload-alt"></i> Backup</button>
         <button onclick="forceRestoreFromCloud()" style="flex:1; border:1px solid rgba(255,118,117,0.3); background:rgba(255,118,117,0.05); color:#ff7675; font-size:10px; padding:5px; border-radius:5px; cursor:pointer; font-weight:600; display:flex; align-items:center; justify-content:center; gap:4px;" title="Overwrite local data with cloud data"><i class="fas fa-cloud-download-alt"></i> Restore</button>
       </div>
     `;
@@ -258,6 +247,33 @@ function manualSyncTrigger() {
     toast("🔄 Checking cloud for updates...");
   }
   syncPull(true);
+}
+
+function forceBackupToCloud() {
+  if (confirm("📤 This will overwrite the cloud backup with this device's progress. Are you sure you want to upload your current data to the cloud?")) {
+    if (!db || !syncCode) {
+      alert("⚠️ Sync offline: Firebase not initialized.");
+      return;
+    }
+    const saved = localStorage.getItem('placementOS_v2');
+    if (!saved) {
+      alert("❌ No local data to backup.");
+      return;
+    }
+    try {
+      const stateObj = JSON.parse(saved);
+      stateObj.updatedAt = Date.now();
+      localStorage.setItem('placementOS_v2', JSON.stringify(stateObj));
+      
+      syncPush(stateObj).then(() => {
+        alert("✅ Cloud backup successfully updated with this device's progress! Now you can reload or click 'Restore' on your other devices to sync.");
+      }).catch(err => {
+        alert("❌ Failed to push backup: " + err.message);
+      });
+    } catch(e) {
+      alert("❌ Error preparing backup data: " + e.message);
+    }
+  }
 }
 
 function forceRestoreFromCloud() {
@@ -294,4 +310,5 @@ window.syncPush = syncPush;
 window.syncPull = syncPull;
 window.promptSyncCode = promptSyncCode;
 window.manualSyncTrigger = manualSyncTrigger;
+window.forceBackupToCloud = forceBackupToCloud;
 window.forceRestoreFromCloud = forceRestoreFromCloud;
