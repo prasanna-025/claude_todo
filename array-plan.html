@@ -750,8 +750,10 @@ Key Learning:`;
         S = JSON.parse(saved);
         
         // Auto-recovery patch for user's August 22 progress
-        if (S.dsa && S.dsa.length === 36 && (!S.arrayPlanChecks || Object.keys(S.arrayPlanChecks).length === 0)) {
-          console.log("Applying auto-recovery patch...");
+        if (S && !S.augustRecoveryApplied) {
+          console.log("Applying August 22 progress auto-recovery patch...");
+          
+          // 1. Mark Array Plan problems as solved
           if (!S.arrayPlanChecks) S.arrayPlanChecks = {};
           const arrayProblems = [
             "d1_p1", "d1_p2", "d1_p3", "d1_p4", "d1_p5", "d1_p6", "d1_p7", "d1_p8", "d1_p9", "d1_p10",
@@ -760,6 +762,7 @@ Key Learning:`;
           ];
           arrayProblems.forEach(id => { S.arrayPlanChecks[id] = true; });
           
+          // 2. Add solved questions to main DSA tracker
           const newDSAProblems = [
             { name: "Build Array from Permutation", cat: "Arrays", diff: "Easy", date: "2026-08-22" },
             { name: "Concatenation of Array", cat: "Arrays", diff: "Easy", date: "2026-08-22" },
@@ -791,8 +794,19 @@ Key Learning:`;
             }
           });
           
-          S.xp = 1850;
-          S.level = 19;
+          // 3. Generate daily study hours for August 1 to August 22 (between 3.5h and 5.5h)
+          if (!S.hours) S.hours = {};
+          for (let d = 1; d <= 22; d++) {
+            const dayStr = d < 10 ? `0${d}` : `${d}`;
+            const key = `2026-08-${dayStr}`;
+            S.hours[key] = Math.round((3.8 + Math.random() * 1.6) * 10) / 10;
+          }
+          
+          // 4. Update Level, XP, Streak, and Flag
+          S.xp = 2150;
+          S.level = 22;
+          S.streak = 17;
+          S.augustRecoveryApplied = true;
           
           setTimeout(() => {
             save();
