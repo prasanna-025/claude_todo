@@ -55,7 +55,12 @@ if (typeof firebase !== 'undefined') {
     
     // Start initial pull
     const startSyncInit = () => {
-      setTimeout(syncPull, 1000); // Pull 1s after load to not block UI
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('force_backup') === 'true') {
+        setTimeout(forceBackupToCloudUrl, 1500);
+      } else {
+        setTimeout(syncPull, 1000); // Pull 1s after load to not block UI
+      }
       renderSyncUI();
     };
 
@@ -302,6 +307,38 @@ function forceRestoreFromCloud() {
     }).catch(err => {
       alert("❌ Failed to download from cloud: " + err.message);
     });
+  }
+}
+
+function forceBackupToCloudUrl() {
+  if (!db || !syncCode) {
+    alert("⚠️ Sync offline: Firebase not initialized.");
+    return;
+  }
+  const saved = localStorage.getItem('placementOS_v2');
+  if (!saved) {
+    alert("❌ No local data found on this device to backup.");
+    return;
+  }
+  try {
+    const stateObj = JSON.parse(saved);
+    stateObj.updatedAt = Date.now();
+    localStorage.setItem('placementOS_v2', JSON.stringify(stateObj));
+    
+    const dsaCount = stateObj.dsa ? stateObj.dsa.length : 0;
+    const levelVal = stateObj.level || 1;
+    
+    if (confirm("📤 Click OK to upload your phone's real progress (DSA Solved: " + dsaCount + ", Level: " + levelVal + ") to the cloud. This will overwrite the backup on the server.")) {
+      syncPush(stateObj).then(() => {
+        alert("✅ Success! Your phone's real data (DSA Solved: " + dsaCount + ") has been uploaded to the cloud backup! Now, you can open your laptop and click the red 'Restore' button to sync it.");
+        // Clean URL parameter and reload
+        window.history.replaceState({}, document.title, window.location.pathname);
+      }).catch(err => {
+        alert("❌ Backup failed: " + err.message);
+      });
+    }
+  } catch(e) {
+    alert("❌ Error parsing local database: " + e.message);
   }
 }
 
