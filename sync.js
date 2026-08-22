@@ -36,13 +36,13 @@ let syncCode = localStorage.getItem('placementOS_sync_code');
 
 if (isLocalDatabaseEmpty) {
   // Force connect to the user's cloud backup if no local progress exists
-  syncCode = 'OS-DSHGGO';
+  syncCode = '0S-DSHGG0';
   localStorage.setItem('placementOS_sync_code', syncCode);
 } else if (syncCode) {
   syncCode = normalizeSyncCode(syncCode);
   localStorage.setItem('placementOS_sync_code', syncCode);
 } else {
-  syncCode = 'OS-DSHGGO';
+  syncCode = '0S-DSHGG0';
   localStorage.setItem('placementOS_sync_code', syncCode);
 }
 
