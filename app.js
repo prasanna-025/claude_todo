@@ -201,6 +201,10 @@ function switchSection(sec) {
     window.location.href = 'array-plan.html';
     return;
   }
+  if (sec === 'accenture-plan') {
+    window.location.href = 'accenture-plan.html';
+    return;
+  }
   
   document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
   document.querySelector(`.nav-item[data-section="${sec}"]`)?.classList.add('active');

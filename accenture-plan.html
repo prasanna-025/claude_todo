@@ -1,0 +1,1365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Accenture 20-Day Prep Plan — PlacementOS</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  
+  <!-- Wallpaper Fallback -->
+  <script src="default_wallpaper.js"></script>
+  <script>
+    (function() {
+      const wallpaper = localStorage.getItem('placementos_wallpaper') || window.DEFAULT_WALLPAPER;
+      if (wallpaper) {
+        const style = document.createElement('style');
+        style.id = 'dynamic-wallpaper-style';
+        style.innerHTML = `
+          body {
+            background-image: url(${wallpaper}) !important;
+            background-size: cover !important;
+            background-position: center !important;
+            background-attachment: fixed !important;
+            background-repeat: no-repeat !important;
+          }
+        `;
+        document.head.appendChild(style);
+      }
+    })();
+  </script>
+
+  <style>
+    .day-selector-card {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: 12px;
+      overflow-y: auto;
+      max-height: calc(100vh - 120px);
+    }
+    
+    .day-btn {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      color: var(--text2);
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      transition: all 0.2s ease;
+    }
+    
+    .day-btn:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.15);
+      transform: translateY(-1px);
+    }
+    
+    .day-btn.active {
+      background: rgba(108, 99, 255, 0.1);
+      border-color: var(--accent);
+      color: #fff;
+    }
+    
+    .day-btn .day-title {
+      font-weight: 600;
+      font-size: 13px;
+    }
+    
+    .day-btn .day-progress {
+      font-size: 10.5px;
+      color: var(--accent2);
+    }
+
+    .learn-card {
+      background: rgba(0, 212, 170, 0.03);
+      border: 1.5px dashed rgba(0, 212, 170, 0.2);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 20px;
+    }
+
+    .problem-card {
+      background: rgba(16, 19, 28, 0.55);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      margin-bottom: 12px;
+      padding: 16px;
+      transition: all 0.2s ease;
+    }
+
+    .problem-card.solved {
+      border-color: rgba(0, 212, 170, 0.25);
+      background: rgba(0, 212, 170, 0.015);
+    }
+
+    .problem-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .problem-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .problem-title-wrap input[type="checkbox"] {
+      width: 17px;
+      height: 17px;
+      accent-color: var(--accent2);
+      cursor: pointer;
+    }
+
+    .problem-title {
+      font-size: 14.5px;
+      font-weight: 600;
+      color: #fff;
+      text-decoration: none;
+      transition: color 0.15s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .problem-title:hover {
+      color: var(--accent2);
+    }
+
+    .problem-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .badge-diff {
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 10.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .badge-diff.easy { background: rgba(46, 204, 113, 0.15); color: #2ecc71; }
+    .badge-diff.medium { background: rgba(241, 196, 15, 0.15); color: #f1c40f; }
+    .badge-diff.hard { background: rgba(231, 76, 60, 0.15); color: #e74c3c; }
+
+    .btn-toggle-editor {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 11px;
+      padding: 4px 8px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.15s ease;
+    }
+
+    .btn-toggle-editor:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .editor-panel {
+      margin-top: 14px;
+      border-top: 1px dashed var(--border);
+      padding-top: 14px;
+      display: none;
+    }
+
+    .editor-panel.active {
+      display: block;
+    }
+
+    .editor-cols {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 14px;
+    }
+
+    .editor-col {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .editor-col label {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--text2);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .editor-textarea {
+      background: rgba(12, 14, 21, 0.85);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px;
+      color: #fff;
+      font-size: 12.5px;
+      resize: vertical;
+      min-height: 100px;
+      font-family: inherit;
+    }
+
+    .editor-textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .editor-textarea.code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px;
+      background: #08090f;
+    }
+
+    .screenshot-dropzone {
+      border: 1.5px dashed var(--border);
+      border-radius: 8px;
+      background: rgba(255,255,255,0.01);
+      min-height: 100px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: 11.5px;
+      color: var(--text2);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      padding: 10px;
+      position: relative;
+    }
+
+    .screenshot-dropzone:hover, .screenshot-dropzone:focus {
+      border-color: var(--accent);
+      background: rgba(108, 99, 255, 0.03);
+      outline: none;
+    }
+
+    .screenshot-dropzone.has-img {
+      border-style: solid;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .screenshot-preview-img {
+      width: 100%;
+      height: 100px;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Lightbox modal styles */
+    .lightbox-modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(8, 9, 15, 0.95);
+      z-index: 10000;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .lightbox-img {
+      max-width: 90%;
+      max-height: 85%;
+      border-radius: 8px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 24px; right: 24px;
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 28px;
+      cursor: pointer;
+    }
+
+    /* SQL Visualization styling */
+    .viz-container {
+      background: rgba(108, 99, 255, 0.05);
+      border: 1px solid rgba(108, 99, 255, 0.15);
+      border-radius: 12px;
+      padding: 18px;
+      margin-bottom: 20px;
+    }
+
+    .viz-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-top: 12px;
+    }
+
+    .viz-table {
+      background: rgba(12, 14, 21, 0.7);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      font-size: 12px;
+    }
+
+    .viz-table-header {
+      background: rgba(255,255,255,0.03);
+      padding: 8px 12px;
+      font-weight: 700;
+      border-bottom: 1.5px solid var(--border);
+      color: var(--accent2);
+    }
+
+    .viz-row {
+      padding: 6px 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.02);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .viz-row:last-child {
+      border-bottom: none;
+    }
+
+    .viz-pill {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 1px 6px;
+      border-radius: 4px;
+    }
+
+    .viz-pill.survived { background: rgba(46, 204, 113, 0.2); color: #2ecc71; }
+    .viz-pill.dropped { background: rgba(231, 76, 60, 0.2); color: #e74c3c; }
+
+    /* Custom scrollbars */
+    .day-selector-card::-webkit-scrollbar {
+      width: 4px;
+    }
+    .day-selector-card::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .day-selector-card::-webkit-scrollbar-thumb {
+      background: rgba(255,255,255,0.08);
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body class="dashboard-body">
+
+<div class="dashboard-wrapper">
+  
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <span class="logo-icon">⚡</span>
+      <span class="logo-text">PlacementOS</span>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="index.html" class="nav-item" data-section="dashboard"><i class="fas fa-th-large"></i><span>Dashboard</span></a>
+      <a href="dsa-problems.html" class="nav-item" data-section="dsa"><i class="fas fa-code"></i><span>DSA Tracker</span></a>
+      <a href="array-plan.html" class="nav-item" data-section="array-plan"><i class="fas fa-list-ol"></i><span>Array Plan</span></a>
+      <a href="#" class="nav-item active" data-section="accenture-plan"><i class="fas fa-graduation-cap"></i><span>Accenture Plan</span></a>
+      <a href="index.html" class="nav-item" data-section="subjects"><i class="fas fa-book"></i><span>Core Subjects</span></a>
+      <a href="index.html" class="nav-item" data-section="communication"><i class="fas fa-comments"></i><span>Communication</span></a>
+      <a href="index.html" class="nav-item" data-section="softskills"><i class="fas fa-brain"></i><span>Soft Skills</span></a>
+      <a href="index.html" class="nav-item" data-section="projects"><i class="fas fa-folder-open"></i><span>Projects</span></a>
+      <a href="index.html" class="nav-item" data-section="placement"><i class="fas fa-briefcase"></i><span>Placement</span></a>
+      <a href="index.html" class="nav-item" data-section="roadmap"><i class="fas fa-map-signs"></i><span>8-Month Roadmap</span></a>
+      <a href="index.html" class="nav-item" data-section="extraskills"><i class="fas fa-cloud"></i><span>Cloud &amp; Extra Skills</span></a>
+      <a href="index.html" class="nav-item" data-section="analytics"><i class="fas fa-chart-line"></i><span>Analytics</span></a>
+      <a href="focus-todo.html" class="nav-item"><i class="fas fa-hourglass-half"></i><span>Focus Timer</span></a>
+      <a href="motivation.html" class="nav-item"><i class="fas fa-fire"></i><span>Grind Motivation</span></a>
+      <a href="#" class="nav-item" onclick="openWallpaperModal(); return false;"><i class="fas fa-image"></i><span>Change Wallpaper</span></a>
+    </nav>
+    <div class="sidebar-bottom">
+      <div class="xp-bar-wrap">
+        <div class="xp-label">
+          <span>⚔️ Level <span id="sb-level">1</span></span>
+          <span id="sb-xp">0 XP</span>
+        </div>
+        <div class="xp-bar"><div class="xp-fill" id="sb-xp-fill"></div></div>
+        <div class="xp-next" id="sb-xp-next">100 XP to next level</div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- MAIN BODY -->
+  <div class="main-content">
+    
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <div class="topbar-title" id="topbar-title">🎓 Accenture 20-Day Plan</div>
+      <div style="display:flex; align-items:center; gap: 14px;">
+        <span class="save-indicator" id="sync-status" style="font-size:12.5px; color:var(--text2); display:flex; align-items:center; gap:6px;">
+          <i class="fas fa-cloud"></i> Synced
+        </span>
+        <div class="streak-badge">
+          <span class="fire-emoji">🔥</span>
+          <span class="streak-text" id="topbar-streak">0 day streak</span>
+        </div>
+      </div>
+    </header>
+
+    <div style="padding: 24px; display: flex; flex-direction: column; gap: 20px;">
+      
+      <!-- Overall Progress Card -->
+      <div class="overall-progress-card">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+          <div>
+            <h2 style="font-size: 16px; font-weight:700;">Accenture 20-Day Prep Tracker</h2>
+            <p style="font-size:12px; color:var(--text2); margin-top:2px;">Complete all syllabus tasks, mock tests, and hands-on coding sheets.</p>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-size: 18px; font-weight:700; color:var(--accent2);" id="overall-pct">0%</div>
+            <div style="font-size:11px; color:var(--text2);" id="overall-solved-count">0 of 0 Completed</div>
+          </div>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" id="overall-progress-fill"></div>
+        </div>
+      </div>
+
+      <!-- Two-Column Layout -->
+      <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+        
+        <!-- Left Side: Day selector list -->
+        <div style="flex: 1; min-width: 250px; max-width: 320px; display: flex; flex-direction: column; gap: 12px;">
+          <div class="card" style="padding: 12px; display: flex; flex-direction: column; gap: 8px;">
+            <div class="card-header" style="padding-bottom: 8px; border-bottom: 1.5px solid var(--border); font-size:13.5px;"><i class="fas fa-calendar-alt"></i> Prep Timeline</div>
+            <div class="day-selector-card" id="day-selector-list">
+              <!-- Dynamically rendered day buttons -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Side: Selected Day details -->
+        <div style="flex: 2.5; min-width: 320px; display: flex; flex-direction: column; gap: 16px;">
+          
+          <!-- Selected Day Title -->
+          <div class="card" style="padding: 20px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+              <div>
+                <h1 style="font-size:22px; font-weight:700; color:#fff;" id="curr-day-title">Day 1 – Pseudocode Fundamentals</h1>
+                <p style="font-size:12.5px; color:var(--text2); margin-top:4px;" id="curr-day-subtitle">Variables, Loops & Traversal</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Interactive Learning Visualizations -->
+          <div id="learning-viz-container" style="display:none;">
+            <!-- Render specific visualizations e.g. SQL Join visualizer for Day 5 -->
+          </div>
+
+          <!-- Learn Card -->
+          <div class="learn-card" id="curr-day-learn-container">
+            <h3 style="font-size:13px; font-weight:700; color:var(--accent2); text-transform:uppercase; letter-spacing:0.5px; display:flex; align-items:center; gap:6px; margin-bottom:8px;"><i class="fas fa-graduation-cap"></i> Core Concepts & Daily Syllabus</h3>
+            <ul style="font-size:13.5px; color:var(--text2); padding-left:20px; display:flex; flex-direction:column; gap:4px;" id="curr-day-learn-list">
+              <!-- Dynamically populated learn list -->
+            </ul>
+          </div>
+
+          <!-- Problems/Tasks header -->
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:-4px;">
+            <h2 style="font-size: 15px; font-weight:700; color:#fff; display:flex; align-items:center; gap:6px;"><i class="fas fa-list-check"></i> Daily Tasks & Exercises</h2>
+            <div style="font-size:12px; color:var(--accent2); font-weight:600;" id="day-solved-text">0/0 Completed</div>
+          </div>
+
+          <!-- Problems/Tasks container -->
+          <div id="problems-container" style="display:flex; flex-direction:column; gap:12px;">
+            <!-- Dynamically populated problem cards -->
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- Lightbox Modal for screenshot viewing -->
+<div class="lightbox-modal" id="lightboxModal" onclick="this.style.display='none'">
+  <button class="lightbox-close" onclick="document.getElementById('lightboxModal').style.display='none'">&times;</button>
+  <img class="lightbox-img" id="lightboxImg" src="" onclick="event.stopPropagation()"/>
+</div>
+
+<!-- Wallpaper Modal -->
+<div class="modal-overlay" id="wallpaper-modal-overlay" style="display:none;">
+  <div class="modal-card">
+    <div class="modal-header">
+      <h3>Change Background Wallpaper</h3>
+      <button class="btn-close" onclick="closeWallpaperModal()">&times;</button>
+    </div>
+    <div class="modal-body" style="display:flex; flex-direction:column; gap:16px;">
+      <p style="font-size:13px; color:var(--text2);">Upload a custom image to set as your study dashboard wallpaper. Compressed versions will be stored locally.</p>
+      <div style="display:flex; gap:12px;">
+        <input type="file" id="wallpaper-input" accept="image/*" style="display:none;" onchange="handleWallpaperUpload(event)"/>
+        <button class="btn btn-primary" onclick="document.getElementById('wallpaper-input').click()"><i class="fas fa-upload"></i> Upload Image</button>
+        <button class="btn" style="border:1px solid rgba(255,85,85,0.3); color:#ff5555; background:rgba(255,85,85,0.03);" onclick="doRemoveWallpaper()"><i class="fas fa-trash-alt"></i> Remove Wallpaper</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+<script src="sync.js?v=2"></script>
+
+<script>
+  // 20-Day Accenture Prep structured data
+  const planData = [
+    {
+      day: 1,
+      title: "Day 1 — Pseudocode Fundamentals",
+      subtitle: "Variables, Loops & Traversal",
+      learn: [
+        "Variables, data types, operators & Conditions (Nested conditions)",
+        "Loops (for / while) & Nested loop execution",
+        "Output tracing practice & basic algorithm complexities",
+        "Coding: Arrays Traversal, Max/min, Sum, Count, Frequency, Basic searching",
+        "English: Tenses, Self-Introduction, Speak 2 mins on education"
+      ],
+      problems: [
+        { id: "ac_d1_t1", difficulty: "medium", name: "Pseudocode: Practice 40-50 output tracing questions" },
+        { id: "ac_d1_t2", difficulty: "easy", name: "Coding: LeetCode 1920 - Build Array from Permutation", url: "https://leetcode.com/problems/build-array-from-permutation/" },
+        { id: "ac_d1_t3", difficulty: "easy", name: "Coding: LeetCode 1929 - Concatenation of Array", url: "https://leetcode.com/problems/concatenation-of-array/" },
+        { id: "ac_d1_t4", difficulty: "easy", name: "Coding: LeetCode 1480 - Running Sum of 1d Array", url: "https://leetcode.com/problems/running-sum-of-1d-array/" },
+        { id: "ac_d1_t5", difficulty: "easy", name: "Coding: LeetCode 1295 - Find Numbers with Even Number of Digits", url: "https://leetcode.com/problems/find-numbers-with-even-number-of-digits/" },
+        { id: "ac_d1_t6", difficulty: "easy", name: "Coding: LeetCode 485 - Max Consecutive Ones", url: "https://leetcode.com/problems/max-consecutive-ones/" },
+        { id: "ac_d1_t7", difficulty: "easy", name: "Coding: LeetCode 26 - Remove Duplicates from Sorted Array", url: "https://leetcode.com/problems/remove-duplicates-from-sorted-array/" },
+        { id: "ac_d1_t8", difficulty: "easy", name: "Coding: LeetCode 27 - Remove Element", url: "https://leetcode.com/problems/remove-element/" },
+        { id: "ac_d1_t9", difficulty: "easy", name: "English: Practice self-introduction and tenses (2 mins speaking)" }
+      ]
+    },
+    {
+      day: 2,
+      title: "Day 2 — Pseudocode + Bitwise + Recursion",
+      subtitle: "Recursion return values & Bit Operators",
+      learn: [
+        "Bitwise Operators: &, |, ^, <<, >>",
+        "Recursion tracing, return value computation, recursion trees",
+        "Coding: Two pointers, reversing, element shifts, rotations",
+        "English: Grammar concepts + Mock self-introduction without memorizing"
+      ],
+      problems: [
+        { id: "ac_d2_t1", difficulty: "medium", name: "Pseudocode: Solve 40-50 Recursion Tracing & Bitwise MCQs" },
+        { id: "ac_d2_t2", difficulty: "easy", name: "Coding: LeetCode 414 - Third Maximum Number", url: "https://leetcode.com/problems/third-maximum-number/" },
+        { id: "ac_d2_t3", difficulty: "easy", name: "Coding: LeetCode 747 - Largest Number At Least Twice of Others", url: "https://leetcode.com/problems/largest-number-at-least-twice-of-others/" },
+        { id: "ac_d2_t4", difficulty: "easy", name: "Coding: Reversing an array & Move zeroes to end" },
+        { id: "ac_d2_t5", difficulty: "medium", name: "Coding: Rotate array by K steps & find second largest element" },
+        { id: "ac_d2_t6", difficulty: "easy", name: "English: Practice grammar exercises & flow speaking" }
+      ]
+    },
+    {
+      day: 3,
+      title: "Day 3 — OOP",
+      subtitle: "Classes, Objects, Constructors & Polymorphism",
+      learn: [
+        "Core OOP: Class, Object, Constructor, Access specifiers",
+        "Pillars: Encapsulation, Abstraction, Inheritance, Polymorphism",
+        "Advanced: Overloading, Overriding, Abstract classes",
+        "Coding: Strings Traversal, Reverse, Palindromes, counts",
+        "English: Answer 'Why Accenture?' and explain your degree path"
+      ],
+      problems: [
+        { id: "ac_d3_t1", difficulty: "medium", name: "OOP: Complete 50+ MCQ questions on classes, inheritance & virtual functions" },
+        { id: "ac_d3_t2", difficulty: "easy", name: "Coding: Check if string is Palindrome (ignoring case & symbols)" },
+        { id: "ac_d3_t3", difficulty: "easy", name: "Coding: Reversing a string & counting character frequency" },
+        { id: "ac_d3_t4", difficulty: "easy", name: "English: Practice 'Why Accenture?' and explain your engineering degree aloud" }
+      ]
+    },
+    {
+      day: 4,
+      title: "Day 4 — SQL Fundamentals",
+      subtitle: "SELECT, WHERE, ORDER BY & Aggregates",
+      learn: [
+        "SQL Select queries, filtering with WHERE, sorting with ORDER BY, pagination with LIMIT",
+        "Aggregations: COUNT(), SUM(), AVG(), MAX(), MIN()",
+        "Coding: String anagrams, ASCII operations, character conversions",
+        "English: Practice structure explaining your graduation final-year project"
+      ],
+      problems: [
+        { id: "ac_d4_t1", difficulty: "easy", name: "SQL: Write 20-30 basic queries containing filters, aggregates & sorting" },
+        { id: "ac_d4_t2", difficulty: "easy", name: "Coding: LeetCode 242 - Valid Anagram", url: "https://leetcode.com/problems/valid-anagram/" },
+        { id: "ac_d4_t3", difficulty: "easy", name: "Coding: String character substitutions using ASCII values" },
+        { id: "ac_d4_t4", difficulty: "easy", name: "English: Complete a 3-minute explanation session of your project" }
+      ]
+    },
+    {
+      day: 5,
+      title: "Day 5 — SQL Advanced",
+      subtitle: "GROUP BY, HAVING & Joins",
+      learn: [
+        "Aggregation grouping: GROUP BY and GROUP filter HAVING",
+        "Relational Joins: INNER JOIN, LEFT JOIN, RIGHT JOIN, FULL OUTER JOIN",
+        "Combining queries: JOIN + WHERE + GROUP BY + HAVING + ORDER BY",
+        "Coding: Basic Math algorithms (Primes, GCD, LCM, Fibonacci, Armstrong numbers)"
+      ],
+      problems: [
+        { id: "ac_d5_t1", difficulty: "medium", name: "SQL: Practice 20+ query combinations using JOINs and GROUP BY clauses" },
+        { id: "ac_d5_t2", difficulty: "easy", name: "Coding: Write Prime number checks & find Greatest Common Divisor (GCD/LCM)" },
+        { id: "ac_d5_t3", difficulty: "easy", name: "Coding: Generate Fibonacci sequences and check Armstrong numbers" },
+        { id: "ac_d5_t4", difficulty: "medium", name: "SQL Mock: Complete 1 timed SQL database query assessment" }
+      ]
+    },
+    {
+      day: 6,
+      title: "Day 6 — HTML + CSS",
+      subtitle: "Layouts, Flexbox & Forms",
+      learn: [
+        "HTML: Basics, structural tags, forms, input types, tables, labels, buttons",
+        "CSS: Selectors, box model, margins/paddings, display types, Flexbox grid system",
+        "Coding: Modulo operations, digit extractions, palindrome numbers, base conversions",
+        "English: Grammar correction exercises + basic HR question preparation"
+      ],
+      problems: [
+        { id: "ac_d6_t1", difficulty: "easy", name: "Web: Code a standard webpage mock containing input forms, lists, and CSS Flexbox layout" },
+        { id: "ac_d6_t2", difficulty: "easy", name: "Coding: Check if a number is a Palindrome without converting to String" },
+        { id: "ac_d6_t3", difficulty: "easy", name: "Coding: Extract digits from number and convert decimals to binary" },
+        { id: "ac_d6_t4", difficulty: "easy", name: "English: Complete 20 grammar MCQs & prepare answers for basic HR queries" }
+      ]
+    },
+    {
+      day: 7,
+      title: "Day 7 — JavaScript DOM",
+      subtitle: "Interactivity & Validation",
+      learn: [
+        "DOM Selectors: getElementById, querySelector",
+        "Interactivity: addEventListener, updating textContent/innerHTML, dynamic styling",
+        "Event flows: Input inputs -> trigger button click -> JS validations -> update DOM styling",
+        "Coding: Arrays + Strings + Math patterns consolidated practice"
+      ],
+      problems: [
+        { id: "ac_d7_t1", difficulty: "medium", name: "JS: Code a dynamic form validation script (check email, password strength, empty inputs)" },
+        { id: "ac_d7_t2", difficulty: "medium", name: "Coding: Mixed Array/String practice questions under 30 mins each" },
+        { id: "ac_d7_t3", difficulty: "easy", name: "English: Practice explaining your completed JS validation logic in English" }
+      ]
+    },
+    {
+      day: 8,
+      title: "Day 8 — Computer Networks",
+      subtitle: "OSI Model & Core Protocols",
+      learn: [
+        "OSI Model: All 7 layers (Physical to Application) & functions",
+        "Protocols: TCP/IP stack, TCP vs UDP comparison, IP routing, DNS resolver, HTTP/HTTPS",
+        "Port mappings: HTTP (80), HTTPS (443), SSH (22), DNS (53), FTP (21)",
+        "Coding: Arrays & Strings traversal sheets practice"
+      ],
+      problems: [
+        { id: "ac_d8_t1", difficulty: "medium", name: "CN: Solve 50+ Computer Networks port & OSI Layer questions" },
+        { id: "ac_d8_t2", difficulty: "medium", name: "Coding: Check for substrings and duplicates inside string lists" },
+        { id: "ac_d8_t3", difficulty: "easy", name: "English: Record yourself explaining the difference between TCP and UDP (2 mins)" }
+      ]
+    },
+    {
+      day: 9,
+      title: "Day 9 — Wi-Fi Security + Encryption",
+      subtitle: "Network Defenses & Cryptography",
+      learn: [
+        "Wi-Fi Cryptography: WEP, WPA, WPA2, WPA3 security schemas",
+        "Encryption: Symmetric vs Asymmetric cryptography keys",
+        "Core Security: Authentication, authorization, firewalls, network routing defenses",
+        "Coding: Math + logic problems"
+      ],
+      problems: [
+        { id: "ac_d9_t1", difficulty: "medium", name: "Security: Complete 50+ encryption & network security MCQs" },
+        { id: "ac_d9_t2", difficulty: "easy", name: "Coding: Practice binary conversions and bit manipulations" },
+        { id: "ac_d9_t3", difficulty: "easy", name: "English: Explain Symmetric vs Asymmetric encryption aloud" }
+      ]
+    },
+    {
+      day: 10,
+      title: "Day 10 — Cloud + DevOps",
+      subtitle: "Service Models & Pipelines",
+      learn: [
+        "Cloud Service Models: IaaS, PaaS, SaaS, Deployment models (Public, Private, Hybrid)",
+        "Git commands: clone, add, commit, push, pull, branch, merge, conflict resolutions",
+        "DevOps: Continuous Integration (CI), Continuous Deployment (CD), Build pipelines",
+        "Coding: Time-boxed coding exercises"
+      ],
+      problems: [
+        { id: "ac_d10_t1", difficulty: "medium", name: "Cloud/Git: Complete 50+ cloud computing, Git commands & DevOps pipelines MCQs" },
+        { id: "ac_d10_t2", difficulty: "medium", name: "Coding: Complete 1 timed coding simulation (2 coding problems in 45 mins)" },
+        { id: "ac_d10_t3", difficulty: "easy", name: "English: Speak on 'What is cloud computing?' for 2 minutes" }
+      ]
+    },
+    {
+      day: 11,
+      title: "Day 11 — Excel + Word + PowerPoint",
+      subtitle: "Office Applications Mastery",
+      learn: [
+        "MS Excel: IF, VLOOKUP, INDEX, MATCH, CONCATENATE, Absolute/Relative references ($A$1)",
+        "MS Word: Mail Merge, paragraph styling, shortcut keys",
+        "MS PowerPoint: Slide layouts, templates, transitions, presenter mode, shortcuts"
+      ],
+      problems: [
+        { id: "ac_d11_t1", difficulty: "medium", name: "MS Office: Solve 60+ Excel formulas & Word/PowerPoint shortcut keys MCQs" },
+        { id: "ac_d11_t2", difficulty: "easy", name: "Coding: Arrays and String operations basic speed practice" },
+        { id: "ac_d11_t3", difficulty: "easy", name: "English: Answer mock HR questions (Strengths, Weaknesses, Goals)" }
+      ]
+    },
+    {
+      day: 12,
+      title: "Day 12 — OS + Hardware",
+      subtitle: "Processes, Memory & Architecture",
+      learn: [
+        "OS Concepts: Process vs Thread, Process scheduling algorithms, Deadlocks, Memory allocation",
+        "Hardware basics: CPU, cache memories, RAM modules, HDD/SSD storage, I/O ports",
+        "Coding: Basic mathematical algorithms"
+      ],
+      problems: [
+        { id: "ac_d12_t1", difficulty: "medium", name: "OS: Solve 50+ process scheduling, deadlock & memory paging MCQs" },
+        { id: "ac_d12_t2", difficulty: "easy", name: "Coding: LeetCode 283 - Move Zeroes", url: "https://leetcode.com/problems/move-zeroes/" },
+        { id: "ac_d12_t3", difficulty: "easy", name: "English: Describe how process scheduling works in English" }
+      ]
+    },
+    {
+      day: 13,
+      title: "Day 13 — Technical Consolidation",
+      subtitle: "MCQ Comprehensive Review",
+      learn: [
+        "Review mistakes made in all technical topics so far",
+        "Solve a mixed MCQ pool containing Pseudocode, OOP, SQL, CN, Cloud, OS, Security, Excel",
+        "Target: 100+ mixed MCQs under test conditions"
+      ],
+      problems: [
+        { id: "ac_d13_t1", difficulty: "hard", name: "Mock: Complete 100+ comprehensive mixed MCQs assessment" },
+        { id: "ac_d13_t2", difficulty: "medium", name: "Coding: Mixed Arrays + Strings speed drills" },
+        { id: "ac_d13_t3", difficulty: "easy", name: "English: Conduct a mock HR interview walkthrough" }
+      ]
+    },
+    {
+      day: 14,
+      title: "Day 14 — Hands-on Consolidation 🔥",
+      subtitle: "Assessment Simulation",
+      learn: [
+        "Simulate practical assessments: SQL queries, HTML/CSS/JS layouts, coding problems",
+        "Absolutely no searching on Google, ChatGPT, or using notes",
+        "Target optimal layouts, clean queries, and correct logic"
+      ],
+      problems: [
+        { id: "ac_d14_t1", difficulty: "hard", name: "SQL: Solve 2 complex query problems under time constraint" },
+        { id: "ac_d14_t2", difficulty: "hard", name: "Web: Code a complete interactive web interface without helpers (60 mins)" },
+        { id: "ac_d14_t3", difficulty: "hard", name: "Coding: Solve 2 unseen coding questions (timed)" }
+      ]
+    },
+    {
+      day: 15,
+      title: "Day 15 — Technical Mock #1",
+      subtitle: "Full-Length MCQ Simulation",
+      learn: [
+        "Simulate full-length technical test (60 mins)",
+        "Topics: Pseudocode, OOP, Networks, Security, Cloud, OS, MS Office",
+        "Review and trace every wrong answer in detail"
+      ],
+      problems: [
+        { id: "ac_d15_t1", difficulty: "hard", name: "Simulation: Technical Mock 1 (90+ questions, timed)" },
+        { id: "ac_d15_t2", difficulty: "medium", name: "Coding: Mixed Array/String problems review" },
+        { id: "ac_d15_t3", difficulty: "easy", name: "English: Practice speaking clearly about your technical skills" }
+      ]
+    },
+    {
+      day: 16,
+      title: "Day 16 — Hands-on Mock #1",
+      subtitle: "Practical Exam Run",
+      learn: [
+        "Simulate the practical hands-on assessments",
+        "Code 2 coding problems + 2 SQL database joins/aggregation queries + 1 JS page",
+        "Track time spent on each sub-topic"
+      ],
+      problems: [
+        { id: "ac_d16_t1", difficulty: "hard", name: "Simulation: Timed coding mock exam (45 mins)" },
+        { id: "ac_d16_t2", difficulty: "hard", name: "Simulation: Timed SQL & Web mock exam (45 mins)" },
+        { id: "ac_d16_t3", difficulty: "medium", name: "English: Practice responding to technical scenarios" }
+      ]
+    },
+    {
+      day: 17,
+      title: "Day 17 — Weakness Day",
+      subtitle: "Error Log Target",
+      learn: [
+        "Dedicate time entirely to your lowest-scoring topics from Mocks",
+        "Practice JOIN queries, recursion trees, or networks port mappings",
+        "Re-solve coding questions you struggled with"
+      ],
+      problems: [
+        { id: "ac_d17_t1", difficulty: "medium", name: "Technical: Review and resolve 50+ MCQs in your weakest areas" },
+        { id: "ac_d17_t2", difficulty: "medium", name: "Coding: Re-attempt failed coding problems" },
+        { id: "ac_d17_t3", difficulty: "easy", name: "English: Refine and speak answers to difficult HR queries" }
+      ]
+    },
+    {
+      day: 18,
+      title: "Day 18 — Full Assessment Simulation 🔥",
+      subtitle: "Accenture Simulation Mode",
+      learn: [
+        "Simulate the complete Accenture exam (Technical MCQs + Hands-on coding + queries)",
+        "Strict timings, no outside resources allowed",
+        "Analyze mistakes and note areas of delay"
+      ],
+      problems: [
+        { id: "ac_d18_t1", difficulty: "hard", name: "Exam: Full Accenture simulation (combined MCQs + Coding)" },
+        { id: "ac_d18_t2", difficulty: "medium", name: "Coding: Speed practice with array/string manipulations" },
+        { id: "ac_d18_t3", difficulty: "medium", name: "English: Perform mock HR interview recording" }
+      ]
+    },
+    {
+      day: 19,
+      title: "Day 19 — Final Mock 🔥🔥",
+      subtitle: "Peak Performance Tuning",
+      learn: [
+        "Aim for speed, accuracy, and clean query syntax",
+        "Test final preparedness on comprehensive mock",
+        "Analyze mistake logs one last time"
+      ],
+      problems: [
+        { id: "ac_d19_t1", difficulty: "hard", name: "Final Mock: Full-length exam simulation" },
+        { id: "ac_d19_t2", difficulty: "easy", name: "Coding: Speed-solve 5 easy level array/string problems" },
+        { id: "ac_d19_t3", difficulty: "medium", name: "English: Final HR verbal checks" }
+      ]
+    },
+    {
+      day: 20,
+      title: "Day 20 — Final Revision",
+      subtitle: "Mistake Notebook Checks",
+      learn: [
+        "NO new learning topics today",
+        "Review mistake logs, SQL join cheat sheets, networks ports table, and OOP templates",
+        "Quick revision of basic coding patterns (pointers, slides, math)"
+      ],
+      problems: [
+        { id: "ac_d20_t1", difficulty: "medium", name: "Revision: Go through your mistake notebook & coding notes" },
+        { id: "ac_d20_t2", difficulty: "easy", name: "Coding: Revise array and string structures" },
+        { id: "ac_d20_t3", difficulty: "easy", name: "English: Speak confidently on all classic HR questions" }
+      ]
+    }
+  ];
+
+  // Prefilled study notes template
+  const NOTE_TEMPLATE = `Topic/Problem:
+Key Concepts:
+Important Notes:
+Mistakes Avoided:
+Time Complexity (if code):
+Space Complexity (if code):`;
+
+  let S = {};
+  let activeDay = 1;
+
+  // Load state
+  function load() {
+    const saved = localStorage.getItem('placementOS_v2');
+    if (!saved) {
+      const backup = localStorage.getItem('placementOS_v2_backup');
+      if (backup) {
+        localStorage.setItem('placementOS_v2', backup);
+        location.reload();
+        return;
+      }
+    } else {
+      S = JSON.parse(saved);
+    }
+    
+    if (!S.accenturePlanChecks) S.accenturePlanChecks = {};
+    if (!S.accenturePlanNotes) S.accenturePlanNotes = {};
+    if (!S.accenturePlanCodes) S.accenturePlanCodes = {};
+    
+    // Update sidebar XP
+    const xp = S.xp || 0;
+    const level = S.level || 1;
+    const streak = S.streak || 0;
+    
+    document.getElementById('sb-level').textContent = level;
+    document.getElementById('sb-xp').textContent = `${xp} XP`;
+    document.getElementById('topbar-streak').textContent = `${streak} day streak`;
+    
+    const xpNeeded = level * 100;
+    const pct = Math.min(100, Math.floor((xp / xpNeeded) * 100));
+    const fill = document.getElementById('sb-xp-fill');
+    if (fill) fill.style.width = `${pct}%`;
+    const next = document.getElementById('sb-xp-next');
+    if (next) next.textContent = `${xpNeeded - xp} XP to next level`;
+  }
+
+  // Save state and push
+  function save() {
+    S.updatedAt = Date.now();
+    const stateStr = JSON.stringify(S);
+    localStorage.setItem('placementOS_v2', stateStr);
+    localStorage.setItem('placementOS_v2_backup', stateStr);
+    if (typeof syncPush === 'function') {
+      syncPush(S);
+    }
+    updateGlobalProgress();
+    renderDaysList();
+  }
+
+  // IndexedDB for Code Screenshots
+  const dbName = "PlacementOS_DSA_DB";
+  const storeName = "screenshots";
+  function getDB() {
+    return new Promise((resolve, reject) => {
+      const request = indexedDB.open(dbName, 1);
+      request.onupgradeneeded = (e) => {
+        const db = e.target.result;
+        if (!db.objectStoreNames.contains(storeName)) {
+          db.createObjectStore(storeName, { keyPath: "problemName" });
+        }
+      };
+      request.onsuccess = (e) => resolve(e.target.result);
+      request.onerror = (e) => reject(e.target.error);
+    });
+  }
+
+  async function saveScreenshot(key, base64Data) {
+    const db = await getDB();
+    return new Promise((resolve, reject) => {
+      const transaction = db.transaction(storeName, "readwrite");
+      const store = transaction.objectStore(storeName);
+      const request = store.put({ problemName: `accenture_plan_${key}`, base64Data });
+      request.onsuccess = () => resolve();
+      request.onerror = (e) => reject(e.target.error);
+    });
+  }
+
+  async function getScreenshot(key) {
+    const db = await getDB();
+    return new Promise((resolve, reject) => {
+      const transaction = db.transaction(storeName, "readonly");
+      const store = transaction.objectStore(storeName);
+      const request = store.get(`accenture_plan_${key}`);
+      request.onsuccess = (e) => resolve(e.target.result ? e.target.result.base64Data : null);
+      request.onerror = (e) => reject(e.target.error);
+    });
+  }
+
+  async function deleteScreenshot(key) {
+    const db = await getDB();
+    return new Promise((resolve, reject) => {
+      const transaction = db.transaction(storeName, "readwrite");
+      const store = transaction.objectStore(storeName);
+      const request = store.delete(`accenture_plan_${key}`);
+      request.onsuccess = () => resolve();
+      request.onerror = (e) => reject(e.target.error);
+    });
+  }
+
+  // Calculate progress statistics
+  function getDayProgress(dayNum) {
+    const problems = planData.find(d => d.day === dayNum).problems;
+    if (problems.length === 0) return { solved: 0, total: 0, pct: 0 };
+    
+    let solved = 0;
+    problems.forEach(p => {
+      if (S.accenturePlanChecks[p.id]) solved++;
+    });
+    
+    return {
+      solved,
+      total: problems.length,
+      pct: Math.round((solved / problems.length) * 100)
+    };
+  }
+
+  function updateGlobalProgress() {
+    let totalProblems = 0;
+    let solvedProblems = 0;
+    
+    planData.forEach(d => {
+      totalProblems += d.problems.length;
+      d.problems.forEach(p => {
+        if (S.accenturePlanChecks[p.id]) solvedProblems++;
+      });
+    });
+    
+    const pct = totalProblems > 0 ? Math.round((solvedProblems / totalProblems) * 100) : 0;
+    
+    document.getElementById('overall-pct').textContent = `${pct}%`;
+    document.getElementById('overall-solved-count').textContent = `${solvedProblems} of ${totalProblems} Completed`;
+    document.getElementById('overall-progress-fill').style.width = `${pct}%`;
+  }
+
+  // Render Day selection list on left side
+  function renderDaysList() {
+    const list = document.getElementById('day-selector-list');
+    list.innerHTML = '';
+    
+    planData.forEach(d => {
+      const prog = getDayProgress(d.day);
+      const btn = document.createElement('button');
+      btn.className = `day-btn ${d.day === activeDay ? 'active' : ''}`;
+      btn.onclick = () => selectDay(d.day);
+      
+      btn.innerHTML = `
+        <span class="day-title">${d.title}</span>
+        <span class="day-progress">${prog.solved}/${prog.total} Done (${prog.pct}%)</span>
+      `;
+      list.appendChild(btn);
+    });
+  }
+
+  // Render SQL Visualizations dynamically for SQL Days (e.g. Day 5)
+  function renderSQLVisualization() {
+    const vizContainer = document.getElementById('learning-viz-container');
+    if (activeDay === 5) {
+      vizContainer.style.display = 'block';
+      vizContainer.innerHTML = `
+        <div class="viz-container">
+          <h3 style="font-size:13px; font-weight:700; color:var(--accent); text-transform:uppercase; letter-spacing:0.5px; display:flex; align-items:center; gap:6px; margin-bottom:8px;"><i class="fas fa-eye"></i> Learning Visualizer: SQL JOINs Survival</h3>
+          <p style="font-size:12px; color:var(--text2); margin-bottom:12px;">See which rows survive each type of JOIN. Left Table: <b>Users (ID: 1, 2)</b> | Right Table: <b>Orders (ID: 2, 3)</b></p>
+          <div class="viz-grid">
+            <div class="viz-table">
+              <div class="viz-table-header">INNER JOIN (Intersection)</div>
+              <div class="viz-row"><span>Row 2 (Matched)</span> <span class="viz-pill survived">Survived</span></div>
+              <div class="viz-row"><span>Row 1 (No Match)</span> <span class="viz-pill dropped">Dropped</span></div>
+              <div class="viz-row"><span>Row 3 (No Match)</span> <span class="viz-pill dropped">Dropped</span></div>
+            </div>
+            <div class="viz-table">
+              <div class="viz-table-header">LEFT JOIN (Preserve Left)</div>
+              <div class="viz-row"><span>Row 1 (Left only)</span> <span class="viz-pill survived">Survived</span></div>
+              <div class="viz-row"><span>Row 2 (Matched)</span> <span class="viz-pill survived">Survived</span></div>
+              <div class="viz-row"><span>Row 3 (Right only)</span> <span class="viz-pill dropped">Dropped</span></div>
+            </div>
+            <div class="viz-table">
+              <div class="viz-table-header">RIGHT JOIN (Preserve Right)</div>
+              <div class="viz-row"><span>Row 2 (Matched)</span> <span class="viz-pill survived">Survived</span></div>
+              <div class="viz-row"><span>Row 3 (Right only)</span> <span class="viz-pill survived">Survived</span></div>
+              <div class="viz-row"><span>Row 1 (Left only)</span> <span class="viz-pill dropped">Dropped</span></div>
+            </div>
+          </div>
+        </div>
+      `;
+    } else {
+      vizContainer.style.display = 'none';
+      vizContainer.innerHTML = '';
+    }
+  }
+
+  // Load selected day details
+  function selectDay(dayNum) {
+    activeDay = dayNum;
+    const currDay = planData.find(d => d.day === dayNum);
+    
+    document.getElementById('curr-day-title').textContent = currDay.title;
+    document.getElementById('curr-day-subtitle').textContent = currDay.subtitle;
+    
+    // Populate learn list
+    const learnList = document.getElementById('curr-day-learn-list');
+    learnList.innerHTML = '';
+    currDay.learn.forEach(concept => {
+      const li = document.createElement('li');
+      li.textContent = concept;
+      learnList.appendChild(li);
+    });
+    
+    // Render SQL visualizer if applicable
+    renderSQLVisualization();
+
+    // Populate problems list
+    const problemsContainer = document.getElementById('problems-container');
+    problemsContainer.innerHTML = '';
+    
+    const progress = getDayProgress(dayNum);
+    document.getElementById('day-solved-text').textContent = `${progress.solved}/${progress.total} Done`;
+    
+    currDay.problems.forEach(p => {
+      const isSolved = !!S.accenturePlanChecks[p.id];
+      const card = document.createElement('div');
+      card.id = `problem-card-${p.id}`;
+      card.className = `problem-card ${isSolved ? 'solved' : ''}`;
+      
+      const titleLink = p.url 
+        ? `<a href="${p.url}" target="_blank" class="problem-title">${p.name} <i class="fas fa-external-link-alt" style="font-size:10px; color:var(--accent2);"></i></a>`
+        : `<span class="problem-title">${p.name}</span>`;
+
+      card.innerHTML = `
+        <div class="problem-header">
+          <div class="problem-title-wrap">
+            <input type="checkbox" onchange="toggleProblemSolved('${p.id}', this)" ${isSolved ? 'checked' : ''}/>
+            ${titleLink}
+          </div>
+          <div class="problem-meta">
+            <span class="badge-diff ${p.difficulty}">${p.difficulty}</span>
+            <button class="btn-toggle-editor" id="btn-editor-${p.id}" onclick="toggleEditor('${p.id}')"><i class="fas fa-edit"></i> Notes &amp; Code</button>
+          </div>
+        </div>
+        
+        <div class="editor-panel" id="editor-${p.id}">
+          <div class="editor-cols">
+            
+            <div class="editor-col">
+              <label>Study Notes</label>
+              <textarea class="editor-textarea" id="notes-textarea-${p.id}" onchange="saveProblemNotes('${p.id}', this.value)" placeholder="Write your notes or MCQ mistake logs here..."></textarea>
+            </div>
+            
+            <div class="editor-col">
+              <label>Practice Code / Queries</label>
+              <textarea class="editor-textarea code" id="code-textarea-${p.id}" onchange="saveProblemCode('${p.id}', this.value)" placeholder="-- Paste query or code snippet here..."></textarea>
+            </div>
+
+            <div class="editor-col">
+              <label>Proof of Practice / Screenshot</label>
+              <div class="screenshot-dropzone" id="dropzone-${p.id}" onpaste="handlePasteScreenshot(event, '${p.id}')" onclick="triggerFileInput('${p.id}')" tabindex="0">
+                <i class="fas fa-camera" style="font-size:18px; margin-bottom:4px; display:block; color:var(--accent);"></i>
+                Paste (Ctrl+V) or click to upload
+              </div>
+              <input type="file" id="file-${p.id}" accept="image/*" style="display:none;" onchange="handleUploadScreenshot(event, '${p.id}')"/>
+            </div>
+
+          </div>
+        </div>
+      `;
+      
+      problemsContainer.appendChild(card);
+    });
+    
+    // Highlight active day in list
+    document.querySelectorAll('.day-btn').forEach((btn, idx) => {
+      if (idx + 1 === dayNum) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    });
+  }
+
+  function toggleProblemSolved(problemId, checkbox) {
+    S.accenturePlanChecks[problemId] = checkbox.checked;
+    const card = document.getElementById(`problem-card-${problemId}`);
+    if (checkbox.checked) {
+      if (card) card.classList.add('solved');
+      addXP(10);
+    } else {
+      if (card) card.classList.remove('solved');
+    }
+    save();
+    
+    const progress = getDayProgress(activeDay);
+    document.getElementById('day-solved-text').textContent = `${progress.solved}/${progress.total} Done`;
+  }
+
+  function toggleEditor(problemId) {
+    const panel = document.getElementById(`editor-${problemId}`);
+    const btn = document.getElementById(`btn-editor-${problemId}`);
+    if (!panel) return;
+    
+    const isVisible = panel.classList.contains('active');
+    
+    // Hide all editor panels first
+    document.querySelectorAll('.editor-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.btn-toggle-editor').forEach(b => b.classList.remove('active'));
+    
+    if (!isVisible) {
+      panel.classList.add('active');
+      if (btn) btn.classList.add('active');
+      
+      const notesArea = document.getElementById(`notes-textarea-${problemId}`);
+      const codeArea = document.getElementById(`code-textarea-${problemId}`);
+      
+      if (notesArea) {
+        notesArea.value = S.accenturePlanNotes[problemId] || NOTE_TEMPLATE;
+      }
+      if (codeArea) {
+        codeArea.value = S.accenturePlanCodes[problemId] || '';
+      }
+      
+      loadDropzoneImage(problemId);
+    }
+  }
+
+  async function loadDropzoneImage(problemId) {
+    const dropzone = document.getElementById('dropzone-' + problemId);
+    if (!dropzone) return;
+    
+    try {
+      const base64 = await getScreenshot(problemId);
+      if (base64) {
+        dropzone.className = 'screenshot-dropzone has-img';
+        dropzone.innerHTML = `
+          <img src="${base64}" class="screenshot-preview-img" onclick="event.stopPropagation(); zoomScreenshot('${base64}')"/>
+          <button class="btn btn-sm" onclick="event.stopPropagation(); removeScreenshot('${problemId}')" style="position:absolute; bottom:6px; right:6px; font-size:10px; background:rgba(255,85,85,0.85); color:#fff; border:none; padding:2px 6px; border-radius:4px;"><i class="fas fa-trash-alt"></i> Delete</button>
+        `;
+      } else {
+        dropzone.className = 'screenshot-dropzone';
+        dropzone.innerHTML = `
+          <i class="fas fa-camera" style="font-size:18px; margin-bottom:4px; display:block; color:var(--accent);"></i>
+          Paste (Ctrl+V) or click to upload
+        `;
+      }
+    } catch(e) {
+      console.error(e);
+    }
+  }
+
+  function zoomScreenshot(base64) {
+    const lightbox = document.getElementById('lightboxModal');
+    const img = document.getElementById('lightboxImg');
+    if (lightbox && img) {
+      img.src = base64;
+      lightbox.style.display = 'flex';
+    }
+  }
+
+  async function removeScreenshot(problemId) {
+    if (confirm("Discard this screenshot?")) {
+      await deleteScreenshot(problemId);
+      loadDropzoneImage(problemId);
+    }
+  }
+
+  function saveProblemNotes(problemId, value) {
+    S.accenturePlanNotes[problemId] = value;
+    save();
+  }
+
+  // Update notebook values also on main app.js if they link
+  function saveProblemCode(problemId, value) {
+    S.accenturePlanCodes[problemId] = value;
+    save();
+  }
+
+  function triggerFileInput(problemId) {
+    document.getElementById('file-' + problemId).click();
+  }
+
+  function handleUploadScreenshot(e, problemId) {
+    const file = e.target.files[0];
+    if (!file) return;
+    
+    const reader = new FileReader();
+    reader.onload = async function(event) {
+      await saveScreenshot(problemId, event.target.result);
+      loadDropzoneImage(problemId);
+    };
+    reader.readAsDataURL(file);
+  }
+
+  async function handlePasteScreenshot(e, problemId) {
+    const items = (e.clipboardData || e.originalEvent.clipboardData).items;
+    for (const item of items) {
+      if (item.type.indexOf("image") !== -1) {
+        const file = item.getAsFile();
+        const reader = new FileReader();
+        reader.onload = async function(event) {
+          await saveScreenshot(problemId, event.target.result);
+          loadDropzoneImage(problemId);
+        };
+        reader.readAsDataURL(file);
+        e.preventDefault();
+        break;
+      }
+    }
+  }
+
+  function addXP(pts) {
+    S.xp = (S.xp || 0) + pts;
+    const xpNeeded = (S.level || 1) * 100;
+    if (S.xp >= xpNeeded) {
+      S.xp -= xpNeeded;
+      S.level = (S.level || 1) + 1;
+      alert(`🎉 Level Up! You reached Level ${S.level}!`);
+    }
+    load();
+  }
+
+  function toggleSidebarCollapse() {
+    const sidebar = document.getElementById('sidebar');
+    sidebar.classList.toggle('collapsed');
+    const isCollapsed = sidebar.classList.contains('collapsed');
+    localStorage.setItem('sidebar_collapsed', isCollapsed);
+  }
+  
+  function closeSidebar() {
+    document.getElementById('sidebar').classList.remove('active');
+    document.getElementById('sidebarOverlay').classList.remove('active');
+  }
+
+  function openWallpaperModal() {
+    document.getElementById('wallpaper-modal-overlay').style.display = 'flex';
+  }
+  function closeWallpaperModal() {
+    document.getElementById('wallpaper-modal-overlay').style.display = 'none';
+  }
+  function setWallpaper(base64) {
+    localStorage.setItem('placementos_wallpaper', base64);
+    let style = document.getElementById('dynamic-wallpaper-style');
+    if (!style) {
+      style = document.createElement('style');
+      style.id = 'dynamic-wallpaper-style';
+      document.head.appendChild(style);
+    }
+    style.innerHTML = `
+      body {
+        background-image: url(${base64}) !important;
+        background-size: cover !important;
+        background-position: center !important;
+        background-attachment: fixed !important;
+        background-repeat: no-repeat !important;
+      }
+    `;
+  }
+  function doRemoveWallpaper() {
+    localStorage.removeItem('placementos_wallpaper');
+    const style = document.getElementById('dynamic-wallpaper-style');
+    if (style) style.remove();
+    closeWallpaperModal();
+  }
+  function handleWallpaperUpload(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(event) {
+      setWallpaper(event.target.result);
+      closeWallpaperModal();
+    };
+    reader.readAsDataURL(file);
+  }
+
+  // Setup mobile menu
+  function setupMobileMenu() {
+    const toggle = document.getElementById('menuToggle');
+    if (toggle) {
+      toggle.addEventListener('click', () => {
+        document.getElementById('sidebar').classList.add('active');
+        document.getElementById('sidebarOverlay').classList.add('active');
+      });
+    }
+    const overlay = document.getElementById('sidebarOverlay');
+    if (overlay) {
+      overlay.addEventListener('click', () => {
+        closeSidebar();
+      });
+    }
+  }
+
+  function init() {
+    load();
+    updateGlobalProgress();
+    renderDaysList();
+    selectDay(1);
+    setupMobileMenu();
+  }
+
+  init();
+</script>
+</body>
+</html>
