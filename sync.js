@@ -23,14 +23,13 @@ function normalizeSyncCode(code) {
 
 let db = null;
 
-// Check if local database is empty
 const localSavedStr = localStorage.getItem('placementOS_v2');
 let localStateData = {};
 try {
   localStateData = localSavedStr ? JSON.parse(localSavedStr) : {};
 } catch(e) {}
 
-const isLocalDatabaseEmpty = !localStateData || !localStateData.dsa || localStateData.dsa.length === 0;
+const isLocalDatabaseEmpty = !localSavedStr || Object.keys(localStateData).length === 0;
 
 let syncCode = localStorage.getItem('placementOS_sync_code');
 
@@ -112,7 +111,7 @@ function syncPull(isManual = false) {
         const localSolved = localState.dsa ? localState.dsa.length : 0;
         const serverSolved = serverState.dsa ? serverState.dsa.length : 0;
         
-        const isLocalEmpty = !localState || !localState.dsa || localState.dsa.length === 0;
+        const isLocalEmpty = !localSaved || Object.keys(localState).length === 0;
         
         let confirmMsg = "🔄 Cloud has newer progress. Update this device from cloud?\n\n";
         if (localSolved > serverSolved) {
