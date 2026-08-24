@@ -12,7 +12,7 @@
   <script src="default_wallpaper.js"></script>
   <script>
     (function() {
-      const wallpaper = localStorage.getItem('placementos_wallpaper') || window.DEFAULT_WALLPAPER;
+      const wallpaper = localStorage.getItem('placementos_wallpaper') || window.DEFAULT_PAPER;
       if (wallpaper) {
         const style = document.createElement('style');
         style.id = 'dynamic-wallpaper-style';
@@ -358,6 +358,38 @@
       background: rgba(255,255,255,0.08);
       border-radius: 4px;
     }
+
+    /* Tab styles */
+    .tabs-group {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+    .btn-tab {
+      flex: 1;
+      padding: 12px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--border);
+      color: var(--text2);
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 13.5px;
+      transition: all 0.2s ease;
+    }
+    .btn-tab.active {
+      background: rgba(108, 99, 255, 0.15) !important;
+      border-color: var(--accent) !important;
+      color: #fff !important;
+    }
+    .btn-tab:hover {
+      background: rgba(255,255,255,0.05);
+      color: #fff;
+    }
   </style>
 </head>
 <body class="dashboard-body">
@@ -436,58 +468,105 @@
         </div>
       </div>
 
-      <!-- Two-Column Layout -->
-      <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-        
-        <!-- Left Side: Day selector list -->
-        <div style="flex: 1; min-width: 250px; max-width: 320px; display: flex; flex-direction: column; gap: 12px;">
-          <div class="card" style="padding: 12px; display: flex; flex-direction: column; gap: 8px;">
-            <div class="card-header" style="padding-bottom: 8px; border-bottom: 1.5px solid var(--border); font-size:13.5px;"><i class="fas fa-calendar-alt"></i> Prep Timeline</div>
-            <div class="day-selector-card" id="day-selector-list">
-              <!-- Dynamically rendered day buttons -->
-            </div>
-          </div>
-        </div>
+      <!-- Tab Buttons Group -->
+      <div class="tabs-group">
+        <button class="btn-tab active" id="tab-roadmap-btn" onclick="switchTab('roadmap')"><i class="fas fa-calendar-alt"></i> 20-Day Roadmap</button>
+        <button class="btn-tab" id="tab-coding-btn" onclick="switchTab('coding')"><i class="fas fa-code"></i> Accenture Coding Sheet</button>
+      </div>
 
-        <!-- Right Side: Selected Day details -->
-        <div style="flex: 2.5; min-width: 320px; display: flex; flex-direction: column; gap: 16px;">
+      <!-- ROADMAP TAB CONTENT -->
+      <div id="roadmap-tab-content">
+        <div style="display: flex; gap: 20px; flex-wrap: wrap;">
           
-          <!-- Selected Day Title -->
-          <div class="card" style="padding: 20px;">
-            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
-              <div>
-                <h1 style="font-size:22px; font-weight:700; color:#fff;" id="curr-day-title">Day 1 – Pseudocode Fundamentals</h1>
-                <p style="font-size:12.5px; color:var(--text2); margin-top:4px;" id="curr-day-subtitle">Variables, Loops & Traversal</p>
+          <!-- Left Side: Day selector list -->
+          <div style="flex: 1; min-width: 250px; max-width: 320px; display: flex; flex-direction: column; gap: 12px;">
+            <div class="card" style="padding: 12px; display: flex; flex-direction: column; gap: 8px;">
+              <div class="card-header" style="padding-bottom: 8px; border-bottom: 1.5px solid var(--border); font-size:13.5px;"><i class="fas fa-calendar-alt"></i> Prep Timeline</div>
+              <div class="day-selector-card" id="day-selector-list">
+                <!-- Dynamically rendered day buttons -->
               </div>
             </div>
           </div>
 
-          <!-- Interactive Learning Visualizations -->
-          <div id="learning-viz-container" style="display:none;">
-            <!-- Render specific visualizations e.g. SQL Join visualizer for Day 5 -->
-          </div>
+          <!-- Right Side: Selected Day details -->
+          <div style="flex: 2.5; min-width: 320px; display: flex; flex-direction: column; gap: 16px;">
+            
+            <!-- Selected Day Title -->
+            <div class="card" style="padding: 20px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+                <div>
+                  <h1 style="font-size:22px; font-weight:700; color:#fff;" id="curr-day-title">Day 1 – Pseudocode Fundamentals</h1>
+                  <p style="font-size:12.5px; color:var(--text2); margin-top:4px;" id="curr-day-subtitle">Variables, Loops & Traversal</p>
+                </div>
+              </div>
+            </div>
 
-          <!-- Learn Card -->
-          <div class="learn-card" id="curr-day-learn-container">
-            <h3 style="font-size:13px; font-weight:700; color:var(--accent2); text-transform:uppercase; letter-spacing:0.5px; display:flex; align-items:center; gap:6px; margin-bottom:8px;"><i class="fas fa-graduation-cap"></i> Core Concepts & Daily Syllabus</h3>
-            <ul style="font-size:13.5px; color:var(--text2); padding-left:20px; display:flex; flex-direction:column; gap:4px;" id="curr-day-learn-list">
-              <!-- Dynamically populated learn list -->
-            </ul>
-          </div>
+            <!-- Interactive Learning Visualizations -->
+            <div id="learning-viz-container" style="display:none;">
+              <!-- Render specific visualizations e.g. SQL Join visualizer for Day 5 -->
+            </div>
 
-          <!-- Problems/Tasks header -->
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:-4px;">
-            <h2 style="font-size: 15px; font-weight:700; color:#fff; display:flex; align-items:center; gap:6px;"><i class="fas fa-list-check"></i> Daily Tasks & Exercises</h2>
-            <div style="font-size:12px; color:var(--accent2); font-weight:600;" id="day-solved-text">0/0 Completed</div>
-          </div>
+            <!-- Learn Card -->
+            <div class="learn-card" id="curr-day-learn-container">
+              <h3 style="font-size:13px; font-weight:700; color:var(--accent2); text-transform:uppercase; letter-spacing:0.5px; display:flex; align-items:center; gap:6px; margin-bottom:8px;"><i class="fas fa-graduation-cap"></i> Core Concepts & Daily Syllabus</h3>
+              <ul style="font-size:13.5px; color:var(--text2); padding-left:20px; display:flex; flex-direction:column; gap:4px;" id="curr-day-learn-list">
+                <!-- Dynamically populated learn list -->
+              </ul>
+            </div>
 
-          <!-- Problems/Tasks container -->
-          <div id="problems-container" style="display:flex; flex-direction:column; gap:12px;">
-            <!-- Dynamically populated problem cards -->
-          </div>
+            <!-- Problems/Tasks header -->
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:-4px;">
+              <h2 style="font-size: 15px; font-weight:700; color:#fff; display:flex; align-items:center; gap:6px;"><i class="fas fa-list-check"></i> Daily Tasks & Exercises</h2>
+              <div style="font-size:12px; color:var(--accent2); font-weight:600;" id="day-solved-text">0/0 Completed</div>
+            </div>
 
+            <!-- Problems/Tasks container -->
+            <div id="problems-container" style="display:flex; flex-direction:column; gap:12px;">
+              <!-- Dynamically populated problem cards -->
+            </div>
+
+          </div>
         </div>
+      </div>
 
+      <!-- CODING SHEET TAB CONTENT -->
+      <div id="coding-tab-content" style="display:none;">
+        <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+          
+          <!-- Left Side: Topic selector list -->
+          <div style="flex: 1; min-width: 250px; max-width: 320px; display: flex; flex-direction: column; gap: 12px;">
+            <div class="card" style="padding: 12px; display: flex; flex-direction: column; gap: 8px;">
+              <div class="card-header" style="padding-bottom: 8px; border-bottom: 1.5px solid var(--border); font-size:13.5px;"><i class="fas fa-list-check"></i> Coding Topics</div>
+              <div class="day-selector-card" id="coding-topic-list">
+                <!-- Dynamically rendered topic buttons -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Side: Selected Topic details -->
+          <div style="flex: 2.5; min-width: 320px; display: flex; flex-direction: column; gap: 16px;">
+            
+            <!-- Selected Topic Title -->
+            <div class="card" style="padding: 20px;">
+              <div>
+                <h1 style="font-size:22px; font-weight:700; color:#fff;" id="curr-topic-title">1. Arrays 🔥</h1>
+                <p style="font-size:12.5px; color:var(--text2); margin-top:4px;" id="curr-topic-desc">Basic storage, traversal, and linear scans</p>
+              </div>
+            </div>
+
+            <!-- Problems header -->
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:-4px;">
+              <h2 style="font-size: 15px; font-weight:700; color:#fff; display:flex; align-items:center; gap:6px;"><i class="fas fa-list-check"></i> Curated Coding Problems</h2>
+              <div style="font-size:12px; color:var(--accent2); font-weight:600;" id="topic-solved-text">0/0 Completed</div>
+            </div>
+
+            <!-- Problems container -->
+            <div id="coding-problems-container" style="display:flex; flex-direction:column; gap:12px;">
+              <!-- Dynamically populated problem cards -->
+            </div>
+
+          </div>
+        </div>
       </div>
 
     </div>
@@ -854,6 +933,195 @@
     }
   ];
 
+  // 13-Topic Curated Coding Problem List for Accenture
+  const codingSheetData = [
+    {
+      id: "arrays",
+      title: "1. Arrays 🔥",
+      desc: "Basic storage, traversal, and linear scans",
+      problems: [
+        { id: "ac_c_arr1", difficulty: "easy", name: "LC 1480 — Running Sum of 1d Array", url: "https://leetcode.com/problems/running-sum-of-1d-array/" },
+        { id: "ac_c_arr2", difficulty: "easy", name: "LC 217 — Contains Duplicate", url: "https://leetcode.com/problems/contains-duplicate/" },
+        { id: "ac_c_arr3", difficulty: "easy", name: "LC 268 — Missing Number", url: "https://leetcode.com/problems/missing-number/" },
+        { id: "ac_c_arr4", difficulty: "easy", name: "LC 27 — Remove Element", url: "https://leetcode.com/problems/remove-element/" },
+        { id: "ac_c_arr5", difficulty: "medium", name: "LC 1 — Two Sum", url: "https://leetcode.com/problems/two-sum/" },
+        { id: "ac_c_arr6", difficulty: "medium", name: "LC 189 — Rotate Array", url: "https://leetcode.com/problems/rotate-array/" },
+        { id: "ac_c_arr7", difficulty: "medium", name: "LC 238 — Product of Array Except Self", url: "https://leetcode.com/problems/product-of-array-except-self/" },
+        { id: "ac_c_arr8", difficulty: "medium", name: "LC 53 — Maximum Subarray", url: "https://leetcode.com/problems/maximum-subarray/" },
+        { id: "ac_c_arr9", difficulty: "hard", name: "LC 41 — First Missing Positive (Stretch)", url: "https://leetcode.com/problems/first-missing-positive/" }
+      ]
+    },
+    {
+      id: "strings",
+      title: "2. Strings 🔥",
+      desc: "Reversals, manipulations, prefix & substring searches",
+      problems: [
+        { id: "ac_c_str1", difficulty: "easy", name: "LC 344 — Reverse String", url: "https://leetcode.com/problems/reverse-string/" },
+        { id: "ac_c_str2", difficulty: "easy", name: "LC 125 — Valid Palindrome", url: "https://leetcode.com/problems/valid-palindrome/" },
+        { id: "ac_c_str3", difficulty: "easy", name: "LC 14 — Longest Common Prefix", url: "https://leetcode.com/problems/longest-common-prefix/" },
+        { id: "ac_c_str4", difficulty: "easy", name: "LC 58 — Length of Last Word", url: "https://leetcode.com/problems/length-of-last-word/" },
+        { id: "ac_c_str5", difficulty: "medium", name: "LC 151 — Reverse Words in a String", url: "https://leetcode.com/problems/reverse-words-in-a-string/" },
+        { id: "ac_c_str6", difficulty: "medium", name: "LC 443 — String Compression", url: "https://leetcode.com/problems/string-compression/" },
+        { id: "ac_c_str7", difficulty: "medium", name: "LC 8 — String to Integer (atoi)", url: "https://leetcode.com/problems/string-to-integer-atoi/" },
+        { id: "ac_c_str8", difficulty: "medium", name: "LC 647 — Palindromic Substrings", url: "https://leetcode.com/problems/palindromic-substrings/" },
+        { id: "ac_c_str9", difficulty: "hard", name: "LC 5 — Longest Palindromic Substring (Stretch)", url: "https://leetcode.com/problems/longest-palindromic-substring/" }
+      ]
+    },
+    {
+      id: "hashing",
+      title: "3. Hashing / Frequency 🔥",
+      desc: "Set/map counts & fast duplicate checks",
+      problems: [
+        { id: "ac_c_hash1", difficulty: "easy", name: "LC 1 — Two Sum", url: "https://leetcode.com/problems/two-sum/" },
+        { id: "ac_c_hash2", difficulty: "easy", name: "LC 217 — Contains Duplicate", url: "https://leetcode.com/problems/contains-duplicate/" },
+        { id: "ac_c_hash3", difficulty: "easy", name: "LC 242 — Valid Anagram", url: "https://leetcode.com/problems/valid-anagram/" },
+        { id: "ac_c_hash4", difficulty: "easy", name: "LC 387 — First Unique Character in a String", url: "https://leetcode.com/problems/first-unique-character-in-a-string/" },
+        { id: "ac_c_hash5", difficulty: "medium", name: "LC 49 — Group Anagrams", url: "https://leetcode.com/problems/group-anagrams/" },
+        { id: "ac_c_hash6", difficulty: "medium", name: "LC 347 — Top K Frequent Elements", url: "https://leetcode.com/problems/top-k-frequent-elements/" },
+        { id: "ac_c_hash7", difficulty: "medium", name: "LC 128 — Longest Consecutive Sequence", url: "https://leetcode.com/problems/longest-consecutive-sequence/" },
+        { id: "ac_c_hash8", difficulty: "hard", name: "LC 30 — Substring with Concatenation of All Words (Stretch)", url: "https://leetcode.com/problems/substring-with-concatenation-of-all-words/" }
+      ]
+    },
+    {
+      id: "pointers",
+      title: "4. Two Pointers 🔥",
+      desc: "Symmetrical narrows, sorted sum searches",
+      problems: [
+        { id: "ac_c_ptr1", difficulty: "easy", name: "LC 125 — Valid Palindrome", url: "https://leetcode.com/problems/valid-palindrome/" },
+        { id: "ac_c_ptr2", difficulty: "easy", name: "LC 344 — Reverse String", url: "https://leetcode.com/problems/reverse-string/" },
+        { id: "ac_c_ptr3", difficulty: "easy", name: "LC 977 — Squares of a Sorted Array", url: "https://leetcode.com/problems/squares-of-a-sorted-array/" },
+        { id: "ac_c_ptr4", difficulty: "medium", name: "LC 167 — Two Sum II - Input Array Is Sorted", url: "https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/" },
+        { id: "ac_c_ptr5", difficulty: "medium", name: "LC 11 — Container With Most Water", url: "https://leetcode.com/problems/container-with-most-water/" },
+        { id: "ac_c_ptr6", difficulty: "medium", name: "LC 15 — 3Sum", url: "https://leetcode.com/problems/3sum/" },
+        { id: "ac_c_ptr7", difficulty: "hard", name: "LC 42 — Trapping Rain Water (Stretch)", url: "https://leetcode.com/problems/trapping-rain-water/" }
+      ]
+    },
+    {
+      id: "math",
+      title: "5. Basic Math 🔥",
+      desc: "Primes, GCD/LCM, integer splits & series checks",
+      problems: [
+        { id: "ac_c_math1", difficulty: "easy", name: "LC 9 — Palindrome Number", url: "https://leetcode.com/problems/palindrome-number/" },
+        { id: "ac_c_math2", difficulty: "easy", name: "LC 7 — Reverse Integer", url: "https://leetcode.com/problems/reverse-integer/" },
+        { id: "ac_c_math3", difficulty: "easy", name: "LC 412 — Fizz Buzz", url: "https://leetcode.com/problems/fizz-buzz/" },
+        { id: "ac_c_math4", difficulty: "easy", name: "LC 1979 — Find Greatest Common Divisor of Array", url: "https://leetcode.com/problems/find-greatest-common-divisor-of-array/" },
+        { id: "ac_c_math5", difficulty: "medium", name: "LC 202 — Happy Number", url: "https://leetcode.com/problems/happy-number/" },
+        { id: "ac_c_math6", difficulty: "medium", name: "LC 204 — Count Primes", url: "https://leetcode.com/problems/count-primes/" },
+        { id: "ac_c_math7", difficulty: "medium", name: "LC 50 — Pow(x, n)", url: "https://leetcode.com/problems/powx-n/" },
+        { id: "ac_c_math8", difficulty: "hard", name: "LC 273 — Integer to English Words (Stretch)", url: "https://leetcode.com/problems/integer-to-english-words/" },
+        { id: "ac_c_math_c1", difficulty: "easy", name: "Concept: Practice Prime Checking, LCM & Factorial implementation" },
+        { id: "ac_c_math_c2", difficulty: "easy", name: "Concept: Practice Fibonacci series & Armstrong Numbers" },
+        { id: "ac_c_math_c3", difficulty: "easy", name: "Concept: Sum of digits, Reverse digits & modulo manipulation" }
+      ]
+    },
+    {
+      id: "window",
+      title: "6. Sliding Window 🔥",
+      desc: "Fixed and variable subsegments calculations",
+      problems: [
+        { id: "ac_c_win1", difficulty: "easy", name: "LC 121 — Best Time to Buy and Sell Stock", url: "https://leetcode.com/problems/best-time-to-buy-and-sell-stock/" },
+        { id: "ac_c_win2", difficulty: "medium", name: "LC 3 — Longest Substring Without Repeating Characters", url: "https://leetcode.com/problems/longest-substring-without-repeating-characters/" },
+        { id: "ac_c_win3", difficulty: "medium", name: "LC 567 — Permutation in String", url: "https://leetcode.com/problems/permutation-in-string/" },
+        { id: "ac_c_win4", difficulty: "medium", name: "LC 438 — Find All Anagrams in a String", url: "https://leetcode.com/problems/find-all-anagrams-in-a-string/" },
+        { id: "ac_c_win5", difficulty: "medium", name: "LC 424 — Longest Repeating Character Replacement", url: "https://leetcode.com/problems/longest-repeating-character-replacement/" },
+        { id: "ac_c_win6", difficulty: "hard", name: "LC 76 — Minimum Window Substring (Stretch)", url: "https://leetcode.com/problems/minimum-window-substring/" }
+      ]
+    },
+    {
+      id: "prefix",
+      title: "7. Prefix Sum 🟡",
+      desc: "O(1) range sum lookups, subsegment matching",
+      problems: [
+        { id: "ac_c_pref1", difficulty: "easy", name: "LC 1480 — Running Sum of 1d Array", url: "https://leetcode.com/problems/running-sum-of-1d-array/" },
+        { id: "ac_c_pref2", difficulty: "easy", name: "LC 724 — Find Pivot Index", url: "https://leetcode.com/problems/find-pivot-index/" },
+        { id: "ac_c_pref3", difficulty: "easy", name: "LC 303 — Range Sum Query - Immutable", url: "https://leetcode.com/problems/range-sum-query-immutable/" },
+        { id: "ac_c_pref4", difficulty: "medium", name: "LC 53 — Maximum Subarray", url: "https://leetcode.com/problems/maximum-subarray/" },
+        { id: "ac_c_pref5", difficulty: "medium", name: "LC 560 — Subarray Sum Equals K", url: "https://leetcode.com/problems/subarray-sum-equals-k/" },
+        { id: "ac_c_pref6", difficulty: "medium", name: "LC 525 — Contiguous Array", url: "https://leetcode.com/problems/contiguous-array/" },
+        { id: "ac_c_pref7", difficulty: "hard", name: "LC 974 — Subarray Sums Divisible by K (Stretch)", url: "https://leetcode.com/problems/subarray-sums-divisible-by-k/" }
+      ]
+    },
+    {
+      id: "sorting",
+      title: "8. Sorting 🟡",
+      desc: "Comparison algorithms & merge segments",
+      problems: [
+        { id: "ac_c_sort1", difficulty: "easy", name: "LC 88 — Merge Sorted Array", url: "https://leetcode.com/problems/merge-sorted-array/" },
+        { id: "ac_c_sort2", difficulty: "easy", name: "LC 912 — Sort an Array", url: "https://leetcode.com/problems/sort-an-array/" },
+        { id: "ac_c_sort3", difficulty: "medium", name: "LC 75 — Sort Colors", url: "https://leetcode.com/problems/sort-colors/" },
+        { id: "ac_c_sort4", difficulty: "medium", name: "LC 56 — Merge Intervals", url: "https://leetcode.com/problems/merge-intervals/" },
+        { id: "ac_c_sort5", difficulty: "medium", name: "LC 179 — Largest Number", url: "https://leetcode.com/problems/largest-number/" },
+        { id: "ac_c_sort6", difficulty: "hard", name: "LC 315 — Count of Smaller Numbers After Self (Stretch)", url: "https://leetcode.com/problems/count-of-smaller-numbers-after-self/" },
+        { id: "ac_c_sort_c1", difficulty: "easy", name: "Concept: Implement Bubble Sort & Selection Sort manually" },
+        { id: "ac_c_sort_c2", difficulty: "easy", name: "Concept: Implement Insertion Sort & learn built-in Python sort()/sorted()" }
+      ]
+    },
+    {
+      id: "binary-search",
+      title: "9. Binary Search 🟡",
+      desc: "Logarithmic space split searches",
+      problems: [
+        { id: "ac_c_bs1", difficulty: "easy", name: "LC 704 — Binary Search", url: "https://leetcode.com/problems/binary-search/" },
+        { id: "ac_c_bs2", difficulty: "easy", name: "LC 35 — Search Insert Position", url: "https://leetcode.com/problems/search-insert-position/" },
+        { id: "ac_c_bs3", difficulty: "easy", name: "LC 69 — Sqrt(x)", url: "https://leetcode.com/problems/sqrtx/" },
+        { id: "ac_c_bs4", difficulty: "medium", name: "LC 34 — Find First and Last Position of Element in Sorted Array", url: "https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/" },
+        { id: "ac_c_bs5", difficulty: "medium", name: "LC 33 — Search in Rotated Sorted Array", url: "https://leetcode.com/problems/search-in-rotated-sorted-array/" },
+        { id: "ac_c_bs6", difficulty: "medium", name: "LC 153 — Find Minimum in Rotated Sorted Array", url: "https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/" },
+        { id: "ac_c_bs7", difficulty: "hard", name: "LC 4 — Median of Two Sorted Arrays (Stretch)", url: "https://leetcode.com/problems/median-of-two-sorted-arrays/" }
+      ]
+    },
+    {
+      id: "bit-manipulation",
+      title: "10. Bit Manipulation 🟡",
+      desc: "Bitwise gates, counting bits, unique XOR states",
+      problems: [
+        { id: "ac_c_bit1", difficulty: "easy", name: "LC 136 — Single Number", url: "https://leetcode.com/problems/single-number/" },
+        { id: "ac_c_bit2", difficulty: "easy", name: "LC 191 — Number of 1 Bits", url: "https://leetcode.com/problems/number-of-1-bits/" },
+        { id: "ac_c_bit3", difficulty: "easy", name: "LC 338 — Counting Bits", url: "https://leetcode.com/problems/counting-bits/" },
+        { id: "ac_c_bit4", difficulty: "medium", name: "LC 137 — Single Number II", url: "https://leetcode.com/problems/single-number-ii/" },
+        { id: "ac_c_bit5", difficulty: "medium", name: "LC 201 — Bitwise AND of Numbers Range", url: "https://leetcode.com/problems/bitwise-and-of-numbers-range/" },
+        { id: "ac_c_bit6", difficulty: "hard", name: "LC 982 — Triples with Bitwise AND Equal To Zero (Stretch)", url: "https://leetcode.com/problems/triples-with-bitwise-and-equal-to-zero/" }
+      ]
+    },
+    {
+      id: "recursion",
+      title: "11. Recursion 🟢",
+      desc: "Call stacks, trace execution trees & return states",
+      problems: [
+        { id: "ac_c_rec1", difficulty: "medium", name: "LC 50 — Pow(x, n)", url: "https://leetcode.com/problems/powx-n/" },
+        { id: "ac_c_rec2", difficulty: "medium", name: "LC 78 — Subsets", url: "https://leetcode.com/problems/subsets/" },
+        { id: "ac_c_rec_c1", difficulty: "easy", name: "Concept: Recursively solve Factorial & Fibonacci" },
+        { id: "ac_c_rec_c2", difficulty: "easy", name: "Concept: Recursively find Sum of digits & Sum of N numbers" },
+        { id: "ac_c_rec_c3", difficulty: "easy", name: "Concept: Recursively reverse a string (helps tracing)" }
+      ]
+    },
+    {
+      id: "stack",
+      title: "12. Stack 🟢",
+      desc: "LIFO, parenthesis checks, postfix evaluation",
+      problems: [
+        { id: "ac_c_stk1", difficulty: "easy", name: "LC 20 — Valid Parentheses", url: "https://leetcode.com/problems/valid-parentheses/" },
+        { id: "ac_c_stk2", difficulty: "easy", name: "LC 682 — Baseball Game", url: "https://leetcode.com/problems/baseball-game/" },
+        { id: "ac_c_stk3", difficulty: "easy", name: "LC 1047 — Remove All Adjacent Duplicates In String", url: "https://leetcode.com/problems/remove-all-adjacent-duplicates-in-string/" },
+        { id: "ac_c_stk4", difficulty: "medium", name: "LC 155 — Min Stack", url: "https://leetcode.com/problems/min-stack/" },
+        { id: "ac_c_stk5", difficulty: "medium", name: "LC 150 — Evaluate Reverse Polish Notation", url: "https://leetcode.com/problems/evaluate-reverse-polish-notation/" },
+        { id: "ac_c_stk6", difficulty: "medium", name: "LC 739 — Daily Temperatures", url: "https://leetcode.com/problems/daily-temperatures/" }
+      ]
+    },
+    {
+      id: "linked-list",
+      title: "13. Linked List 🟢",
+      desc: "Node pointer redirections & fast/slow loops",
+      problems: [
+        { id: "ac_c_ll1", difficulty: "easy", name: "LC 206 — Reverse Linked List", url: "https://leetcode.com/problems/reverse-linked-list/" },
+        { id: "ac_c_ll2", difficulty: "easy", name: "LC 21 — Merge Two Sorted Lists", url: "https://leetcode.com/problems/merge-two-sorted-lists/" },
+        { id: "ac_c_ll3", difficulty: "easy", name: "LC 141 — Linked List Cycle", url: "https://leetcode.com/problems/linked-list-cycle/" },
+        { id: "ac_c_ll4", difficulty: "medium", name: "LC 19 — Remove Nth Node From End of List", url: "https://leetcode.com/problems/remove-nth-node-from-end-of-list/" },
+        { id: "ac_c_ll5", difficulty: "medium", name: "LC 160 — Intersection of Two Linked Lists", url: "https://leetcode.com/problems/intersection-of-two-linked-lists/" }
+      ]
+    }
+  ];
+
   // Prefilled study notes template
   const NOTE_TEMPLATE = `Topic/Problem:
 Key Concepts:
@@ -864,6 +1132,8 @@ Space Complexity (if code):`;
 
   let S = {};
   let activeDay = 1;
+  let activeTab = 'roadmap';
+  let activeTopic = 'arrays';
 
   // Load state
   function load() {
@@ -882,6 +1152,9 @@ Space Complexity (if code):`;
     if (!S.accenturePlanChecks) S.accenturePlanChecks = {};
     if (!S.accenturePlanNotes) S.accenturePlanNotes = {};
     if (!S.accenturePlanCodes) S.accenturePlanCodes = {};
+    if (!S.accentureCodingChecks) S.accentureCodingChecks = {};
+    if (!S.accentureCodingNotes) S.accentureCodingNotes = {};
+    if (!S.accentureCodingCodes) S.accentureCodingCodes = {};
     
     // Update sidebar XP
     const xp = S.xp || 0;
@@ -911,6 +1184,7 @@ Space Complexity (if code):`;
     }
     updateGlobalProgress();
     renderDaysList();
+    renderTopicsList();
   }
 
   // IndexedDB for Code Screenshots
@@ -930,6 +1204,7 @@ Space Complexity (if code):`;
     });
   }
 
+  // Screenshots: Roadmap
   async function saveScreenshot(key, base64Data) {
     const db = await getDB();
     return new Promise((resolve, reject) => {
@@ -940,7 +1215,6 @@ Space Complexity (if code):`;
       request.onerror = (e) => reject(e.target.error);
     });
   }
-
   async function getScreenshot(key) {
     const db = await getDB();
     return new Promise((resolve, reject) => {
@@ -951,13 +1225,44 @@ Space Complexity (if code):`;
       request.onerror = (e) => reject(e.target.error);
     });
   }
-
   async function deleteScreenshot(key) {
     const db = await getDB();
     return new Promise((resolve, reject) => {
       const transaction = db.transaction(storeName, "readwrite");
       const store = transaction.objectStore(storeName);
       const request = store.delete(`accenture_plan_${key}`);
+      request.onsuccess = () => resolve();
+      request.onerror = (e) => reject(e.target.error);
+    });
+  }
+
+  // Screenshots: Coding Sheet
+  async function saveCodingScreenshot(key, base64Data) {
+    const db = await getDB();
+    return new Promise((resolve, reject) => {
+      const transaction = db.transaction(storeName, "readwrite");
+      const store = transaction.objectStore(storeName);
+      const request = store.put({ problemName: `accenture_coding_${key}`, base64Data });
+      request.onsuccess = () => resolve();
+      request.onerror = (e) => reject(e.target.error);
+    });
+  }
+  async function getCodingScreenshot(key) {
+    const db = await getDB();
+    return new Promise((resolve, reject) => {
+      const transaction = db.transaction(storeName, "readonly");
+      const store = transaction.objectStore(storeName);
+      const request = store.get(`accenture_coding_${key}`);
+      request.onsuccess = (e) => resolve(e.target.result ? e.target.result.base64Data : null);
+      request.onerror = (e) => reject(e.target.error);
+    });
+  }
+  async function deleteCodingScreenshot(key) {
+    const db = await getDB();
+    return new Promise((resolve, reject) => {
+      const transaction = db.transaction(storeName, "readwrite");
+      const store = transaction.objectStore(storeName);
+      const request = store.delete(`accenture_coding_${key}`);
       request.onsuccess = () => resolve();
       request.onerror = (e) => reject(e.target.error);
     });
@@ -980,14 +1285,39 @@ Space Complexity (if code):`;
     };
   }
 
+  function getTopicProgress(topicId) {
+    const topic = codingSheetData.find(t => t.id === topicId);
+    if (!topic || topic.problems.length === 0) return { solved: 0, total: 0, pct: 0 };
+    
+    let solved = 0;
+    topic.problems.forEach(p => {
+      if (S.accentureCodingChecks[p.id]) solved++;
+    });
+    
+    return {
+      solved,
+      total: topic.problems.length,
+      pct: Math.round((solved / topic.problems.length) * 100)
+    };
+  }
+
   function updateGlobalProgress() {
     let totalProblems = 0;
     let solvedProblems = 0;
     
+    // Roadmap
     planData.forEach(d => {
       totalProblems += d.problems.length;
       d.problems.forEach(p => {
         if (S.accenturePlanChecks[p.id]) solvedProblems++;
+      });
+    });
+
+    // Coding Sheet
+    codingSheetData.forEach(topic => {
+      totalProblems += topic.problems.length;
+      topic.problems.forEach(p => {
+        if (S.accentureCodingChecks[p.id]) solvedProblems++;
       });
     });
     
@@ -1017,10 +1347,29 @@ Space Complexity (if code):`;
     });
   }
 
+  // Render Topic selection list on left side
+  function renderTopicsList() {
+    const list = document.getElementById('coding-topic-list');
+    list.innerHTML = '';
+    
+    codingSheetData.forEach(t => {
+      const prog = getTopicProgress(t.id);
+      const btn = document.createElement('button');
+      btn.className = `day-btn ${t.id === activeTopic ? 'active' : ''}`;
+      btn.onclick = () => selectTopic(t.id);
+      
+      btn.innerHTML = `
+        <span class="day-title">${t.title}</span>
+        <span class="day-progress">${prog.solved}/${prog.total} Done (${prog.pct}%)</span>
+      `;
+      list.appendChild(btn);
+    });
+  }
+
   // Render SQL Visualizations dynamically for SQL Days (e.g. Day 5)
   function renderSQLVisualization() {
     const vizContainer = document.getElementById('learning-viz-container');
-    if (activeDay === 5) {
+    if (activeDay === 5 && activeTab === 'roadmap') {
       vizContainer.style.display = 'block';
       vizContainer.innerHTML = `
         <div class="viz-container">
@@ -1133,8 +1482,83 @@ Space Complexity (if code):`;
     });
     
     // Highlight active day in list
-    document.querySelectorAll('.day-btn').forEach((btn, idx) => {
+    document.querySelectorAll('#day-selector-list .day-btn').forEach((btn, idx) => {
       if (idx + 1 === dayNum) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    });
+  }
+
+  // Load selected topic details (Coding Sheet)
+  function selectTopic(topicId) {
+    activeTopic = topicId;
+    const topic = codingSheetData.find(t => t.id === topicId);
+    
+    document.getElementById('curr-topic-title').textContent = topic.title;
+    document.getElementById('curr-topic-desc').textContent = topic.desc;
+    
+    const problemsContainer = document.getElementById('coding-problems-container');
+    problemsContainer.innerHTML = '';
+    
+    const progress = getTopicProgress(topicId);
+    document.getElementById('topic-solved-text').textContent = `${progress.solved}/${progress.total} Done`;
+    
+    topic.problems.forEach(p => {
+      const isSolved = !!S.accentureCodingChecks[p.id];
+      const card = document.createElement('div');
+      card.id = `coding-card-${p.id}`;
+      card.className = `problem-card ${isSolved ? 'solved' : ''}`;
+      
+      const titleLink = p.url 
+        ? `<a href="${p.url}" target="_blank" class="problem-title">${p.name} <i class="fas fa-external-link-alt" style="font-size:10px; color:var(--accent2);"></i></a>`
+        : `<span class="problem-title">${p.name}</span>`;
+
+      card.innerHTML = `
+        <div class="problem-header">
+          <div class="problem-title-wrap">
+            <input type="checkbox" onchange="toggleCodingSolved('${p.id}', this)" ${isSolved ? 'checked' : ''}/>
+            ${titleLink}
+          </div>
+          <div class="problem-meta">
+            <span class="badge-diff ${p.difficulty}">${p.difficulty}</span>
+            <button class="btn-toggle-editor" id="btn-editor-coding-${p.id}" onclick="toggleCodingEditor('${p.id}')"><i class="fas fa-edit"></i> Notes &amp; Code</button>
+          </div>
+        </div>
+        
+        <div class="editor-panel" id="editor-coding-${p.id}">
+          <div class="editor-cols">
+            
+            <div class="editor-col">
+              <label>Study Notes</label>
+              <textarea class="editor-textarea" id="notes-coding-textarea-${p.id}" onchange="saveCodingNotes('${p.id}', this.value)" placeholder="Write your notes or mistake logs here..."></textarea>
+            </div>
+            
+            <div class="editor-col">
+              <label>Practice Code / Solution</label>
+              <textarea class="editor-textarea code" id="code-coding-textarea-${p.id}" onchange="saveCodingCode('${p.id}', this.value)" placeholder="// Paste your code solution here..."></textarea>
+            </div>
+
+            <div class="editor-col">
+              <label>Screenshot Proof</label>
+              <div class="screenshot-dropzone" id="dropzone-coding-${p.id}" onpaste="handlePasteCodingScreenshot(event, '${p.id}')" onclick="triggerCodingFileInput('${p.id}')" tabindex="0">
+                <i class="fas fa-camera" style="font-size:18px; margin-bottom:4px; display:block; color:var(--accent);"></i>
+                Paste (Ctrl+V) or click to upload
+              </div>
+              <input type="file" id="file-coding-${p.id}" accept="image/*" style="display:none;" onchange="handleUploadCodingScreenshot(event, '${p.id}')"/>
+            </div>
+
+          </div>
+        </div>
+      `;
+      
+      problemsContainer.appendChild(card);
+    });
+    
+    // Highlight active topic in list
+    document.querySelectorAll('#coding-topic-list .day-btn').forEach((btn, idx) => {
+      if (codingSheetData[idx].id === topicId) {
         btn.classList.add('active');
       } else {
         btn.classList.remove('active');
@@ -1157,6 +1581,21 @@ Space Complexity (if code):`;
     document.getElementById('day-solved-text').textContent = `${progress.solved}/${progress.total} Done`;
   }
 
+  function toggleCodingSolved(problemId, checkbox) {
+    S.accentureCodingChecks[problemId] = checkbox.checked;
+    const card = document.getElementById(`coding-card-${problemId}`);
+    if (checkbox.checked) {
+      if (card) card.classList.add('solved');
+      addXP(10);
+    } else {
+      if (card) card.classList.remove('solved');
+    }
+    save();
+    
+    const progress = getTopicProgress(activeTopic);
+    document.getElementById('topic-solved-text').textContent = `${progress.solved}/${progress.total} Done`;
+  }
+
   function toggleEditor(problemId) {
     const panel = document.getElementById(`editor-${problemId}`);
     const btn = document.getElementById(`btn-editor-${problemId}`);
@@ -1164,7 +1603,6 @@ Space Complexity (if code):`;
     
     const isVisible = panel.classList.contains('active');
     
-    // Hide all editor panels first
     document.querySelectorAll('.editor-panel').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.btn-toggle-editor').forEach(b => b.classList.remove('active'));
     
@@ -1186,6 +1624,34 @@ Space Complexity (if code):`;
     }
   }
 
+  function toggleCodingEditor(problemId) {
+    const panel = document.getElementById(`editor-coding-${problemId}`);
+    const btn = document.getElementById(`btn-editor-coding-${problemId}`);
+    if (!panel) return;
+    
+    const isVisible = panel.classList.contains('active');
+    
+    document.querySelectorAll('.editor-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.btn-toggle-editor').forEach(b => b.classList.remove('active'));
+    
+    if (!isVisible) {
+      panel.classList.add('active');
+      if (btn) btn.classList.add('active');
+      
+      const notesArea = document.getElementById(`notes-coding-textarea-${problemId}`);
+      const codeArea = document.getElementById(`code-coding-textarea-${problemId}`);
+      
+      if (notesArea) {
+        notesArea.value = S.accentureCodingNotes[problemId] || NOTE_TEMPLATE;
+      }
+      if (codeArea) {
+        codeArea.value = S.accentureCodingCodes[problemId] || '';
+      }
+      
+      loadCodingDropzoneImage(problemId);
+    }
+  }
+
   async function loadDropzoneImage(problemId) {
     const dropzone = document.getElementById('dropzone-' + problemId);
     if (!dropzone) return;
@@ -1197,6 +1663,30 @@ Space Complexity (if code):`;
         dropzone.innerHTML = `
           <img src="${base64}" class="screenshot-preview-img" onclick="event.stopPropagation(); zoomScreenshot('${base64}')"/>
           <button class="btn btn-sm" onclick="event.stopPropagation(); removeScreenshot('${problemId}')" style="position:absolute; bottom:6px; right:6px; font-size:10px; background:rgba(255,85,85,0.85); color:#fff; border:none; padding:2px 6px; border-radius:4px;"><i class="fas fa-trash-alt"></i> Delete</button>
+        `;
+      } else {
+        dropzone.className = 'screenshot-dropzone';
+        dropzone.innerHTML = `
+          <i class="fas fa-camera" style="font-size:18px; margin-bottom:4px; display:block; color:var(--accent);"></i>
+          Paste (Ctrl+V) or click to upload
+        `;
+      }
+    } catch(e) {
+      console.error(e);
+    }
+  }
+
+  async function loadCodingDropzoneImage(problemId) {
+    const dropzone = document.getElementById(`dropzone-coding-${problemId}`);
+    if (!dropzone) return;
+    
+    try {
+      const base64 = await getCodingScreenshot(problemId);
+      if (base64) {
+        dropzone.className = 'screenshot-dropzone has-img';
+        dropzone.innerHTML = `
+          <img src="${base64}" class="screenshot-preview-img" onclick="event.stopPropagation(); zoomScreenshot('${base64}')"/>
+          <button class="btn btn-sm" onclick="event.stopPropagation(); removeCodingScreenshot('${problemId}')" style="position:absolute; bottom:6px; right:6px; font-size:10px; background:rgba(255,85,85,0.85); color:#fff; border:none; padding:2px 6px; border-radius:4px;"><i class="fas fa-trash-alt"></i> Delete</button>
         `;
       } else {
         dropzone.className = 'screenshot-dropzone';
@@ -1226,19 +1716,39 @@ Space Complexity (if code):`;
     }
   }
 
+  async function removeCodingScreenshot(problemId) {
+    if (confirm("Discard this screenshot?")) {
+      await deleteCodingScreenshot(problemId);
+      loadCodingDropzoneImage(problemId);
+    }
+  }
+
   function saveProblemNotes(problemId, value) {
     S.accenturePlanNotes[problemId] = value;
     save();
   }
 
-  // Update notebook values also on main app.js if they link
   function saveProblemCode(problemId, value) {
     S.accenturePlanCodes[problemId] = value;
     save();
   }
 
+  function saveCodingNotes(problemId, value) {
+    S.accentureCodingNotes[problemId] = value;
+    save();
+  }
+
+  function saveCodingCode(problemId, value) {
+    S.accentureCodingCodes[problemId] = value;
+    save();
+  }
+
   function triggerFileInput(problemId) {
     document.getElementById('file-' + problemId).click();
+  }
+
+  function triggerCodingFileInput(problemId) {
+    document.getElementById('file-coding-' + problemId).click();
   }
 
   function handleUploadScreenshot(e, problemId) {
@@ -1249,6 +1759,18 @@ Space Complexity (if code):`;
     reader.onload = async function(event) {
       await saveScreenshot(problemId, event.target.result);
       loadDropzoneImage(problemId);
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function handleUploadCodingScreenshot(e, problemId) {
+    const file = e.target.files[0];
+    if (!file) return;
+    
+    const reader = new FileReader();
+    reader.onload = async function(event) {
+      await saveCodingScreenshot(problemId, event.target.result);
+      loadCodingDropzoneImage(problemId);
     };
     reader.readAsDataURL(file);
   }
@@ -1267,6 +1789,47 @@ Space Complexity (if code):`;
         e.preventDefault();
         break;
       }
+    }
+  }
+
+  async function handlePasteCodingScreenshot(e, problemId) {
+    const items = (e.clipboardData || e.originalEvent.clipboardData).items;
+    for (const item of items) {
+      if (item.type.indexOf("image") !== -1) {
+        const file = item.getAsFile();
+        const reader = new FileReader();
+        reader.onload = async function(event) {
+          await saveCodingScreenshot(problemId, event.target.result);
+          loadCodingDropzoneImage(problemId);
+        };
+        reader.readAsDataURL(file);
+        e.preventDefault();
+        break;
+      }
+    }
+  }
+
+  // Switch between tabs
+  function switchTab(tabId) {
+    activeTab = tabId;
+    const roadmapBtn = document.getElementById('tab-roadmap-btn');
+    const codingBtn = document.getElementById('tab-coding-btn');
+    const roadmapContent = document.getElementById('roadmap-tab-content');
+    const codingContent = document.getElementById('coding-tab-content');
+    
+    if (tabId === 'roadmap') {
+      roadmapBtn.className = 'btn-tab active';
+      codingBtn.className = 'btn-tab';
+      roadmapContent.style.display = 'block';
+      codingContent.style.display = 'none';
+      selectDay(activeDay);
+    } else {
+      codingBtn.className = 'btn-tab active';
+      roadmapBtn.className = 'btn-tab';
+      roadmapContent.style.display = 'none';
+      codingContent.style.display = 'block';
+      renderTopicsList();
+      selectTopic(activeTopic);
     }
   }
 
