@@ -506,6 +506,9 @@
               <!-- Render specific visualizations e.g. SQL Join visualizer for Day 5 -->
             </div>
 
+            <!-- Daily Schedule Dashboard Card -->
+            <div id="daily-schedule-dashboard-card" style="margin-bottom: 20px;"></div>
+
             <!-- Learn Card -->
             <div class="learn-card" id="curr-day-learn-container">
               <h3 style="font-size:13px; font-weight:700; color:var(--accent2); text-transform:uppercase; letter-spacing:0.5px; display:flex; align-items:center; gap:6px; margin-bottom:8px;"><i class="fas fa-graduation-cap"></i> Core Concepts & Daily Syllabus</h3>
@@ -1425,6 +1428,106 @@ Space Complexity (if code):`;
     }
   }
 
+  // Render Daily 12-Hour Schedule Dashboard
+  function renderDailyScheduleDashboard(currDay) {
+    const container = document.getElementById('daily-schedule-dashboard-card');
+    if (!container) return;
+    
+    // Group tasks
+    let techTotal = 0, techSolved = 0, techHours = 5.5;
+    let codingTotal = 0, codingSolved = 0, codingHours = 4.0;
+    let engTotal = 0, engSolved = 0, engHours = 1.5;
+    let revTotal = 0, revSolved = 0, revHours = 1.0;
+    
+    currDay.problems.forEach(p => {
+      const isSolved = !!S.accenturePlanChecks[p.id];
+      const nameLower = p.name.toLowerCase();
+      
+      if (nameLower.includes("coding:") || p.url) {
+        codingTotal++;
+        if (isSolved) codingSolved++;
+      } else if (nameLower.includes("english:")) {
+        engTotal++;
+        if (isSolved) engSolved++;
+      } else if (nameLower.includes("revision:")) {
+        revTotal++;
+        if (isSolved) revSolved++;
+      } else {
+        techTotal++;
+        if (isSolved) techSolved++;
+      }
+    });
+    
+    // Calculate achieved hours based on proportions
+    const techAchieved = techTotal > 0 ? (techSolved / techTotal) * techHours : 0;
+    const codingAchieved = codingTotal > 0 ? (codingSolved / codingTotal) * codingHours : 0;
+    const engAchieved = engTotal > 0 ? (engSolved / engTotal) * engHours : 0;
+    const revAchieved = revTotal > 0 ? (revSolved / revTotal) * revHours : 0;
+    
+    const totalAchieved = techAchieved + codingAchieved + engAchieved + revAchieved;
+    const achievedPercent = Math.round((totalAchieved / 12.0) * 100);
+    
+    const formatHours = (hr) => {
+      if (hr === 0) return "0h";
+      const h = Math.floor(hr);
+      const m = Math.round((hr - h) * 60);
+      return m > 0 ? `${h}h ${m}m` : `${h}h`;
+    };
+
+    container.innerHTML = `
+      <div class="card" style="padding: 20px; background: rgba(108, 99, 255, 0.03); border: 1px solid rgba(108, 99, 255, 0.2); border-radius: 12px; margin-bottom: 20px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:12px;">
+          <div>
+            <h3 style="font-size:14px; font-weight:700; color:#fff; display:flex; align-items:center; gap:6px;"><i class="fas fa-tasks"></i> Day ${currDay.day} Study Schedule Budget</h3>
+            <p style="font-size:11.5px; color:var(--text2); margin-top:2px;">Complete tasks to log your 12 study hours today.</p>
+          </div>
+          <div style="text-align:right;">
+            <span style="font-size:16px; font-weight:700; color:var(--accent2);">${formatHours(totalAchieved)} / 12h Achieved</span>
+            <div style="font-size:11px; color:var(--text2); margin-top:1px;">${achievedPercent}% of daily budget</div>
+          </div>
+        </div>
+        
+        <div class="progress-track" style="margin-bottom:16px; height:6px;">
+          <div class="progress-fill" style="width: ${achievedPercent}%; background: linear-gradient(90deg, var(--accent), var(--accent2));"></div>
+        </div>
+        
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap:12px;">
+          <!-- Tech Card -->
+          <div style="background:rgba(255,255,255,0.01); border:1px solid var(--border); border-radius:8px; padding:10px; text-align:center;">
+            <div style="font-size:16px; margin-bottom:4px;">🧠</div>
+            <div style="font-size:11px; font-weight:700; color:#fff; text-transform:uppercase; letter-spacing:0.5px;">Technical</div>
+            <div style="font-size:13px; font-weight:700; color:var(--accent); margin-top:2px;">${formatHours(techAchieved)} / 5.5h</div>
+            <div style="font-size:10px; color:var(--text2); margin-top:2px;">${techSolved}/${techTotal} Done</div>
+          </div>
+
+          <!-- Coding Card -->
+          <div style="background:rgba(255,255,255,0.01); border:1px solid var(--border); border-radius:8px; padding:10px; text-align:center;">
+            <div style="font-size:16px; margin-bottom:4px;">💻</div>
+            <div style="font-size:11px; font-weight:700; color:#fff; text-transform:uppercase; letter-spacing:0.5px;">Coding/DSA</div>
+            <div style="font-size:13px; font-weight:700; color:var(--accent2); margin-top:2px;">${formatHours(codingAchieved)} / 4h</div>
+            <div style="font-size:10px; color:var(--text2); margin-top:2px;">${codingSolved}/${codingTotal} Done</div>
+          </div>
+
+          <!-- English Card -->
+          <div style="background:rgba(255,255,255,0.01); border:1px solid var(--border); border-radius:8px; padding:10px; text-align:center;">
+            <div style="font-size:16px; margin-bottom:4px;">🇬🇧</div>
+            <div style="font-size:11px; font-weight:700; color:#fff; text-transform:uppercase; letter-spacing:0.5px;">English/HR</div>
+            <div style="font-size:13px; font-weight:700; color:#2ecc71; margin-top:2px;">${formatHours(engAchieved)} / 1.5h</div>
+            <div style="font-size:10px; color:var(--text2); margin-top:2px;">${engSolved}/${engTotal} Done</div>
+          </div>
+
+          <!-- Revision Card -->
+          <div style="background:rgba(255,255,255,0.01); border:1px solid var(--border); border-radius:8px; padding:10px; text-align:center;">
+            <div style="font-size:16px; margin-bottom:4px;">🔄</div>
+            <div style="font-size:11px; font-weight:700; color:#fff; text-transform:uppercase; letter-spacing:0.5px;">Revision</div>
+            <div style="font-size:13px; font-weight:700; color:#f1c40f; margin-top:2px;">${formatHours(revAchieved)} / 1h</div>
+            <div style="font-size:10px; color:var(--text2); margin-top:2px;">${revSolved}/${revTotal} Done</div>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
   // Load selected day details
   function selectDay(dayNum) {
     activeDay = dayNum;
@@ -1512,6 +1615,9 @@ Space Complexity (if code):`;
         btn.classList.remove('active');
       }
     });
+
+    // Rerender daily schedule dashboard
+    renderDailyScheduleDashboard(currDay);
   }
 
   // Load selected topic details (Coding Sheet)
@@ -1603,6 +1709,10 @@ Space Complexity (if code):`;
     
     const progress = getDayProgress(activeDay);
     document.getElementById('day-solved-text').textContent = `${progress.solved}/${progress.total} Done`;
+
+    // Rerender daily schedule dashboard
+    const currDay = planData.find(d => d.day === activeDay);
+    renderDailyScheduleDashboard(currDay);
   }
 
   function toggleCodingSolved(problemId, checkbox) {
