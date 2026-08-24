@@ -744,6 +744,28 @@ Key Learning:`;
     let S = {};
     let activeDay = 1;
 
+    function updateSidebarUI() {
+      const xp = S.xp || 0;
+      const level = S.level || 1;
+      const streak = S.streak || 0;
+      
+      const sbLevel = document.getElementById('sb-level');
+      if (sbLevel) sbLevel.textContent = level;
+      
+      const sbXp = document.getElementById('sb-xp');
+      if (sbXp) sbXp.textContent = `${xp} XP`;
+      
+      const tbStreak = document.getElementById('topbar-streak');
+      if (tbStreak) tbStreak.textContent = `${streak} day streak`;
+      
+      const xpNeeded = level * 100;
+      const pct = Math.min(100, Math.floor((xp / xpNeeded) * 100));
+      const fill = document.getElementById('sb-xp-fill');
+      if (fill) fill.style.width = `${pct}%`;
+      const next = document.getElementById('sb-xp-next');
+      if (next) next.textContent = `${xpNeeded - xp} XP to next level`;
+    }
+
     // Load state
     function load() {
       let saved = localStorage.getItem('placementOS_v2');
@@ -762,21 +784,7 @@ Key Learning:`;
       if (!S.arrayPlanCodes) S.arrayPlanCodes = {};
       if (!S.arrayPlanSelectedRandoms) S.arrayPlanSelectedRandoms = [];
       
-      // Update sidebar XP
-      const xp = S.xp || 0;
-      const level = S.level || 1;
-      const streak = S.streak || 0;
-      
-      document.getElementById('sb-level').textContent = level;
-      document.getElementById('sb-xp').textContent = `${xp} XP`;
-      document.getElementById('topbar-streak').textContent = `${streak} day streak`;
-      
-      const xpNeeded = level * 100;
-      const pct = Math.min(100, Math.floor((xp / xpNeeded) * 100));
-      const fill = document.getElementById('sb-xp-fill');
-      if (fill) fill.style.width = `${pct}%`;
-      const next = document.getElementById('sb-xp-next');
-      if (next) next.textContent = `${xpNeeded - xp} XP to next level`;
+      updateSidebarUI();
     }
 
     // Save state and push
@@ -1216,7 +1224,7 @@ Key Learning:`;
         S.level = (S.level || 1) + 1;
         alert(`🎉 Level Up! You reached Level ${S.level}!`);
       }
-      load();
+      updateSidebarUI();
     }
 
     function toggleSidebarCollapse() {
