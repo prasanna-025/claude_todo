@@ -1,6 +1,6 @@
 /* ========================================
    PlacementOS — sync.js
-   Frictionless background syncing with robust timestamp parsing
+   Conflict-Free Deep Merge Background Syncing
    ======================================== */
 
 const firebaseConfig = {
@@ -58,6 +58,86 @@ function updateSyncStatusUI(status, color) {
   }
 }
 
+// Deep merge local and server states to prevent progress loss
+function deepMergeStates(local, server) {
+  const merged = { ...server, ...local };
+  
+  // 1. Merge DSA solved lists
+  if (local.dsa && server.dsa) {
+    const seen = new Set();
+    const mergedDSA = [];
+    server.dsa.forEach(p => {
+      if (p && p.name) {
+        seen.add(p.name);
+        mergedDSA.push(p);
+      }
+    });
+    local.dsa.forEach(p => {
+      if (p && p.name && !seen.has(p.name)) {
+        seen.add(p.name);
+        mergedDSA.push(p);
+      }
+    });
+    merged.dsa = mergedDSA;
+  }
+
+  // 2. Merge checkmark maps
+  const mergeChecks = (key) => {
+    merged[key] = {};
+    if (server[key]) Object.assign(merged[key], server[key]);
+    if (local[key]) Object.assign(merged[key], local[key]);
+  };
+  mergeChecks('accenturePlanChecks');
+  mergeChecks('accentureCodingChecks');
+  mergeChecks('arrayPlanChecks');
+  
+  // 3. Merge notes and code snippets (keep longer entries to avoid empty overwrites)
+  const mergeTexts = (key) => {
+    merged[key] = {};
+    const combinedKeys = new Set([
+      ...Object.keys(server[key] || {}),
+      ...Object.keys(local[key] || {})
+    ]);
+    combinedKeys.forEach(id => {
+      const localVal = local[key] ? (local[key][id] || '') : '';
+      const serverVal = server[key] ? (server[key][id] || '') : '';
+      merged[key][id] = (localVal.length >= serverVal.length) ? localVal : serverVal;
+    });
+  };
+  mergeTexts('accenturePlanNotes');
+  mergeTexts('accenturePlanCodes');
+  mergeTexts('accentureCodingNotes');
+  mergeTexts('accentureCodingCodes');
+  mergeTexts('arrayPlanNotes');
+  mergeTexts('arrayPlanCodes');
+  
+  // 4. Merge XP and Level
+  merged.level = Math.max(Number(local.level) || 1, Number(server.level) || 1);
+  merged.xp = Math.max(Number(local.xp) || 0, Number(server.xp) || 0);
+  merged.streak = Math.max(Number(local.streak) || 0, Number(server.streak) || 0);
+  
+  // 5. Merge Study Hours map
+  if (local.hours || server.hours) {
+    merged.hours = {};
+    const allDays = new Set([
+      ...Object.keys(server.hours || {}),
+      ...Object.keys(local.hours || {})
+    ]);
+    allDays.forEach(day => {
+      const localHr = local.hours ? (local.hours[day] || 0) : 0;
+      const serverHr = server.hours ? (server.hours[day] || 0) : 0;
+      merged.hours[day] = Math.max(localHr, serverHr);
+    });
+  }
+
+  // 6. Set timestamp to newest
+  const localTime = parseTime(local.updatedAt);
+  const serverTime = parseTime(server.updatedAt);
+  merged.updatedAt = Math.max(localTime, serverTime, Date.now());
+  
+  return merged;
+}
+
 let db = null;
 
 const localSavedStr = localStorage.getItem('placementOS_v2');
@@ -71,7 +151,6 @@ const isLocalDatabaseEmpty = !localSavedStr || Object.keys(localStateData).lengt
 let syncCode = localStorage.getItem('placementOS_sync_code');
 
 if (isLocalDatabaseEmpty) {
-  // Force connect to the user's cloud backup if no local progress exists
   syncCode = '0S-DSHGG0';
   try {
     localStorage.setItem('placementOS_sync_code', syncCode);
@@ -129,7 +208,7 @@ function generateSyncCode() {
   return code;
 }
 
-// Pull data from Firestore
+// Pull data from Firestore and perform automatic merge
 function syncPull(isManual = false) {
   if (!db || !syncCode) {
     updateSyncStatusUI('offline', 'var(--text2)');
@@ -148,78 +227,40 @@ function syncPull(isManual = false) {
         localState = localSaved ? JSON.parse(localSaved) : {};
       } catch (e) {}
       
+      let serverState = {};
+      try {
+        serverState = JSON.parse(serverData.data);
+      } catch(e) {}
+
       const serverUpdatedAt = parseTime(serverData.updatedAt);
       const localUpdatedAt = parseTime(localState.updatedAt);
       
       console.log("syncPull comparison: server =", serverUpdatedAt, "local =", localUpdatedAt);
       
-      if (serverUpdatedAt > localUpdatedAt) {
-        let serverState = {};
+      if (serverUpdatedAt !== localUpdatedAt) {
+        console.log("Sync mismatch detected. Merging states...");
+        const mergedState = deepMergeStates(localState, serverState);
+        const mergedStr = JSON.stringify(mergedState);
+        
         try {
-          serverState = JSON.parse(serverData.data);
+          localStorage.setItem('placementOS_v2', mergedStr);
+          localStorage.setItem('placementOS_v2_backup', mergedStr);
         } catch(e) {}
         
-        const localSolved = localState.dsa ? localState.dsa.length : 0;
-        const serverSolved = serverState.dsa ? serverState.dsa.length : 0;
-        
-        const isLocalEmpty = !localSaved || Object.keys(localState).length === 0;
-        
-        let confirmMsg = "🔄 Cloud has newer progress. Update this device from cloud?\n\n";
-        if (localSolved > serverSolved) {
-          confirmMsg = "⚠️ WARNING: The Cloud backup has LESS solved questions than this device!\n" +
-                       "Overwriting will LOSE some progress!\n\n" +
-                       `Device Solved: ${localSolved} | Cloud Solved: ${serverSolved}\n\n` +
-                       "Are you absolutely sure you want to download from the Cloud?";
-        } else {
-          confirmMsg += `Device: Level ${localState.level || 1} (${localSolved} solved)\n` +
-                        `Cloud: Level ${serverState.level || 1} (${serverSolved} solved)\n\n` +
-                        "Sync and update this device?";
+        if (typeof S !== 'undefined') {
+          Object.assign(S, mergedState);
         }
         
-        if (isLocalEmpty || confirm(confirmMsg)) {
-          console.log("Server data is newer. Syncing server data to local...");
-          try {
-            const parsedServer = JSON.parse(serverData.data);
-            
-            // Merge server data into local
-            localStorage.setItem('placementOS_v2', serverData.data);
-            localStorage.setItem('placementOS_v2_backup', serverData.data);
-            
-            if (typeof S !== 'undefined') {
-              Object.assign(S, parsedServer);
-            }
-
-            // Sync wallpaper to local storage if present in cloud backup
-            if (parsedServer.wallpaper) {
-              localStorage.setItem('placementos_wallpaper', parsedServer.wallpaper);
-            } else {
-              localStorage.removeItem('placementos_wallpaper');
-            }
-            
-            updateSyncStatusUI('synced', '#2ecc71');
-            
-            if (isLocalEmpty) {
-              location.reload();
-            } else {
-              alert("🔄 Sync complete! Page will reload to apply synced data.");
-              location.reload();
-            }
-          } catch (e) {
-            console.error("Failed to parse server sync data:", e);
-            updateSyncStatusUI('error', '#e74c3c');
-          }
-        } else {
-          // User cancelled overwrite, keep local as synced status
+        // Push merged state back to cloud
+        syncPush(mergedState).then(() => {
           updateSyncStatusUI('synced', '#2ecc71');
-        }
-      } else if (localUpdatedAt > serverUpdatedAt) {
-        console.log("Local data is newer. Pushing to server...");
-        syncPush(localState).then(() => {
-          updateSyncStatusUI('synced', '#2ecc71');
-          if (isManual && typeof toast === 'function') {
-            toast("📤 Local progress pushed to cloud successfully!");
-          }
-        }).catch(err => {
+          console.log("Merged state successfully updated on cloud.");
+          
+          // Reload page to apply changes
+          setTimeout(() => {
+            location.reload();
+          }, 300);
+        }).catch(() => {
           updateSyncStatusUI('error', '#e74c3c');
         });
       } else {
