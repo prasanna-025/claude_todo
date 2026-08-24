@@ -1,7 +1,7 @@
 /* ========================================
    PlacementOS — sync.js
-   Frictionless background syncing
-======================================== */
+   Frictionless background syncing with robust timestamp parsing
+   ======================================== */
 
 const firebaseConfig = {
   apiKey: "AIzaSyDj7T1LxwCpDuCHSIAj5lli4Y_Y2f73j7A",
@@ -21,6 +21,43 @@ function normalizeSyncCode(code) {
              .replace(/L/g, '1');
 }
 
+// Utility to parse any timestamp safely to numeric milliseconds
+function parseTime(val) {
+  if (!val) return 0;
+  if (typeof val === 'number') return val;
+  if (typeof val === 'string') {
+    const num = Number(val);
+    if (!isNaN(num)) return num;
+    const parsed = Date.parse(val);
+    return isNaN(parsed) ? 0 : parsed;
+  }
+  if (val.seconds) { // Firebase Timestamp object
+    return val.seconds * 1000 + Math.floor((val.nanoseconds || 0) / 1000000);
+  }
+  if (typeof val.toDate === 'function') {
+    return val.toDate().getTime();
+  }
+  return 0;
+}
+
+// Update the sync status indicator in the topbar dynamically
+function updateSyncStatusUI(status, color) {
+  const el = document.getElementById('sync-status');
+  if (!el) return;
+  el.style.color = color;
+  if (status === 'synced') {
+    el.innerHTML = '<i class="fas fa-cloud" style="color:#2ecc71;"></i> Synced';
+  } else if (status === 'saving') {
+    el.innerHTML = '<i class="fas fa-sync-alt fa-spin" style="color:#f1c40f;"></i> Saving...';
+  } else if (status === 'syncing') {
+    el.innerHTML = '<i class="fas fa-sync-alt fa-spin" style="color:#f1c40f;"></i> Syncing...';
+  } else if (status === 'error') {
+    el.innerHTML = '<i class="fas fa-exclamation-triangle" style="color:#e74c3c;"></i> Sync Error';
+  } else if (status === 'offline') {
+    el.innerHTML = '<i class="fas fa-cloud-slash" style="color:var(--text2);"></i> Offline';
+  }
+}
+
 let db = null;
 
 const localSavedStr = localStorage.getItem('placementOS_v2');
@@ -36,13 +73,19 @@ let syncCode = localStorage.getItem('placementOS_sync_code');
 if (isLocalDatabaseEmpty) {
   // Force connect to the user's cloud backup if no local progress exists
   syncCode = '0S-DSHGG0';
-  localStorage.setItem('placementOS_sync_code', syncCode);
+  try {
+    localStorage.setItem('placementOS_sync_code', syncCode);
+  } catch(e) {}
 } else if (syncCode) {
   syncCode = normalizeSyncCode(syncCode);
-  localStorage.setItem('placementOS_sync_code', syncCode);
+  try {
+    localStorage.setItem('placementOS_sync_code', syncCode);
+  } catch(e) {}
 } else {
   syncCode = '0S-DSHGG0';
-  localStorage.setItem('placementOS_sync_code', syncCode);
+  try {
+    localStorage.setItem('placementOS_sync_code', syncCode);
+  } catch(e) {}
 }
 
 // Initialize Firebase
@@ -70,7 +113,10 @@ if (typeof firebase !== 'undefined') {
     }
   } catch (e) {
     console.error("Firebase initialization failed:", e);
+    updateSyncStatusUI('offline', 'var(--text2)');
   }
+} else {
+  updateSyncStatusUI('offline', 'var(--text2)');
 }
 
 // Helper to generate a random code (excluding confusing characters)
@@ -86,9 +132,12 @@ function generateSyncCode() {
 // Pull data from Firestore
 function syncPull(isManual = false) {
   if (!db || !syncCode) {
+    updateSyncStatusUI('offline', 'var(--text2)');
     if (isManual && typeof toast === 'function') toast("⚠️ Sync offline: Firebase not initialized.", "error");
     return;
   }
+  
+  updateSyncStatusUI('syncing', '#f1c40f');
   
   db.collection('sync_states').doc(syncCode).get().then(doc => {
     if (doc.exists) {
@@ -99,8 +148,10 @@ function syncPull(isManual = false) {
         localState = localSaved ? JSON.parse(localSaved) : {};
       } catch (e) {}
       
-      const serverUpdatedAt = serverData.updatedAt || 0;
-      const localUpdatedAt = localState.updatedAt || 0;
+      const serverUpdatedAt = parseTime(serverData.updatedAt);
+      const localUpdatedAt = parseTime(localState.updatedAt);
+      
+      console.log("syncPull comparison: server =", serverUpdatedAt, "local =", localUpdatedAt);
       
       if (serverUpdatedAt > localUpdatedAt) {
         let serverState = {};
@@ -145,6 +196,8 @@ function syncPull(isManual = false) {
               localStorage.removeItem('placementos_wallpaper');
             }
             
+            updateSyncStatusUI('synced', '#2ecc71');
+            
             if (isLocalEmpty) {
               location.reload();
             } else {
@@ -153,15 +206,24 @@ function syncPull(isManual = false) {
             }
           } catch (e) {
             console.error("Failed to parse server sync data:", e);
+            updateSyncStatusUI('error', '#e74c3c');
           }
+        } else {
+          // User cancelled overwrite, keep local as synced status
+          updateSyncStatusUI('synced', '#2ecc71');
         }
       } else if (localUpdatedAt > serverUpdatedAt) {
         console.log("Local data is newer. Pushing to server...");
-        syncPush(localState);
-        if (isManual && typeof toast === 'function') {
-          toast("📤 Local progress pushed to cloud successfully!");
-        }
+        syncPush(localState).then(() => {
+          updateSyncStatusUI('synced', '#2ecc71');
+          if (isManual && typeof toast === 'function') {
+            toast("📤 Local progress pushed to cloud successfully!");
+          }
+        }).catch(err => {
+          updateSyncStatusUI('error', '#e74c3c');
+        });
       } else {
+        updateSyncStatusUI('synced', '#2ecc71');
         if (isManual && typeof toast === 'function') {
           toast("✅ Already in sync with cloud!");
         }
@@ -171,15 +233,24 @@ function syncPull(isManual = false) {
       const localSaved = localStorage.getItem('placementOS_v2');
       if (localSaved) {
         try {
-          syncPush(JSON.parse(localSaved));
-          if (isManual && typeof toast === 'function') {
-            toast("📤 Progress initialized & backed up to cloud!");
-          }
-        } catch (e) {}
+          syncPush(JSON.parse(localSaved)).then(() => {
+            updateSyncStatusUI('synced', '#2ecc71');
+            if (isManual && typeof toast === 'function') {
+              toast("📤 Progress initialized & backed up to cloud!");
+            }
+          }).catch(() => {
+            updateSyncStatusUI('error', '#e74c3c');
+          });
+        } catch (e) {
+          updateSyncStatusUI('error', '#e74c3c');
+        }
+      } else {
+        updateSyncStatusUI('synced', '#2ecc71');
       }
     }
   }).catch(err => {
     console.warn("Sync pull failed:", err);
+    updateSyncStatusUI('error', '#e74c3c');
     if (isManual && typeof toast === 'function') {
       toast("❌ Sync failed. Check internet connection.", "error");
     }
@@ -190,8 +261,10 @@ function syncPull(isManual = false) {
 function syncPush(state) {
   if (!db || !syncCode || !state) return Promise.reject("Sync offline");
   
+  updateSyncStatusUI('saving', '#f1c40f');
+  
   // Update state timestamp
-  state.updatedAt = state.updatedAt || Date.now();
+  state.updatedAt = parseTime(state.updatedAt) || Date.now();
   
   const payload = {
     data: JSON.stringify(state),
@@ -201,9 +274,11 @@ function syncPush(state) {
   return db.collection('sync_states').doc(syncCode).set(payload)
     .then(() => {
       console.log("Successfully pushed state to server sync ID:", syncCode);
+      updateSyncStatusUI('synced', '#2ecc71');
     })
     .catch(err => {
       console.warn("Sync push failed (offline or permission issue):", err);
+      updateSyncStatusUI('error', '#e74c3c');
       throw err;
     });
 }
@@ -215,15 +290,20 @@ function changeSyncCode(newCode) {
   if (newCode === syncCode) return;
   
   syncCode = newCode;
-  localStorage.setItem('placementOS_sync_code', syncCode);
+  try {
+    localStorage.setItem('placementOS_sync_code', syncCode);
+  } catch(e) {}
   
   // Pull the data immediately
   if (db) {
+    updateSyncStatusUI('syncing', '#f1c40f');
     db.collection('sync_states').doc(syncCode).get().then(doc => {
       if (doc.exists) {
         const serverData = doc.data();
-        localStorage.setItem('placementOS_v2', serverData.data);
-        localStorage.setItem('placementOS_v2_backup', serverData.data);
+        try {
+          localStorage.setItem('placementOS_v2', serverData.data);
+          localStorage.setItem('placementOS_v2_backup', serverData.data);
+        } catch(e) {}
         location.reload();
       } else {
         location.reload();
@@ -236,7 +316,6 @@ function changeSyncCode(newCode) {
 
 // Render the sync code in the UI
 function renderSyncUI() {
-  // Try to find a place to render the sync status (e.g. sidebar or footer)
   let sidebar = document.getElementById('sidebar');
   if (sidebar) {
     let syncPill = document.getElementById('sync-pill');
@@ -290,8 +369,10 @@ function forceBackupToCloud() {
     try {
       const stateObj = JSON.parse(saved);
       stateObj.updatedAt = Date.now();
-      localStorage.setItem('placementOS_v2', JSON.stringify(stateObj));
-      localStorage.setItem('placementOS_v2_backup', JSON.stringify(stateObj));
+      try {
+        localStorage.setItem('placementOS_v2', JSON.stringify(stateObj));
+        localStorage.setItem('placementOS_v2_backup', JSON.stringify(stateObj));
+      } catch(e) {}
       
       syncPush(stateObj).then(() => {
         alert("✅ Cloud backup successfully updated with this device's progress! Now you can reload or click 'Restore' on your other devices to sync.");
@@ -310,6 +391,7 @@ function forceRestoreFromCloud() {
       alert("⚠️ Sync offline: Firebase not initialized.");
       return;
     }
+    updateSyncStatusUI('syncing', '#f1c40f');
     db.collection('sync_states').doc(syncCode).get().then(doc => {
       if (doc.exists) {
         const serverData = doc.data();
@@ -320,15 +402,19 @@ function forceRestoreFromCloud() {
           if (parsedServer.wallpaper) {
             localStorage.setItem('placementos_wallpaper', parsedServer.wallpaper);
           }
+          updateSyncStatusUI('synced', '#2ecc71');
           alert("✅ Data restored from cloud successfully! The page will reload.");
           location.reload();
         } catch (e) {
+          updateSyncStatusUI('error', '#e74c3c');
           alert("❌ Error parsing cloud data: " + e.message);
         }
       } else {
+        updateSyncStatusUI('error', '#e74c3c');
         alert("❌ No backup found on cloud for code: " + syncCode);
       }
     }).catch(err => {
+      updateSyncStatusUI('error', '#e74c3c');
       alert("❌ Failed to download from cloud: " + err.message);
     });
   }
@@ -347,18 +433,22 @@ function forceBackupToCloudUrl() {
   try {
     const stateObj = JSON.parse(saved);
     stateObj.updatedAt = Date.now();
-    localStorage.setItem('placementOS_v2', JSON.stringify(stateObj));
-    localStorage.setItem('placementOS_v2_backup', JSON.stringify(stateObj));
+    try {
+      localStorage.setItem('placementOS_v2', JSON.stringify(stateObj));
+      localStorage.setItem('placementOS_v2_backup', JSON.stringify(stateObj));
+    } catch(e) {}
     
     const dsaCount = stateObj.dsa ? stateObj.dsa.length : 0;
     const levelVal = stateObj.level || 1;
     
     if (confirm("📤 Click OK to upload your phone's real progress (DSA Solved: " + dsaCount + ", Level: " + levelVal + ") to the cloud. This will overwrite the backup on the server.")) {
+      updateSyncStatusUI('saving', '#f1c40f');
       syncPush(stateObj).then(() => {
+        updateSyncStatusUI('synced', '#2ecc71');
         alert("✅ Success! Your phone's real data (DSA Solved: " + dsaCount + ") has been uploaded to the cloud backup! Now, you can open your laptop and click the red 'Restore' button to sync it.");
-        // Clean URL parameter and reload
         window.history.replaceState({}, document.title, window.location.pathname);
       }).catch(err => {
+        updateSyncStatusUI('error', '#e74c3c');
         alert("❌ Backup failed: " + err.message);
       });
     }
