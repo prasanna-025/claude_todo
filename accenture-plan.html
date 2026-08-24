@@ -7,7 +7,6 @@
   <link rel="stylesheet" href="style.css"/>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-  
 
   <style>
     .day-selector-card {
@@ -562,13 +561,12 @@
   <img class="lightbox-img" id="lightboxImg" src="" onclick="event.stopPropagation()"/>
 </div>
 
-
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 <script src="sync.js?v=2"></script>
 
 <script>
-  // 20-Day Accenture Prep structured data (Roadmap Tasks with Time Splits + Daily Revision)
+  // 20-Day Accenture Prep structured data (Roadmap contains Technical, English & Revision only)
   const planData = [
     {
       day: 1,
@@ -578,19 +576,11 @@
         "Variables, data types, operators & Conditions (Nested conditions)",
         "Loops (for / while) & Nested loop execution",
         "Output tracing practice & basic algorithm complexities",
-        "Coding: Arrays Traversal, Max/min, Sum, Count, Frequency, Basic searching",
         "English: Tenses, Self-Introduction, Speak 2 mins on education"
       ],
       problems: [
         { id: "ac_d1_t1", difficulty: "medium", time: "5.5h", name: "Pseudocode: Practice 40-50 output tracing questions" },
-        { id: "ac_d1_t2", difficulty: "easy", time: "35m", name: "Coding: LeetCode 1920 - Build Array from Permutation", url: "https://leetcode.com/problems/build-array-from-permutation/" },
-        { id: "ac_d1_t3", difficulty: "easy", time: "35m", name: "Coding: LeetCode 1929 - Concatenation of Array", url: "https://leetcode.com/problems/concatenation-of-array/" },
-        { id: "ac_d1_t4", difficulty: "easy", time: "35m", name: "Coding: LeetCode 1480 - Running Sum of 1d Array", url: "https://leetcode.com/problems/running-sum-of-1d-array/" },
-        { id: "ac_d1_t5", difficulty: "easy", time: "35m", name: "Coding: LeetCode 1295 - Find Numbers with Even Number of Digits", url: "https://leetcode.com/problems/find-numbers-with-even-number-of-digits/" },
-        { id: "ac_d1_t6", difficulty: "easy", time: "35m", name: "Coding: LeetCode 485 - Max Consecutive Ones", url: "https://leetcode.com/problems/max-consecutive-ones/" },
-        { id: "ac_d1_t7", difficulty: "easy", time: "35m", name: "Coding: LeetCode 26 - Remove Duplicates from Sorted Array", url: "https://leetcode.com/problems/remove-duplicates-from-sorted-array/" },
-        { id: "ac_d1_t8", difficulty: "easy", time: "35m", name: "Coding: LeetCode 27 - Remove Element", url: "https://leetcode.com/problems/remove-element/" },
-        { id: "ac_d1_t9", difficulty: "easy", time: "1.5h", name: "English: Practice self-introduction and tenses (2 mins speaking)" },
+        { id: "ac_d1_t2", difficulty: "easy", time: "1.5h", name: "English: Practice self-introduction and tenses (2 mins speaking)" },
         { id: "ac_d1_rev", difficulty: "easy", time: "1h", name: "Daily Revision: Review today's mistakes and check weak topics" }
       ]
     },
@@ -601,16 +591,11 @@
       learn: [
         "Bitwise Operators: &, |, ^, <<, >>",
         "Recursion tracing, return value computation, recursion trees",
-        "Coding: Two pointers, reversing, element shifts, rotations",
         "English: Grammar concepts + Mock self-introduction without memorizing"
       ],
       problems: [
         { id: "ac_d2_t1", difficulty: "medium", time: "5.5h", name: "Pseudocode: Solve 40-50 Recursion Tracing & Bitwise MCQs" },
-        { id: "ac_d2_t2", difficulty: "easy", time: "1h", name: "Coding: LeetCode 414 - Third Maximum Number", url: "https://leetcode.com/problems/third-maximum-number/" },
-        { id: "ac_d2_t3", difficulty: "easy", time: "1h", name: "Coding: LeetCode 747 - Largest Number At Least Twice of Others", url: "https://leetcode.com/problems/largest-number-at-least-twice-of-others/" },
-        { id: "ac_d2_t4", difficulty: "easy", time: "1h", name: "Coding: Reversing an array & Move zeroes to end" },
-        { id: "ac_d2_t5", difficulty: "medium", time: "1h", name: "Coding: Rotate array by K steps & find second largest element" },
-        { id: "ac_d2_t6", difficulty: "easy", time: "1.5h", name: "English: Practice grammar exercises & flow speaking" },
+        { id: "ac_d2_t2", difficulty: "easy", time: "1.5h", name: "English: Practice grammar exercises & flow speaking" },
         { id: "ac_d2_rev", difficulty: "easy", time: "1h", name: "Daily Revision: Review today's mistakes and check weak topics" }
       ]
     },
@@ -622,14 +607,11 @@
         "Core OOP: Class, Object, Constructor, Access specifiers",
         "Pillars: Encapsulation, Abstraction, Inheritance, Polymorphism",
         "Advanced: Overloading, Overriding, Abstract classes",
-        "Coding: Strings Traversal, Reverse, Palindromes, counts",
         "English: Answer 'Why Accenture?' and explain your degree path"
       ],
       problems: [
         { id: "ac_d3_t1", difficulty: "medium", time: "5.5h", name: "OOP: Complete 50+ MCQ questions on classes, inheritance & virtual functions" },
-        { id: "ac_d3_t2", difficulty: "easy", time: "2h", name: "Coding: Check if string is Palindrome (ignoring case & symbols)" },
-        { id: "ac_d3_t3", difficulty: "easy", time: "2h", name: "Coding: Reversing a string & counting character frequency" },
-        { id: "ac_d3_t4", difficulty: "easy", time: "1.5h", name: "English: Practice 'Why Accenture?' and explain your engineering degree aloud" },
+        { id: "ac_d3_t2", difficulty: "easy", time: "1.5h", name: "English: Practice 'Why Accenture?' and explain your engineering degree aloud" },
         { id: "ac_d3_rev", difficulty: "easy", time: "1h", name: "Daily Revision: Review today's mistakes and check weak topics" }
       ]
     },
@@ -640,14 +622,11 @@
       learn: [
         "SQL Select queries, filtering with WHERE, sorting with ORDER BY, pagination with LIMIT",
         "Aggregations: COUNT(), SUM(), AVG(), MAX(), MIN()",
-        "Coding: String anagrams, ASCII operations, character conversions",
         "English: Practice structure explaining your graduation final-year project"
       ],
       problems: [
         { id: "ac_d4_t1", difficulty: "easy", time: "5.5h", name: "SQL: Write 20-30 basic queries containing filters, aggregates & sorting" },
-        { id: "ac_d4_t2", difficulty: "easy", time: "2h", name: "Coding: LeetCode 242 - Valid Anagram", url: "https://leetcode.com/problems/valid-anagram/" },
-        { id: "ac_d4_t3", difficulty: "easy", time: "2h", name: "Coding: String character substitutions using ASCII values" },
-        { id: "ac_d4_t4", difficulty: "easy", time: "1.5h", name: "English: Complete a 3-minute explanation session of your project" },
+        { id: "ac_d4_t2", difficulty: "easy", time: "1.5h", name: "English: Complete a 3-minute explanation session of your project" },
         { id: "ac_d4_rev", difficulty: "easy", time: "1h", name: "Daily Revision: Review today's mistakes and check weak topics" }
       ]
     },
@@ -658,15 +637,12 @@
       learn: [
         "Aggregation grouping: GROUP BY and GROUP filter HAVING",
         "Relational Joins: INNER JOIN, LEFT JOIN, RIGHT JOIN, FULL OUTER JOIN",
-        "Combining queries: JOIN + WHERE + GROUP BY + HAVING + ORDER BY",
-        "Coding: Basic Math algorithms (Primes, GCD, LCM, Fibonacci, Armstrong numbers)"
+        "Combining queries: JOIN + WHERE + GROUP BY + HAVING + ORDER BY"
       ],
       problems: [
         { id: "ac_d5_t1", difficulty: "medium", time: "3.5h", name: "SQL: Practice 20+ query combinations using JOINs and GROUP BY clauses" },
-        { id: "ac_d5_t4", difficulty: "medium", time: "2h", name: "SQL Mock: Complete 1 timed SQL database query assessment" },
-        { id: "ac_d5_t2", difficulty: "easy", time: "2h", name: "Coding: Write Prime number checks & find Greatest Common Divisor (GCD/LCM)" },
-        { id: "ac_d5_t3", difficulty: "easy", time: "2h", name: "Coding: Generate Fibonacci sequences and check Armstrong numbers" },
-        { id: "ac_d5_t5", difficulty: "easy", time: "1.5h", name: "English: Technical explanation speaking practice" },
+        { id: "ac_d5_t2", difficulty: "medium", time: "2h", name: "SQL Mock: Complete 1 timed SQL database query assessment" },
+        { id: "ac_d5_t3", difficulty: "easy", time: "1.5h", name: "English: Technical explanation speaking practice" },
         { id: "ac_d5_rev", difficulty: "easy", time: "1h", name: "Daily Revision: Review today's mistakes and check weak topics" }
       ]
     },
@@ -677,14 +653,11 @@
       learn: [
         "HTML: Basics, structural tags, forms, input types, tables, labels, buttons",
         "CSS: Selectors, box model, margins/paddings, display types, Flexbox grid system",
-        "Coding: Modulo operations, digit extractions, palindrome numbers, base conversions",
         "English: Grammar correction exercises + basic HR question preparation"
       ],
       problems: [
         { id: "ac_d6_t1", difficulty: "easy", time: "5.5h", name: "Web: Code a standard webpage mock containing input forms, lists, and CSS Flexbox layout" },
-        { id: "ac_d6_t2", difficulty: "easy", time: "2h", name: "Coding: Check if a number is a Palindrome without converting to String" },
-        { id: "ac_d6_t3", difficulty: "easy", time: "2h", name: "Coding: Extract digits from number and convert decimals to binary" },
-        { id: "ac_d6_t4", difficulty: "easy", time: "1.5h", name: "English: Complete 20 grammar MCQs & prepare answers for basic HR queries" },
+        { id: "ac_d6_t2", difficulty: "easy", time: "1.5h", name: "English: Complete 20 grammar MCQs & prepare answers for basic HR queries" },
         { id: "ac_d6_rev", difficulty: "easy", time: "1h", name: "Daily Revision: Review today's mistakes and check weak topics" }
       ]
     },
@@ -695,13 +668,11 @@
       learn: [
         "DOM Selectors: getElementById, querySelector",
         "Interactivity: addEventListener, updating textContent/innerHTML, dynamic styling",
-        "Event flows: Input inputs -> trigger button click -> JS validations -> update DOM styling",
-        "Coding: Arrays + Strings + Math patterns consolidated practice"
+        "Event flows: Input inputs -> trigger button click -> JS validations -> update DOM styling"
       ],
       problems: [
         { id: "ac_d7_t1", difficulty: "medium", time: "5.5h", name: "JS: Code a dynamic form validation script (check email, password strength, empty inputs)" },
-        { id: "ac_d7_t2", difficulty: "medium", time: "4h", name: "Coding: Mixed Array/String practice questions under 30 mins each" },
-        { id: "ac_d7_t3", difficulty: "easy", time: "1.5h", name: "English: Practice explaining your completed JS validation logic in English" },
+        { id: "ac_d7_t2", difficulty: "easy", time: "1.5h", name: "English: Practice explaining your completed JS validation logic in English" },
         { id: "ac_d7_rev", difficulty: "easy", time: "1h", name: "Daily Revision: Review today's mistakes and check weak topics" }
       ]
     },
@@ -712,13 +683,11 @@
       learn: [
         "OSI Model: All 7 layers (Physical to Application) & functions",
         "Protocols: TCP/IP stack, TCP vs UDP comparison, IP routing, DNS resolver, HTTP/HTTPS",
-        "Port mappings: HTTP (80), HTTPS (443), SSH (22), DNS (53), FTP (21)",
-        "Coding: Arrays & Strings traversal sheets practice"
+        "Port mappings: HTTP (80), HTTPS (443), SSH (22), DNS (53), FTP (21)"
       ],
       problems: [
         { id: "ac_d8_t1", difficulty: "medium", time: "5.5h", name: "CN: Solve 50+ Computer Networks port & OSI Layer questions" },
-        { id: "ac_d8_t2", difficulty: "medium", time: "4h", name: "Coding: Check for substrings and duplicates inside string lists" },
-        { id: "ac_d8_t3", difficulty: "easy", time: "1.5h", name: "English: Record yourself explaining the difference between TCP and UDP (2 mins)" },
+        { id: "ac_d8_t2", difficulty: "easy", time: "1.5h", name: "English: Record yourself explaining the difference between TCP and UDP (2 mins)" },
         { id: "ac_d8_rev", difficulty: "easy", time: "1h", name: "Daily Revision: Review today's mistakes and check weak topics" }
       ]
     },
@@ -729,13 +698,11 @@
       learn: [
         "Wi-Fi Cryptography: WEP, WPA, WPA2, WPA3 security schemas",
         "Encryption: Symmetric vs Asymmetric cryptography keys",
-        "Core Security: Authentication, authorization, firewalls, network routing defenses",
-        "Coding: Math + logic problems"
+        "Core Security: Authentication, authorization, firewalls, network routing defenses"
       ],
       problems: [
         { id: "ac_d9_t1", difficulty: "medium", time: "5.5h", name: "Security: Complete 50+ encryption & network security MCQs" },
-        { id: "ac_d9_t2", difficulty: "easy", time: "4h", name: "Coding: Practice binary conversions and bit manipulations" },
-        { id: "ac_d9_t3", difficulty: "easy", time: "1.5h", name: "English: Explain Symmetric vs Asymmetric encryption aloud" },
+        { id: "ac_d9_t2", difficulty: "easy", time: "1.5h", name: "English: Explain Symmetric vs Asymmetric encryption aloud" },
         { id: "ac_d9_rev", difficulty: "easy", time: "1h", name: "Daily Revision: Review today's mistakes and check weak topics" }
       ]
     },
@@ -746,13 +713,11 @@
       learn: [
         "Cloud Service Models: IaaS, PaaS, SaaS, Deployment models (Public, Private, Hybrid)",
         "Git commands: clone, add, commit, push, pull, branch, merge, conflict resolutions",
-        "DevOps: Continuous Integration (CI), Continuous Deployment (CD), Build pipelines",
-        "Coding: Time-boxed coding exercises"
+        "DevOps: Continuous Integration (CI), Continuous Deployment (CD), Build pipelines"
       ],
       problems: [
         { id: "ac_d10_t1", difficulty: "medium", time: "5.5h", name: "Cloud/Git: Complete 50+ cloud computing, Git commands & DevOps pipelines MCQs" },
-        { id: "ac_d10_t2", difficulty: "medium", time: "4h", name: "Coding: Complete 1 timed coding simulation (2 coding problems in 45 mins)" },
-        { id: "ac_d10_t3", difficulty: "easy", time: "1.5h", name: "English: Speak on 'What is cloud computing?' for 2 minutes" },
+        { id: "ac_d10_t2", difficulty: "easy", time: "1.5h", name: "English: Speak on 'What is cloud computing?' for 2 minutes" },
         { id: "ac_d10_rev", difficulty: "easy", time: "1h", name: "Daily Revision: Review today's mistakes and check weak topics" }
       ]
     },
@@ -767,8 +732,7 @@
       ],
       problems: [
         { id: "ac_d11_t1", difficulty: "medium", time: "5.5h", name: "MS Office: Solve 60+ Excel formulas & Word/PowerPoint shortcut keys MCQs" },
-        { id: "ac_d11_t2", difficulty: "easy", time: "4h", name: "Coding: Arrays and String operations basic speed practice" },
-        { id: "ac_d11_t3", difficulty: "easy", time: "1.5h", name: "English: Answer mock HR questions (Strengths, Weaknesses, Goals)" },
+        { id: "ac_d11_t2", difficulty: "easy", time: "1.5h", name: "English: Answer mock HR questions (Strengths, Weaknesses, Goals)" },
         { id: "ac_d11_rev", difficulty: "easy", time: "1h", name: "Daily Revision: Review today's mistakes and check weak topics" }
       ]
     },
@@ -778,13 +742,11 @@
       subtitle: "Processes, Memory & Architecture",
       learn: [
         "OS Concepts: Process vs Thread, Process scheduling algorithms, Deadlocks, Memory allocation",
-        "Hardware basics: CPU, cache memories, RAM modules, HDD/SSD storage, I/O ports",
-        "Coding: Basic mathematical algorithms"
+        "Hardware basics: CPU, cache memories, RAM modules, HDD/SSD storage, I/O ports"
       ],
       problems: [
         { id: "ac_d12_t1", difficulty: "medium", time: "5.5h", name: "OS: Solve 50+ process scheduling, deadlock & memory paging MCQs" },
-        { id: "ac_d12_t2", difficulty: "easy", time: "4h", name: "Coding: LeetCode 283 - Move Zeroes", url: "https://leetcode.com/problems/move-zeroes/" },
-        { id: "ac_d12_t3", difficulty: "easy", time: "1.5h", name: "English: Describe how process scheduling works in English" },
+        { id: "ac_d12_t2", difficulty: "easy", time: "1.5h", name: "English: Describe how process scheduling works in English" },
         { id: "ac_d12_rev", difficulty: "easy", time: "1h", name: "Daily Revision: Review today's mistakes and check weak topics" }
       ]
     },
@@ -799,8 +761,7 @@
       ],
       problems: [
         { id: "ac_d13_t1", difficulty: "hard", time: "5.5h", name: "Mock: Complete 100+ comprehensive mixed MCQs assessment" },
-        { id: "ac_d13_t2", difficulty: "medium", time: "4h", name: "Coding: Mixed Arrays + Strings speed drills" },
-        { id: "ac_d13_t3", difficulty: "easy", time: "1.5h", name: "English: Conduct a mock HR interview walkthrough" },
+        { id: "ac_d13_t2", difficulty: "easy", time: "1.5h", name: "English: Conduct a mock HR interview walkthrough" },
         { id: "ac_d13_rev", difficulty: "easy", time: "1h", name: "Daily Revision: Review today's mistakes and check weak topics" }
       ]
     },
@@ -809,15 +770,14 @@
       title: "Day 14 — Hands-on Consolidation 🔥",
       subtitle: "Assessment Simulation",
       learn: [
-        "Simulate practical assessments: SQL queries, HTML/CSS/JS layouts, coding problems",
+        "Simulate practical assessments: SQL queries, HTML/CSS/JS layouts",
         "Absolutely no searching on Google, ChatGPT, or using notes",
         "Target optimal layouts, clean queries, and correct logic"
       ],
       problems: [
         { id: "ac_d14_t1", difficulty: "hard", time: "2.5h", name: "SQL: Solve 2 complex query problems under time constraint" },
         { id: "ac_d14_t2", difficulty: "hard", time: "3h", name: "Web: Code a complete interactive web interface without helpers (60 mins)" },
-        { id: "ac_d14_t3", difficulty: "hard", time: "4h", name: "Coding: Solve 2 unseen coding questions (timed)" },
-        { id: "ac_d14_t4", difficulty: "hard", time: "1.5h", name: "English: Record yourself explaining one technical design" },
+        { id: "ac_d14_t3", difficulty: "hard", time: "1.5h", name: "English: Record yourself explaining one technical design" },
         { id: "ac_d14_rev", difficulty: "easy", time: "1h", name: "Daily Revision: Review today's mistakes and check weak topics" }
       ]
     },
@@ -832,8 +792,7 @@
       ],
       problems: [
         { id: "ac_d15_t1", difficulty: "hard", time: "5.5h", name: "Simulation: Technical Mock 1 (90+ questions, timed)" },
-        { id: "ac_d15_t2", difficulty: "medium", time: "4h", name: "Coding: Mixed Array/String problems review" },
-        { id: "ac_d15_t3", difficulty: "easy", time: "1.5h", name: "English: Practice speaking clearly about your technical skills" },
+        { id: "ac_d15_t2", difficulty: "easy", time: "1.5h", name: "English: Practice speaking clearly about your technical skills" },
         { id: "ac_d15_rev", difficulty: "easy", time: "1h", name: "Daily Revision: Review today's mistakes and check weak topics" }
       ]
     },
@@ -843,13 +802,12 @@
       subtitle: "Practical Exam Run",
       learn: [
         "Simulate the practical hands-on assessments",
-        "Code 2 coding problems + 2 SQL database joins/aggregation queries + 1 JS page",
+        "Code 2 SQL database joins/aggregation queries + 1 JS page",
         "Track time spent on each sub-topic"
       ],
       problems: [
         { id: "ac_d16_t1", difficulty: "hard", time: "5.5h", name: "Simulation: Timed SQL & Web mock exam (45 mins)" },
-        { id: "ac_d16_t2", difficulty: "hard", time: "4h", name: "Simulation: Timed coding mock exam (45 mins)" },
-        { id: "ac_d16_t3", difficulty: "medium", time: "1.5h", name: "English: Practice responding to technical scenarios" },
+        { id: "ac_d16_t2", difficulty: "medium", time: "1.5h", name: "English: Practice responding to technical scenarios" },
         { id: "ac_d16_rev", difficulty: "easy", time: "1h", name: "Daily Revision: Review today's mistakes and check weak topics" }
       ]
     },
@@ -859,13 +817,11 @@
       subtitle: "Error Log Target",
       learn: [
         "Dedicate time entirely to your lowest-scoring topics from Mocks",
-        "Practice JOIN queries, recursion trees, or networks port mappings",
-        "Re-solve coding questions you struggled with"
+        "Practice JOIN queries, recursion trees, or networks port mappings"
       ],
       problems: [
         { id: "ac_d17_t1", difficulty: "medium", time: "5.5h", name: "Technical: Review and resolve 50+ MCQs in your weakest areas" },
-        { id: "ac_d17_t2", difficulty: "medium", time: "4h", name: "Coding: Re-attempt failed coding problems" },
-        { id: "ac_d17_t3", difficulty: "easy", time: "1.5h", name: "English: Refine and speak answers to difficult HR queries" },
+        { id: "ac_d17_t2", difficulty: "easy", time: "1.5h", name: "English: Refine and speak answers to difficult HR queries" },
         { id: "ac_d17_rev", difficulty: "easy", time: "1h", name: "Daily Revision: Review today's mistakes and check weak topics" }
       ]
     },
@@ -874,14 +830,13 @@
       title: "Day 18 — Full Assessment Simulation 🔥",
       subtitle: "Accenture Simulation Mode",
       learn: [
-        "Simulate the complete Accenture exam (Technical MCQs + Hands-on coding + queries)",
+        "Simulate the complete Accenture exam (Technical MCQs + Hands-on queries)",
         "Strict timings, no outside resources allowed",
         "Analyze mistakes and note areas of delay"
       ],
       problems: [
-        { id: "ac_d18_t1", difficulty: "hard", time: "5.5h", name: "Exam: Full Accenture simulation (combined MCQs + Coding)" },
-        { id: "ac_d18_t2", difficulty: "medium", time: "4h", name: "Coding: Speed practice with array/string manipulations" },
-        { id: "ac_d18_t3", difficulty: "medium", time: "1.5h", name: "English: Perform mock HR interview recording" },
+        { id: "ac_d18_t1", difficulty: "hard", time: "5.5h", name: "Exam: Full Accenture simulation (combined MCQs + Web/SQL)" },
+        { id: "ac_d18_t2", difficulty: "medium", time: "1.5h", name: "English: Perform mock HR interview recording" },
         { id: "ac_d18_rev", difficulty: "easy", time: "1h", name: "Daily Revision: Review today's mistakes and check weak topics" }
       ]
     },
@@ -896,8 +851,7 @@
       ],
       problems: [
         { id: "ac_d19_t1", difficulty: "hard", time: "5.5h", name: "Final Mock: Full-length exam simulation" },
-        { id: "ac_d19_t2", difficulty: "easy", time: "4h", name: "Coding: Speed-solve 5 easy level array/string problems" },
-        { id: "ac_d19_t3", difficulty: "medium", time: "1.5h", name: "English: Final HR verbal checks" },
+        { id: "ac_d19_t2", difficulty: "medium", time: "1.5h", name: "English: Final HR verbal checks" },
         { id: "ac_d19_rev", difficulty: "easy", time: "1h", name: "Daily Revision: Review today's mistakes and check weak topics" }
       ]
     },
@@ -907,13 +861,11 @@
       subtitle: "Mistake Notebook Checks",
       learn: [
         "NO new learning topics today",
-        "Review mistake logs, SQL join cheat sheets, networks ports table, and OOP templates",
-        "Quick revision of basic coding patterns (pointers, slides, math)"
+        "Review mistake logs, SQL join cheat sheets, networks ports table, and OOP templates"
       ],
       problems: [
         { id: "ac_d20_t1", difficulty: "medium", time: "5.5h", name: "Revision: Go through your mistake notebook & coding notes" },
-        { id: "ac_d20_t2", difficulty: "easy", time: "4h", name: "Coding: Revise array and string structures" },
-        { id: "ac_d20_t3", difficulty: "easy", time: "1.5h", name: "English: Speak confidently on all classic HR questions" },
+        { id: "ac_d20_t2", difficulty: "easy", time: "1.5h", name: "English: Speak confidently on all classic HR questions" },
         { id: "ac_d20_rev", difficulty: "easy", time: "1h", name: "Daily Revision: Review today's mistakes and check weak topics" }
       ]
     }
@@ -1396,7 +1348,6 @@ Space Complexity (if code):`;
     
     // Group tasks
     let techTotal = 0, techSolved = 0, techHours = 5.5;
-    let codingTotal = 0, codingSolved = 0, codingHours = 4.0;
     let engTotal = 0, engSolved = 0, engHours = 1.5;
     let revTotal = 0, revSolved = 0, revHours = 1.0;
     
@@ -1404,10 +1355,7 @@ Space Complexity (if code):`;
       const isSolved = !!S.accenturePlanChecks[p.id];
       const nameLower = p.name.toLowerCase();
       
-      if (nameLower.includes("coding:") || p.url) {
-        codingTotal++;
-        if (isSolved) codingSolved++;
-      } else if (nameLower.includes("english:")) {
+      if (nameLower.includes("english:")) {
         engTotal++;
         if (isSolved) engSolved++;
       } else if (nameLower.includes("revision:")) {
@@ -1421,12 +1369,11 @@ Space Complexity (if code):`;
     
     // Calculate achieved hours based on proportions
     const techAchieved = techTotal > 0 ? (techSolved / techTotal) * techHours : 0;
-    const codingAchieved = codingTotal > 0 ? (codingSolved / codingTotal) * codingHours : 0;
     const engAchieved = engTotal > 0 ? (engSolved / engTotal) * engHours : 0;
     const revAchieved = revTotal > 0 ? (revSolved / revTotal) * revHours : 0;
     
-    const totalAchieved = techAchieved + codingAchieved + engAchieved + revAchieved;
-    const achievedPercent = Math.round((totalAchieved / 12.0) * 100);
+    const totalAchieved = techAchieved + engAchieved + revAchieved;
+    const achievedPercent = Math.round((totalAchieved / 8.0) * 100);
     
     const formatHours = (hr) => {
       if (hr === 0) return "0h";
@@ -1440,11 +1387,11 @@ Space Complexity (if code):`;
         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:12px;">
           <div>
             <h3 style="font-size:14px; font-weight:700; color:#fff; display:flex; align-items:center; gap:6px;"><i class="fas fa-tasks"></i> Day ${currDay.day} Study Schedule Budget</h3>
-            <p style="font-size:11.5px; color:var(--text2); margin-top:2px;">Complete tasks to log your 12 study hours today.</p>
+            <p style="font-size:11.5px; color:var(--text2); margin-top:2px;">Complete tasks to log your study hours. (Practice Coding separately in the Coding Sheet tab!).</p>
           </div>
           <div style="text-align:right;">
-            <span style="font-size:16px; font-weight:700; color:var(--accent2);">${formatHours(totalAchieved)} / 12h Achieved</span>
-            <div style="font-size:11px; color:var(--text2); margin-top:1px;">${achievedPercent}% of daily budget</div>
+            <span style="font-size:16px; font-weight:700; color:var(--accent2);">${formatHours(totalAchieved)} / 8h Achieved</span>
+            <div style="font-size:11px; color:var(--text2); margin-top:1px;">${achievedPercent}% of Roadmap budget</div>
           </div>
         </div>
         
@@ -1461,12 +1408,12 @@ Space Complexity (if code):`;
             <div style="font-size:10px; color:var(--text2); margin-top:2px;">${techSolved}/${techTotal} Done</div>
           </div>
 
-          <!-- Coding Card -->
-          <div style="background:rgba(255,255,255,0.01); border:1px solid var(--border); border-radius:8px; padding:10px; text-align:center;">
+          <!-- Coding Card (Placeholder) -->
+          <div style="background:rgba(255,255,255,0.01); border:1px solid var(--border); border-radius:8px; padding:10px; text-align:center; opacity: 0.65;">
             <div style="font-size:16px; margin-bottom:4px;">💻</div>
-            <div style="font-size:11px; font-weight:700; color:#fff; text-transform:uppercase; letter-spacing:0.5px;">Coding/DSA</div>
-            <div style="font-size:13px; font-weight:700; color:var(--accent2); margin-top:2px;">${formatHours(codingAchieved)} / 4h</div>
-            <div style="font-size:10px; color:var(--text2); margin-top:2px;">${codingSolved}/${codingTotal} Done</div>
+            <div style="font-size:11px; font-weight:700; color:var(--text2); text-transform:uppercase; letter-spacing:0.5px;">Coding/DSA</div>
+            <div style="font-size:12px; font-weight:700; color:var(--text2); margin-top:2px;">4.0h Allocated</div>
+            <div style="font-size:10px; color:var(--accent2); margin-top:2px;">Track on Coding Tab</div>
           </div>
 
           <!-- English Card -->
@@ -2039,7 +1986,6 @@ Space Complexity (if code):`;
     document.getElementById('sidebar').classList.remove('active');
     document.getElementById('sidebarOverlay').classList.remove('active');
   }
-
 
   // Setup mobile menu
   function setupMobileMenu() {
