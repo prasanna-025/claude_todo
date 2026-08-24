@@ -1555,57 +1555,134 @@ Space Complexity (if code):`;
     const progress = getDayProgress(dayNum);
     document.getElementById('day-solved-text').textContent = `${progress.solved}/${progress.total} Done`;
     
+    // Group tasks by category
+    const techTasks = [];
+    const codingTasks = [];
+    const englishTasks = [];
+    const revisionTasks = [];
+    
     currDay.problems.forEach(p => {
-      const isSolved = !!S.accenturePlanChecks[p.id];
-      const card = document.createElement('div');
-      card.id = `problem-card-${p.id}`;
-      card.className = `problem-card ${isSolved ? 'solved' : ''}`;
+      const nameLower = p.name.toLowerCase();
+      if (nameLower.includes("coding:") || p.url) {
+        codingTasks.push(p);
+      } else if (nameLower.includes("english:")) {
+        englishTasks.push(p);
+      } else if (nameLower.includes("revision:")) {
+        revisionTasks.push(p);
+      } else {
+        techTasks.push(p);
+      }
+    });
+
+    const createCategoryBlock = (title, icon, hours, tasks, color) => {
+      if (tasks.length === 0) return null;
       
-      const titleLink = p.url 
-        ? `<a href="${p.url}" target="_blank" class="problem-title">${p.name} <i class="fas fa-external-link-alt" style="font-size:10px; color:var(--accent2);"></i></a>`
-        : `<span class="problem-title">${p.name}</span>`;
-
-      card.innerHTML = `
-        <div class="problem-header">
-          <div class="problem-title-wrap">
-            <input type="checkbox" onchange="toggleProblemSolved('${p.id}', this)" ${isSolved ? 'checked' : ''}/>
-            ${titleLink}
-          </div>
-          <div class="problem-meta">
-            ${p.time ? `<span class="badge-time" style="padding:3px 8px; border-radius:6px; font-size:10.5px; font-weight:600; background:rgba(255, 255, 255, 0.05); border:1px solid var(--border); color:var(--text2); display:inline-flex; align-items:center; gap:4px; margin-right:4px;"><i class="far fa-clock"></i> ${p.time}</span>` : ''}
-            <span class="badge-diff ${p.difficulty}">${p.difficulty}</span>
-            <button class="btn-toggle-editor" id="btn-editor-${p.id}" onclick="toggleEditor('${p.id}')"><i class="fas fa-edit"></i> Notes &amp; Code</button>
-          </div>
-        </div>
-        
-        <div class="editor-panel" id="editor-${p.id}">
-          <div class="editor-cols">
-            
-            <div class="editor-col">
-              <label>Study Notes</label>
-              <textarea class="editor-textarea" id="notes-textarea-${p.id}" onchange="saveProblemNotes('${p.id}', this.value)" placeholder="Write your notes or MCQ mistake logs here..."></textarea>
-            </div>
-            
-            <div class="editor-col">
-              <label>Practice Code / Queries</label>
-              <textarea class="editor-textarea code" id="code-textarea-${p.id}" onchange="saveProblemCode('${p.id}', this.value)" placeholder="-- Paste query or code snippet here..."></textarea>
-            </div>
-
-            <div class="editor-col">
-              <label>Proof of Practice / Screenshot</label>
-              <div class="screenshot-dropzone" id="dropzone-${p.id}" onpaste="handlePasteScreenshot(event, '${p.id}')" onclick="triggerFileInput('${p.id}')" tabindex="0">
-                <i class="fas fa-camera" style="font-size:18px; margin-bottom:4px; display:block; color:var(--accent);"></i>
-                Paste (Ctrl+V) or click to upload
-              </div>
-              <input type="file" id="file-${p.id}" accept="image/*" style="display:none;" onchange="handleUploadScreenshot(event, '${p.id}')"/>
-            </div>
-
-          </div>
+      const block = document.createElement('div');
+      block.style.background = 'rgba(16, 19, 28, 0.4)';
+      block.style.border = '1px solid var(--border)';
+      block.style.borderLeft = `4px solid ${color}`;
+      block.style.borderRadius = '12px';
+      block.style.padding = '18px';
+      block.style.marginBottom = '20px';
+      
+      // Header
+      const header = document.createElement('div');
+      header.style.display = 'flex';
+      header.style.justifyContent = 'space-between';
+      header.style.alignItems = 'center';
+      header.style.borderBottom = '1px dashed var(--border)';
+      header.style.paddingBottom = '10px';
+      header.style.marginBottom = '14px';
+      
+      let solvedCount = 0;
+      tasks.forEach(t => { if (S.accenturePlanChecks[t.id]) solvedCount++; });
+      
+      header.innerHTML = `
+        <h3 style="font-size: 14px; font-weight:700; color:#fff; display:flex; align-items:center; gap:8px; margin:0;">
+          <span style="font-size:16px;">${icon}</span> ${title}
+        </h3>
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span class="category-solved-badge" style="font-size:11px; font-weight:700; color:${color}; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05); padding:3px 10px; border-radius:12px;">
+            ${solvedCount} of ${tasks.length} Done
+          </span>
+          <span style="font-size:11px; font-weight:700; color:var(--text2); background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05); padding:3px 10px; border-radius:12px;">
+            <i class="far fa-clock"></i> ${hours} Allocation
+          </span>
         </div>
       `;
+      block.appendChild(header);
       
-      problemsContainer.appendChild(card);
-    });
+      // Tasks container
+      const taskContainer = document.createElement('div');
+      taskContainer.style.display = 'flex';
+      taskContainer.style.flexDirection = 'column';
+      taskContainer.style.gap = '10px';
+      
+      tasks.forEach(p => {
+        const isSolved = !!S.accenturePlanChecks[p.id];
+        const card = document.createElement('div');
+        card.id = `problem-card-${p.id}`;
+        card.className = `problem-card ${isSolved ? 'solved' : ''}`;
+        card.style.margin = '0';
+        card.style.padding = '12px';
+        card.style.background = 'rgba(0,0,0,0.15)';
+        
+        const titleLink = p.url 
+          ? `<a href="${p.url}" target="_blank" class="problem-title" style="font-size:13.5px;">${p.name} <i class="fas fa-external-link-alt" style="font-size:9px; color:var(--accent2);"></i></a>`
+          : `<span class="problem-title" style="font-size:13.5px;">${p.name}</span>`;
+
+        card.innerHTML = `
+          <div class="problem-header">
+            <div class="problem-title-wrap">
+              <input type="checkbox" onchange="toggleProblemSolved('${p.id}', this)" ${isSolved ? 'checked' : ''}/>
+              ${titleLink}
+            </div>
+            <div class="problem-meta">
+              ${p.time ? `<span class="badge-time" style="padding:2px 6px; border-radius:4px; font-size:10px; font-weight:600; background:rgba(255, 255, 255, 0.05); border:1px solid var(--border); color:var(--text2); display:inline-flex; align-items:center; gap:4px; margin-right:4px;"><i class="far fa-clock"></i> ${p.time}</span>` : ''}
+              <span class="badge-diff ${p.difficulty}" style="font-size:9px; padding:2px 6px;">${p.difficulty}</span>
+              <button class="btn-toggle-editor" id="btn-editor-${p.id}" onclick="toggleEditor('${p.id}')" style="font-size:10px; padding:2px 6px;"><i class="fas fa-edit"></i> Notes &amp; Code</button>
+            </div>
+          </div>
+          
+          <div class="editor-panel" id="editor-${p.id}">
+            <div class="editor-cols">
+              <div class="editor-col">
+                <label style="font-size:10px;">Study Notes</label>
+                <textarea class="editor-textarea" id="notes-textarea-${p.id}" onchange="saveProblemNotes('${p.id}', this.value)" placeholder="Write your notes or MCQ mistake logs here..."></textarea>
+              </div>
+              <div class="editor-col">
+                <label style="font-size:10px;">Practice Code / Queries</label>
+                <textarea class="editor-textarea code" id="code-textarea-${p.id}" onchange="saveProblemCode('${p.id}', this.value)" placeholder="-- Paste query or code snippet here..."></textarea>
+              </div>
+              <div class="editor-col">
+                <label style="font-size:10px;">Proof of Practice / Screenshot</label>
+                <div class="screenshot-dropzone" id="dropzone-${p.id}" onpaste="handlePasteScreenshot(event, '${p.id}')" onclick="triggerFileInput('${p.id}')" tabindex="0" style="min-height:80px; font-size:10.5px;">
+                  <i class="fas fa-camera" style="font-size:14px; margin-bottom:2px; display:block; color:var(--accent);"></i>
+                  Paste (Ctrl+V) or click
+                </div>
+                <input type="file" id="file-${p.id}" accept="image/*" style="display:none;" onchange="handleUploadScreenshot(event, '${p.id}')"/>
+              </div>
+            </div>
+          </div>
+        `;
+        taskContainer.appendChild(card);
+      });
+      block.appendChild(taskContainer);
+      return block;
+    };
+
+    // Render each category block in order
+    const techBlock = createCategoryBlock("Technical Syllabus", "🧠", "5.5h", techTasks, "var(--accent)");
+    if (techBlock) problemsContainer.appendChild(techBlock);
+
+    const codingBlock = createCategoryBlock("Coding & DSA Practice", "💻", "4.0h", codingTasks, "var(--accent2)");
+    if (codingBlock) problemsContainer.appendChild(codingBlock);
+
+    const englishBlock = createCategoryBlock("English & Communication", "🇬🇧", "1.5h", englishTasks, "#2ecc71");
+    if (englishBlock) problemsContainer.appendChild(englishBlock);
+
+    const revisionBlock = createCategoryBlock("Daily Revision", "🔄", "1.0h", revisionTasks, "#f1c40f");
+    if (revisionBlock) problemsContainer.appendChild(revisionBlock);
     
     // Highlight active day in list
     document.querySelectorAll('#day-selector-list .day-btn').forEach((btn, idx) => {
@@ -1713,6 +1790,18 @@ Space Complexity (if code):`;
     // Rerender daily schedule dashboard
     const currDay = planData.find(d => d.day === activeDay);
     renderDailyScheduleDashboard(currDay);
+
+    // Update the category header count badge manually
+    const parentBlock = card.closest('[style*="border-left"]');
+    if (parentBlock) {
+      const badge = parentBlock.querySelector('.category-solved-badge');
+      if (badge) {
+        const checkboxes = parentBlock.querySelectorAll('input[type="checkbox"]');
+        let solved = 0;
+        checkboxes.forEach(cb => { if (cb.checked) solved++; });
+        badge.textContent = `${solved} of ${checkboxes.length} Done`;
+      }
+    }
   }
 
   function toggleCodingSolved(problemId, checkbox) {
