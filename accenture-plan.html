@@ -12,7 +12,7 @@
   <script src="default_wallpaper.js"></script>
   <script>
     (function() {
-      const wallpaper = localStorage.getItem('placementos_wallpaper') || window.DEFAULT_PAPER;
+      const wallpaper = localStorage.getItem('placementos_wallpaper') || window.DEFAULT_WALLPAPER;
       if (wallpaper) {
         const style = document.createElement('style');
         style.id = 'dynamic-wallpaper-style';
@@ -604,7 +604,7 @@
 <script src="sync.js?v=2"></script>
 
 <script>
-  // 20-Day Accenture Prep structured data
+  // 20-Day Accenture Prep structured data (Roadmap Tasks with Time Splits + Daily Revision)
   const planData = [
     {
       day: 1,
@@ -618,15 +618,16 @@
         "English: Tenses, Self-Introduction, Speak 2 mins on education"
       ],
       problems: [
-        { id: "ac_d1_t1", difficulty: "medium", name: "Pseudocode: Practice 40-50 output tracing questions" },
-        { id: "ac_d1_t2", difficulty: "easy", name: "Coding: LeetCode 1920 - Build Array from Permutation", url: "https://leetcode.com/problems/build-array-from-permutation/" },
-        { id: "ac_d1_t3", difficulty: "easy", name: "Coding: LeetCode 1929 - Concatenation of Array", url: "https://leetcode.com/problems/concatenation-of-array/" },
-        { id: "ac_d1_t4", difficulty: "easy", name: "Coding: LeetCode 1480 - Running Sum of 1d Array", url: "https://leetcode.com/problems/running-sum-of-1d-array/" },
-        { id: "ac_d1_t5", difficulty: "easy", name: "Coding: LeetCode 1295 - Find Numbers with Even Number of Digits", url: "https://leetcode.com/problems/find-numbers-with-even-number-of-digits/" },
-        { id: "ac_d1_t6", difficulty: "easy", name: "Coding: LeetCode 485 - Max Consecutive Ones", url: "https://leetcode.com/problems/max-consecutive-ones/" },
-        { id: "ac_d1_t7", difficulty: "easy", name: "Coding: LeetCode 26 - Remove Duplicates from Sorted Array", url: "https://leetcode.com/problems/remove-duplicates-from-sorted-array/" },
-        { id: "ac_d1_t8", difficulty: "easy", name: "Coding: LeetCode 27 - Remove Element", url: "https://leetcode.com/problems/remove-element/" },
-        { id: "ac_d1_t9", difficulty: "easy", name: "English: Practice self-introduction and tenses (2 mins speaking)" }
+        { id: "ac_d1_t1", difficulty: "medium", time: "5.5h", name: "Pseudocode: Practice 40-50 output tracing questions" },
+        { id: "ac_d1_t2", difficulty: "easy", time: "35m", name: "Coding: LeetCode 1920 - Build Array from Permutation", url: "https://leetcode.com/problems/build-array-from-permutation/" },
+        { id: "ac_d1_t3", difficulty: "easy", time: "35m", name: "Coding: LeetCode 1929 - Concatenation of Array", url: "https://leetcode.com/problems/concatenation-of-array/" },
+        { id: "ac_d1_t4", difficulty: "easy", time: "35m", name: "Coding: LeetCode 1480 - Running Sum of 1d Array", url: "https://leetcode.com/problems/running-sum-of-1d-array/" },
+        { id: "ac_d1_t5", difficulty: "easy", time: "35m", name: "Coding: LeetCode 1295 - Find Numbers with Even Number of Digits", url: "https://leetcode.com/problems/find-numbers-with-even-number-of-digits/" },
+        { id: "ac_d1_t6", difficulty: "easy", time: "35m", name: "Coding: LeetCode 485 - Max Consecutive Ones", url: "https://leetcode.com/problems/max-consecutive-ones/" },
+        { id: "ac_d1_t7", difficulty: "easy", time: "35m", name: "Coding: LeetCode 26 - Remove Duplicates from Sorted Array", url: "https://leetcode.com/problems/remove-duplicates-from-sorted-array/" },
+        { id: "ac_d1_t8", difficulty: "easy", time: "35m", name: "Coding: LeetCode 27 - Remove Element", url: "https://leetcode.com/problems/remove-element/" },
+        { id: "ac_d1_t9", difficulty: "easy", time: "1.5h", name: "English: Practice self-introduction and tenses (2 mins speaking)" },
+        { id: "ac_d1_rev", difficulty: "easy", time: "1h", name: "Daily Revision: Review today's mistakes and check weak topics" }
       ]
     },
     {
@@ -640,12 +641,13 @@
         "English: Grammar concepts + Mock self-introduction without memorizing"
       ],
       problems: [
-        { id: "ac_d2_t1", difficulty: "medium", name: "Pseudocode: Solve 40-50 Recursion Tracing & Bitwise MCQs" },
-        { id: "ac_d2_t2", difficulty: "easy", name: "Coding: LeetCode 414 - Third Maximum Number", url: "https://leetcode.com/problems/third-maximum-number/" },
-        { id: "ac_d2_t3", difficulty: "easy", name: "Coding: LeetCode 747 - Largest Number At Least Twice of Others", url: "https://leetcode.com/problems/largest-number-at-least-twice-of-others/" },
-        { id: "ac_d2_t4", difficulty: "easy", name: "Coding: Reversing an array & Move zeroes to end" },
-        { id: "ac_d2_t5", difficulty: "medium", name: "Coding: Rotate array by K steps & find second largest element" },
-        { id: "ac_d2_t6", difficulty: "easy", name: "English: Practice grammar exercises & flow speaking" }
+        { id: "ac_d2_t1", difficulty: "medium", time: "5.5h", name: "Pseudocode: Solve 40-50 Recursion Tracing & Bitwise MCQs" },
+        { id: "ac_d2_t2", difficulty: "easy", time: "1h", name: "Coding: LeetCode 414 - Third Maximum Number", url: "https://leetcode.com/problems/third-maximum-number/" },
+        { id: "ac_d2_t3", difficulty: "easy", time: "1h", name: "Coding: LeetCode 747 - Largest Number At Least Twice of Others", url: "https://leetcode.com/problems/largest-number-at-least-twice-of-others/" },
+        { id: "ac_d2_t4", difficulty: "easy", time: "1h", name: "Coding: Reversing an array & Move zeroes to end" },
+        { id: "ac_d2_t5", difficulty: "medium", time: "1h", name: "Coding: Rotate array by K steps & find second largest element" },
+        { id: "ac_d2_t6", difficulty: "easy", time: "1.5h", name: "English: Practice grammar exercises & flow speaking" },
+        { id: "ac_d2_rev", difficulty: "easy", time: "1h", name: "Daily Revision: Review today's mistakes and check weak topics" }
       ]
     },
     {
@@ -660,10 +662,11 @@
         "English: Answer 'Why Accenture?' and explain your degree path"
       ],
       problems: [
-        { id: "ac_d3_t1", difficulty: "medium", name: "OOP: Complete 50+ MCQ questions on classes, inheritance & virtual functions" },
-        { id: "ac_d3_t2", difficulty: "easy", name: "Coding: Check if string is Palindrome (ignoring case & symbols)" },
-        { id: "ac_d3_t3", difficulty: "easy", name: "Coding: Reversing a string & counting character frequency" },
-        { id: "ac_d3_t4", difficulty: "easy", name: "English: Practice 'Why Accenture?' and explain your engineering degree aloud" }
+        { id: "ac_d3_t1", difficulty: "medium", time: "5.5h", name: "OOP: Complete 50+ MCQ questions on classes, inheritance & virtual functions" },
+        { id: "ac_d3_t2", difficulty: "easy", time: "2h", name: "Coding: Check if string is Palindrome (ignoring case & symbols)" },
+        { id: "ac_d3_t3", difficulty: "easy", time: "2h", name: "Coding: Reversing a string & counting character frequency" },
+        { id: "ac_d3_t4", difficulty: "easy", time: "1.5h", name: "English: Practice 'Why Accenture?' and explain your engineering degree aloud" },
+        { id: "ac_d3_rev", difficulty: "easy", time: "1h", name: "Daily Revision: Review today's mistakes and check weak topics" }
       ]
     },
     {
@@ -677,10 +680,11 @@
         "English: Practice structure explaining your graduation final-year project"
       ],
       problems: [
-        { id: "ac_d4_t1", difficulty: "easy", name: "SQL: Write 20-30 basic queries containing filters, aggregates & sorting" },
-        { id: "ac_d4_t2", difficulty: "easy", name: "Coding: LeetCode 242 - Valid Anagram", url: "https://leetcode.com/problems/valid-anagram/" },
-        { id: "ac_d4_t3", difficulty: "easy", name: "Coding: String character substitutions using ASCII values" },
-        { id: "ac_d4_t4", difficulty: "easy", name: "English: Complete a 3-minute explanation session of your project" }
+        { id: "ac_d4_t1", difficulty: "easy", time: "5.5h", name: "SQL: Write 20-30 basic queries containing filters, aggregates & sorting" },
+        { id: "ac_d4_t2", difficulty: "easy", time: "2h", name: "Coding: LeetCode 242 - Valid Anagram", url: "https://leetcode.com/problems/valid-anagram/" },
+        { id: "ac_d4_t3", difficulty: "easy", time: "2h", name: "Coding: String character substitutions using ASCII values" },
+        { id: "ac_d4_t4", difficulty: "easy", time: "1.5h", name: "English: Complete a 3-minute explanation session of your project" },
+        { id: "ac_d4_rev", difficulty: "easy", time: "1h", name: "Daily Revision: Review today's mistakes and check weak topics" }
       ]
     },
     {
@@ -694,10 +698,12 @@
         "Coding: Basic Math algorithms (Primes, GCD, LCM, Fibonacci, Armstrong numbers)"
       ],
       problems: [
-        { id: "ac_d5_t1", difficulty: "medium", name: "SQL: Practice 20+ query combinations using JOINs and GROUP BY clauses" },
-        { id: "ac_d5_t2", difficulty: "easy", name: "Coding: Write Prime number checks & find Greatest Common Divisor (GCD/LCM)" },
-        { id: "ac_d5_t3", difficulty: "easy", name: "Coding: Generate Fibonacci sequences and check Armstrong numbers" },
-        { id: "ac_d5_t4", difficulty: "medium", name: "SQL Mock: Complete 1 timed SQL database query assessment" }
+        { id: "ac_d5_t1", difficulty: "medium", time: "3.5h", name: "SQL: Practice 20+ query combinations using JOINs and GROUP BY clauses" },
+        { id: "ac_d5_t4", difficulty: "medium", time: "2h", name: "SQL Mock: Complete 1 timed SQL database query assessment" },
+        { id: "ac_d5_t2", difficulty: "easy", time: "2h", name: "Coding: Write Prime number checks & find Greatest Common Divisor (GCD/LCM)" },
+        { id: "ac_d5_t3", difficulty: "easy", time: "2h", name: "Coding: Generate Fibonacci sequences and check Armstrong numbers" },
+        { id: "ac_d5_t5", difficulty: "easy", time: "1.5h", name: "English: Technical explanation speaking practice" },
+        { id: "ac_d5_rev", difficulty: "easy", time: "1h", name: "Daily Revision: Review today's mistakes and check weak topics" }
       ]
     },
     {
@@ -711,10 +717,11 @@
         "English: Grammar correction exercises + basic HR question preparation"
       ],
       problems: [
-        { id: "ac_d6_t1", difficulty: "easy", name: "Web: Code a standard webpage mock containing input forms, lists, and CSS Flexbox layout" },
-        { id: "ac_d6_t2", difficulty: "easy", name: "Coding: Check if a number is a Palindrome without converting to String" },
-        { id: "ac_d6_t3", difficulty: "easy", name: "Coding: Extract digits from number and convert decimals to binary" },
-        { id: "ac_d6_t4", difficulty: "easy", name: "English: Complete 20 grammar MCQs & prepare answers for basic HR queries" }
+        { id: "ac_d6_t1", difficulty: "easy", time: "5.5h", name: "Web: Code a standard webpage mock containing input forms, lists, and CSS Flexbox layout" },
+        { id: "ac_d6_t2", difficulty: "easy", time: "2h", name: "Coding: Check if a number is a Palindrome without converting to String" },
+        { id: "ac_d6_t3", difficulty: "easy", time: "2h", name: "Coding: Extract digits from number and convert decimals to binary" },
+        { id: "ac_d6_t4", difficulty: "easy", time: "1.5h", name: "English: Complete 20 grammar MCQs & prepare answers for basic HR queries" },
+        { id: "ac_d6_rev", difficulty: "easy", time: "1h", name: "Daily Revision: Review today's mistakes and check weak topics" }
       ]
     },
     {
@@ -728,9 +735,10 @@
         "Coding: Arrays + Strings + Math patterns consolidated practice"
       ],
       problems: [
-        { id: "ac_d7_t1", difficulty: "medium", name: "JS: Code a dynamic form validation script (check email, password strength, empty inputs)" },
-        { id: "ac_d7_t2", difficulty: "medium", name: "Coding: Mixed Array/String practice questions under 30 mins each" },
-        { id: "ac_d7_t3", difficulty: "easy", name: "English: Practice explaining your completed JS validation logic in English" }
+        { id: "ac_d7_t1", difficulty: "medium", time: "5.5h", name: "JS: Code a dynamic form validation script (check email, password strength, empty inputs)" },
+        { id: "ac_d7_t2", difficulty: "medium", time: "4h", name: "Coding: Mixed Array/String practice questions under 30 mins each" },
+        { id: "ac_d7_t3", difficulty: "easy", time: "1.5h", name: "English: Practice explaining your completed JS validation logic in English" },
+        { id: "ac_d7_rev", difficulty: "easy", time: "1h", name: "Daily Revision: Review today's mistakes and check weak topics" }
       ]
     },
     {
@@ -744,9 +752,10 @@
         "Coding: Arrays & Strings traversal sheets practice"
       ],
       problems: [
-        { id: "ac_d8_t1", difficulty: "medium", name: "CN: Solve 50+ Computer Networks port & OSI Layer questions" },
-        { id: "ac_d8_t2", difficulty: "medium", name: "Coding: Check for substrings and duplicates inside string lists" },
-        { id: "ac_d8_t3", difficulty: "easy", name: "English: Record yourself explaining the difference between TCP and UDP (2 mins)" }
+        { id: "ac_d8_t1", difficulty: "medium", time: "5.5h", name: "CN: Solve 50+ Computer Networks port & OSI Layer questions" },
+        { id: "ac_d8_t2", difficulty: "medium", time: "4h", name: "Coding: Check for substrings and duplicates inside string lists" },
+        { id: "ac_d8_t3", difficulty: "easy", time: "1.5h", name: "English: Record yourself explaining the difference between TCP and UDP (2 mins)" },
+        { id: "ac_d8_rev", difficulty: "easy", time: "1h", name: "Daily Revision: Review today's mistakes and check weak topics" }
       ]
     },
     {
@@ -760,9 +769,10 @@
         "Coding: Math + logic problems"
       ],
       problems: [
-        { id: "ac_d9_t1", difficulty: "medium", name: "Security: Complete 50+ encryption & network security MCQs" },
-        { id: "ac_d9_t2", difficulty: "easy", name: "Coding: Practice binary conversions and bit manipulations" },
-        { id: "ac_d9_t3", difficulty: "easy", name: "English: Explain Symmetric vs Asymmetric encryption aloud" }
+        { id: "ac_d9_t1", difficulty: "medium", time: "5.5h", name: "Security: Complete 50+ encryption & network security MCQs" },
+        { id: "ac_d9_t2", difficulty: "easy", time: "4h", name: "Coding: Practice binary conversions and bit manipulations" },
+        { id: "ac_d9_t3", difficulty: "easy", time: "1.5h", name: "English: Explain Symmetric vs Asymmetric encryption aloud" },
+        { id: "ac_d9_rev", difficulty: "easy", time: "1h", name: "Daily Revision: Review today's mistakes and check weak topics" }
       ]
     },
     {
@@ -776,9 +786,10 @@
         "Coding: Time-boxed coding exercises"
       ],
       problems: [
-        { id: "ac_d10_t1", difficulty: "medium", name: "Cloud/Git: Complete 50+ cloud computing, Git commands & DevOps pipelines MCQs" },
-        { id: "ac_d10_t2", difficulty: "medium", name: "Coding: Complete 1 timed coding simulation (2 coding problems in 45 mins)" },
-        { id: "ac_d10_t3", difficulty: "easy", name: "English: Speak on 'What is cloud computing?' for 2 minutes" }
+        { id: "ac_d10_t1", difficulty: "medium", time: "5.5h", name: "Cloud/Git: Complete 50+ cloud computing, Git commands & DevOps pipelines MCQs" },
+        { id: "ac_d10_t2", difficulty: "medium", time: "4h", name: "Coding: Complete 1 timed coding simulation (2 coding problems in 45 mins)" },
+        { id: "ac_d10_t3", difficulty: "easy", time: "1.5h", name: "English: Speak on 'What is cloud computing?' for 2 minutes" },
+        { id: "ac_d10_rev", difficulty: "easy", time: "1h", name: "Daily Revision: Review today's mistakes and check weak topics" }
       ]
     },
     {
@@ -791,9 +802,10 @@
         "MS PowerPoint: Slide layouts, templates, transitions, presenter mode, shortcuts"
       ],
       problems: [
-        { id: "ac_d11_t1", difficulty: "medium", name: "MS Office: Solve 60+ Excel formulas & Word/PowerPoint shortcut keys MCQs" },
-        { id: "ac_d11_t2", difficulty: "easy", name: "Coding: Arrays and String operations basic speed practice" },
-        { id: "ac_d11_t3", difficulty: "easy", name: "English: Answer mock HR questions (Strengths, Weaknesses, Goals)" }
+        { id: "ac_d11_t1", difficulty: "medium", time: "5.5h", name: "MS Office: Solve 60+ Excel formulas & Word/PowerPoint shortcut keys MCQs" },
+        { id: "ac_d11_t2", difficulty: "easy", time: "4h", name: "Coding: Arrays and String operations basic speed practice" },
+        { id: "ac_d11_t3", difficulty: "easy", time: "1.5h", name: "English: Answer mock HR questions (Strengths, Weaknesses, Goals)" },
+        { id: "ac_d11_rev", difficulty: "easy", time: "1h", name: "Daily Revision: Review today's mistakes and check weak topics" }
       ]
     },
     {
@@ -806,9 +818,10 @@
         "Coding: Basic mathematical algorithms"
       ],
       problems: [
-        { id: "ac_d12_t1", difficulty: "medium", name: "OS: Solve 50+ process scheduling, deadlock & memory paging MCQs" },
-        { id: "ac_d12_t2", difficulty: "easy", name: "Coding: LeetCode 283 - Move Zeroes", url: "https://leetcode.com/problems/move-zeroes/" },
-        { id: "ac_d12_t3", difficulty: "easy", name: "English: Describe how process scheduling works in English" }
+        { id: "ac_d12_t1", difficulty: "medium", time: "5.5h", name: "OS: Solve 50+ process scheduling, deadlock & memory paging MCQs" },
+        { id: "ac_d12_t2", difficulty: "easy", time: "4h", name: "Coding: LeetCode 283 - Move Zeroes", url: "https://leetcode.com/problems/move-zeroes/" },
+        { id: "ac_d12_t3", difficulty: "easy", time: "1.5h", name: "English: Describe how process scheduling works in English" },
+        { id: "ac_d12_rev", difficulty: "easy", time: "1h", name: "Daily Revision: Review today's mistakes and check weak topics" }
       ]
     },
     {
@@ -821,9 +834,10 @@
         "Target: 100+ mixed MCQs under test conditions"
       ],
       problems: [
-        { id: "ac_d13_t1", difficulty: "hard", name: "Mock: Complete 100+ comprehensive mixed MCQs assessment" },
-        { id: "ac_d13_t2", difficulty: "medium", name: "Coding: Mixed Arrays + Strings speed drills" },
-        { id: "ac_d13_t3", difficulty: "easy", name: "English: Conduct a mock HR interview walkthrough" }
+        { id: "ac_d13_t1", difficulty: "hard", time: "5.5h", name: "Mock: Complete 100+ comprehensive mixed MCQs assessment" },
+        { id: "ac_d13_t2", difficulty: "medium", time: "4h", name: "Coding: Mixed Arrays + Strings speed drills" },
+        { id: "ac_d13_t3", difficulty: "easy", time: "1.5h", name: "English: Conduct a mock HR interview walkthrough" },
+        { id: "ac_d13_rev", difficulty: "easy", time: "1h", name: "Daily Revision: Review today's mistakes and check weak topics" }
       ]
     },
     {
@@ -836,9 +850,11 @@
         "Target optimal layouts, clean queries, and correct logic"
       ],
       problems: [
-        { id: "ac_d14_t1", difficulty: "hard", name: "SQL: Solve 2 complex query problems under time constraint" },
-        { id: "ac_d14_t2", difficulty: "hard", name: "Web: Code a complete interactive web interface without helpers (60 mins)" },
-        { id: "ac_d14_t3", difficulty: "hard", name: "Coding: Solve 2 unseen coding questions (timed)" }
+        { id: "ac_d14_t1", difficulty: "hard", time: "2.5h", name: "SQL: Solve 2 complex query problems under time constraint" },
+        { id: "ac_d14_t2", difficulty: "hard", time: "3h", name: "Web: Code a complete interactive web interface without helpers (60 mins)" },
+        { id: "ac_d14_t3", difficulty: "hard", time: "4h", name: "Coding: Solve 2 unseen coding questions (timed)" },
+        { id: "ac_d14_t4", difficulty: "hard", time: "1.5h", name: "English: Record yourself explaining one technical design" },
+        { id: "ac_d14_rev", difficulty: "easy", time: "1h", name: "Daily Revision: Review today's mistakes and check weak topics" }
       ]
     },
     {
@@ -851,9 +867,10 @@
         "Review and trace every wrong answer in detail"
       ],
       problems: [
-        { id: "ac_d15_t1", difficulty: "hard", name: "Simulation: Technical Mock 1 (90+ questions, timed)" },
-        { id: "ac_d15_t2", difficulty: "medium", name: "Coding: Mixed Array/String problems review" },
-        { id: "ac_d15_t3", difficulty: "easy", name: "English: Practice speaking clearly about your technical skills" }
+        { id: "ac_d15_t1", difficulty: "hard", time: "5.5h", name: "Simulation: Technical Mock 1 (90+ questions, timed)" },
+        { id: "ac_d15_t2", difficulty: "medium", time: "4h", name: "Coding: Mixed Array/String problems review" },
+        { id: "ac_d15_t3", difficulty: "easy", time: "1.5h", name: "English: Practice speaking clearly about your technical skills" },
+        { id: "ac_d15_rev", difficulty: "easy", time: "1h", name: "Daily Revision: Review today's mistakes and check weak topics" }
       ]
     },
     {
@@ -866,9 +883,10 @@
         "Track time spent on each sub-topic"
       ],
       problems: [
-        { id: "ac_d16_t1", difficulty: "hard", name: "Simulation: Timed coding mock exam (45 mins)" },
-        { id: "ac_d16_t2", difficulty: "hard", name: "Simulation: Timed SQL & Web mock exam (45 mins)" },
-        { id: "ac_d16_t3", difficulty: "medium", name: "English: Practice responding to technical scenarios" }
+        { id: "ac_d16_t1", difficulty: "hard", time: "5.5h", name: "Simulation: Timed SQL & Web mock exam (45 mins)" },
+        { id: "ac_d16_t2", difficulty: "hard", time: "4h", name: "Simulation: Timed coding mock exam (45 mins)" },
+        { id: "ac_d16_t3", difficulty: "medium", time: "1.5h", name: "English: Practice responding to technical scenarios" },
+        { id: "ac_d16_rev", difficulty: "easy", time: "1h", name: "Daily Revision: Review today's mistakes and check weak topics" }
       ]
     },
     {
@@ -881,9 +899,10 @@
         "Re-solve coding questions you struggled with"
       ],
       problems: [
-        { id: "ac_d17_t1", difficulty: "medium", name: "Technical: Review and resolve 50+ MCQs in your weakest areas" },
-        { id: "ac_d17_t2", difficulty: "medium", name: "Coding: Re-attempt failed coding problems" },
-        { id: "ac_d17_t3", difficulty: "easy", name: "English: Refine and speak answers to difficult HR queries" }
+        { id: "ac_d17_t1", difficulty: "medium", time: "5.5h", name: "Technical: Review and resolve 50+ MCQs in your weakest areas" },
+        { id: "ac_d17_t2", difficulty: "medium", time: "4h", name: "Coding: Re-attempt failed coding problems" },
+        { id: "ac_d17_t3", difficulty: "easy", time: "1.5h", name: "English: Refine and speak answers to difficult HR queries" },
+        { id: "ac_d17_rev", difficulty: "easy", time: "1h", name: "Daily Revision: Review today's mistakes and check weak topics" }
       ]
     },
     {
@@ -896,9 +915,10 @@
         "Analyze mistakes and note areas of delay"
       ],
       problems: [
-        { id: "ac_d18_t1", difficulty: "hard", name: "Exam: Full Accenture simulation (combined MCQs + Coding)" },
-        { id: "ac_d18_t2", difficulty: "medium", name: "Coding: Speed practice with array/string manipulations" },
-        { id: "ac_d18_t3", difficulty: "medium", name: "English: Perform mock HR interview recording" }
+        { id: "ac_d18_t1", difficulty: "hard", time: "5.5h", name: "Exam: Full Accenture simulation (combined MCQs + Coding)" },
+        { id: "ac_d18_t2", difficulty: "medium", time: "4h", name: "Coding: Speed practice with array/string manipulations" },
+        { id: "ac_d18_t3", difficulty: "medium", time: "1.5h", name: "English: Perform mock HR interview recording" },
+        { id: "ac_d18_rev", difficulty: "easy", time: "1h", name: "Daily Revision: Review today's mistakes and check weak topics" }
       ]
     },
     {
@@ -911,9 +931,10 @@
         "Analyze mistake logs one last time"
       ],
       problems: [
-        { id: "ac_d19_t1", difficulty: "hard", name: "Final Mock: Full-length exam simulation" },
-        { id: "ac_d19_t2", difficulty: "easy", name: "Coding: Speed-solve 5 easy level array/string problems" },
-        { id: "ac_d19_t3", difficulty: "medium", name: "English: Final HR verbal checks" }
+        { id: "ac_d19_t1", difficulty: "hard", time: "5.5h", name: "Final Mock: Full-length exam simulation" },
+        { id: "ac_d19_t2", difficulty: "easy", time: "4h", name: "Coding: Speed-solve 5 easy level array/string problems" },
+        { id: "ac_d19_t3", difficulty: "medium", time: "1.5h", name: "English: Final HR verbal checks" },
+        { id: "ac_d19_rev", difficulty: "easy", time: "1h", name: "Daily Revision: Review today's mistakes and check weak topics" }
       ]
     },
     {
@@ -926,29 +947,30 @@
         "Quick revision of basic coding patterns (pointers, slides, math)"
       ],
       problems: [
-        { id: "ac_d20_t1", difficulty: "medium", name: "Revision: Go through your mistake notebook & coding notes" },
-        { id: "ac_d20_t2", difficulty: "easy", name: "Coding: Revise array and string structures" },
-        { id: "ac_d20_t3", difficulty: "easy", name: "English: Speak confidently on all classic HR questions" }
+        { id: "ac_d20_t1", difficulty: "medium", time: "5.5h", name: "Revision: Go through your mistake notebook & coding notes" },
+        { id: "ac_d20_t2", difficulty: "easy", time: "4h", name: "Coding: Revise array and string structures" },
+        { id: "ac_d20_t3", difficulty: "easy", time: "1.5h", name: "English: Speak confidently on all classic HR questions" },
+        { id: "ac_d20_rev", difficulty: "easy", time: "1h", name: "Daily Revision: Review today's mistakes and check weak topics" }
       ]
     }
   ];
 
-  // 13-Topic Curated Coding Problem List for Accenture
+  // 13-Topic Curated Coding Problem List with Custom Time Splits
   const codingSheetData = [
     {
       id: "arrays",
       title: "1. Arrays 🔥",
       desc: "Basic storage, traversal, and linear scans",
       problems: [
-        { id: "ac_c_arr1", difficulty: "easy", name: "LC 1480 — Running Sum of 1d Array", url: "https://leetcode.com/problems/running-sum-of-1d-array/" },
-        { id: "ac_c_arr2", difficulty: "easy", name: "LC 217 — Contains Duplicate", url: "https://leetcode.com/problems/contains-duplicate/" },
-        { id: "ac_c_arr3", difficulty: "easy", name: "LC 268 — Missing Number", url: "https://leetcode.com/problems/missing-number/" },
-        { id: "ac_c_arr4", difficulty: "easy", name: "LC 27 — Remove Element", url: "https://leetcode.com/problems/remove-element/" },
-        { id: "ac_c_arr5", difficulty: "medium", name: "LC 1 — Two Sum", url: "https://leetcode.com/problems/two-sum/" },
-        { id: "ac_c_arr6", difficulty: "medium", name: "LC 189 — Rotate Array", url: "https://leetcode.com/problems/rotate-array/" },
-        { id: "ac_c_arr7", difficulty: "medium", name: "LC 238 — Product of Array Except Self", url: "https://leetcode.com/problems/product-of-array-except-self/" },
-        { id: "ac_c_arr8", difficulty: "medium", name: "LC 53 — Maximum Subarray", url: "https://leetcode.com/problems/maximum-subarray/" },
-        { id: "ac_c_arr9", difficulty: "hard", name: "LC 41 — First Missing Positive (Stretch)", url: "https://leetcode.com/problems/first-missing-positive/" }
+        { id: "ac_c_arr1", difficulty: "easy", time: "30m", name: "LC 1480 — Running Sum of 1d Array", url: "https://leetcode.com/problems/running-sum-of-1d-array/" },
+        { id: "ac_c_arr2", difficulty: "easy", time: "30m", name: "LC 217 — Contains Duplicate", url: "https://leetcode.com/problems/contains-duplicate/" },
+        { id: "ac_c_arr3", difficulty: "easy", time: "30m", name: "LC 268 — Missing Number", url: "https://leetcode.com/problems/missing-number/" },
+        { id: "ac_c_arr4", difficulty: "easy", time: "30m", name: "LC 27 — Remove Element", url: "https://leetcode.com/problems/remove-element/" },
+        { id: "ac_c_arr5", difficulty: "medium", time: "45m", name: "LC 1 — Two Sum", url: "https://leetcode.com/problems/two-sum/" },
+        { id: "ac_c_arr6", difficulty: "medium", time: "45m", name: "LC 189 — Rotate Array", url: "https://leetcode.com/problems/rotate-array/" },
+        { id: "ac_c_arr7", difficulty: "medium", time: "45m", name: "LC 238 — Product of Array Except Self", url: "https://leetcode.com/problems/product-of-array-except-self/" },
+        { id: "ac_c_arr8", difficulty: "medium", time: "45m", name: "LC 53 — Maximum Subarray", url: "https://leetcode.com/problems/maximum-subarray/" },
+        { id: "ac_c_arr9", difficulty: "hard", time: "1.5h", name: "LC 41 — First Missing Positive (Stretch)", url: "https://leetcode.com/problems/first-missing-positive/" }
       ]
     },
     {
@@ -956,15 +978,15 @@
       title: "2. Strings 🔥",
       desc: "Reversals, manipulations, prefix & substring searches",
       problems: [
-        { id: "ac_c_str1", difficulty: "easy", name: "LC 344 — Reverse String", url: "https://leetcode.com/problems/reverse-string/" },
-        { id: "ac_c_str2", difficulty: "easy", name: "LC 125 — Valid Palindrome", url: "https://leetcode.com/problems/valid-palindrome/" },
-        { id: "ac_c_str3", difficulty: "easy", name: "LC 14 — Longest Common Prefix", url: "https://leetcode.com/problems/longest-common-prefix/" },
-        { id: "ac_c_str4", difficulty: "easy", name: "LC 58 — Length of Last Word", url: "https://leetcode.com/problems/length-of-last-word/" },
-        { id: "ac_c_str5", difficulty: "medium", name: "LC 151 — Reverse Words in a String", url: "https://leetcode.com/problems/reverse-words-in-a-string/" },
-        { id: "ac_c_str6", difficulty: "medium", name: "LC 443 — String Compression", url: "https://leetcode.com/problems/string-compression/" },
-        { id: "ac_c_str7", difficulty: "medium", name: "LC 8 — String to Integer (atoi)", url: "https://leetcode.com/problems/string-to-integer-atoi/" },
-        { id: "ac_c_str8", difficulty: "medium", name: "LC 647 — Palindromic Substrings", url: "https://leetcode.com/problems/palindromic-substrings/" },
-        { id: "ac_c_str9", difficulty: "hard", name: "LC 5 — Longest Palindromic Substring (Stretch)", url: "https://leetcode.com/problems/longest-palindromic-substring/" }
+        { id: "ac_c_str1", difficulty: "easy", time: "30m", name: "LC 344 — Reverse String", url: "https://leetcode.com/problems/reverse-string/" },
+        { id: "ac_c_str2", difficulty: "easy", time: "30m", name: "LC 125 — Valid Palindrome", url: "https://leetcode.com/problems/valid-palindrome/" },
+        { id: "ac_c_str3", difficulty: "easy", time: "30m", name: "LC 14 — Longest Common Prefix", url: "https://leetcode.com/problems/longest-common-prefix/" },
+        { id: "ac_c_str4", difficulty: "easy", time: "30m", name: "LC 58 — Length of Last Word", url: "https://leetcode.com/problems/length-of-last-word/" },
+        { id: "ac_c_str5", difficulty: "medium", time: "45m", name: "LC 151 — Reverse Words in a String", url: "https://leetcode.com/problems/reverse-words-in-a-string/" },
+        { id: "ac_c_str6", difficulty: "medium", time: "45m", name: "LC 443 — String Compression", url: "https://leetcode.com/problems/string-compression/" },
+        { id: "ac_c_str7", difficulty: "medium", time: "45m", name: "LC 8 — String to Integer (atoi)", url: "https://leetcode.com/problems/string-to-integer-atoi/" },
+        { id: "ac_c_str8", difficulty: "medium", time: "45m", name: "LC 647 — Palindromic Substrings", url: "https://leetcode.com/problems/palindromic-substrings/" },
+        { id: "ac_c_str9", difficulty: "hard", time: "1.5h", name: "LC 5 — Longest Palindromic Substring (Stretch)", url: "https://leetcode.com/problems/longest-palindromic-substring/" }
       ]
     },
     {
@@ -972,14 +994,14 @@
       title: "3. Hashing / Frequency 🔥",
       desc: "Set/map counts & fast duplicate checks",
       problems: [
-        { id: "ac_c_hash1", difficulty: "easy", name: "LC 1 — Two Sum", url: "https://leetcode.com/problems/two-sum/" },
-        { id: "ac_c_hash2", difficulty: "easy", name: "LC 217 — Contains Duplicate", url: "https://leetcode.com/problems/contains-duplicate/" },
-        { id: "ac_c_hash3", difficulty: "easy", name: "LC 242 — Valid Anagram", url: "https://leetcode.com/problems/valid-anagram/" },
-        { id: "ac_c_hash4", difficulty: "easy", name: "LC 387 — First Unique Character in a String", url: "https://leetcode.com/problems/first-unique-character-in-a-string/" },
-        { id: "ac_c_hash5", difficulty: "medium", name: "LC 49 — Group Anagrams", url: "https://leetcode.com/problems/group-anagrams/" },
-        { id: "ac_c_hash6", difficulty: "medium", name: "LC 347 — Top K Frequent Elements", url: "https://leetcode.com/problems/top-k-frequent-elements/" },
-        { id: "ac_c_hash7", difficulty: "medium", name: "LC 128 — Longest Consecutive Sequence", url: "https://leetcode.com/problems/longest-consecutive-sequence/" },
-        { id: "ac_c_hash8", difficulty: "hard", name: "LC 30 — Substring with Concatenation of All Words (Stretch)", url: "https://leetcode.com/problems/substring-with-concatenation-of-all-words/" }
+        { id: "ac_c_hash1", difficulty: "easy", time: "30m", name: "LC 1 — Two Sum", url: "https://leetcode.com/problems/two-sum/" },
+        { id: "ac_c_hash2", difficulty: "easy", time: "30m", name: "LC 217 — Contains Duplicate", url: "https://leetcode.com/problems/contains-duplicate/" },
+        { id: "ac_c_hash3", difficulty: "easy", time: "30m", name: "LC 242 — Valid Anagram", url: "https://leetcode.com/problems/valid-anagram/" },
+        { id: "ac_c_hash4", difficulty: "easy", time: "30m", name: "LC 387 — First Unique Character in a String", url: "https://leetcode.com/problems/first-unique-character-in-a-string/" },
+        { id: "ac_c_hash5", difficulty: "medium", time: "45m", name: "LC 49 — Group Anagrams", url: "https://leetcode.com/problems/group-anagrams/" },
+        { id: "ac_c_hash6", difficulty: "medium", time: "45m", name: "LC 347 — Top K Frequent Elements", url: "https://leetcode.com/problems/top-k-frequent-elements/" },
+        { id: "ac_c_hash7", difficulty: "medium", time: "45m", name: "LC 128 — Longest Consecutive Sequence", url: "https://leetcode.com/problems/longest-consecutive-sequence/" },
+        { id: "ac_c_hash8", difficulty: "hard", time: "1.5h", name: "LC 30 — Substring with Concatenation of All Words (Stretch)", url: "https://leetcode.com/problems/substring-with-concatenation-of-all-words/" }
       ]
     },
     {
@@ -987,13 +1009,13 @@
       title: "4. Two Pointers 🔥",
       desc: "Symmetrical narrows, sorted sum searches",
       problems: [
-        { id: "ac_c_ptr1", difficulty: "easy", name: "LC 125 — Valid Palindrome", url: "https://leetcode.com/problems/valid-palindrome/" },
-        { id: "ac_c_ptr2", difficulty: "easy", name: "LC 344 — Reverse String", url: "https://leetcode.com/problems/reverse-string/" },
-        { id: "ac_c_ptr3", difficulty: "easy", name: "LC 977 — Squares of a Sorted Array", url: "https://leetcode.com/problems/squares-of-a-sorted-array/" },
-        { id: "ac_c_ptr4", difficulty: "medium", name: "LC 167 — Two Sum II - Input Array Is Sorted", url: "https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/" },
-        { id: "ac_c_ptr5", difficulty: "medium", name: "LC 11 — Container With Most Water", url: "https://leetcode.com/problems/container-with-most-water/" },
-        { id: "ac_c_ptr6", difficulty: "medium", name: "LC 15 — 3Sum", url: "https://leetcode.com/problems/3sum/" },
-        { id: "ac_c_ptr7", difficulty: "hard", name: "LC 42 — Trapping Rain Water (Stretch)", url: "https://leetcode.com/problems/trapping-rain-water/" }
+        { id: "ac_c_ptr1", difficulty: "easy", time: "30m", name: "LC 125 — Valid Palindrome", url: "https://leetcode.com/problems/valid-palindrome/" },
+        { id: "ac_c_ptr2", difficulty: "easy", time: "30m", name: "LC 344 — Reverse String", url: "https://leetcode.com/problems/reverse-string/" },
+        { id: "ac_c_ptr3", difficulty: "easy", time: "30m", name: "LC 977 — Squares of a Sorted Array", url: "https://leetcode.com/problems/squares-of-a-sorted-array/" },
+        { id: "ac_c_ptr4", difficulty: "medium", time: "45m", name: "LC 167 — Two Sum II - Input Array Is Sorted", url: "https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/" },
+        { id: "ac_c_ptr5", difficulty: "medium", time: "45m", name: "LC 11 — Container With Most Water", url: "https://leetcode.com/problems/container-with-most-water/" },
+        { id: "ac_c_ptr6", difficulty: "medium", time: "45m", name: "LC 15 — 3Sum", url: "https://leetcode.com/problems/3sum/" },
+        { id: "ac_c_ptr7", difficulty: "hard", time: "1.5h", name: "LC 42 — Trapping Rain Water (Stretch)", url: "https://leetcode.com/problems/trapping-rain-water/" }
       ]
     },
     {
@@ -1001,17 +1023,17 @@
       title: "5. Basic Math 🔥",
       desc: "Primes, GCD/LCM, integer splits & series checks",
       problems: [
-        { id: "ac_c_math1", difficulty: "easy", name: "LC 9 — Palindrome Number", url: "https://leetcode.com/problems/palindrome-number/" },
-        { id: "ac_c_math2", difficulty: "easy", name: "LC 7 — Reverse Integer", url: "https://leetcode.com/problems/reverse-integer/" },
-        { id: "ac_c_math3", difficulty: "easy", name: "LC 412 — Fizz Buzz", url: "https://leetcode.com/problems/fizz-buzz/" },
-        { id: "ac_c_math4", difficulty: "easy", name: "LC 1979 — Find Greatest Common Divisor of Array", url: "https://leetcode.com/problems/find-greatest-common-divisor-of-array/" },
-        { id: "ac_c_math5", difficulty: "medium", name: "LC 202 — Happy Number", url: "https://leetcode.com/problems/happy-number/" },
-        { id: "ac_c_math6", difficulty: "medium", name: "LC 204 — Count Primes", url: "https://leetcode.com/problems/count-primes/" },
-        { id: "ac_c_math7", difficulty: "medium", name: "LC 50 — Pow(x, n)", url: "https://leetcode.com/problems/powx-n/" },
-        { id: "ac_c_math8", difficulty: "hard", name: "LC 273 — Integer to English Words (Stretch)", url: "https://leetcode.com/problems/integer-to-english-words/" },
-        { id: "ac_c_math_c1", difficulty: "easy", name: "Concept: Practice Prime Checking, LCM & Factorial implementation" },
-        { id: "ac_c_math_c2", difficulty: "easy", name: "Concept: Practice Fibonacci series & Armstrong Numbers" },
-        { id: "ac_c_math_c3", difficulty: "easy", name: "Concept: Sum of digits, Reverse digits & modulo manipulation" }
+        { id: "ac_c_math1", difficulty: "easy", time: "30m", name: "LC 9 — Palindrome Number", url: "https://leetcode.com/problems/palindrome-number/" },
+        { id: "ac_c_math2", difficulty: "easy", time: "30m", name: "LC 7 — Reverse Integer", url: "https://leetcode.com/problems/reverse-integer/" },
+        { id: "ac_c_math3", difficulty: "easy", time: "30m", name: "LC 412 — Fizz Buzz", url: "https://leetcode.com/problems/fizz-buzz/" },
+        { id: "ac_c_math4", difficulty: "easy", time: "30m", name: "LC 1979 — Find Greatest Common Divisor of Array", url: "https://leetcode.com/problems/find-greatest-common-divisor-of-array/" },
+        { id: "ac_c_math5", difficulty: "medium", time: "45m", name: "LC 202 — Happy Number", url: "https://leetcode.com/problems/happy-number/" },
+        { id: "ac_c_math6", difficulty: "medium", time: "45m", name: "LC 204 — Count Primes", url: "https://leetcode.com/problems/count-primes/" },
+        { id: "ac_c_math7", difficulty: "medium", time: "45m", name: "LC 50 — Pow(x, n)", url: "https://leetcode.com/problems/powx-n/" },
+        { id: "ac_c_math8", difficulty: "hard", time: "1.5h", name: "LC 273 — Integer to English Words (Stretch)", url: "https://leetcode.com/problems/integer-to-english-words/" },
+        { id: "ac_c_math_c1", difficulty: "easy", time: "1h", name: "Concept: Practice Prime Checking, LCM & Factorial implementation" },
+        { id: "ac_c_math_c2", difficulty: "easy", time: "1h", name: "Concept: Practice Fibonacci series & Armstrong Numbers" },
+        { id: "ac_c_math_c3", difficulty: "easy", time: "1h", name: "Concept: Sum of digits, Reverse digits & modulo manipulation" }
       ]
     },
     {
@@ -1019,12 +1041,12 @@
       title: "6. Sliding Window 🔥",
       desc: "Fixed and variable subsegments calculations",
       problems: [
-        { id: "ac_c_win1", difficulty: "easy", name: "LC 121 — Best Time to Buy and Sell Stock", url: "https://leetcode.com/problems/best-time-to-buy-and-sell-stock/" },
-        { id: "ac_c_win2", difficulty: "medium", name: "LC 3 — Longest Substring Without Repeating Characters", url: "https://leetcode.com/problems/longest-substring-without-repeating-characters/" },
-        { id: "ac_c_win3", difficulty: "medium", name: "LC 567 — Permutation in String", url: "https://leetcode.com/problems/permutation-in-string/" },
-        { id: "ac_c_win4", difficulty: "medium", name: "LC 438 — Find All Anagrams in a String", url: "https://leetcode.com/problems/find-all-anagrams-in-a-string/" },
-        { id: "ac_c_win5", difficulty: "medium", name: "LC 424 — Longest Repeating Character Replacement", url: "https://leetcode.com/problems/longest-repeating-character-replacement/" },
-        { id: "ac_c_win6", difficulty: "hard", name: "LC 76 — Minimum Window Substring (Stretch)", url: "https://leetcode.com/problems/minimum-window-substring/" }
+        { id: "ac_c_win1", difficulty: "easy", time: "30m", name: "LC 121 — Best Time to Buy and Sell Stock", url: "https://leetcode.com/problems/best-time-to-buy-and-sell-stock/" },
+        { id: "ac_c_win2", difficulty: "medium", time: "45m", name: "LC 3 — Longest Substring Without Repeating Characters", url: "https://leetcode.com/problems/longest-substring-without-repeating-characters/" },
+        { id: "ac_c_win3", difficulty: "medium", time: "45m", name: "LC 567 — Permutation in String", url: "https://leetcode.com/problems/permutation-in-string/" },
+        { id: "ac_c_win4", difficulty: "medium", time: "45m", name: "LC 438 — Find All Anagrams in a String", url: "https://leetcode.com/problems/find-all-anagrams-in-a-string/" },
+        { id: "ac_c_win5", difficulty: "medium", time: "45m", name: "LC 424 — Longest Repeating Character Replacement", url: "https://leetcode.com/problems/longest-repeating-character-replacement/" },
+        { id: "ac_c_win6", difficulty: "hard", time: "1.5h", name: "LC 76 — Minimum Window Substring (Stretch)", url: "https://leetcode.com/problems/minimum-window-substring/" }
       ]
     },
     {
@@ -1032,13 +1054,13 @@
       title: "7. Prefix Sum 🟡",
       desc: "O(1) range sum lookups, subsegment matching",
       problems: [
-        { id: "ac_c_pref1", difficulty: "easy", name: "LC 1480 — Running Sum of 1d Array", url: "https://leetcode.com/problems/running-sum-of-1d-array/" },
-        { id: "ac_c_pref2", difficulty: "easy", name: "LC 724 — Find Pivot Index", url: "https://leetcode.com/problems/find-pivot-index/" },
-        { id: "ac_c_pref3", difficulty: "easy", name: "LC 303 — Range Sum Query - Immutable", url: "https://leetcode.com/problems/range-sum-query-immutable/" },
-        { id: "ac_c_pref4", difficulty: "medium", name: "LC 53 — Maximum Subarray", url: "https://leetcode.com/problems/maximum-subarray/" },
-        { id: "ac_c_pref5", difficulty: "medium", name: "LC 560 — Subarray Sum Equals K", url: "https://leetcode.com/problems/subarray-sum-equals-k/" },
-        { id: "ac_c_pref6", difficulty: "medium", name: "LC 525 — Contiguous Array", url: "https://leetcode.com/problems/contiguous-array/" },
-        { id: "ac_c_pref7", difficulty: "hard", name: "LC 974 — Subarray Sums Divisible by K (Stretch)", url: "https://leetcode.com/problems/subarray-sums-divisible-by-k/" }
+        { id: "ac_c_pref1", difficulty: "easy", time: "30m", name: "LC 1480 — Running Sum of 1d Array", url: "https://leetcode.com/problems/running-sum-of-1d-array/" },
+        { id: "ac_c_pref2", difficulty: "easy", time: "30m", name: "LC 724 — Find Pivot Index", url: "https://leetcode.com/problems/find-pivot-index/" },
+        { id: "ac_c_pref3", difficulty: "easy", time: "30m", name: "LC 303 — Range Sum Query - Immutable", url: "https://leetcode.com/problems/range-sum-query-immutable/" },
+        { id: "ac_c_pref4", difficulty: "medium", time: "45m", name: "LC 53 — Maximum Subarray", url: "https://leetcode.com/problems/maximum-subarray/" },
+        { id: "ac_c_pref5", difficulty: "medium", time: "45m", name: "LC 560 — Subarray Sum Equals K", url: "https://leetcode.com/problems/subarray-sum-equals-k/" },
+        { id: "ac_c_pref6", difficulty: "medium", time: "45m", name: "LC 525 — Contiguous Array", url: "https://leetcode.com/problems/contiguous-array/" },
+        { id: "ac_c_pref7", difficulty: "hard", time: "1.5h", name: "LC 974 — Subarray Sums Divisible by K (Stretch)", url: "https://leetcode.com/problems/subarray-sums-divisible-by-k/" }
       ]
     },
     {
@@ -1046,14 +1068,14 @@
       title: "8. Sorting 🟡",
       desc: "Comparison algorithms & merge segments",
       problems: [
-        { id: "ac_c_sort1", difficulty: "easy", name: "LC 88 — Merge Sorted Array", url: "https://leetcode.com/problems/merge-sorted-array/" },
-        { id: "ac_c_sort2", difficulty: "easy", name: "LC 912 — Sort an Array", url: "https://leetcode.com/problems/sort-an-array/" },
-        { id: "ac_c_sort3", difficulty: "medium", name: "LC 75 — Sort Colors", url: "https://leetcode.com/problems/sort-colors/" },
-        { id: "ac_c_sort4", difficulty: "medium", name: "LC 56 — Merge Intervals", url: "https://leetcode.com/problems/merge-intervals/" },
-        { id: "ac_c_sort5", difficulty: "medium", name: "LC 179 — Largest Number", url: "https://leetcode.com/problems/largest-number/" },
-        { id: "ac_c_sort6", difficulty: "hard", name: "LC 315 — Count of Smaller Numbers After Self (Stretch)", url: "https://leetcode.com/problems/count-of-smaller-numbers-after-self/" },
-        { id: "ac_c_sort_c1", difficulty: "easy", name: "Concept: Implement Bubble Sort & Selection Sort manually" },
-        { id: "ac_c_sort_c2", difficulty: "easy", name: "Concept: Implement Insertion Sort & learn built-in Python sort()/sorted()" }
+        { id: "ac_c_sort1", difficulty: "easy", time: "30m", name: "LC 88 — Merge Sorted Array", url: "https://leetcode.com/problems/merge-sorted-array/" },
+        { id: "ac_c_sort2", difficulty: "easy", time: "30m", name: "LC 912 — Sort an Array", url: "https://leetcode.com/problems/sort-an-array/" },
+        { id: "ac_c_sort3", difficulty: "medium", time: "45m", name: "LC 75 — Sort Colors", url: "https://leetcode.com/problems/sort-colors/" },
+        { id: "ac_c_sort4", difficulty: "medium", time: "45m", name: "LC 56 — Merge Intervals", url: "https://leetcode.com/problems/merge-intervals/" },
+        { id: "ac_c_sort5", difficulty: "medium", time: "45m", name: "LC 179 — Largest Number", url: "https://leetcode.com/problems/largest-number/" },
+        { id: "ac_c_sort6", difficulty: "hard", time: "1.5h", name: "LC 315 — Count of Smaller Numbers After Self (Stretch)", url: "https://leetcode.com/problems/count-of-smaller-numbers-after-self/" },
+        { id: "ac_c_sort_c1", difficulty: "easy", time: "1h", name: "Concept: Implement Bubble Sort & Selection Sort manually" },
+        { id: "ac_c_sort_c2", difficulty: "easy", time: "1h", name: "Concept: Implement Insertion Sort & learn built-in Python sort()/sorted()" }
       ]
     },
     {
@@ -1061,13 +1083,13 @@
       title: "9. Binary Search 🟡",
       desc: "Logarithmic space split searches",
       problems: [
-        { id: "ac_c_bs1", difficulty: "easy", name: "LC 704 — Binary Search", url: "https://leetcode.com/problems/binary-search/" },
-        { id: "ac_c_bs2", difficulty: "easy", name: "LC 35 — Search Insert Position", url: "https://leetcode.com/problems/search-insert-position/" },
-        { id: "ac_c_bs3", difficulty: "easy", name: "LC 69 — Sqrt(x)", url: "https://leetcode.com/problems/sqrtx/" },
-        { id: "ac_c_bs4", difficulty: "medium", name: "LC 34 — Find First and Last Position of Element in Sorted Array", url: "https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/" },
-        { id: "ac_c_bs5", difficulty: "medium", name: "LC 33 — Search in Rotated Sorted Array", url: "https://leetcode.com/problems/search-in-rotated-sorted-array/" },
-        { id: "ac_c_bs6", difficulty: "medium", name: "LC 153 — Find Minimum in Rotated Sorted Array", url: "https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/" },
-        { id: "ac_c_bs7", difficulty: "hard", name: "LC 4 — Median of Two Sorted Arrays (Stretch)", url: "https://leetcode.com/problems/median-of-two-sorted-arrays/" }
+        { id: "ac_c_bs1", difficulty: "easy", time: "30m", name: "LC 704 — Binary Search", url: "https://leetcode.com/problems/binary-search/" },
+        { id: "ac_c_bs2", difficulty: "easy", time: "30m", name: "LC 35 — Search Insert Position", url: "https://leetcode.com/problems/search-insert-position/" },
+        { id: "ac_c_bs3", difficulty: "easy", time: "30m", name: "LC 69 — Sqrt(x)", url: "https://leetcode.com/problems/sqrtx/" },
+        { id: "ac_c_bs4", difficulty: "medium", time: "45m", name: "LC 34 — Find First and Last Position of Element in Sorted Array", url: "https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/" },
+        { id: "ac_c_bs5", difficulty: "medium", time: "45m", name: "LC 33 — Search in Rotated Sorted Array", url: "https://leetcode.com/problems/search-in-rotated-sorted-array/" },
+        { id: "ac_c_bs6", difficulty: "medium", time: "45m", name: "LC 153 — Find Minimum in Rotated Sorted Array", url: "https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/" },
+        { id: "ac_c_bs7", difficulty: "hard", time: "1.5h", name: "LC 4 — Median of Two Sorted Arrays (Stretch)", url: "https://leetcode.com/problems/median-of-two-sorted-arrays/" }
       ]
     },
     {
@@ -1075,12 +1097,12 @@
       title: "10. Bit Manipulation 🟡",
       desc: "Bitwise gates, counting bits, unique XOR states",
       problems: [
-        { id: "ac_c_bit1", difficulty: "easy", name: "LC 136 — Single Number", url: "https://leetcode.com/problems/single-number/" },
-        { id: "ac_c_bit2", difficulty: "easy", name: "LC 191 — Number of 1 Bits", url: "https://leetcode.com/problems/number-of-1-bits/" },
-        { id: "ac_c_bit3", difficulty: "easy", name: "LC 338 — Counting Bits", url: "https://leetcode.com/problems/counting-bits/" },
-        { id: "ac_c_bit4", difficulty: "medium", name: "LC 137 — Single Number II", url: "https://leetcode.com/problems/single-number-ii/" },
-        { id: "ac_c_bit5", difficulty: "medium", name: "LC 201 — Bitwise AND of Numbers Range", url: "https://leetcode.com/problems/bitwise-and-of-numbers-range/" },
-        { id: "ac_c_bit6", difficulty: "hard", name: "LC 982 — Triples with Bitwise AND Equal To Zero (Stretch)", url: "https://leetcode.com/problems/triples-with-bitwise-and-equal-to-zero/" }
+        { id: "ac_c_bit1", difficulty: "easy", time: "30m", name: "LC 136 — Single Number", url: "https://leetcode.com/problems/single-number/" },
+        { id: "ac_c_bit2", difficulty: "easy", time: "30m", name: "LC 191 — Number of 1 Bits", url: "https://leetcode.com/problems/number-of-1-bits/" },
+        { id: "ac_c_bit3", difficulty: "easy", time: "30m", name: "LC 338 — Counting Bits", url: "https://leetcode.com/problems/counting-bits/" },
+        { id: "ac_c_bit4", difficulty: "medium", time: "45m", name: "LC 137 — Single Number II", url: "https://leetcode.com/problems/single-number-ii/" },
+        { id: "ac_c_bit5", difficulty: "medium", time: "45m", name: "LC 201 — Bitwise AND of Numbers Range", url: "https://leetcode.com/problems/bitwise-and-of-numbers-range/" },
+        { id: "ac_c_bit6", difficulty: "hard", time: "1.5h", name: "LC 982 — Triples with Bitwise AND Equal To Zero (Stretch)", url: "https://leetcode.com/problems/triples-with-bitwise-and-equal-to-zero/" }
       ]
     },
     {
@@ -1088,11 +1110,11 @@
       title: "11. Recursion 🟢",
       desc: "Call stacks, trace execution trees & return states",
       problems: [
-        { id: "ac_c_rec1", difficulty: "medium", name: "LC 50 — Pow(x, n)", url: "https://leetcode.com/problems/powx-n/" },
-        { id: "ac_c_rec2", difficulty: "medium", name: "LC 78 — Subsets", url: "https://leetcode.com/problems/subsets/" },
-        { id: "ac_c_rec_c1", difficulty: "easy", name: "Concept: Recursively solve Factorial & Fibonacci" },
-        { id: "ac_c_rec_c2", difficulty: "easy", name: "Concept: Recursively find Sum of digits & Sum of N numbers" },
-        { id: "ac_c_rec_c3", difficulty: "easy", name: "Concept: Recursively reverse a string (helps tracing)" }
+        { id: "ac_c_rec1", difficulty: "medium", time: "45m", name: "LC 50 — Pow(x, n)", url: "https://leetcode.com/problems/powx-n/" },
+        { id: "ac_c_rec2", difficulty: "medium", time: "45m", name: "LC 78 — Subsets", url: "https://leetcode.com/problems/subsets/" },
+        { id: "ac_c_rec_c1", difficulty: "easy", time: "1h", name: "Concept: Recursively solve Factorial & Fibonacci" },
+        { id: "ac_c_rec_c2", difficulty: "easy", time: "1h", name: "Concept: Recursively find Sum of digits & Sum of N numbers" },
+        { id: "ac_c_rec_c3", difficulty: "easy", time: "1h", name: "Concept: Recursively reverse a string (helps tracing)" }
       ]
     },
     {
@@ -1100,12 +1122,12 @@
       title: "12. Stack 🟢",
       desc: "LIFO, parenthesis checks, postfix evaluation",
       problems: [
-        { id: "ac_c_stk1", difficulty: "easy", name: "LC 20 — Valid Parentheses", url: "https://leetcode.com/problems/valid-parentheses/" },
-        { id: "ac_c_stk2", difficulty: "easy", name: "LC 682 — Baseball Game", url: "https://leetcode.com/problems/baseball-game/" },
-        { id: "ac_c_stk3", difficulty: "easy", name: "LC 1047 — Remove All Adjacent Duplicates In String", url: "https://leetcode.com/problems/remove-all-adjacent-duplicates-in-string/" },
-        { id: "ac_c_stk4", difficulty: "medium", name: "LC 155 — Min Stack", url: "https://leetcode.com/problems/min-stack/" },
-        { id: "ac_c_stk5", difficulty: "medium", name: "LC 150 — Evaluate Reverse Polish Notation", url: "https://leetcode.com/problems/evaluate-reverse-polish-notation/" },
-        { id: "ac_c_stk6", difficulty: "medium", name: "LC 739 — Daily Temperatures", url: "https://leetcode.com/problems/daily-temperatures/" }
+        { id: "ac_c_stk1", difficulty: "easy", time: "30m", name: "LC 20 — Valid Parentheses", url: "https://leetcode.com/problems/valid-parentheses/" },
+        { id: "ac_c_stk2", difficulty: "easy", time: "30m", name: "LC 682 — Baseball Game", url: "https://leetcode.com/problems/baseball-game/" },
+        { id: "ac_c_stk3", difficulty: "easy", time: "30m", name: "LC 1047 — Remove All Adjacent Duplicates In String", url: "https://leetcode.com/problems/remove-all-adjacent-duplicates-in-string/" },
+        { id: "ac_c_stk4", difficulty: "medium", time: "45m", name: "LC 155 — Min Stack", url: "https://leetcode.com/problems/min-stack/" },
+        { id: "ac_c_stk5", difficulty: "medium", time: "45m", name: "LC 150 — Evaluate Reverse Polish Notation", url: "https://leetcode.com/problems/evaluate-reverse-polish-notation/" },
+        { id: "ac_c_stk6", difficulty: "medium", time: "45m", name: "LC 739 — Daily Temperatures", url: "https://leetcode.com/problems/daily-temperatures/" }
       ]
     },
     {
@@ -1113,11 +1135,11 @@
       title: "13. Linked List 🟢",
       desc: "Node pointer redirections & fast/slow loops",
       problems: [
-        { id: "ac_c_ll1", difficulty: "easy", name: "LC 206 — Reverse Linked List", url: "https://leetcode.com/problems/reverse-linked-list/" },
-        { id: "ac_c_ll2", difficulty: "easy", name: "LC 21 — Merge Two Sorted Lists", url: "https://leetcode.com/problems/merge-two-sorted-lists/" },
-        { id: "ac_c_ll3", difficulty: "easy", name: "LC 141 — Linked List Cycle", url: "https://leetcode.com/problems/linked-list-cycle/" },
-        { id: "ac_c_ll4", difficulty: "medium", name: "LC 19 — Remove Nth Node From End of List", url: "https://leetcode.com/problems/remove-nth-node-from-end-of-list/" },
-        { id: "ac_c_ll5", difficulty: "medium", name: "LC 160 — Intersection of Two Linked Lists", url: "https://leetcode.com/problems/intersection-of-two-linked-lists/" }
+        { id: "ac_c_ll1", difficulty: "easy", time: "30m", name: "LC 206 — Reverse Linked List", url: "https://leetcode.com/problems/reverse-linked-list/" },
+        { id: "ac_c_ll2", difficulty: "easy", time: "30m", name: "LC 21 — Merge Two Sorted Lists", url: "https://leetcode.com/problems/merge-two-sorted-lists/" },
+        { id: "ac_c_ll3", difficulty: "easy", time: "30m", name: "LC 141 — Linked List Cycle", url: "https://leetcode.com/problems/linked-list-cycle/" },
+        { id: "ac_c_ll4", difficulty: "medium", time: "45m", name: "LC 19 — Remove Nth Node From End of List", url: "https://leetcode.com/problems/remove-nth-node-from-end-of-list/" },
+        { id: "ac_c_ll5", difficulty: "medium", time: "45m", name: "LC 160 — Intersection of Two Linked Lists", url: "https://leetcode.com/problems/intersection-of-two-linked-lists/" }
       ]
     }
   ];
@@ -1447,6 +1469,7 @@ Space Complexity (if code):`;
             ${titleLink}
           </div>
           <div class="problem-meta">
+            ${p.time ? `<span class="badge-time" style="padding:3px 8px; border-radius:6px; font-size:10.5px; font-weight:600; background:rgba(255, 255, 255, 0.05); border:1px solid var(--border); color:var(--text2); display:inline-flex; align-items:center; gap:4px; margin-right:4px;"><i class="far fa-clock"></i> ${p.time}</span>` : ''}
             <span class="badge-diff ${p.difficulty}">${p.difficulty}</span>
             <button class="btn-toggle-editor" id="btn-editor-${p.id}" onclick="toggleEditor('${p.id}')"><i class="fas fa-edit"></i> Notes &amp; Code</button>
           </div>
@@ -1522,6 +1545,7 @@ Space Complexity (if code):`;
             ${titleLink}
           </div>
           <div class="problem-meta">
+            ${p.time ? `<span class="badge-time" style="padding:3px 8px; border-radius:6px; font-size:10.5px; font-weight:600; background:rgba(255, 255, 255, 0.05); border:1px solid var(--border); color:var(--text2); display:inline-flex; align-items:center; gap:4px; margin-right:4px;"><i class="far fa-clock"></i> ${p.time}</span>` : ''}
             <span class="badge-diff ${p.difficulty}">${p.difficulty}</span>
             <button class="btn-toggle-editor" id="btn-editor-coding-${p.id}" onclick="toggleCodingEditor('${p.id}')"><i class="fas fa-edit"></i> Notes &amp; Code</button>
           </div>
@@ -1886,12 +1910,12 @@ Space Complexity (if code):`;
     if (style) style.remove();
     closeWallpaperModal();
   }
-  function handleWallpaperUpload(e) {
-    const file = e.target.files[0];
+  function handleWallpaperUpload(event) {
+    const file = event.target.files[0];
     if (!file) return;
     const reader = new FileReader();
-    reader.onload = function(event) {
-      setWallpaper(event.target.result);
+    reader.onload = function(e) {
+      setWallpaper(e.target.result);
       closeWallpaperModal();
     };
     reader.readAsDataURL(file);
