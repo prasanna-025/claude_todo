@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Accenture 20-Day Prep Plan — PlacementOS</title>
+  <title>Accenture 15-Day Prep Plan — PlacementOS</title>
   <link rel="stylesheet" href="style.css"/>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
@@ -365,7 +365,7 @@
       color: #fff !important;
     }
     .btn-tab:hover {
-      background: rgba(255,255,255,0.05);
+      background: rgba(255, 255, 255, 0.05);
       color: #fff;
     }
   </style>
@@ -414,7 +414,7 @@
     
     <!-- TOPBAR -->
     <header class="topbar">
-      <div class="topbar-title" id="topbar-title">🎓 Accenture 20-Day Plan</div>
+      <div class="topbar-title" id="topbar-title">🎓 Accenture 15-Day Plan</div>
       <div style="display:flex; align-items:center; gap: 14px;">
         <span class="save-indicator" id="sync-status" style="font-size:12.5px; color:var(--text2); display:flex; align-items:center; gap:6px;">
           <i class="fas fa-cloud"></i> Synced
@@ -432,8 +432,8 @@
       <div class="overall-progress-card">
         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
           <div>
-            <h2 style="font-size: 16px; font-weight:700;">Accenture 20-Day Prep Tracker</h2>
-            <p style="font-size:12px; color:var(--text2); margin-top:2px;">Complete all syllabus tasks, mock tests, and hands-on coding sheets.</p>
+            <h2 style="font-size: 16px; font-weight:700;">Accenture 15-Day Master Plan</h2>
+            <p style="font-size:12px; color:var(--text2); margin-top:2px;">Complete all syllabus tasks, coding projects, and mock assessments.</p>
           </div>
           <div style="text-align:right;">
             <div style="font-size: 18px; font-weight:700; color:var(--accent2);" id="overall-pct">0%</div>
@@ -447,7 +447,7 @@
 
       <!-- Tab Buttons Group -->
       <div class="tabs-group">
-        <button class="btn-tab active" id="tab-roadmap-btn" onclick="switchTab('roadmap')"><i class="fas fa-calendar-alt"></i> 20-Day Roadmap</button>
+        <button class="btn-tab active" id="tab-roadmap-btn" onclick="switchTab('roadmap')"><i class="fas fa-calendar-alt"></i> 15-Day Roadmap</button>
         <button class="btn-tab" id="tab-coding-btn" onclick="switchTab('coding')"><i class="fas fa-code"></i> Accenture Coding Sheet</button>
       </div>
 
@@ -472,15 +472,15 @@
             <div class="card" style="padding: 20px;">
               <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
                 <div>
-                  <h1 style="font-size:22px; font-weight:700; color:#fff;" id="curr-day-title">Day 1 – Pseudocode Fundamentals</h1>
-                  <p style="font-size:12.5px; color:var(--text2); margin-top:4px;" id="curr-day-subtitle">Variables, Loops & Traversal</p>
+                  <h1 style="font-size:22px; font-weight:700; color:#fff;" id="curr-day-title">Day 1 – DSA + SQL Foundation</h1>
+                  <p style="font-size:12.5px; color:var(--text2); margin-top:4px;" id="curr-day-subtitle">Basic operators, structures & variables</p>
                 </div>
               </div>
             </div>
 
             <!-- Interactive Learning Visualizations -->
             <div id="learning-viz-container" style="display:none;">
-              <!-- Render specific visualizations e.g. SQL Join visualizer for Day 5 -->
+              <!-- Render specific visualizations e.g. SQL Join visualizer for Day 3 -->
             </div>
 
             <!-- Daily Schedule Dashboard Card -->
@@ -566,327 +566,277 @@
 <script src="sync.js?v=6"></script>
 
 <script>
-  // 20-Day Accenture Prep structured data (Roadmap contains Technical, Coding (4h Session), English & Revision)
+  // 15-Day Master Plan Syllabus
   const planData = [
     {
       day: 1,
-      title: "Day 1 — Pseudocode Fundamentals",
-      subtitle: "Variables, Loops & Traversal",
+      title: "Day 1 — DSA + SQL Foundation",
+      subtitle: "Basic operators, structures & variables",
       learn: [
-        "Variables, data types, operators & Conditions (Nested conditions)",
-        "Loops (for / while) & Nested loop execution",
-        "Output tracing practice & basic algorithm complexities",
-        "English: Tenses, Self-Introduction, Speak 2 mins on education"
+        "DSA: Problem solving on Arrays, Strings, Hashing, Frequency, and Two Pointers",
+        "SQL: SELECT, FROM, WHERE, DISTINCT, ORDER BY, LIMIT, AND/OR, IN, BETWEEN, LIKE",
+        "Technical: Pseudocode Part 1 (Variables, Data types, Operators, Conditions, Loops, Nested loops)",
+        "Communication: Self-introduction practice, pronunciation & fluency checks"
       ],
       problems: [
-        { id: "ac_d1_t1", difficulty: "medium", time: "5.5h", name: "Pseudocode: Practice 40-50 output tracing questions" },
-        { id: "ac_d1_code", difficulty: "medium", time: "4h", name: "Coding: 4 Hours of Coding Sheet / Array Plan practice" },
-        { id: "ac_d1_t2", difficulty: "easy", time: "1.5h", name: "English: Practice self-introduction and tenses (2 mins speaking)" },
-        { id: "ac_d1_rev", difficulty: "easy", time: "1h", name: "Daily Revision: Review today's mistakes and check weak topics" }
+        { id: "ac_d1_t1", difficulty: "medium", time: "4h", name: "DSA: Solve 8–10 problems on Arrays, Strings, Hashing, and Two Pointers" },
+        { id: "ac_d1_t2", difficulty: "easy", time: "3h", name: "SQL: Write 20 basic queries yourself using SELECT, WHERE, ORDER BY, IN, LIKE" },
+        { id: "ac_d1_t3", difficulty: "medium", time: "3h", name: "Technical: Trace 30–40 Pseudocode questions (Loops, nested loops, outputs)" },
+        { id: "ac_d1_t4", difficulty: "easy", time: "1h", name: "Communication: Self-introduction, pronunciation & fluency exercises" },
+        { id: "ac_d1_rev", difficulty: "easy", time: "1h", name: "Revision: Review today's mistakes and check weak topics" }
       ]
     },
     {
       day: 2,
-      title: "Day 2 — Pseudocode + Bitwise + Recursion",
-      subtitle: "Recursion return values & Bit Operators",
+      title: "Day 2 — DSA + SQL Aggregation",
+      subtitle: "Aggregate queries & loops logic",
       learn: [
-        "Bitwise Operators: &, |, ^, <<, >>",
-        "Recursion tracing, return value computation, recursion trees",
-        "English: Grammar concepts + Mock self-introduction without memorizing"
+        "DSA: Problem solving on Sliding Window, Two Pointers, Arrays, and Strings",
+        "SQL: Aggregate functions (COUNT, SUM, AVG, MIN, MAX), GROUP BY, HAVING (WHERE vs HAVING)",
+        "Technical: Pseudocode Part 2 (Nested loops, Functions, Return values, Recursion tracing, Complexity)",
+        "Communication: Focus on Grammar, Tenses, and Speaking fluency"
       ],
       problems: [
-        { id: "ac_d2_t1", difficulty: "medium", time: "5.5h", name: "Pseudocode: Solve 40-50 Recursion Tracing & Bitwise MCQs" },
-        { id: "ac_d2_code", difficulty: "medium", time: "4h", name: "Coding: 4 Hours of Coding Sheet / Array Plan practice" },
-        { id: "ac_d2_t2", difficulty: "easy", time: "1.5h", name: "English: Practice grammar exercises & flow speaking" },
-        { id: "ac_d2_rev", difficulty: "easy", time: "1h", name: "Daily Revision: Review today's mistakes and check weak topics" }
+        { id: "ac_d2_t1", difficulty: "medium", time: "4h", name: "DSA: Solve 8–10 problems on Sliding Window, Two Pointers, and Arrays/Strings" },
+        { id: "ac_d2_t2", difficulty: "medium", time: "3h", name: "SQL: Write 20–25 queries using COUNT, SUM, GROUP BY, and HAVING clauses" },
+        { id: "ac_d2_t3", difficulty: "medium", time: "3h", name: "Technical: Trace 40 Pseudocode recursion & function return questions" },
+        { id: "ac_d2_t4", difficulty: "easy", time: "1h", name: "Communication: Complete tenses, fluency & pronunciation speaking checks" },
+        { id: "ac_d2_rev", difficulty: "easy", time: "1h", name: "Revision: Review today's mistakes and check weak topics" }
       ]
     },
     {
       day: 3,
-      title: "Day 3 — OOP",
-      subtitle: "Classes, Objects, Constructors & Polymorphism",
+      title: "Day 3 — DSA + SQL JOIN",
+      subtitle: "Relational queries & CS concepts",
       learn: [
-        "Core OOP: Class, Object, Constructor, Access specifiers",
-        "Pillars: Encapsulation, Abstraction, Inheritance, Polymorphism",
-        "Advanced: Overloading, Overriding, Abstract classes",
-        "English: Answer 'Why Accenture?' and explain your degree path"
+        "DSA: Problem solving on Searching, Binary Search, Sorting, and Array algorithms",
+        "SQL: INNER JOIN, LEFT JOIN, RIGHT JOIN, SELF JOIN, Primary/Foreign keys",
+        "Technical: Core CS Programming concepts (Conditions, Functions, Sorting, Searching complexity)",
+        "Communication: Technical speaking (explain project, tenses, graduation path)"
       ],
       problems: [
-        { id: "ac_d3_t1", difficulty: "medium", time: "5.5h", name: "OOP: Complete 50+ MCQ questions on classes, inheritance & virtual functions" },
-        { id: "ac_d3_code", difficulty: "medium", time: "4h", name: "Coding: 4 Hours of Coding Sheet / Array Plan practice" },
-        { id: "ac_d3_t2", difficulty: "easy", time: "1.5h", name: "English: Practice 'Why Accenture?' and explain your engineering degree aloud" },
-        { id: "ac_d3_rev", difficulty: "easy", time: "1h", name: "Daily Revision: Review today's mistakes and check weak topics" }
+        { id: "ac_d3_t1", difficulty: "medium", time: "4h", name: "DSA: Solve 8–10 problems on Searching, Binary Search, and Sorting" },
+        { id: "ac_d3_t2", difficulty: "hard", time: "3h", name: "SQL: Write 20–25 queries combining JOIN + WHERE + GROUP BY + HAVING" },
+        { id: "ac_d3_t3", difficulty: "medium", time: "3h", name: "Technical: Solve 50 programming concepts & complexity MCQs" },
+        { id: "ac_d3_t4", difficulty: "easy", time: "1h", name: "Communication: Practice explaining your college project and graduation studies aloud" },
+        { id: "ac_d3_rev", difficulty: "easy", time: "1h", name: "Revision: Review today's mistakes and check weak topics" }
       ]
     },
     {
       day: 4,
-      title: "Day 4 — SQL Fundamentals",
-      subtitle: "SELECT, WHERE, ORDER BY & Aggregates",
+      title: "Day 4 — DSA + SQL Advanced",
+      subtitle: "Complex subqueries & Object Oriented concepts",
       learn: [
-        "SQL Select queries, filtering with WHERE, sorting with ORDER BY, pagination with LIMIT",
-        "Aggregations: COUNT(), SUM(), AVG(), MAX(), MIN()",
-        "English: Practice structure explaining your graduation final-year project"
+        "DSA: Problem solving on Matrix traversals, Spiral Matrix, Diagonal scans, and Stacks",
+        "SQL: Subqueries, Nested queries, CASE statements, NULL checks (IS NULL / IS NOT NULL), UNION basics",
+        "Technical: Object Oriented Programming (Class, Object, Constructor, Encapsulation, Abstraction, Pillars)",
+        "Communication: Speak and explain OOP concepts aloud without memorizing"
       ],
       problems: [
-        { id: "ac_d4_t1", difficulty: "easy", time: "5.5h", name: "SQL: Write 20-30 basic queries containing filters, aggregates & sorting" },
-        { id: "ac_d4_code", difficulty: "medium", time: "4h", name: "Coding: 4 Hours of Coding Sheet / Array Plan practice" },
-        { id: "ac_d4_t2", difficulty: "easy", time: "1.5h", name: "English: Complete a 3-minute explanation session of your project" },
-        { id: "ac_d4_rev", difficulty: "easy", time: "1h", name: "Daily Revision: Review today's mistakes and check weak topics" }
+        { id: "ac_d4_t1", difficulty: "medium", time: "4h", name: "DSA: Solve 8 problems on Matrix traversals, Spiral matrix, and basic Stack" },
+        { id: "ac_d4_t2", difficulty: "hard", time: "3h", name: "SQL: Write 20 queries involving Subqueries, CASE, and UNION statements" },
+        { id: "ac_d4_t3", difficulty: "medium", time: "3h", name: "Technical: Solve 50 OOP MCQs (access specifiers, constructor inheritance, virtual functions)" },
+        { id: "ac_d4_t4", difficulty: "easy", time: "1h", name: "Communication: Record yourself explaining all four OOP pillars aloud (2 mins)" },
+        { id: "ac_d4_rev", difficulty: "easy", time: "1h", name: "Revision: Review today's mistakes and check weak topics" }
       ]
     },
     {
       day: 5,
-      title: "Day 5 — SQL Advanced",
-      subtitle: "GROUP BY, HAVING & Joins",
+      title: "Day 5 — SQL TEST + DSA",
+      subtitle: "Timed query test & Network OSI layers",
       learn: [
-        "Aggregation grouping: GROUP BY and GROUP filter HAVING",
-        "Relational Joins: INNER JOIN, LEFT JOIN, RIGHT JOIN, FULL OUTER JOIN",
-        "Combining queries: JOIN + WHERE + GROUP BY + HAVING + ORDER BY"
+        "DSA: Timed practice covering Arrays, Strings, Hashing, Two Pointers, and Sliding Window",
+        "SQL: Full 60-minute timed query test (20-25 questions) under test conditions",
+        "Technical: Computer Networks OSI Model 7 layers, TCP/IP vs OSI model, LAN/WAN, MAC addresses",
+        "Communication: Explain difference between TCP and UDP aloud in English"
       ],
       problems: [
-        { id: "ac_d5_t1", difficulty: "medium", time: "3.5h", name: "SQL: Practice 20+ query combinations using JOINs and GROUP BY clauses" },
-        { id: "ac_d5_t2", difficulty: "medium", time: "2h", name: "SQL Mock: Complete 1 timed SQL database query assessment" },
-        { id: "ac_d5_code", difficulty: "medium", time: "4h", name: "Coding: 4 Hours of Coding Sheet / Array Plan practice" },
-        { id: "ac_d5_t3", difficulty: "easy", time: "1.5h", name: "English: Technical explanation speaking practice" },
-        { id: "ac_d5_rev", difficulty: "easy", time: "1h", name: "Daily Revision: Review today's mistakes and check weak topics" }
+        { id: "ac_d5_t1", difficulty: "hard", time: "4h", name: "DSA: Solve 10 timed mixed problems under time constraints" },
+        { id: "ac_d5_t2", difficulty: "hard", time: "3h", name: "SQL: Complete 60-min timed SQL test (20-25 queries) & analyze mistakes" },
+        { id: "ac_d5_t3", difficulty: "medium", time: "3h", name: "Technical: Solve 40-50 Networks MCQs (OSI layers & devices)" },
+        { id: "ac_d5_t4", difficulty: "easy", time: "1h", name: "Communication: Speak on OSI Model and TCP vs UDP (2 mins)" },
+        { id: "ac_d5_rev", difficulty: "easy", time: "1h", name: "Revision: Review today's mistakes and check weak topics" }
       ]
     },
     {
       day: 6,
       title: "Day 6 — HTML + CSS",
-      subtitle: "Layouts, Flexbox & Forms",
+      subtitle: "Web structures & Network protocols",
       learn: [
-        "HTML: Basics, structural tags, forms, input types, tables, labels, buttons",
-        "CSS: Selectors, box model, margins/paddings, display types, Flexbox grid system",
-        "English: Grammar correction exercises + basic HR question preparation"
+        "DSA: Problem solving on Stack, Queue, Linked List basics, and Arrays/Strings",
+        "SQL/Frontend: HTML structures, headings, links, forms, input types, CSS selectors, margins, box model",
+        "Technical: Networks protocols (DNS, DHCP, HTTP, HTTPS, common protocols: 80, 443, 53, 22, 21)",
+        "Communication: Technical speaking and grammar corrections"
       ],
       problems: [
-        { id: "ac_d6_t1", difficulty: "easy", time: "5.5h", name: "Web: Code a standard webpage mock containing input forms, lists, and CSS Flexbox layout" },
-        { id: "ac_d6_code", difficulty: "medium", time: "4h", name: "Coding: 4 Hours of Coding Sheet / Array Plan practice" },
-        { id: "ac_d6_t2", difficulty: "easy", time: "1.5h", name: "English: Complete 20 grammar MCQs & prepare answers for basic HR queries" },
-        { id: "ac_d6_rev", difficulty: "easy", time: "1h", name: "Daily Revision: Review today's mistakes and check weak topics" }
+        { id: "ac_d6_t1", difficulty: "medium", time: "4h", name: "DSA: Solve 8 problems on Stack, Queue, and Linked List basics" },
+        { id: "ac_d6_t2", difficulty: "easy", time: "3h", name: "HTML/CSS: Build a mockup query/details page from scratch using forms & CSS box model" },
+        { id: "ac_d6_t3", difficulty: "medium", time: "3h", name: "Technical: Solve 50 Networks MCQs (ports, HTTP states & routing protocols)" },
+        { id: "ac_d6_t4", difficulty: "easy", time: "1h", name: "Communication: Practice speaking on network ports and protocols" },
+        { id: "ac_d6_rev", difficulty: "easy", time: "1h", name: "Revision: Review today's mistakes and check weak topics" }
       ]
     },
     {
       day: 7,
-      title: "Day 7 — JavaScript DOM",
-      subtitle: "Interactivity & Validation",
+      title: "Day 7 — CSS + DSA",
+      subtitle: "Flexbox layout & Network security",
       learn: [
-        "DOM Selectors: getElementById, querySelector",
-        "Interactivity: addEventListener, updating textContent/innerHTML, dynamic styling",
-        "Event flows: Input inputs -> trigger button click -> JS validations -> update DOM styling"
+        "DSA: Mixed DSA problem solving on Arrays, Strings, Hashing, Searching, Sorting, and Matrix",
+        "SQL/Frontend: CSS Flexbox, Grid basics, Position, Width/Height, Responsive layout principles",
+        "Technical: Network Security basics (CIA Triad, Symmetric vs Asymmetric keys, Firewalls, VPN)",
+        "Communication: English pronunciation, voice articulation & fluency checks"
       ],
       problems: [
-        { id: "ac_d7_t1", difficulty: "medium", time: "5.5h", name: "JS: Code a dynamic form validation script (check email, password strength, empty inputs)" },
-        { id: "ac_d7_code", difficulty: "medium", time: "4h", name: "Coding: 4 Hours of Coding Sheet / Array Plan practice" },
-        { id: "ac_d7_t2", difficulty: "easy", time: "1.5h", name: "English: Practice explaining your completed JS validation logic in English" },
-        { id: "ac_d7_rev", difficulty: "easy", time: "1h", name: "Daily Revision: Review today's mistakes and check weak topics" }
+        { id: "ac_d7_t1", difficulty: "medium", time: "4h", name: "DSA: Solve 10 problems on Arrays, Strings, Hashing, and Matrix" },
+        { id: "ac_d7_t2", difficulty: "medium", time: "3h", name: "CSS: Code one completely responsive Flexbox layout from scratch" },
+        { id: "ac_d7_t3", difficulty: "medium", time: "3h", name: "Technical: Solve 50 Security MCQs (encryption keys & cryptography)" },
+        { id: "ac_d7_t4", difficulty: "easy", time: "1h", name: "Communication: Pronunciation and fluency speaking practice" },
+        { id: "ac_d7_rev", difficulty: "easy", time: "1h", name: "Revision: Review today's mistakes and check weak topics" }
       ]
     },
     {
       day: 8,
-      title: "Day 8 — Computer Networks",
-      subtitle: "OSI Model & Core Protocols",
+      title: "Day 8 — JavaScript DOM",
+      subtitle: "Browser scripts & Threat mitigation",
       learn: [
-        "OSI Model: All 7 layers (Physical to Application) & functions",
-        "Protocols: TCP/IP stack, TCP vs UDP comparison, IP routing, DNS resolver, HTTP/HTTPS",
-        "Port mappings: HTTP (80), HTTPS (443), SSH (22), DNS (53), FTP (21)"
+        "DSA: Problem solving on Arrays, Strings, Hashing, Two Pointers, and Sliding Window",
+        "SQL/Frontend: JavaScript basics (Variables, Loops, DOM selectors: querySelector, Events, addEventListener)",
+        "Technical: Security threats (Virus, Worms, Phishing, Spoofing, WEP/WPA protocols)",
+        "Communication: English listening and speaking checks"
       ],
       problems: [
-        { id: "ac_d8_t1", difficulty: "medium", time: "5.5h", name: "CN: Solve 50+ Computer Networks port & OSI Layer questions" },
-        { id: "ac_d8_code", difficulty: "medium", time: "4h", name: "Coding: 4 Hours of Coding Sheet / Array Plan practice" },
-        { id: "ac_d8_t2", difficulty: "easy", time: "1.5h", name: "English: Record yourself explaining the difference between TCP and UDP (2 mins)" },
-        { id: "ac_d8_rev", difficulty: "easy", time: "1h", name: "Daily Revision: Review today's mistakes and check weak topics" }
+        { id: "ac_d8_t1", difficulty: "medium", time: "4h", name: "DSA: Solve 8–10 problems on Arrays, Strings, and Two Pointers" },
+        { id: "ac_d8_t2", difficulty: "medium", time: "3h", name: "JS: Build an interactive page (Input -> Button click -> DOM validation -> Output)" },
+        { id: "ac_d8_t3", difficulty: "medium", time: "3h", name: "Technical: Solve 50 Security MCQs (threat types & Wi-Fi encryption schemas)" },
+        { id: "ac_d8_t4", difficulty: "easy", time: "1h", name: "Communication: Complete English speaking/listening checks" },
+        { id: "ac_d8_rev", difficulty: "easy", time: "1h", name: "Revision: Review today's mistakes and check weak topics" }
       ]
     },
     {
       day: 9,
-      title: "Day 9 — Wi-Fi Security + Encryption",
-      subtitle: "Network Defenses & Cryptography",
+      title: "Day 9 — JavaScript + Cloud",
+      subtitle: "ES6 arrays & Cloud deployment models",
       learn: [
-        "Wi-Fi Cryptography: WEP, WPA, WPA2, WPA3 security schemas",
-        "Encryption: Symmetric vs Asymmetric cryptography keys",
-        "Core Security: Authentication, authorization, firewalls, network routing defenses"
+        "DSA: Problem solving on Binary Search, Sorting, Matrix, and Stacks/Queues",
+        "SQL/Frontend: ES6 JavaScript array methods (map, filter, reduce), JSON payloads, Form validations",
+        "Technical: Cloud Computing basics (Public, Private, Hybrid, IaaS, PaaS, SaaS, VM virtualization, storage)",
+        "Communication: Explain Cloud service models and VM virtualization aloud in English"
       ],
       problems: [
-        { id: "ac_d9_t1", difficulty: "medium", time: "5.5h", name: "Security: Complete 50+ encryption & network security MCQs" },
-        { id: "ac_d9_code", difficulty: "medium", time: "4h", name: "Coding: 4 Hours of Coding Sheet / Array Plan practice" },
-        { id: "ac_d9_t2", difficulty: "easy", time: "1.5h", name: "English: Explain Symmetric vs Asymmetric encryption aloud" },
-        { id: "ac_d9_rev", difficulty: "easy", time: "1h", name: "Daily Revision: Review today's mistakes and check weak topics" }
+        { id: "ac_d9_t1", difficulty: "medium", time: "4h", name: "DSA: Solve 8–10 problems on Binary Search, Matrix, and Stack/Queue" },
+        { id: "ac_d9_t2", difficulty: "medium", time: "3h", name: "JS: Code an interactive page containing Form validation & array map/filter" },
+        { id: "ac_d9_t3", difficulty: "medium", time: "3h", name: "Technical: Solve 50 Cloud MCQs (service models & VM virtualization)" },
+        { id: "ac_d9_t4", difficulty: "easy", time: "1h", name: "Communication: Speak on Cloud service models (IaaS/PaaS/SaaS) for 2 minutes" },
+        { id: "ac_d9_rev", difficulty: "easy", time: "1h", name: "Revision: Review today's mistakes and check weak topics" }
       ]
     },
     {
       day: 10,
-      title: "Day 10 — Cloud + DevOps",
-      subtitle: "Service Models & Pipelines",
+      title: "Day 10 — React JS",
+      subtitle: "React components & Cloud architecture",
       learn: [
-        "Cloud Service Models: IaaS, PaaS, SaaS, Deployment models (Public, Private, Hybrid)",
-        "Git commands: clone, add, commit, push, pull, branch, merge, conflict resolutions",
-        "DevOps: Continuous Integration (CI), Continuous Deployment (CD), Build pipelines"
+        "DSA: Timed practice covering mixed DSA questions",
+        "SQL/Frontend: React basics (JSX, components, props, state, useState hook, conditional rendering, lists mapping)",
+        "Technical: Cloud concepts (Scalability, Elasticity, Availability, Containers, AWS/Azure/GCP providers)",
+        "Communication: Technical speaking practice (explain useState state management)"
       ],
       problems: [
-        { id: "ac_d10_t1", difficulty: "medium", time: "5.5h", name: "Cloud/Git: Complete 50+ cloud computing, Git commands & DevOps pipelines MCQs" },
-        { id: "ac_d10_code", difficulty: "medium", time: "4h", name: "Coding: 4 Hours of Coding Sheet / Array Plan practice" },
-        { id: "ac_d10_t2", difficulty: "easy", time: "1.5h", name: "English: Speak on 'What is cloud computing?' for 2 minutes" },
-        { id: "ac_d10_rev", difficulty: "easy", time: "1h", name: "Daily Revision: Review today's mistakes and check weak topics" }
+        { id: "ac_d10_t1", difficulty: "hard", time: "4h", name: "DSA: Solve 10 timed mixed problems under test constraints" },
+        { id: "ac_d10_t2", difficulty: "hard", time: "3h", name: "React: Code a simple React application (Todo list or Counter) using useState" },
+        { id: "ac_d10_t3", difficulty: "medium", time: "3h", name: "Technical: Solve 50 Cloud MCQs (containers, AWS/Azure/GCP infrastructure)" },
+        { id: "ac_d10_t4", difficulty: "easy", time: "1h", name: "Communication: Explain React state vs props in English aloud" },
+        { id: "ac_d10_rev", difficulty: "easy", time: "1h", name: "Revision: Review today's mistakes and check weak topics" }
       ]
     },
     {
       day: 11,
-      title: "Day 11 — Excel + Word + PowerPoint",
-      subtitle: "Office Applications Mastery",
+      title: "Day 11 — React + MS Office",
+      subtitle: "Forms validation & Excel/Word MCQs",
       learn: [
-        "MS Excel: IF, VLOOKUP, INDEX, MATCH, CONCATENATE, Absolute/Relative references ($A$1)",
-        "MS Word: Mail Merge, paragraph styling, shortcut keys",
-        "MS PowerPoint: Slide layouts, templates, transitions, presenter mode, shortcuts"
+        "DSA: Problem solving on weak DSA areas",
+        "SQL/Frontend: React forms, lists, components communication, and basic useEffect hook",
+        "Technical: MS Office Suite (Excel IF/VLOOKUP/INDEX/Absolute values, Word mail merge, PowerPoint shortcuts)",
+        "Communication: Written English checks & grammar reviews"
       ],
       problems: [
-        { id: "ac_d11_t1", difficulty: "medium", time: "5.5h", name: "MS Office: Solve 60+ Excel formulas & Word/PowerPoint shortcut keys MCQs" },
-        { id: "ac_d11_code", difficulty: "medium", time: "4h", name: "Coding: 4 Hours of Coding Sheet / Array Plan practice" },
-        { id: "ac_d11_t2", difficulty: "easy", time: "1.5h", name: "English: Answer mock HR questions (Strengths, Weaknesses, Goals)" },
-        { id: "ac_d11_rev", difficulty: "easy", time: "1h", name: "Daily Revision: Review today's mistakes and check weak topics" }
+        { id: "ac_d11_t1", difficulty: "medium", time: "4h", name: "DSA: Solve 8–10 problems on weak DSA areas" },
+        { id: "ac_d11_t2", difficulty: "hard", time: "3h", name: "React: Code a multi-component React page with forms & conditional rendering" },
+        { id: "ac_d11_t3", difficulty: "medium", time: "3h", name: "Technical: Solve 60 MS Office MCQs (Excel formulas & Word/PPT keys)" },
+        { id: "ac_d11_t4", difficulty: "easy", time: "1h", name: "Communication: Practice written English mock questions" },
+        { id: "ac_d11_rev", difficulty: "easy", time: "1h", name: "Revision: Review today's mistakes and check weak topics" }
       ]
     },
     {
       day: 12,
-      title: "Day 12 — OS + Hardware",
-      subtitle: "Processes, Memory & Architecture",
+      title: "Day 12 — Complete Coding Revision",
+      subtitle: "Combined practice rotation",
       learn: [
-        "OS Concepts: Process vs Thread, Process scheduling algorithms, Deadlocks, Memory allocation",
-        "Hardware basics: CPU, cache memories, RAM modules, HDD/SSD storage, I/O ports"
+        "DSA: Solve 10-12 mixed problems across all high-priority DSA topics",
+        "SQL/Frontend: Rotated coding session (1 hour SQL queries, 1 hour Frontend responsive task, 1 hour Python algorithms)",
+        "Technical: Full syllabus technical review (OOP, Pseudocode, Networks, Cloud, Security, MS Office)",
+        "Communication: HR interview mock verbal drills"
       ],
       problems: [
-        { id: "ac_d12_t1", difficulty: "medium", time: "5.5h", name: "OS: Solve 50+ process scheduling, deadlock & memory paging MCQs" },
-        { id: "ac_d12_code", difficulty: "medium", time: "4h", name: "Coding: 4 Hours of Coding Sheet / Array Plan practice" },
-        { id: "ac_d12_t2", difficulty: "easy", time: "1.5h", name: "English: Describe how process scheduling works in English" },
-        { id: "ac_d12_rev", difficulty: "easy", time: "1h", name: "Daily Revision: Review today's mistakes and check weak topics" }
+        { id: "ac_d12_t1", difficulty: "hard", time: "4h", name: "DSA: Solve 10–12 mixed problems across all high-priority topics" },
+        { id: "ac_d12_t2", difficulty: "hard", time: "3h", name: "Coding: Practice rotated rotation (1h SQL queries, 1h Frontend task, 1h Python)" },
+        { id: "ac_d12_t3", difficulty: "hard", time: "3h", name: "Technical: Solve 100 mixed MCQs under timed test conditions" },
+        { id: "ac_d12_t4", difficulty: "easy", time: "1h", name: "Communication: Conduct a final verbal interview simulation" },
+        { id: "ac_d12_rev", difficulty: "easy", time: "1h", name: "Revision: Review mistake notebook and logs" }
       ]
     },
     {
       day: 13,
-      title: "Day 13 — Technical Consolidation",
-      subtitle: "MCQ Comprehensive Review",
+      title: "Day 13 — Technical Mock",
+      subtitle: "45-minute MCQ simulation",
       learn: [
-        "Review mistakes made in all technical topics so far",
-        "Solve a mixed MCQ pool containing Pseudocode, OOP, SQL, CN, Cloud, OS, Security, Excel",
-        "Target: 100+ mixed MCQs under test conditions"
+        "DSA: Review and solve problems in identified weak topics",
+        "SQL/Frontend: Combined SQL + Frontend mock coding tasks",
+        "Technical: 45-minute timed Technical Assessment simulation (Common Apps, MS Office, Pseudocode, CN, Security, Cloud)",
+        "Communication: Technical speaking and HR final checks"
       ],
       problems: [
-        { id: "ac_d13_t1", difficulty: "hard", time: "5.5h", name: "Mock: Complete 100+ comprehensive mixed MCQs assessment" },
-        { id: "ac_d13_code", difficulty: "medium", time: "4h", name: "Coding: 4 Hours of Coding Sheet / Array Plan practice" },
-        { id: "ac_d13_t2", difficulty: "easy", time: "1.5h", name: "English: Conduct a mock HR interview walkthrough" },
-        { id: "ac_d13_rev", difficulty: "easy", time: "1h", name: "Daily Revision: Review today's mistakes and check weak topics" }
+        { id: "ac_d13_t1", difficulty: "medium", time: "4h", name: "DSA: Solve 8–10 problems focusing strictly on weak topics" },
+        { id: "ac_d13_t2", difficulty: "medium", time: "2h", name: "Coding: Solve mixed Python, SQL & Frontend queries" },
+        { id: "ac_d13_t3", difficulty: "hard", time: "4h", name: "Technical: Simulate 45-minute Technical Mock (MCQs pool & mistake analysis)" },
+        { id: "ac_d13_t4", difficulty: "easy", time: "1h", name: "Communication: HR verbal interview drills" },
+        { id: "ac_d13_rev", difficulty: "easy", time: "1h", name: "Revision: Review today's mistakes and check weak topics" }
       ]
     },
     {
       day: 14,
-      title: "Day 14 — Hands-on Consolidation 🔥",
-      subtitle: "Assessment Simulation",
+      title: "Day 14 — Coding Mock",
+      subtitle: "60-minute timed coding simulation",
       learn: [
-        "Simulate practical assessments: SQL queries, HTML/CSS/JS layouts",
-        "Absolutely no searching on Google, ChatGPT, or using notes",
-        "Target optimal layouts, clean queries, and correct logic"
+        "DSA: Re-solve previously failed coding questions",
+        "SQL/Frontend: 60-minute timed Coding Mock simulation (3 questions: 1 Python/DSA, 1 SQL, 1 Frontend) + analysis",
+        "Technical: Mixed Technical assessment MCQ review",
+        "Communication: HR verbal mocks & fluency checks"
       ],
       problems: [
-        { id: "ac_d14_t1", difficulty: "hard", time: "2.5h", name: "SQL: Solve 2 complex query problems under time constraint" },
-        { id: "ac_d14_t2", difficulty: "hard", time: "3h", name: "Web: Code a complete interactive web interface without helpers (60 mins)" },
-        { id: "ac_d14_code", difficulty: "medium", time: "4h", name: "Coding: 4 Hours of Coding Sheet / Array Plan practice" },
-        { id: "ac_d14_t3", difficulty: "hard", time: "1.5h", name: "English: Record yourself explaining one technical design" },
-        { id: "ac_d14_rev", difficulty: "easy", time: "1h", name: "Daily Revision: Review today's mistakes and check weak topics" }
+        { id: "ac_d14_t1", difficulty: "medium", time: "3h", name: "DSA: Re-solve previously failed coding questions" },
+        { id: "ac_d14_t2", difficulty: "hard", time: "4h", name: "Coding: Simulate 60-min Coding Mock (1 Python/DSA, 1 SQL, 1 Frontend) + analysis" },
+        { id: "ac_d14_t3", difficulty: "medium", time: "3h", name: "Technical: Complete final Technical Assessment Mock MCQs" },
+        { id: "ac_d14_t4", difficulty: "easy", time: "1h", name: "Communication: Verbal communication mocks" },
+        { id: "ac_d14_rev", difficulty: "easy", time: "1h", name: "Revision: Review today's mistakes and check weak topics" }
       ]
     },
     {
       day: 15,
-      title: "Day 15 — Technical Mock #1",
-      subtitle: "Full-Length MCQ Simulation",
+      title: "Day 15 — Final Simulation",
+      subtitle: "Complete assessment runs",
       learn: [
-        "Simulate full-length technical test (60 mins)",
-        "Topics: Pseudocode, OOP, Networks, Security, Cloud, OS, MS Office",
-        "Review and trace every wrong answer in detail"
+        "Simulate full assessment sequence: 45-min Technical MCQs, 60-min Coding (3 questions), and 30-min English communication mock",
+        "DSA: Review high priority DSA areas (Arrays, Strings, Hashing) and re-solve mistakes",
+        "SQL/Frontend: Core revision of Python functions, SQL joins/aggregates, HTML/CSS layouts, and React useState templates",
+        "Communication: Final verbal check session"
       ],
       problems: [
-        { id: "ac_d15_t1", difficulty: "hard", time: "5.5h", name: "Simulation: Technical Mock 1 (90+ questions, timed)" },
-        { id: "ac_d15_code", difficulty: "medium", time: "4h", name: "Coding: 4 Hours of Coding Sheet / Array Plan practice" },
-        { id: "ac_d15_t2", difficulty: "easy", time: "1.5h", name: "English: Practice speaking clearly about your technical skills" },
-        { id: "ac_d15_rev", difficulty: "easy", time: "1h", name: "Daily Revision: Review today's mistakes and check weak topics" }
-      ]
-    },
-    {
-      day: 16,
-      title: "Day 16 — Hands-on Mock #1",
-      subtitle: "Practical Exam Run",
-      learn: [
-        "Simulate the practical hands-on assessments",
-        "Code 2 SQL database joins/aggregation queries + 1 JS page",
-        "Track time spent on each sub-topic"
-      ],
-      problems: [
-        { id: "ac_d16_t1", difficulty: "hard", time: "5.5h", name: "Simulation: Timed SQL & Web mock exam (45 mins)" },
-        { id: "ac_d16_code", difficulty: "medium", time: "4h", name: "Coding: 4 Hours of Coding Sheet / Array Plan practice" },
-        { id: "ac_d16_t2", difficulty: "medium", time: "1.5h", name: "English: Practice responding to technical scenarios" },
-        { id: "ac_d16_rev", difficulty: "easy", time: "1h", name: "Daily Revision: Review today's mistakes and check weak topics" }
-      ]
-    },
-    {
-      day: 17,
-      title: "Day 17 — Weakness Day",
-      subtitle: "Error Log Target",
-      learn: [
-        "Dedicate time entirely to your lowest-scoring topics from Mocks",
-        "Practice JOIN queries, recursion trees, or networks port mappings"
-      ],
-      problems: [
-        { id: "ac_d17_t1", difficulty: "medium", time: "5.5h", name: "Technical: Review and resolve 50+ MCQs in your weakest areas" },
-        { id: "ac_d17_code", difficulty: "medium", time: "4h", name: "Coding: 4 Hours of Coding Sheet / Array Plan practice" },
-        { id: "ac_d17_t2", difficulty: "easy", time: "1.5h", name: "English: Refine and speak answers to difficult HR queries" },
-        { id: "ac_d17_rev", difficulty: "easy", time: "1h", name: "Daily Revision: Review today's mistakes and check weak topics" }
-      ]
-    },
-    {
-      day: 18,
-      title: "Day 18 — Full Assessment Simulation 🔥",
-      subtitle: "Accenture Simulation Mode",
-      learn: [
-        "Simulate the complete Accenture exam (Technical MCQs + Hands-on queries)",
-        "Strict timings, no outside resources allowed",
-        "Analyze mistakes and note areas of delay"
-      ],
-      problems: [
-        { id: "ac_d18_t1", difficulty: "hard", time: "5.5h", name: "Exam: Full Accenture simulation (combined MCQs + Web/SQL)" },
-        { id: "ac_d18_code", difficulty: "medium", time: "4h", name: "Coding: 4 Hours of Coding Sheet / Array Plan practice" },
-        { id: "ac_d18_t2", difficulty: "medium", time: "1.5h", name: "English: Perform mock HR interview recording" },
-        { id: "ac_d18_rev", difficulty: "easy", time: "1h", name: "Daily Revision: Review today's mistakes and check weak topics" }
-      ]
-    },
-    {
-      day: 19,
-      title: "Day 19 — Final Mock 🔥🔥",
-      subtitle: "Peak Performance Tuning",
-      learn: [
-        "Aim for speed, accuracy, and clean query syntax",
-        "Test final preparedness on comprehensive mock",
-        "Analyze mistake logs one last time"
-      ],
-      problems: [
-        { id: "ac_d19_t1", difficulty: "hard", time: "5.5h", name: "Final Mock: Full-length exam simulation" },
-        { id: "ac_d19_code", difficulty: "medium", time: "4h", name: "Coding: 4 Hours of Coding Sheet / Array Plan practice" },
-        { id: "ac_d19_t2", difficulty: "medium", time: "1.5h", name: "English: Final HR verbal checks" },
-        { id: "ac_d19_rev", difficulty: "easy", time: "1h", name: "Daily Revision: Review today's mistakes and check weak topics" }
-      ]
-    },
-    {
-      day: 20,
-      title: "Day 20 — Final Revision",
-      subtitle: "Mistake Notebook Checks",
-      learn: [
-        "NO new learning topics today",
-        "Review mistake logs, SQL join cheat sheets, networks ports table, and OOP templates"
-      ],
-      problems: [
-        { id: "ac_d20_t1", difficulty: "medium", time: "5.5h", name: "Revision: Go through your mistake notebook & coding notes" },
-        { id: "ac_d20_code", difficulty: "medium", time: "4h", name: "Coding: 4 Hours of Coding Sheet / Array Plan practice" },
-        { id: "ac_d20_t2", difficulty: "easy", time: "1.5h", name: "English: Speak confidently on all classic HR questions" },
-        { id: "ac_d20_rev", difficulty: "easy", time: "1h", name: "Daily Revision: Review today's mistakes and check weak topics" }
+        { id: "ac_d15_t1", difficulty: "medium", time: "3h", name: "DSA: Final high-priority DSA review & re-solve mistakes" },
+        { id: "ac_d15_t2", difficulty: "medium", time: "2h", name: "Coding: Review Python lists/dicts, SQL aggregates/joins, and CSS layouts" },
+        { id: "ac_d15_t3", difficulty: "hard", time: "4h", name: "Technical: Review pseudocode, OSI ports, encryption, cloud models & Excel" },
+        { id: "ac_d15_t4", difficulty: "easy", time: "1h", name: "Communication: Final English verbal check session" },
+        { id: "ac_d15_rev", difficulty: "easy", time: "1h", name: "Revision: Final review of your mistake notebook only" },
+        { id: "ac_d15_sim", difficulty: "hard", time: "1h", name: "Technical: Complete full assessment sequence simulation" }
       ]
     }
   ];
@@ -1048,9 +998,9 @@
       problems: [
         { id: "ac_c_rec1", difficulty: "medium", time: "45m", name: "LC 50 — Pow(x, n)", url: "https://leetcode.com/problems/powx-n/" },
         { id: "ac_c_rec2", difficulty: "medium", time: "45m", name: "LC 78 — Subsets", url: "https://leetcode.com/problems/subsets/" },
-        { id: "ac_c_rec_c1", difficulty: "easy", time: "1h", name: "Concept: Recursively solve Factorial & Fibonacci" },
-        { id: "ac_c_rec_c2", difficulty: "easy", time: "1h", name: "Concept: Recursively find Sum of digits & Sum of N numbers" },
-        { id: "ac_c_rec_c3", difficulty: "easy", time: "1h", name: "Concept: Recursively reverse a string (helps tracing)" }
+        { id: "ac_c_rec_c1", difficulty: "easy", time: "1h", name: "Concept: Practice Prime Checking, LCM & Factorial implementation" },
+        { id: "ac_c_rec_c2", difficulty: "easy", time: "1h", name: "Concept: Practice Fibonacci series & Armstrong Numbers" },
+        { id: "ac_c_rec_c3", difficulty: "easy", time: "1h", name: "Concept: Sum of digits, Reverse digits & modulo manipulation" }
       ]
     },
     {
@@ -1093,26 +1043,23 @@ Space Complexity (if code):`;
   let activeTab = 'roadmap';
   let activeTopic = 'arrays';
 
-  function updateSidebarUI() {
-    const xp = S.xp || 0;
-    const level = S.level || 1;
-    const streak = S.streak || 0;
-    
-    const sbLevel = document.getElementById('sb-level');
-    if (sbLevel) sbLevel.textContent = level;
-    
-    const sbXp = document.getElementById('sb-xp');
-    if (sbXp) sbXp.textContent = `${xp} XP`;
-    
-    const tbStreak = document.getElementById('topbar-streak');
-    if (tbStreak) tbStreak.textContent = `${streak} day streak`;
-    
-    const xpNeeded = level * 100;
-    const pct = Math.min(100, Math.floor((xp / xpNeeded) * 100));
-    const fill = document.getElementById('sb-xp-fill');
-    if (fill) fill.style.width = `${pct}%`;
-    const next = document.getElementById('sb-xp-next');
-    if (next) next.textContent = `${xpNeeded - xp} XP to next level`;
+  // Utility to parse any time string into numeric hours
+  function parseTimeStrToHours(timeStr) {
+    if (!timeStr) return 0;
+    const lower = timeStr.toLowerCase().trim();
+    if (lower.endsWith('hrs') || lower.endsWith('hours')) {
+      const match = lower.match(/^([0-9.]+)\s*(hrs|hours)/);
+      return match ? parseFloat(match[1]) : parseFloat(lower) || 0;
+    }
+    if (lower.endsWith('hr') || lower.endsWith('hour') || lower.endsWith('h')) {
+      const match = lower.match(/^([0-9.]+)\s*(hr|hour|h)/);
+      return match ? parseFloat(match[1]) : parseFloat(lower) || 0;
+    }
+    if (lower.endsWith('m') || lower.endsWith('mins') || lower.endsWith('minutes') || lower.endsWith('min')) {
+      const match = lower.match(/^([0-9.]+)\s*(m|mins|minutes|min)/);
+      return match ? (parseFloat(match[1]) / 60) : (parseFloat(lower) / 60) || 0;
+    }
+    return parseFloat(lower) || 0;
   }
 
   // Load state
@@ -1136,7 +1083,21 @@ Space Complexity (if code):`;
     if (!S.accentureCodingNotes) S.accentureCodingNotes = {};
     if (!S.accentureCodingCodes) S.accentureCodingCodes = {};
     
-    updateSidebarUI();
+    // Update sidebar XP
+    const xp = S.xp || 0;
+    const level = S.level || 1;
+    const streak = S.streak || 0;
+    
+    document.getElementById('sb-level').textContent = level;
+    document.getElementById('sb-xp').textContent = `${xp} XP`;
+    document.getElementById('topbar-streak').textContent = `${streak} day streak`;
+    
+    const xpNeeded = level * 100;
+    const pct = Math.min(100, Math.floor((xp / xpNeeded) * 100));
+    const fill = document.getElementById('sb-xp-fill');
+    if (fill) fill.style.width = `${pct}%`;
+    const next = document.getElementById('sb-xp-next');
+    if (next) next.textContent = `${xpNeeded - xp} XP to next level`;
   }
 
   // Save state and push
@@ -1251,6 +1212,7 @@ Space Complexity (if code):`;
     };
   }
 
+  // Calculate overall coding topic progress
   function getTopicProgress(topicId) {
     const topic = codingSheetData.find(t => t.id === topicId);
     if (!topic || topic.problems.length === 0) return { solved: 0, total: 0, pct: 0 };
@@ -1332,10 +1294,10 @@ Space Complexity (if code):`;
     });
   }
 
-  // Render SQL Visualizations dynamically for SQL Days (e.g. Day 5)
+  // Render SQL Visualizations dynamically for Day 3
   function renderSQLVisualization() {
     const vizContainer = document.getElementById('learning-viz-container');
-    if (activeDay === 5 && activeTab === 'roadmap') {
+    if (activeDay === 3 && activeTab === 'roadmap') {
       vizContainer.style.display = 'block';
       vizContainer.innerHTML = `
         <div class="viz-container">
@@ -1374,27 +1336,37 @@ Space Complexity (if code):`;
     const container = document.getElementById('daily-schedule-dashboard-card');
     if (!container) return;
     
-    // Group tasks
-    let techTotal = 0, techSolved = 0, techHours = 5.5;
-    let codingTotal = 0, codingSolved = 0, codingHours = 4.0;
-    let engTotal = 0, engSolved = 0, engHours = 1.5;
-    let revTotal = 0, revSolved = 0, revHours = 1.0;
+    // Group tasks dynamically based on their actual hourly weights
+    let techTotal = 0, techSolved = 0, techHours = 0;
+    let codingTotal = 0, codingSolved = 0, codingHours = 0;
+    let sqlFrontTotal = 0, sqlFrontSolved = 0, sqlFrontHours = 0;
+    let engTotal = 0, engSolved = 0, engHours = 0;
+    let revTotal = 0, revSolved = 0, revHours = 0;
     
     currDay.problems.forEach(p => {
       const isSolved = !!S.accenturePlanChecks[p.id];
       const nameLower = p.name.toLowerCase();
+      const taskHours = parseTimeStrToHours(p.time);
       
-      if (nameLower.includes("coding:")) {
+      if (nameLower.includes("dsa:") || nameLower.includes("coding dsa:")) {
         codingTotal++;
+        codingHours += taskHours;
         if (isSolved) codingSolved++;
-      } else if (nameLower.includes("english:")) {
+      } else if (nameLower.includes("sql:") || nameLower.includes("html:") || nameLower.includes("css:") || nameLower.includes("javascript:") || nameLower.includes("js:") || nameLower.includes("react:") || nameLower.includes("frontend:") || nameLower.includes("coding:")) {
+        sqlFrontTotal++;
+        sqlFrontHours += taskHours;
+        if (isSolved) sqlFrontSolved++;
+      } else if (nameLower.includes("communication:") || nameLower.includes("english:")) {
         engTotal++;
+        engHours += taskHours;
         if (isSolved) engSolved++;
       } else if (nameLower.includes("revision:")) {
         revTotal++;
+        revHours += taskHours;
         if (isSolved) revSolved++;
       } else {
         techTotal++;
+        techHours += taskHours;
         if (isSolved) techSolved++;
       }
     });
@@ -1402,11 +1374,13 @@ Space Complexity (if code):`;
     // Calculate achieved hours based on proportions
     const techAchieved = techTotal > 0 ? (techSolved / techTotal) * techHours : 0;
     const codingAchieved = codingTotal > 0 ? (codingSolved / codingTotal) * codingHours : 0;
+    const sqlFrontAchieved = sqlFrontTotal > 0 ? (sqlFrontSolved / sqlFrontTotal) * sqlFrontHours : 0;
     const engAchieved = engTotal > 0 ? (engSolved / engTotal) * engHours : 0;
     const revAchieved = revTotal > 0 ? (revSolved / revTotal) * revHours : 0;
     
-    const totalAchieved = techAchieved + codingAchieved + engAchieved + revAchieved;
-    const achievedPercent = Math.round((totalAchieved / 12.0) * 100);
+    const totalHours = techHours + codingHours + sqlFrontHours + engHours + revHours;
+    const totalAchieved = techAchieved + codingAchieved + sqlFrontAchieved + engAchieved + revAchieved;
+    const achievedPercent = totalHours > 0 ? Math.round((totalAchieved / totalHours) * 100) : 0;
     
     const formatHours = (hr) => {
       if (hr === 0) return "0h";
@@ -1420,10 +1394,10 @@ Space Complexity (if code):`;
         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:12px;">
           <div>
             <h3 style="font-size:14px; font-weight:700; color:#fff; display:flex; align-items:center; gap:6px;"><i class="fas fa-tasks"></i> Day ${currDay.day} Study Schedule Budget</h3>
-            <p style="font-size:11.5px; color:var(--text2); margin-top:2px;">Complete tasks to log your 12 study hours today.</p>
+            <p style="font-size:11.5px; color:var(--text2); margin-top:2px;">Complete tasks to log your ${totalHours} study hours today.</p>
           </div>
           <div style="text-align:right;">
-            <span style="font-size:16px; font-weight:700; color:var(--accent2);">${formatHours(totalAchieved)} / 12h Achieved</span>
+            <span style="font-size:16px; font-weight:700; color:var(--accent2);">${formatHours(totalAchieved)} / ${formatHours(totalHours)} Achieved</span>
             <div style="font-size:11px; color:var(--text2); margin-top:1px;">${achievedPercent}% of daily budget</div>
           </div>
         </div>
@@ -1437,23 +1411,31 @@ Space Complexity (if code):`;
           <div style="background:rgba(255,255,255,0.01); border:1px solid var(--border); border-radius:8px; padding:10px; text-align:center;">
             <div style="font-size:16px; margin-bottom:4px;">🧠</div>
             <div style="font-size:11px; font-weight:700; color:#fff; text-transform:uppercase; letter-spacing:0.5px;">Technical</div>
-            <div style="font-size:13px; font-weight:700; color:var(--accent); margin-top:2px;">${formatHours(techAchieved)} / 5.5h</div>
+            <div style="font-size:13px; font-weight:700; color:var(--accent); margin-top:2px;">${formatHours(techAchieved)} / ${formatHours(techHours)}</div>
             <div style="font-size:10px; color:var(--text2); margin-top:2px;">${techSolved}/${techTotal} Done</div>
           </div>
 
-          <!-- Coding Card -->
+          <!-- Coding/DSA Card -->
           <div style="background:rgba(255,255,255,0.01); border:1px solid var(--border); border-radius:8px; padding:10px; text-align:center;">
             <div style="font-size:16px; margin-bottom:4px;">💻</div>
-            <div style="font-size:11px; font-weight:700; color:#fff; text-transform:uppercase; letter-spacing:0.5px;">Coding/DSA</div>
-            <div style="font-size:13px; font-weight:700; color:var(--accent2); margin-top:2px;">${formatHours(codingAchieved)} / 4h</div>
+            <div style="font-size:11px; font-weight:700; color:#fff; text-transform:uppercase; letter-spacing:0.5px;">DSA Practice</div>
+            <div style="font-size:13px; font-weight:700; color:var(--accent2); margin-top:2px;">${formatHours(codingAchieved)} / ${formatHours(codingHours)}</div>
             <div style="font-size:10px; color:var(--text2); margin-top:2px;">${codingSolved}/${codingTotal} Done</div>
+          </div>
+
+          <!-- SQL/Frontend Card -->
+          <div style="background:rgba(255,255,255,0.01); border:1px solid var(--border); border-radius:8px; padding:10px; text-align:center;">
+            <div style="font-size:16px; margin-bottom:4px;">👨‍💻</div>
+            <div style="font-size:11px; font-weight:700; color:#fff; text-transform:uppercase; letter-spacing:0.5px;">SQL / Web</div>
+            <div style="font-size:13px; font-weight:700; color:#9b59b6; margin-top:2px;">${formatHours(sqlFrontAchieved)} / ${formatHours(sqlFrontHours)}</div>
+            <div style="font-size:10px; color:var(--text2); margin-top:2px;">${sqlFrontSolved}/${sqlFrontTotal} Done</div>
           </div>
 
           <!-- English Card -->
           <div style="background:rgba(255,255,255,0.01); border:1px solid var(--border); border-radius:8px; padding:10px; text-align:center;">
             <div style="font-size:16px; margin-bottom:4px;">🇬🇧</div>
-            <div style="font-size:11px; font-weight:700; color:#fff; text-transform:uppercase; letter-spacing:0.5px;">English/HR</div>
-            <div style="font-size:13px; font-weight:700; color:#2ecc71; margin-top:2px;">${formatHours(engAchieved)} / 1.5h</div>
+            <div style="font-size:11px; font-weight:700; color:#fff; text-transform:uppercase; letter-spacing:0.5px;">English/Comm</div>
+            <div style="font-size:13px; font-weight:700; color:#2ecc71; margin-top:2px;">${formatHours(engAchieved)} / ${formatHours(engHours)}</div>
             <div style="font-size:10px; color:var(--text2); margin-top:2px;">${engSolved}/${engTotal} Done</div>
           </div>
 
@@ -1461,7 +1443,7 @@ Space Complexity (if code):`;
           <div style="background:rgba(255,255,255,0.01); border:1px solid var(--border); border-radius:8px; padding:10px; text-align:center;">
             <div style="font-size:16px; margin-bottom:4px;">🔄</div>
             <div style="font-size:11px; font-weight:700; color:#fff; text-transform:uppercase; letter-spacing:0.5px;">Revision</div>
-            <div style="font-size:13px; font-weight:700; color:#f1c40f; margin-top:2px;">${formatHours(revAchieved)} / 1h</div>
+            <div style="font-size:13px; font-weight:700; color:#f1c40f; margin-top:2px;">${formatHours(revAchieved)} / ${formatHours(revHours)}</div>
             <div style="font-size:10px; color:var(--text2); margin-top:2px;">${revSolved}/${revTotal} Done</div>
           </div>
         </div>
@@ -1496,24 +1478,43 @@ Space Complexity (if code):`;
     const progress = getDayProgress(dayNum);
     document.getElementById('day-solved-text').textContent = `${progress.solved}/${progress.total} Done`;
     
-    // Group tasks by category
+    // Group tasks by category and compute subsegment hours dynamically
     const techTasks = [];
     const codingTasks = [];
+    const sqlFrontTasks = [];
     const englishTasks = [];
     const revisionTasks = [];
+
+    let techHours = 0, codingHours = 0, sqlFrontHours = 0, engHours = 0, revHours = 0;
     
     currDay.problems.forEach(p => {
       const nameLower = p.name.toLowerCase();
-      if (nameLower.includes("coding:")) {
+      const taskHours = parseTimeStrToHours(p.time);
+
+      if (nameLower.includes("dsa:") || nameLower.includes("coding dsa:")) {
         codingTasks.push(p);
-      } else if (nameLower.includes("english:")) {
+        codingHours += taskHours;
+      } else if (nameLower.includes("sql:") || nameLower.includes("html:") || nameLower.includes("css:") || nameLower.includes("javascript:") || nameLower.includes("js:") || nameLower.includes("react:") || nameLower.includes("frontend:") || nameLower.includes("coding:")) {
+        sqlFrontTasks.push(p);
+        sqlFrontHours += taskHours;
+      } else if (nameLower.includes("communication:") || nameLower.includes("english:")) {
         englishTasks.push(p);
+        engHours += taskHours;
       } else if (nameLower.includes("revision:")) {
         revisionTasks.push(p);
+        revHours += taskHours;
       } else {
         techTasks.push(p);
+        techHours += taskHours;
       }
     });
+
+    const formatHours = (hr) => {
+      if (hr === 0) return "0h";
+      const h = Math.floor(hr);
+      const m = Math.round((hr - h) * 60);
+      return m > 0 ? `${h}h ${m}m` : `${h}h`;
+    };
 
     const createCategoryBlock = (title, icon, hours, tasks, color) => {
       if (tasks.length === 0) return null;
@@ -1547,7 +1548,7 @@ Space Complexity (if code):`;
             ${solvedCount} of ${tasks.length} Done
           </span>
           <span style="font-size:11px; font-weight:700; color:var(--text2); background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05); padding:3px 10px; border-radius:12px;">
-            <i class="far fa-clock"></i> ${hours} Allocation
+            <i class="far fa-clock"></i> ${hours}
           </span>
         </div>
       `;
@@ -1613,16 +1614,19 @@ Space Complexity (if code):`;
     };
 
     // Render each category block in order
-    const techBlock = createCategoryBlock("Technical Syllabus", "🧠", "5.5h", techTasks, "var(--accent)");
+    const techBlock = createCategoryBlock("Technical Assessment", "🧠", formatHours(techHours), techTasks, "var(--accent)");
     if (techBlock) problemsContainer.appendChild(techBlock);
 
-    const codingBlock = createCategoryBlock("Coding & DSA Practice", "💻", "4.0h", codingTasks, "var(--accent2)");
+    const codingBlock = createCategoryBlock("DSA / Coding Problems", "💻", formatHours(codingHours), codingTasks, "var(--accent2)");
     if (codingBlock) problemsContainer.appendChild(codingBlock);
 
-    const englishBlock = createCategoryBlock("English & Communication", "🇬🇧", "1.5h", englishTasks, "#2ecc71");
+    const sqlFrontBlock = createCategoryBlock("Coding Assessment Technology", "👨‍💻", formatHours(sqlFrontHours), sqlFrontTasks, "#9b59b6");
+    if (sqlFrontBlock) problemsContainer.appendChild(sqlFrontBlock);
+
+    const englishBlock = createCategoryBlock("English & Communication", "🇬🇧", formatHours(engHours), englishTasks, "#2ecc71");
     if (englishBlock) problemsContainer.appendChild(englishBlock);
 
-    const revisionBlock = createCategoryBlock("Daily Revision", "🔄", "1.0h", revisionTasks, "#f1c40f");
+    const revisionBlock = createCategoryBlock("Daily Revision", "🔄", formatHours(revHours), revisionTasks, "#f1c40f");
     if (revisionBlock) problemsContainer.appendChild(revisionBlock);
     
     // Highlight active day in list
@@ -1915,7 +1919,6 @@ Space Complexity (if code):`;
     document.getElementById('file-coding-' + problemId).click();
   }
 
-  // Sync state and push helper
   function handleUploadScreenshot(e, problemId) {
     const file = e.target.files[0];
     if (!file) return;
@@ -1996,6 +1999,28 @@ Space Complexity (if code):`;
       renderTopicsList();
       selectTopic(activeTopic);
     }
+  }
+
+  function updateSidebarUI() {
+    const xp = S.xp || 0;
+    const level = S.level || 1;
+    const streak = S.streak || 0;
+    
+    const sbLevel = document.getElementById('sb-level');
+    if (sbLevel) sbLevel.textContent = level;
+    
+    const sbXp = document.getElementById('sb-xp');
+    if (sbXp) sbXp.textContent = `${xp} XP`;
+    
+    const tbStreak = document.getElementById('topbar-streak');
+    if (tbStreak) tbStreak.textContent = `${streak} day streak`;
+    
+    const xpNeeded = level * 100;
+    const pct = Math.min(100, Math.floor((xp / xpNeeded) * 100));
+    const fill = document.getElementById('sb-xp-fill');
+    if (fill) fill.style.width = `${pct}%`;
+    const next = document.getElementById('sb-xp-next');
+    if (next) next.textContent = `${xpNeeded - xp} XP to next level`;
   }
 
   function addXP(pts) {
