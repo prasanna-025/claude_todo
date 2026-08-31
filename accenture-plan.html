@@ -449,6 +449,7 @@
       <div class="tabs-group">
         <button class="btn-tab active" id="tab-roadmap-btn" onclick="switchTab('roadmap')"><i class="fas fa-calendar-alt"></i> 15-Day Roadmap</button>
         <button class="btn-tab" id="tab-coding-btn" onclick="switchTab('coding')"><i class="fas fa-code"></i> Accenture Coding Sheet</button>
+        <button class="btn-tab" id="tab-cheatsheet-btn" onclick="switchTab('cheatsheet')"><i class="fas fa-bolt"></i> ⚡ SQL & Assessment Cheat Sheet</button>
       </div>
 
       <!-- ROADMAP TAB CONTENT -->
@@ -546,6 +547,295 @@
             </div>
 
           </div>
+        </div>
+      </div>
+
+      <!-- CHEAT SHEET TAB CONTENT -->
+      <div id="cheatsheet-tab-content" style="display:none;">
+        <div style="display: flex; flex-direction: column; gap: 20px;">
+          
+          <!-- Cheat sheet header & search card -->
+          <div class="card" style="padding: 22px; background: rgba(108, 99, 255, 0.04); border: 1px solid rgba(108, 99, 255, 0.25);">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px;">
+              <div>
+                <h1 style="font-size:22px; font-weight:700; color:#fff; display:flex; align-items:center; gap:8px;"><i class="fas fa-bolt" style="color:var(--accent2);"></i> SQL &amp; Accenture Assessment Cheat Sheet</h1>
+                <p style="font-size:12.5px; color:var(--text2); margin-top:4px;">Quick reference formulas, SQL join diagrams, top query patterns, pseudocode rules &amp; network ports.</p>
+              </div>
+              <div style="flex:1; max-width:320px; min-width:220px;">
+                <input type="text" id="cs-search-input" onkeyup="filterCheatSheet(this.value)" placeholder="🔍 Search queries, ports, formulas..." style="width:100%; background:rgba(0,0,0,0.4); border:1px solid var(--border); border-radius:8px; padding:10px 14px; color:#fff; font-size:12.5px; outline:none;"/>
+              </div>
+            </div>
+
+            <!-- Filter Pills -->
+            <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:16px;" id="cs-filter-pills">
+              <button class="badge-diff easy" style="cursor:pointer; border:none; padding:5px 12px; font-size:11.5px;" onclick="filterCSCategory('all')">All Topics</button>
+              <button class="badge-diff medium" style="cursor:pointer; border:none; padding:5px 12px; font-size:11.5px;" onclick="filterCSCategory('sql')">SQL Mastery</button>
+              <button class="badge-diff hard" style="cursor:pointer; border:none; padding:5px 12px; font-size:11.5px;" onclick="filterCSCategory('pseudocode')">Pseudocode &amp; Bitwise</button>
+              <button class="badge-diff medium" style="cursor:pointer; border:none; padding:5px 12px; font-size:11.5px;" onclick="filterCSCategory('networks')">Networks &amp; Ports</button>
+              <button class="badge-diff easy" style="cursor:pointer; border:none; padding:5px 12px; font-size:11.5px;" onclick="filterCSCategory('security')">Security</button>
+              <button class="badge-diff medium" style="cursor:pointer; border:none; padding:5px 12px; font-size:11.5px;" onclick="filterCSCategory('cloud')">Cloud Computing</button>
+              <button class="badge-diff easy" style="cursor:pointer; border:none; padding:5px 12px; font-size:11.5px;" onclick="filterCSCategory('msoffice')">MS Office</button>
+              <button class="badge-diff hard" style="cursor:pointer; border:none; padding:5px 12px; font-size:11.5px;" onclick="filterCSCategory('oop')">OOP Pillars</button>
+              <button class="badge-diff medium" style="cursor:pointer; border:none; padding:5px 12px; font-size:11.5px;" onclick="filterCSCategory('web')">Web &amp; React</button>
+            </div>
+          </div>
+
+          <!-- CHEAT SHEET SECTIONS GRID -->
+          <div id="cs-cards-container" style="display:flex; flex-direction:column; gap:20px;">
+            
+            <!-- SECTION 1: SQL FUNDAMENTALS & HIGH FREQUENCY PATTERNS -->
+            <div class="cs-category-card" data-category="sql" style="background:rgba(16,19,28,0.6); border:1px solid var(--border); border-left:4px solid #9b59b6; border-radius:12px; padding:20px;">
+              <h2 style="font-size:16px; font-weight:700; color:#fff; display:flex; align-items:center; gap:8px; margin-bottom:14px;"><i class="fas fa-database" style="color:#9b59b6;"></i> SQL Mastery &amp; Top 10 Accenture Query Patterns</h2>
+              
+              <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:14px;">
+                
+                <div style="background:rgba(0,0,0,0.3); border:1px solid var(--border); border-radius:8px; padding:14px;">
+                  <div style="font-size:13px; font-weight:700; color:var(--accent2); margin-bottom:6px;">1. 2nd / Nth Highest Salary</div>
+                  <pre style="margin:0; font-family:'JetBrains Mono',monospace; font-size:11.5px; color:#e0e0e0; background:#08090f; padding:10px; border-radius:6px; overflow-x:auto;"><code>-- Method 1: Subquery
+SELECT MAX(salary) AS SecondHighestSalary
+FROM Employees
+WHERE salary &lt; (SELECT MAX(salary) FROM Employees);
+
+-- Method 2: Nth Highest (For 2nd, OFFSET 1)
+SELECT DISTINCT salary
+FROM Employees
+ORDER BY salary DESC
+LIMIT 1 OFFSET 1;</code></pre>
+                </div>
+
+                <div style="background:rgba(0,0,0,0.3); border:1px solid var(--border); border-radius:8px; padding:14px;">
+                  <div style="font-size:13px; font-weight:700; color:var(--accent2); margin-bottom:6px;">2. WHERE vs HAVING Difference</div>
+                  <div style="font-size:12px; color:var(--text2); line-height:1.6;">
+                    • <b>WHERE</b>: Filters rows <i>before</i> grouping. Cannot use aggregates.<br>
+                    • <b>HAVING</b>: Filters groups <i>after</i> <code>GROUP BY</code>. Can use <code>SUM()</code>, <code>COUNT()</code>.
+                  </div>
+                  <pre style="margin-top:8px; font-family:'JetBrains Mono',monospace; font-size:11px; color:#e0e0e0; background:#08090f; padding:8px; border-radius:6px; overflow-x:auto;"><code>SELECT dept, AVG(salary) 
+FROM Employees 
+WHERE status = 'Active' 
+GROUP BY dept 
+HAVING AVG(salary) &gt; 50000;</code></pre>
+                </div>
+
+                <div style="background:rgba(0,0,0,0.3); border:1px solid var(--border); border-radius:8px; padding:14px;">
+                  <div style="font-size:13px; font-weight:700; color:var(--accent2); margin-bottom:6px;">3. Employees Earning More Than Their Manager</div>
+                  <pre style="margin:0; font-family:'JetBrains Mono',monospace; font-size:11.5px; color:#e0e0e0; background:#08090f; padding:10px; border-radius:6px; overflow-x:auto;"><code>SELECT E.name AS Employee
+FROM Employees E
+JOIN Employees M ON E.manager_id = M.id
+WHERE E.salary &gt; M.salary;</code></pre>
+                </div>
+
+                <div style="background:rgba(0,0,0,0.3); border:1px solid var(--border); border-radius:8px; padding:14px;">
+                  <div style="font-size:13px; font-weight:700; color:var(--accent2); margin-bottom:6px;">4. Find &amp; Delete Duplicate Emails</div>
+                  <pre style="margin:0; font-family:'JetBrains Mono',monospace; font-size:11.5px; color:#e0e0e0; background:#08090f; padding:10px; border-radius:6px; overflow-x:auto;"><code>-- Find Duplicates
+SELECT email, COUNT(*) AS count
+FROM Users GROUP BY email HAVING COUNT(*) &gt; 1;
+
+-- Delete Duplicates (Keep Lowest ID)
+DELETE p1 FROM Person p1
+JOIN Person p2 
+WHERE p1.email = p2.email AND p1.id &gt; p2.id;</code></pre>
+                </div>
+
+                <div style="background:rgba(0,0,0,0.3); border:1px solid var(--border); border-radius:8px; padding:14px;">
+                  <div style="font-size:13px; font-weight:700; color:var(--accent2); margin-bottom:6px;">5. Customers Who Never Ordered (LEFT JOIN NULL check)</div>
+                  <pre style="margin:0; font-family:'JetBrains Mono',monospace; font-size:11.5px; color:#e0e0e0; background:#08090f; padding:10px; border-radius:6px; overflow-x:auto;"><code>SELECT C.name AS Customers
+FROM Customers C
+LEFT JOIN Orders O ON C.id = O.customer_id
+WHERE O.customer_id IS NULL;</code></pre>
+                </div>
+
+                <div style="background:rgba(0,0,0,0.3); border:1px solid var(--border); border-radius:8px; padding:14px;">
+                  <div style="font-size:13px; font-weight:700; color:var(--accent2); margin-bottom:6px;">6. CASE Conditional Update (Swap 'm' &amp; 'f')</div>
+                  <pre style="margin:0; font-family:'JetBrains Mono',monospace; font-size:11.5px; color:#e0e0e0; background:#08090f; padding:10px; border-radius:6px; overflow-x:auto;"><code>UPDATE Salary
+SET sex = CASE 
+            WHEN sex = 'm' THEN 'f' 
+            ELSE 'm' 
+          END;</code></pre>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- SECTION 2: PSEUDOCODE & BITWISE -->
+            <div class="cs-category-card" data-category="pseudocode" style="background:rgba(16,19,28,0.6); border:1px solid var(--border); border-left:4px solid var(--accent); border-radius:12px; padding:20px;">
+              <h2 style="font-size:16px; font-weight:700; color:#fff; display:flex; align-items:center; gap:8px; margin-bottom:14px;"><i class="fas fa-terminal" style="color:var(--accent);"></i> Pseudocode Tracing &amp; Bitwise Operators</h2>
+              
+              <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:14px;">
+                <div style="background:rgba(0,0,0,0.3); border:1px solid var(--border); border-radius:8px; padding:14px;">
+                  <div style="font-size:13px; font-weight:700; color:var(--accent); margin-bottom:8px;">Bitwise Operator Reference</div>
+                  <table style="width:100%; font-size:11.5px; color:var(--text2); border-collapse:collapse;">
+                    <tr style="border-bottom:1px solid var(--border);"><th style="text-align:left; padding:4px 0;">Op</th><th style="text-align:left;">Name</th><th style="text-align:left;">Rule / Shortcut</th></tr>
+                    <tr style="border-bottom:1px solid rgba(255,255,255,0.02);"><td style="padding:4px 0; color:#fff;"><code>&amp;</code></td><td>AND</td><td><code>1</code> only if both bits are 1</td></tr>
+                    <tr style="border-bottom:1px solid rgba(255,255,255,0.02);"><td style="padding:4px 0; color:#fff;"><code>|</code></td><td>OR</td><td><code>1</code> if at least one bit is 1</td></tr>
+                    <tr style="border-bottom:1px solid rgba(255,255,255,0.02);"><td style="padding:4px 0; color:#fff;"><code>^</code></td><td>XOR</td><td><code>1</code> if different; <code>a ^ a = 0</code>, <code>a ^ 0 = a</code></td></tr>
+                    <tr style="border-bottom:1px solid rgba(255,255,255,0.02);"><td style="padding:4px 0; color:#fff;"><code>~</code></td><td>NOT</td><td><code>~x = -(x + 1)</code> (e.g. <code>~5 = -6</code>)</td></tr>
+                    <tr style="border-bottom:1px solid rgba(255,255,255,0.02);"><td style="padding:4px 0; color:#fff;"><code>&lt;&lt;</code></td><td>Left Shift</td><td><code>a &lt;&lt; b</code> = <code>a * 2^b</code> (<code>3 &lt;&lt; 2 = 12</code>)</td></tr>
+                    <tr><td style="padding:4px 0; color:#fff;"><code>&gt;&gt;</code></td><td>Right Shift</td><td><code>a &gt;&gt; b</code> = <code>floor(a / 2^b)</code> (<code>16 &gt;&gt; 2 = 4</code>)</td></tr>
+                  </table>
+                </div>
+
+                <div style="background:rgba(0,0,0,0.3); border:1px solid var(--border); border-radius:8px; padding:14px;">
+                  <div style="font-size:13px; font-weight:700; color:var(--accent); margin-bottom:8px;">Recursion Tracing Formula</div>
+                  <div style="font-size:12px; color:var(--text2); line-height:1.6;">
+                    • <b>Step 1</b>: Always write base cases and their return values.<br>
+                    • <b>Step 2</b>: Draw tree diagram top-down.<br>
+                    • <b>Step 3</b>: Evaluate from leaf nodes bottom-up.<br>
+                    • <i>Watch out for static / global variables whose state persists across recursive calls!</i>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- SECTION 3: NETWORKS & PORTS -->
+            <div class="cs-category-card" data-category="networks" style="background:rgba(16,19,28,0.6); border:1px solid var(--border); border-left:4px solid #3498db; border-radius:12px; padding:20px;">
+              <h2 style="font-size:16px; font-weight:700; color:#fff; display:flex; align-items:center; gap:8px; margin-bottom:14px;"><i class="fas fa-network-wired" style="color:#3498db;"></i> Computer Networks &amp; Crucial Port Numbers</h2>
+              
+              <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:14px;">
+                <div style="background:rgba(0,0,0,0.3); border:1px solid var(--border); border-radius:8px; padding:14px;">
+                  <div style="font-size:13px; font-weight:700; color:#3498db; margin-bottom:8px;">Crucial Port Numbers</div>
+                  <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; font-size:11.5px; color:var(--text2);">
+                    <div>• <b>HTTP</b>: Port 80</div>
+                    <div>• <b>HTTPS</b>: Port 443</div>
+                    <div>• <b>DNS</b>: Port 53</div>
+                    <div>• <b>SSH</b>: Port 22</div>
+                    <div>• <b>FTP</b>: Port 20, 21</div>
+                    <div>• <b>Telnet</b>: Port 23</div>
+                    <div>• <b>SMTP</b>: Port 25</div>
+                    <div>• <b>POP3</b>: Port 110</div>
+                    <div>• <b>IMAP</b>: Port 143</div>
+                    <div>• <b>MySQL</b>: Port 3306</div>
+                  </div>
+                </div>
+
+                <div style="background:rgba(0,0,0,0.3); border:1px solid var(--border); border-radius:8px; padding:14px;">
+                  <div style="font-size:13px; font-weight:700; color:#3498db; margin-bottom:8px;">OSI 7 Layers (Top to Bottom)</div>
+                  <div style="font-size:12px; color:var(--text2); line-height:1.5;">
+                    7. <b>Application</b>: HTTP, DNS, FTP<br>
+                    6. <b>Presentation</b>: Encryption, SSL, JPEG<br>
+                    5. <b>Session</b>: Dialog control, tokens<br>
+                    4. <b>Transport</b>: TCP, UDP, Port addressing<br>
+                    3. <b>Network</b>: IP addressing, Routers<br>
+                    2. <b>Data Link</b>: MAC addressing, Switches, Frames<br>
+                    1. <b>Physical</b>: Cables, Hubs, Bits
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- SECTION 4: SECURITY -->
+            <div class="cs-category-card" data-category="security" style="background:rgba(16,19,28,0.6); border:1px solid var(--border); border-left:4px solid #e74c3c; border-radius:12px; padding:20px;">
+              <h2 style="font-size:16px; font-weight:700; color:#fff; display:flex; align-items:center; gap:8px; margin-bottom:14px;"><i class="fas fa-shield-alt" style="color:#e74c3c;"></i> Information &amp; Network Security</h2>
+              
+              <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:14px; font-size:12px; color:var(--text2); line-height:1.6;">
+                <div style="background:rgba(0,0,0,0.3); border:1px solid var(--border); border-radius:8px; padding:14px;">
+                  <div style="font-size:13px; font-weight:700; color:#e74c3c; margin-bottom:6px;">Encryption &amp; CIA Triad</div>
+                  • <b>CIA</b>: Confidentiality (Encryption), Integrity (Hashing), Availability (Redundancy/DDoS defense).<br>
+                  • <b>Symmetric</b>: 1 shared key. Fast. (AES, DES, 3DES).<br>
+                  • <b>Asymmetric</b>: Public + Private key pair. (RSA, ECC, Diffie-Hellman).<br>
+                  • <b>Hashing</b>: One-way irreversible (MD5, SHA-256).
+                </div>
+
+                <div style="background:rgba(0,0,0,0.3); border:1px solid var(--border); border-radius:8px; padding:14px;">
+                  <div style="font-size:13px; font-weight:700; color:#e74c3c; margin-bottom:6px;">Threats &amp; Wi-Fi Security</div>
+                  • <b>Virus</b>: Needs host program + user execution.<br>
+                  • <b>Worm</b>: Self-replicating over network without user action.<br>
+                  • <b>Trojan</b>: Disguised harmful software.<br>
+                  • <b>Wi-Fi Protocol Strength</b>: WEP (Weakest) &lt; WPA &lt; WPA2 (AES) &lt; WPA3 (Strongest).
+                </div>
+              </div>
+            </div>
+
+            <!-- SECTION 5: CLOUD COMPUTING -->
+            <div class="cs-category-card" data-category="cloud" style="background:rgba(16,19,28,0.6); border:1px solid var(--border); border-left:4px solid #1abc9c; border-radius:12px; padding:20px;">
+              <h2 style="font-size:16px; font-weight:700; color:#fff; display:flex; align-items:center; gap:8px; margin-bottom:14px;"><i class="fas fa-cloud" style="color:#1abc9c;"></i> Cloud Computing Fundamentals</h2>
+              
+              <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:14px; font-size:12px; color:var(--text2); line-height:1.6;">
+                <div style="background:rgba(0,0,0,0.3); border:1px solid var(--border); border-radius:8px; padding:14px;">
+                  <div style="font-size:13px; font-weight:700; color:#1abc9c; margin-bottom:6px;">Service Models (SPI)</div>
+                  • <b>IaaS</b>: Infrastructure (VMs, Storage, Network) -> AWS EC2, Azure VMs.<br>
+                  • <b>PaaS</b>: Platform (Runtime, OS managed) -> Heroku, AWS Elastic Beanstalk.<br>
+                  • <b>SaaS</b>: Software as a Service -> Google Workspace, Microsoft 365, Salesforce.
+                </div>
+
+                <div style="background:rgba(0,0,0,0.3); border:1px solid var(--border); border-radius:8px; padding:14px;">
+                  <div style="font-size:13px; font-weight:700; color:#1abc9c; margin-bottom:6px;">Scaling &amp; Elasticity</div>
+                  • <b>Vertical Scaling (Scale Up)</b>: Add more RAM / CPU to the same instance.<br>
+                  • <b>Horizontal Scaling (Scale Out)</b>: Add more VM instances to distribute traffic.<br>
+                  • <b>Elasticity</b>: Dynamically increasing or decreasing resources based on live load.
+                </div>
+              </div>
+            </div>
+
+            <!-- SECTION 6: MS OFFICE -->
+            <div class="cs-category-card" data-category="msoffice" style="background:rgba(16,19,28,0.6); border:1px solid var(--border); border-left:4px solid #27ae60; border-radius:12px; padding:20px;">
+              <h2 style="font-size:16px; font-weight:700; color:#fff; display:flex; align-items:center; gap:8px; margin-bottom:14px;"><i class="fas fa-file-excel" style="color:#27ae60;"></i> MS Office &amp; Excel Formulas</h2>
+              
+              <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:14px; font-size:12px; color:var(--text2); line-height:1.6;">
+                <div style="background:rgba(0,0,0,0.3); border:1px solid var(--border); border-radius:8px; padding:14px;">
+                  <div style="font-size:13px; font-weight:700; color:#27ae60; margin-bottom:6px;">Key Excel Functions</div>
+                  • <code>=VLOOKUP(lookup, table, col_index, FALSE)</code><br>
+                  • <code>=INDEX(array, row, col)</code> + <code>=MATCH(val, range, 0)</code><br>
+                  • <code>=IF(cond, true_val, false_val)</code><br>
+                  • <code>=COUNT()</code> (Numbers only) vs <code>=COUNTA()</code> (Non-blank).<br>
+                  • <b>Absolute Reference</b>: <code>$A$1</code> locks row and column.
+                </div>
+
+                <div style="background:rgba(0,0,0,0.3); border:1px solid var(--border); border-radius:8px; padding:14px;">
+                  <div style="font-size:13px; font-weight:700; color:#27ae60; margin-bottom:6px;">Word &amp; PPT Shortcuts</div>
+                  • <b>Ctrl + K</b>: Insert Link | <b>Ctrl + H</b>: Replace | <b>Ctrl + F</b>: Find.<br>
+                  • <b>F5</b>: Slideshow from slide 1 | <b>Shift + F5</b>: Slideshow from current slide.<br>
+                  • <b>Mail Merge</b>: Generate bulk personalized letters/envelopes.
+                </div>
+              </div>
+            </div>
+
+            <!-- SECTION 7: OOP -->
+            <div class="cs-category-card" data-category="oop" style="background:rgba(16,19,28,0.6); border:1px solid var(--border); border-left:4px solid #f39c12; border-radius:12px; padding:20px;">
+              <h2 style="font-size:16px; font-weight:700; color:#fff; display:flex; align-items:center; gap:8px; margin-bottom:14px;"><i class="fas fa-cubes" style="color:#f39c12;"></i> OOP Core Principles</h2>
+              
+              <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:14px; font-size:12px; color:var(--text2); line-height:1.6;">
+                <div style="background:rgba(0,0,0,0.3); border:1px solid var(--border); border-radius:8px; padding:12px;">
+                  <div style="font-size:13px; font-weight:700; color:#f39c12; margin-bottom:4px;">1. Encapsulation</div>
+                  Data hiding. Wrapping data &amp; methods inside a class; private variables with getters/setters.
+                </div>
+                <div style="background:rgba(0,0,0,0.3); border:1px solid var(--border); border-radius:8px; padding:12px;">
+                  <div style="font-size:13px; font-weight:700; color:#f39c12; margin-bottom:4px;">2. Abstraction</div>
+                  Hiding implementation details and showing only necessary interfaces (Abstract classes, Interfaces).
+                </div>
+                <div style="background:rgba(0,0,0,0.3); border:1px solid var(--border); border-radius:8px; padding:12px;">
+                  <div style="font-size:13px; font-weight:700; color:#f39c12; margin-bottom:4px;">3. Inheritance</div>
+                  Child class inheriting properties of parent class for code reusability (<code>extends</code>).
+                </div>
+                <div style="background:rgba(0,0,0,0.3); border:1px solid var(--border); border-radius:8px; padding:12px;">
+                  <div style="font-size:13px; font-weight:700; color:#f39c12; margin-bottom:4px;">4. Polymorphism</div>
+                  <b>Overloading</b> (Compile-time: same name, different params) vs <b>Overriding</b> (Run-time: exact same signature in child).
+                </div>
+              </div>
+            </div>
+
+            <!-- SECTION 8: WEB & REACT -->
+            <div class="cs-category-card" data-category="web" style="background:rgba(16,19,28,0.6); border:1px solid var(--border); border-left:4px solid #61dafb; border-radius:12px; padding:20px;">
+              <h2 style="font-size:16px; font-weight:700; color:#fff; display:flex; align-items:center; gap:8px; margin-bottom:14px;"><i class="fab fa-react" style="color:#61dafb;"></i> Web Frontend &amp; React.js</h2>
+              
+              <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:14px; font-size:12px; color:var(--text2); line-height:1.6;">
+                <div style="background:rgba(0,0,0,0.3); border:1px solid var(--border); border-radius:8px; padding:14px;">
+                  <div style="font-size:13px; font-weight:700; color:#61dafb; margin-bottom:6px;">JavaScript DOM &amp; ES6</div>
+                  • <code>document.querySelector('#btn').addEventListener('click', fn)</code><br>
+                  • Array methods: <code>map()</code>, <code>filter()</code>, <code>reduce()</code>, <code>find()</code>, <code>includes()</code>.<br>
+                  • Destructuring: <code>const { name, age } = user;</code>
+                </div>
+
+                <div style="background:rgba(0,0,0,0.3); border:1px solid var(--border); border-radius:8px; padding:14px;">
+                  <div style="font-size:13px; font-weight:700; color:#61dafb; margin-bottom:6px;">React.js Fundamentals</div>
+                  • State Hook: <code>const [count, setCount] = useState(0);</code><br>
+                  • Props: Passing data parent -&gt; child (read-only).<br>
+                  • Lists: <code>items.map(item =&gt; &lt;div key={item.id}&gt;{item.name}&lt;/div&gt;)</code>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
         </div>
       </div>
 
@@ -1982,23 +2272,62 @@ Space Complexity (if code):`;
     activeTab = tabId;
     const roadmapBtn = document.getElementById('tab-roadmap-btn');
     const codingBtn = document.getElementById('tab-coding-btn');
+    const cheatsheetBtn = document.getElementById('tab-cheatsheet-btn');
     const roadmapContent = document.getElementById('roadmap-tab-content');
     const codingContent = document.getElementById('coding-tab-content');
+    const cheatsheetContent = document.getElementById('cheatsheet-tab-content');
     
     if (tabId === 'roadmap') {
-      roadmapBtn.className = 'btn-tab active';
-      codingBtn.className = 'btn-tab';
-      roadmapContent.style.display = 'block';
-      codingContent.style.display = 'none';
+      if (roadmapBtn) roadmapBtn.className = 'btn-tab active';
+      if (codingBtn) codingBtn.className = 'btn-tab';
+      if (cheatsheetBtn) cheatsheetBtn.className = 'btn-tab';
+      if (roadmapContent) roadmapContent.style.display = 'block';
+      if (codingContent) codingContent.style.display = 'none';
+      if (cheatsheetContent) cheatsheetContent.style.display = 'none';
       selectDay(activeDay);
-    } else {
-      codingBtn.className = 'btn-tab active';
-      roadmapBtn.className = 'btn-tab';
-      roadmapContent.style.display = 'none';
-      codingContent.style.display = 'block';
+    } else if (tabId === 'coding') {
+      if (codingBtn) codingBtn.className = 'btn-tab active';
+      if (roadmapBtn) roadmapBtn.className = 'btn-tab';
+      if (cheatsheetBtn) cheatsheetBtn.className = 'btn-tab';
+      if (roadmapContent) roadmapContent.style.display = 'none';
+      if (codingContent) codingContent.style.display = 'block';
+      if (cheatsheetContent) cheatsheetContent.style.display = 'none';
       renderTopicsList();
       selectTopic(activeTopic);
+    } else if (tabId === 'cheatsheet') {
+      if (cheatsheetBtn) cheatsheetBtn.className = 'btn-tab active';
+      if (roadmapBtn) roadmapBtn.className = 'btn-tab';
+      if (codingBtn) codingBtn.className = 'btn-tab';
+      if (roadmapContent) roadmapContent.style.display = 'none';
+      if (codingContent) codingContent.style.display = 'none';
+      if (cheatsheetContent) cheatsheetContent.style.display = 'block';
     }
+  }
+
+  // Filter cheat sheet cards by category
+  function filterCSCategory(cat) {
+    const cards = document.querySelectorAll('.cs-category-card');
+    cards.forEach(card => {
+      if (cat === 'all' || card.getAttribute('data-category') === cat) {
+        card.style.display = 'block';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  }
+
+  // Search cheat sheet cards by text
+  function filterCheatSheet(query) {
+    const q = (query || '').toLowerCase().trim();
+    const cards = document.querySelectorAll('.cs-category-card');
+    cards.forEach(card => {
+      const text = card.innerText.toLowerCase();
+      if (!q || text.includes(q)) {
+        card.style.display = 'block';
+      } else {
+        card.style.display = 'none';
+      }
+    });
   }
 
   function updateSidebarUI() {
