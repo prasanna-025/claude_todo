@@ -569,6 +569,7 @@
             <!-- Filter Pills -->
             <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:16px;" id="cs-filter-pills">
               <button class="badge-diff easy" style="cursor:pointer; border:none; padding:5px 12px; font-size:11.5px;" onclick="filterCSCategory('all')">All Topics</button>
+              <button class="badge-diff hard" style="cursor:pointer; border:none; padding:5px 12px; font-size:11.5px; background:linear-gradient(90deg, #6c63ff, #00d4aa); color:#fff;" onclick="filterCSCategory('accenture85')">🔥 Accenture 85 Coding</button>
               <button class="badge-diff medium" style="cursor:pointer; border:none; padding:5px 12px; font-size:11.5px;" onclick="filterCSCategory('sql')">SQL Mastery</button>
               <button class="badge-diff hard" style="cursor:pointer; border:none; padding:5px 12px; font-size:11.5px;" onclick="filterCSCategory('pseudocode')">Pseudocode &amp; Bitwise</button>
               <button class="badge-diff medium" style="cursor:pointer; border:none; padding:5px 12px; font-size:11.5px;" onclick="filterCSCategory('networks')">Networks &amp; Ports</button>
@@ -831,6 +832,74 @@ SET sex = CASE
                   • Props: Passing data parent -&gt; child (read-only).<br>
                   • Lists: <code>items.map(item =&gt; &lt;div key={item.id}&gt;{item.name}&lt;/div&gt;)</code>
                 </div>
+              </div>
+            </div>
+
+            <!-- SECTION 9: ACCENTURE 85 CODING QUESTIONS CHEAT SHEET -->
+            <div class="cs-category-card" data-category="accenture85" style="background:rgba(16,19,28,0.6); border:1px solid var(--border); border-left:4px solid #ff79c6; border-radius:12px; padding:20px;">
+              <h2 style="font-size:16px; font-weight:700; color:#fff; display:flex; align-items:center; gap:8px; margin-bottom:14px;"><i class="fas fa-fire" style="color:#ff79c6;"></i> Accenture 85 Coding Practice Questions — Core Patterns &amp; LeetCode Mapping</h2>
+              
+              <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:14px;">
+                
+                <div style="background:rgba(0,0,0,0.3); border:1px solid var(--border); border-radius:8px; padding:14px;">
+                  <div style="font-size:13px; font-weight:700; color:#ff79c6; margin-bottom:6px;">Section A: Important (Q1–Q2)</div>
+                  <div style="font-size:11.5px; color:var(--text2); line-height:1.6;">
+                    • <b>Q1. Array Transformation</b>: <code>new = x - (i % 7)*3 + (x // 11 if x % 11 == 0 else 0)</code><br>
+                    • <b>Q2. Equivalent Prefix Sum</b>: <code>eqSum(123) = 1 + 12 + 123 = 136</code>. Loop 1 to n, count where <code>eqSum(x) &gt; n</code>.
+                  </div>
+                </div>
+
+                <div style="background:rgba(0,0,0,0.3); border:1px solid var(--border); border-radius:8px; padding:14px;">
+                  <div style="font-size:13px; font-weight:700; color:#ff79c6; margin-bottom:6px;">Section B: Array Story (Q3–Q27)</div>
+                  <div style="font-size:11.5px; color:var(--text2); line-height:1.6;">
+                    • <b>Q12. Discounts</b>: <code>&gt; 1000: 0.90 | &gt;= 500: 0.95</code><br>
+                    • <b>Q15. Bank Penalty</b>: If balance &lt; 1000 after txn, subtract 20.<br>
+                    • <b>Q19. Buy 2 Get 1 Free</b>: Groups of 3 $\to$ <code>sum(group) - min(group)</code><br>
+                    • <b>Q26. Adjusted Avg</b>: Remove min and max, average remainder. (<b>LC 1491</b>)
+                  </div>
+                </div>
+
+                <div style="background:rgba(0,0,0,0.3); border:1px solid var(--border); border-radius:8px; padding:14px;">
+                  <div style="font-size:13px; font-weight:700; color:#ff79c6; margin-bottom:6px;">Section C: String Story (Q28–Q47)</div>
+                  <div style="font-size:11.5px; color:var(--text2); line-height:1.6;">
+                    • <b>Q28. Extract Numbers</b>: <code>re.findall(r'\d+', s)</code> $\to$ sum integers.<br>
+                    • <b>Q37. First Unique Char</b>: <code>Counter(s)</code>, scan s for count == 1. (<b>LC 387</b>)<br>
+                    • <b>Q39. String Compression</b>: <code>aaabb $\to$ a3b2</code> (<b>LC 443</b>)<br>
+                    • <b>Q42. Code Amount</b>: <code>P100</code> (+100), <code>D20</code> (-20) $\to$ net sum.
+                  </div>
+                </div>
+
+                <div style="background:rgba(0,0,0,0.3); border:1px solid var(--border); border-radius:8px; padding:14px;">
+                  <div style="font-size:13px; font-weight:700; color:#ff79c6; margin-bottom:6px;">Section D: Mixed Array + String (Q48–Q65)</div>
+                  <div style="font-size:11.5px; color:var(--text2); line-height:1.6;">
+                    • <b>Q48. Prefix Multiply</b>: <code>X10 $\to$ 10*2, Y20 $\to$ 20*3, Z5 $\to$ 5*1</code><br>
+                    • <b>Q54. Two Numbers Target Sum</b>: Set lookup for <code>target - val</code>. (<b>LC 1</b>)<br>
+                    • <b>Q60. Order COD</b>: <code>qty * price + (50 if isCod else 0)</code><br>
+                    • <b>Q63. Booking Surge</b>: Weekend 20%, Weekday 10%.
+                  </div>
+                </div>
+
+                <div style="background:rgba(0,0,0,0.3); border:1px solid var(--border); border-radius:8px; padding:14px;">
+                  <div style="font-size:13px; font-weight:700; color:#ff79c6; margin-bottom:6px;">Section E: Core DSA (Q66–Q75)</div>
+                  <div style="font-size:11.5px; color:var(--text2); line-height:1.6;">
+                    • <b>Q68. Remove Duplicates</b>: In-place two pointers. (<b>LC 26</b>)<br>
+                    • <b>Q69. Move Zeroes</b>: Non-zero pointer pass. (<b>LC 283</b>)<br>
+                    • <b>Q71. Rotate Array</b>: Reverse whole, reverse k, reverse n-k. (<b>LC 189</b>)<br>
+                    • <b>Q72. Anagrams</b>: <code>Counter(s) == Counter(t)</code>. (<b>LC 242</b>)
+                  </div>
+                </div>
+
+                <div style="background:rgba(0,0,0,0.3); border:1px solid var(--border); border-radius:8px; padding:14px;">
+                  <div style="font-size:13px; font-weight:700; color:#ff79c6; margin-bottom:6px;">Section F: Binary Search on Answer (Q76–Q85)</div>
+                  <div style="font-size:11.5px; color:var(--text2); line-height:1.6;">
+                    • <b>Q77. Ship Capacity in D Days</b>: BS range <code>[max(w), sum(w)]</code>. (<b>LC 1011</b>)<br>
+                    • <b>Q78. Book Allocation</b>: Min-max contiguous pages. (<b>LC 410</b>)<br>
+                    • <b>Q80. Aggressive Cows</b>: Maximize min distance. (<b>LC 1552</b>)<br>
+                    • <b>Q81. Smallest Divisor</b>: <code>sum(ceil(x / mid)) &lt;= threshold</code>. (<b>LC 1283</b>)<br>
+                    • <b>Q85. Equalize Array</b>: <code>sum(x - min(arr))</code>. (<b>LC 453</b>)
+                  </div>
+                </div>
+
               </div>
             </div>
 
@@ -1131,191 +1200,133 @@ SET sex = CASE
     }
   ];
 
-  // 13-Topic Curated Coding Problem List with Custom Time Splits
+  // 85 Accenture Coding Practice Questions organized into 6 core sections
   const codingSheetData = [
     {
-      id: "arrays",
-      title: "1. Arrays 🔥",
-      desc: "Basic storage, traversal, and linear scans",
+      id: "sec_a",
+      title: "A. Important Questions (Q1–Q2) 🔥",
+      desc: "High-priority array transformations & equivalent prefix sums",
       problems: [
-        { id: "ac_c_arr1", difficulty: "easy", time: "30m", name: "LC 1480 — Running Sum of 1d Array", url: "https://leetcode.com/problems/running-sum-of-1d-array/" },
-        { id: "ac_c_arr2", difficulty: "easy", time: "30m", name: "LC 217 — Contains Duplicate", url: "https://leetcode.com/problems/contains-duplicate/" },
-        { id: "ac_c_arr3", difficulty: "easy", time: "30m", name: "LC 268 — Missing Number", url: "https://leetcode.com/problems/missing-number/" },
-        { id: "ac_c_arr4", difficulty: "easy", time: "30m", name: "LC 27 — Remove Element", url: "https://leetcode.com/problems/remove-element/" },
-        { id: "ac_c_arr5", difficulty: "medium", time: "45m", name: "LC 1 — Two Sum", url: "https://leetcode.com/problems/two-sum/" },
-        { id: "ac_c_arr6", difficulty: "medium", time: "45m", name: "LC 189 — Rotate Array", url: "https://leetcode.com/problems/rotate-array/" },
-        { id: "ac_c_arr7", difficulty: "medium", time: "45m", name: "LC 238 — Product of Array Except Self", url: "https://leetcode.com/problems/product-of-array-except-self/" },
-        { id: "ac_c_arr8", difficulty: "medium", time: "45m", name: "LC 53 — Maximum Subarray", url: "https://leetcode.com/problems/maximum-subarray/" },
-        { id: "ac_c_arr9", difficulty: "hard", time: "1.5h", name: "LC 41 — First Missing Positive (Stretch)", url: "https://leetcode.com/problems/first-missing-positive/" }
+        { id: "ac_q1", difficulty: "medium", time: "30m", name: "Q1. Array Transformation", desc: "For index i: subtract (i%7)*3. If nums[i]%11==0, add nums[i]/11. Find total sum.", url: "https://leetcode.com/problems/running-sum-of-1d-array/" },
+        { id: "ac_q2", difficulty: "medium", time: "35m", name: "Q2. Equivalent Prefix Sum", desc: "eqSum(x) = sum of all prefix numbers of x (e.g. eqSum(123) = 1+12+123 = 136). Count 1 <= x < n where eqSum(x) > n." }
       ]
     },
     {
-      id: "strings",
-      title: "2. Strings 🔥",
-      desc: "Reversals, manipulations, prefix & substring searches",
+      id: "sec_b",
+      title: "B. Array Story Problems (Q3–Q27) 📦",
+      desc: "Business logic: discounts, bonuses, penalties, taxi fares & salaries",
       problems: [
-        { id: "ac_c_str1", difficulty: "easy", time: "30m", name: "LC 344 — Reverse String", url: "https://leetcode.com/problems/reverse-string/" },
-        { id: "ac_c_str2", difficulty: "easy", time: "30m", name: "LC 125 — Valid Palindrome", url: "https://leetcode.com/problems/valid-palindrome/" },
-        { id: "ac_c_str3", difficulty: "easy", time: "30m", name: "LC 14 — Longest Common Prefix", url: "https://leetcode.com/problems/longest-common-prefix/" },
-        { id: "ac_c_str4", difficulty: "easy", time: "30m", name: "LC 58 — Length of Last Word", url: "https://leetcode.com/problems/length-of-last-word/" },
-        { id: "ac_c_str5", difficulty: "medium", time: "45m", name: "LC 151 — Reverse Words in a String", url: "https://leetcode.com/problems/reverse-words-in-a-string/" },
-        { id: "ac_c_str6", difficulty: "medium", time: "45m", name: "LC 443 — String Compression", url: "https://leetcode.com/problems/string-compression/" },
-        { id: "ac_c_str7", difficulty: "medium", time: "45m", name: "LC 8 — String to Integer (atoi)", url: "https://leetcode.com/problems/string-to-integer-atoi/" },
-        { id: "ac_c_str8", difficulty: "medium", time: "45m", name: "LC 647 — Palindromic Substrings", url: "https://leetcode.com/problems/palindromic-substrings/" },
-        { id: "ac_c_str9", difficulty: "hard", time: "1.5h", name: "LC 5 — Longest Palindromic Substring (Stretch)", url: "https://leetcode.com/problems/longest-palindromic-substring/" }
+        { id: "ac_q3", difficulty: "easy", time: "15m", name: "Q3. Count Even and Odd Numbers", desc: "Count the number of even and odd elements in array.", url: "https://leetcode.com/problems/find-numbers-with-even-number-of-digits/" },
+        { id: "ac_q4", difficulty: "easy", time: "15m", name: "Q4. Count Positive, Negative and Zero", desc: "Count positive numbers, negative numbers, and zeros in array." },
+        { id: "ac_q5", difficulty: "easy", time: "15m", name: "Q5. Sum and Average", desc: "Find the sum and average of all array elements." },
+        { id: "ac_q6", difficulty: "easy", time: "15m", name: "Q6. Maximum and Minimum", desc: "Find the maximum and minimum elements in array." },
+        { id: "ac_q7", difficulty: "easy", time: "15m", name: "Q7. Count Elements Divisible by K", desc: "Count how many elements in array are divisible by K." },
+        { id: "ac_q8", difficulty: "easy", time: "15m", name: "Q8. Count Elements Greater Than X", desc: "Count how many elements are strictly greater than X." },
+        { id: "ac_q9", difficulty: "easy", time: "15m", name: "Q9. Count Elements Less Than X", desc: "Count how many elements are strictly less than X." },
+        { id: "ac_q10", difficulty: "easy", time: "15m", name: "Q10. Sum of Even Elements", desc: "Find the sum of all even elements in array." },
+        { id: "ac_q11", difficulty: "easy", time: "15m", name: "Q11. Sum of Odd Elements", desc: "Find the sum of all odd elements in array." },
+        { id: "ac_q12", difficulty: "easy", time: "20m", name: "Q12. Product Discount", desc: "Price > 1000: 10% off; 500-1000: 5% off; else no discount. Total amount.", url: "https://leetcode.com/problems/final-prices-with-a-special-discount-in-a-shop/" },
+        { id: "ac_q13", difficulty: "easy", time: "20m", name: "Q13. Employee Bonus", desc: "Salary < 20k: bonus 5000; 20k-40k: 3000; > 40k: 1000. Find total bonus." },
+        { id: "ac_q14", difficulty: "easy", time: "20m", name: "Q14. Game Points", desc: "Score >= 80: +10 pts; < 40: -5 pts; else no change. Find final total." },
+        { id: "ac_q15", difficulty: "medium", time: "25m", name: "Q15. Bank Penalty", desc: "Initial balance B, apply transactions. If balance < 1000 after a transaction, deduct 20 penalty." },
+        { id: "ac_q16", difficulty: "easy", time: "20m", name: "Q16. Delivery Charge", desc: "Order >= 500: free delivery; < 500: delivery charge 40. Find total payable." },
+        { id: "ac_q17", difficulty: "easy", time: "20m", name: "Q17. Grace Marks", desc: "If marks < 33, replace with 33. Find the new average of marks." },
+        { id: "ac_q18", difficulty: "easy", time: "20m", name: "Q18. Sales Incentive", desc: "Sales <= 10000: 5% incentive; > 10000: 10% incentive. Find total incentive." },
+        { id: "ac_q19", difficulty: "medium", time: "25m", name: "Q19. Buy 2 Get 1 Free", desc: "Products grouped in threes; in every group, cheapest item is free. Total bill." },
+        { id: "ac_q20", difficulty: "medium", time: "25m", name: "Q20. Taxi Fare", desc: "First 5km @ 50/km; next 10km @ 40/km; beyond 15km @ 30/km. Find total fare." },
+        { id: "ac_q21", difficulty: "medium", time: "25m", name: "Q21. Festival Bonus", desc: "Tenure >= 5 yrs: 20% bonus; 2-4 yrs: 10%; < 2 yrs: 5%. Total bonus payout." },
+        { id: "ac_q22", difficulty: "easy", time: "20m", name: "Q22. Scholarship", desc: "Marks >= 90: 100% fees; 75-89: 50% fees; else 0%. Find total fees collected." },
+        { id: "ac_q23", difficulty: "easy", time: "20m", name: "Q23. Target Incentive", desc: "If sales >= target: 10% incentive; else 0. Find total incentive." },
+        { id: "ac_q24", difficulty: "medium", time: "25m", name: "Q24. Mobile Bill", desc: "First 100 units @ 1.0; next 200 @ 0.8; above 300 @ 0.5. Calculate bill." },
+        { id: "ac_q25", difficulty: "easy", time: "20m", name: "Q25. Gym Discount", desc: "Fee 1000. If attendance >= 20 days: 20% discount (fee 800); else 1000." },
+        { id: "ac_q26", difficulty: "easy", time: "20m", name: "Q26. Adjusted Average Salary", desc: "Remove one min and one max salary, calculate average of remaining.", url: "https://leetcode.com/problems/average-salary-excluding-the-minimum-and-maximum-salary/" },
+        { id: "ac_q27", difficulty: "easy", time: "20m", name: "Q27. Second Item 50% Off", desc: "Consecutive pairs: 2nd item gets 50% discount. Find total bill." }
       ]
     },
     {
-      id: "hashing",
-      title: "3. Hashing / Frequency 🔥",
-      desc: "Set/map counts & fast duplicate checks",
+      id: "sec_c",
+      title: "C. String Story & Parsing (Q28–Q47) 🔤",
+      desc: "Alphanumeric parsing, code amounts (P100, D20), reversals & compression",
       problems: [
-        { id: "ac_c_hash1", difficulty: "easy", time: "30m", name: "LC 1 — Two Sum", url: "https://leetcode.com/problems/two-sum/" },
-        { id: "ac_c_hash2", difficulty: "easy", time: "30m", name: "LC 217 — Contains Duplicate", url: "https://leetcode.com/problems/contains-duplicate/" },
-        { id: "ac_c_hash3", difficulty: "easy", time: "30m", name: "LC 242 — Valid Anagram", url: "https://leetcode.com/problems/valid-anagram/" },
-        { id: "ac_c_hash4", difficulty: "easy", time: "30m", name: "LC 387 — First Unique Character in a String", url: "https://leetcode.com/problems/first-unique-character-in-a-string/" },
-        { id: "ac_c_hash5", difficulty: "medium", time: "45m", name: "LC 49 — Group Anagrams", url: "https://leetcode.com/problems/group-anagrams/" },
-        { id: "ac_c_hash6", difficulty: "medium", time: "45m", name: "LC 347 — Top K Frequent Elements", url: "https://leetcode.com/problems/top-k-frequent-elements/" },
-        { id: "ac_c_hash7", difficulty: "medium", time: "45m", name: "LC 128 — Longest Consecutive Sequence", url: "https://leetcode.com/problems/longest-consecutive-sequence/" },
-        { id: "ac_c_hash8", difficulty: "hard", time: "1.5h", name: "LC 30 — Substring with Concatenation of All Words (Stretch)", url: "https://leetcode.com/problems/substring-with-concatenation-of-all-words/" }
+        { id: "ac_q28", difficulty: "easy", time: "20m", name: "Q28. Extract Numbers and Find Sum", desc: "Extract all numbers from string containing letters/specials, find sum." },
+        { id: "ac_q29", difficulty: "easy", time: "15m", name: "Q29. Count Numbers in a String", desc: "Extract and count how many numbers exist in the string." },
+        { id: "ac_q30", difficulty: "easy", time: "20m", name: "Q30. Average of Extracted Numbers", desc: "Extract numbers from string and find their average." },
+        { id: "ac_q31", difficulty: "easy", time: "15m", name: "Q31. Maximum Extracted Number", desc: "Extract numbers from string and find the maximum number." },
+        { id: "ac_q32", difficulty: "easy", time: "15m", name: "Q32. Count Even Extracted Numbers", desc: "Extract all numbers from string and count how many are even." },
+        { id: "ac_q33", difficulty: "easy", time: "15m", name: "Q33. Reverse a String", desc: "Reverse the given string.", url: "https://leetcode.com/problems/reverse-string/" },
+        { id: "ac_q34", difficulty: "easy", time: "15m", name: "Q34. Palindrome String", desc: "Check if string is a palindrome while ignoring case and non-alphanumeric.", url: "https://leetcode.com/problems/valid-palindrome/" },
+        { id: "ac_q35", difficulty: "easy", time: "15m", name: "Q35. Count Vowels and Consonants", desc: "Count vowels and consonants in the given string." },
+        { id: "ac_q36", difficulty: "easy", time: "15m", name: "Q36. Count Uppercase and Lowercase", desc: "Count uppercase and lowercase letters in the given string." },
+        { id: "ac_q37", difficulty: "easy", time: "20m", name: "Q37. First Non-Repeating Character", desc: "Find the first character that occurs only once.", url: "https://leetcode.com/problems/first-unique-character-in-a-string/" },
+        { id: "ac_q38", difficulty: "easy", time: "20m", name: "Q38. Remove Duplicate Characters", desc: "Remove duplicates while preserving first occurrence order." },
+        { id: "ac_q39", difficulty: "medium", time: "25m", name: "Q39. String Compression", desc: "Compress repeated chars: 'aaabbcccc' -> 'a3b2c4'.", url: "https://leetcode.com/problems/string-compression/" },
+        { id: "ac_q40", difficulty: "easy", time: "15m", name: "Q40. Words Longer Than 5", desc: "In sentence, count how many words have length > 5." },
+        { id: "ac_q41", difficulty: "easy", time: "20m", name: "Q41. Reverse Words", desc: "Reverse the order of words in sentence.", url: "https://leetcode.com/problems/reverse-words-in-a-string/" },
+        { id: "ac_q42", difficulty: "easy", time: "20m", name: "Q42. Code Amount", desc: "P100 (add 100), D20 (subtract 20). Find net amount." },
+        { id: "ac_q43", difficulty: "easy", time: "20m", name: "Q43. Passed Marks", desc: "S85 (passed, add 85), F30 (fail, ignore). Total passed marks." },
+        { id: "ac_q44", difficulty: "medium", time: "25m", name: "Q44. Deposit and Withdrawal", desc: "D100 (deposit), W50 (withdraw). If balance < 500, deduct 10 penalty." },
+        { id: "ac_q45", difficulty: "easy", time: "20m", name: "Q45. Adjust Marks", desc: "Marks >= 80: +5; < 40: +10; else unchanged. Find average of final marks." },
+        { id: "ac_q46", difficulty: "medium", time: "25m", name: "Q46. ID Filtering", desc: "Count IDs starting with 'A' or 'B' having numeric part > 100 (e.g. A105, B200)." },
+        { id: "ac_q47", difficulty: "easy", time: "20m", name: "Q47. Username Filtering", desc: "Count usernames with length >= 5 containing 'user'." }
       ]
     },
     {
-      id: "pointers",
-      title: "4. Two Pointers 🔥",
-      desc: "Symmetrical narrows, sorted sum searches",
+      id: "sec_d",
+      title: "D. Mixed Array + String Logic (Q48–Q65) 🧩",
+      desc: "Prefix multiplies, order pricing, rating bonuses & surge pricing",
       problems: [
-        { id: "ac_c_ptr1", difficulty: "easy", time: "30m", name: "LC 125 — Valid Palindrome", url: "https://leetcode.com/problems/valid-palindrome/" },
-        { id: "ac_c_ptr2", difficulty: "easy", time: "30m", name: "LC 344 — Reverse String", url: "https://leetcode.com/problems/reverse-string/" },
-        { id: "ac_c_ptr3", difficulty: "easy", time: "30m", name: "LC 977 — Squares of a Sorted Array", url: "https://leetcode.com/problems/squares-of-a-sorted-array/" },
-        { id: "ac_c_ptr4", difficulty: "medium", time: "45m", name: "LC 167 — Two Sum II - Input Array Is Sorted", url: "https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/" },
-        { id: "ac_c_ptr5", difficulty: "medium", time: "45m", name: "LC 11 — Container With Most Water", url: "https://leetcode.com/problems/container-with-most-water/" },
-        { id: "ac_c_ptr6", difficulty: "medium", time: "45m", name: "LC 15 — 3Sum", url: "https://leetcode.com/problems/3sum/" },
-        { id: "ac_c_ptr7", difficulty: "hard", time: "1.5h", name: "LC 42 — Trapping Rain Water (Stretch)", url: "https://leetcode.com/problems/trapping-rain-water/" }
+        { id: "ac_q48", difficulty: "easy", time: "20m", name: "Q48. Prefix-Based Multiplication", desc: "X10 (X*2 = 20), Y20 (Y*3 = 60), Z5 (Z*1 = 5). Find total." },
+        { id: "ac_q49", difficulty: "easy", time: "20m", name: "Q49. Numeric String Filtering", desc: "Given ['10', '20', 'abc', '30'], ignore non-numeric, find sum and average." },
+        { id: "ac_q50", difficulty: "easy", time: "20m", name: "Q50. Status and Marks", desc: "Statuses ['P', 'F', 'P'] and marks [80, 35, 90]. Sum marks where status is 'P'." },
+        { id: "ac_q51", difficulty: "easy", time: "20m", name: "Q51. Prices as Strings", desc: "Price > 200: 10% off; else 5% off. Total amount after discounts." },
+        { id: "ac_q52", difficulty: "easy", time: "20m", name: "Q52. Time Comparison", desc: "Given times ['09:30', '13:15', '18:45'], count how many are after '12:00'." },
+        { id: "ac_q53", difficulty: "medium", time: "25m", name: "Q53. Country Codes", desc: "Codes like IN100, US200, IN150. Find total for IN and others separately." },
+        { id: "ac_q54", difficulty: "medium", time: "25m", name: "Q54. Two Numbers with Target Sum", desc: "Numbers as strings. Check if any two sum to target.", url: "https://leetcode.com/problems/two-sum/" },
+        { id: "ac_q55", difficulty: "medium", time: "25m", name: "Q55. Prefix with Maximum Total", desc: "A10, B20, C30, A40. Find prefix with max total sum and print it." },
+        { id: "ac_q56", difficulty: "easy", time: "20m", name: "Q56. Order Discount", desc: "Prime: 10% off; Non-prime >= 1000: 5% off; else no discount. Total amount." },
+        { id: "ac_q57", difficulty: "easy", time: "20m", name: "Q57. Employee Department Bonus", desc: "IT dept: 10% bonus; other depts: 5% bonus. Find total bonus." },
+        { id: "ac_q58", difficulty: "easy", time: "20m", name: "Q58. Customer Discount", desc: "Age >= 60: 15% off; else if purchase >= 5000: 10% off; else 5% off." },
+        { id: "ac_q59", difficulty: "medium", time: "25m", name: "Q59. Student Scholarship", desc: "Marks >= 75 & Att >= 90: 100% fees; Marks >= 60 & Att >= 75: 50%; else 0%." },
+        { id: "ac_q60", difficulty: "easy", time: "20m", name: "Q60. Order Revenue", desc: "Quantity * Price. If COD is true, add charge 50; else free shipping." },
+        { id: "ac_q61", difficulty: "easy", time: "20m", name: "Q61. Employee Rating Bonus", desc: "Rating >= 4: 20% bonus; Rating == 3: 10%; else no bonus. Total payout." },
+        { id: "ac_q62", difficulty: "easy", time: "20m", name: "Q62. Product Tax", desc: "Electronics: 10% tax; Groceries: 5%; Others: 8%. Total price with tax." },
+        { id: "ac_q63", difficulty: "easy", time: "20m", name: "Q63. Booking Surge", desc: "Weekend: 20% surge; Weekday: 10% surge. Total fare." },
+        { id: "ac_q64", difficulty: "easy", time: "20m", name: "Q64. Rider Bonus", desc: "Rides >= 100 and Rating >= 4.5: 5000 bonus; else 0. Total bonus." },
+        { id: "ac_q65", difficulty: "easy", time: "20m", name: "Q65. Coupon Discount", desc: "SAVE10: 10% off; SAVE20: 20% off; other: no discount. Total bill." }
       ]
     },
     {
-      id: "math",
-      title: "5. Basic Math 🔥",
-      desc: "Primes, GCD/LCM, integer splits & series checks",
+      id: "sec_e",
+      title: "E. Basic Array & String DSA (Q66–Q75) 🧠",
+      desc: "Core DSA: two pointers, second largest, anagrams, rotation & duplicates",
       problems: [
-        { id: "ac_c_math1", difficulty: "easy", time: "30m", name: "LC 9 — Palindrome Number", url: "https://leetcode.com/problems/palindrome-number/" },
-        { id: "ac_c_math2", difficulty: "easy", time: "30m", name: "LC 7 — Reverse Integer", url: "https://leetcode.com/problems/reverse-integer/" },
-        { id: "ac_c_math3", difficulty: "easy", time: "30m", name: "LC 412 — Fizz Buzz", url: "https://leetcode.com/problems/fizz-buzz/" },
-        { id: "ac_c_math4", difficulty: "easy", time: "30m", name: "LC 1979 — Find Greatest Common Divisor of Array", url: "https://leetcode.com/problems/find-greatest-common-divisor-of-array/" },
-        { id: "ac_c_math5", difficulty: "medium", time: "45m", name: "LC 202 — Happy Number", url: "https://leetcode.com/problems/happy-number/" },
-        { id: "ac_c_math6", difficulty: "medium", time: "45m", name: "LC 204 — Count Primes", url: "https://leetcode.com/problems/count-primes/" },
-        { id: "ac_c_math7", difficulty: "medium", time: "45m", name: "LC 50 — Pow(x, n)", url: "https://leetcode.com/problems/powx-n/" },
-        { id: "ac_c_math8", difficulty: "hard", time: "1.5h", name: "LC 273 — Integer to English Words (Stretch)", url: "https://leetcode.com/problems/integer-to-english-words/" },
-        { id: "ac_c_math_c1", difficulty: "easy", time: "1h", name: "Concept: Practice Prime Checking, LCM & Factorial implementation" },
-        { id: "ac_c_math_c2", difficulty: "easy", time: "1h", name: "Concept: Practice Fibonacci series & Armstrong Numbers" },
-        { id: "ac_c_math_c3", difficulty: "easy", time: "1h", name: "Concept: Sum of digits, Reverse digits & modulo manipulation" }
+        { id: "ac_q66", difficulty: "easy", time: "15m", name: "Q66. Reverse an Array", desc: "Reverse an integer array in place.", url: "https://leetcode.com/problems/reverse-string/" },
+        { id: "ac_q67", difficulty: "easy", time: "20m", name: "Q67. Second Largest Element", desc: "Find second largest distinct element in array." },
+        { id: "ac_q68", difficulty: "easy", time: "20m", name: "Q68. Remove Duplicates from Sorted Array", desc: "In-place duplicate removal, return unique count.", url: "https://leetcode.com/problems/remove-duplicates-from-sorted-array/" },
+        { id: "ac_q69", difficulty: "easy", time: "20m", name: "Q69. Move Zeros to the End", desc: "Move all zeros to end preserving order.", url: "https://leetcode.com/problems/move-zeroes/" },
+        { id: "ac_q70", difficulty: "easy", time: "20m", name: "Q70. Check if Array is Sorted", desc: "Determine if array is sorted non-decreasingly.", url: "https://leetcode.com/problems/check-if-array-is-sorted-and-rotated/" },
+        { id: "ac_q71", difficulty: "medium", time: "25m", name: "Q71. Rotate Array Right by K", desc: "Rotate array right by K positions in place.", url: "https://leetcode.com/problems/rotate-array/" },
+        { id: "ac_q72", difficulty: "easy", time: "20m", name: "Q72. Check Anagrams", desc: "Check if two strings are anagrams of each other.", url: "https://leetcode.com/problems/valid-anagram/" },
+        { id: "ac_q73", difficulty: "easy", time: "20m", name: "Q73. Longest Word", desc: "Find the longest word in a given sentence." },
+        { id: "ac_q74", difficulty: "easy", time: "20m", name: "Q74. Most Frequent Character", desc: "Count char frequencies and return the most frequent character." },
+        { id: "ac_q75", difficulty: "easy", time: "20m", name: "Q75. First Non-Repeating Character", desc: "Find first non-repeating character using index scan.", url: "https://leetcode.com/problems/first-unique-character-in-a-string/" }
       ]
     },
     {
-      id: "window",
-      title: "6. Sliding Window 🔥",
-      desc: "Fixed and variable subsegments calculations",
+      id: "sec_f",
+      title: "F. Binary Search on Answer (Q76–Q85) 🎯",
+      desc: "Ship capacities, book allocation, aggressive cows, divisors & equalization",
       problems: [
-        { id: "ac_c_win1", difficulty: "easy", time: "30m", name: "LC 121 — Best Time to Buy and Sell Stock", url: "https://leetcode.com/problems/best-time-to-buy-and-sell-stock/" },
-        { id: "ac_c_win2", difficulty: "medium", time: "45m", name: "LC 3 — Longest Substring Without Repeating Characters", url: "https://leetcode.com/problems/longest-substring-without-repeating-characters/" },
-        { id: "ac_c_win3", difficulty: "medium", time: "45m", name: "LC 567 — Permutation in String", url: "https://leetcode.com/problems/permutation-in-string/" },
-        { id: "ac_c_win4", difficulty: "medium", time: "45m", name: "LC 438 — Find All Anagrams in a String", url: "https://leetcode.com/problems/find-all-anagrams-in-a-string/" },
-        { id: "ac_c_win5", difficulty: "medium", time: "45m", name: "LC 424 — Longest Repeating Character Replacement", url: "https://leetcode.com/problems/longest-repeating-character-replacement/" },
-        { id: "ac_c_win6", difficulty: "hard", time: "1.5h", name: "LC 76 — Minimum Window Substring (Stretch)", url: "https://leetcode.com/problems/minimum-window-substring/" }
-      ]
-    },
-    {
-      id: "prefix",
-      title: "7. Prefix Sum 🟡",
-      desc: "O(1) range sum lookups, subsegment matching",
-      problems: [
-        { id: "ac_c_pref1", difficulty: "easy", time: "30m", name: "LC 1480 — Running Sum of 1d Array", url: "https://leetcode.com/problems/running-sum-of-1d-array/" },
-        { id: "ac_c_pref2", difficulty: "easy", time: "30m", name: "LC 724 — Find Pivot Index", url: "https://leetcode.com/problems/find-pivot-index/" },
-        { id: "ac_c_pref3", difficulty: "easy", time: "30m", name: "LC 303 — Range Sum Query - Immutable", url: "https://leetcode.com/problems/range-sum-query-immutable/" },
-        { id: "ac_c_pref4", difficulty: "medium", time: "45m", name: "LC 53 — Maximum Subarray", url: "https://leetcode.com/problems/maximum-subarray/" },
-        { id: "ac_c_pref5", difficulty: "medium", time: "45m", name: "LC 560 — Subarray Sum Equals K", url: "https://leetcode.com/problems/subarray-sum-equals-k/" },
-        { id: "ac_c_pref6", difficulty: "medium", time: "45m", name: "LC 525 — Contiguous Array", url: "https://leetcode.com/problems/contiguous-array/" },
-        { id: "ac_c_pref7", difficulty: "hard", time: "1.5h", name: "LC 974 — Subarray Sums Divisible by K (Stretch)", url: "https://leetcode.com/problems/subarray-sums-divisible-by-k/" }
-      ]
-    },
-    {
-      id: "sorting",
-      title: "8. Sorting 🟡",
-      desc: "Comparison algorithms & merge segments",
-      problems: [
-        { id: "ac_c_sort1", difficulty: "easy", time: "30m", name: "LC 88 — Merge Sorted Array", url: "https://leetcode.com/problems/merge-sorted-array/" },
-        { id: "ac_c_sort2", difficulty: "easy", time: "30m", name: "LC 912 — Sort an Array", url: "https://leetcode.com/problems/sort-an-array/" },
-        { id: "ac_c_sort3", difficulty: "medium", time: "45m", name: "LC 75 — Sort Colors", url: "https://leetcode.com/problems/sort-colors/" },
-        { id: "ac_c_sort4", difficulty: "medium", time: "45m", name: "LC 56 — Merge Intervals", url: "https://leetcode.com/problems/merge-intervals/" },
-        { id: "ac_c_sort5", difficulty: "medium", time: "45m", name: "LC 179 — Largest Number", url: "https://leetcode.com/problems/largest-number/" },
-        { id: "ac_c_sort6", difficulty: "hard", time: "1.5h", name: "LC 315 — Count of Smaller Numbers After Self (Stretch)", url: "https://leetcode.com/problems/count-of-smaller-numbers-after-self/" },
-        { id: "ac_c_sort_c1", difficulty: "easy", time: "1h", name: "Concept: Implement Bubble Sort & Selection Sort manually" },
-        { id: "ac_c_sort_c2", difficulty: "easy", time: "1h", name: "Concept: Implement Insertion Sort & learn built-in Python sort()/sorted()" }
-      ]
-    },
-    {
-      id: "binary-search",
-      title: "9. Binary Search 🟡",
-      desc: "Logarithmic space split searches",
-      problems: [
-        { id: "ac_c_bs1", difficulty: "easy", time: "30m", name: "LC 704 — Binary Search", url: "https://leetcode.com/problems/binary-search/" },
-        { id: "ac_c_bs2", difficulty: "easy", time: "30m", name: "LC 35 — Search Insert Position", url: "https://leetcode.com/problems/search-insert-position/" },
-        { id: "ac_c_bs3", difficulty: "easy", time: "30m", name: "LC 69 — Sqrt(x)", url: "https://leetcode.com/problems/sqrtx/" },
-        { id: "ac_c_bs4", difficulty: "medium", time: "45m", name: "LC 34 — Find First and Last Position of Element in Sorted Array", url: "https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/" },
-        { id: "ac_c_bs5", difficulty: "medium", time: "45m", name: "LC 33 — Search in Rotated Sorted Array", url: "https://leetcode.com/problems/search-in-rotated-sorted-array/" },
-        { id: "ac_c_bs6", difficulty: "medium", time: "45m", name: "LC 153 — Find Minimum in Rotated Sorted Array", url: "https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/" },
-        { id: "ac_c_bs7", difficulty: "hard", time: "1.5h", name: "LC 4 — Median of Two Sorted Arrays (Stretch)", url: "https://leetcode.com/problems/median-of-two-sorted-arrays/" }
-      ]
-    },
-    {
-      id: "bit-manipulation",
-      title: "10. Bit Manipulation 🟡",
-      desc: "Bitwise gates, counting bits, unique XOR states",
-      problems: [
-        { id: "ac_c_bit1", difficulty: "easy", time: "30m", name: "LC 136 — Single Number", url: "https://leetcode.com/problems/single-number/" },
-        { id: "ac_c_bit2", difficulty: "easy", time: "30m", name: "LC 191 — Number of 1 Bits", url: "https://leetcode.com/problems/number-of-1-bits/" },
-        { id: "ac_c_bit3", difficulty: "easy", time: "30m", name: "LC 338 — Counting Bits", url: "https://leetcode.com/problems/counting-bits/" },
-        { id: "ac_c_bit4", difficulty: "medium", time: "45m", name: "LC 137 — Single Number II", url: "https://leetcode.com/problems/single-number-ii/" },
-        { id: "ac_c_bit5", difficulty: "medium", time: "45m", name: "LC 201 — Bitwise AND of Numbers Range", url: "https://leetcode.com/problems/bitwise-and-of-numbers-range/" },
-        { id: "ac_c_bit6", difficulty: "hard", time: "1.5h", name: "LC 982 — Triples with Bitwise AND Equal To Zero (Stretch)", url: "https://leetcode.com/problems/triples-with-bitwise-and-equal-to-zero/" }
-      ]
-    },
-    {
-      id: "recursion",
-      title: "11. Recursion 🟢",
-      desc: "Call stacks, trace execution trees & return states",
-      problems: [
-        { id: "ac_c_rec1", difficulty: "medium", time: "45m", name: "LC 50 — Pow(x, n)", url: "https://leetcode.com/problems/powx-n/" },
-        { id: "ac_c_rec2", difficulty: "medium", time: "45m", name: "LC 78 — Subsets", url: "https://leetcode.com/problems/subsets/" },
-        { id: "ac_c_rec_c1", difficulty: "easy", time: "1h", name: "Concept: Practice Prime Checking, LCM & Factorial implementation" },
-        { id: "ac_c_rec_c2", difficulty: "easy", time: "1h", name: "Concept: Practice Fibonacci series & Armstrong Numbers" },
-        { id: "ac_c_rec_c3", difficulty: "easy", time: "1h", name: "Concept: Sum of digits, Reverse digits & modulo manipulation" }
-      ]
-    },
-    {
-      id: "stack",
-      title: "12. Stack 🟢",
-      desc: "LIFO, parenthesis checks, postfix evaluation",
-      problems: [
-        { id: "ac_c_stk1", difficulty: "easy", time: "30m", name: "LC 20 — Valid Parentheses", url: "https://leetcode.com/problems/valid-parentheses/" },
-        { id: "ac_c_stk2", difficulty: "easy", time: "30m", name: "LC 682 — Baseball Game", url: "https://leetcode.com/problems/baseball-game/" },
-        { id: "ac_c_stk3", difficulty: "easy", time: "30m", name: "LC 1047 — Remove All Adjacent Duplicates In String", url: "https://leetcode.com/problems/remove-all-adjacent-duplicates-in-string/" },
-        { id: "ac_c_stk4", difficulty: "medium", time: "45m", name: "LC 155 — Min Stack", url: "https://leetcode.com/problems/min-stack/" },
-        { id: "ac_c_stk5", difficulty: "medium", time: "45m", name: "LC 150 — Evaluate Reverse Polish Notation", url: "https://leetcode.com/problems/evaluate-reverse-polish-notation/" },
-        { id: "ac_c_stk6", difficulty: "medium", time: "45m", name: "LC 739 — Daily Temperatures", url: "https://leetcode.com/problems/daily-temperatures/" }
-      ]
-    },
-    {
-      id: "linked-list",
-      title: "13. Linked List 🟢",
-      desc: "Node pointer redirections & fast/slow loops",
-      problems: [
-        { id: "ac_c_ll1", difficulty: "easy", time: "30m", name: "LC 206 — Reverse Linked List", url: "https://leetcode.com/problems/reverse-linked-list/" },
-        { id: "ac_c_ll2", difficulty: "easy", time: "30m", name: "LC 21 — Merge Two Sorted Lists", url: "https://leetcode.com/problems/merge-two-sorted-lists/" },
-        { id: "ac_c_ll3", difficulty: "easy", time: "30m", name: "LC 141 — Linked List Cycle", url: "https://leetcode.com/problems/linked-list-cycle/" },
-        { id: "ac_c_ll4", difficulty: "medium", time: "45m", name: "LC 19 — Remove Nth Node From End of List", url: "https://leetcode.com/problems/remove-nth-node-from-end-of-list/" },
-        { id: "ac_c_ll5", difficulty: "medium", time: "45m", name: "LC 160 — Intersection of Two Linked Lists", url: "https://leetcode.com/problems/intersection-of-two-linked-lists/" }
+        { id: "ac_q76", difficulty: "medium", time: "30m", name: "Q76. Minimum X for Sum Condition", desc: "Find min X such that sum(elements > X) <= K." },
+        { id: "ac_q77", difficulty: "medium", time: "35m", name: "Q77. Minimum Ship Capacity", desc: "Find minimum capacity to ship all packages within D days.", url: "https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/" },
+        { id: "ac_q78", difficulty: "hard", time: "40m", name: "Q78. Allocate Books", desc: "Allocate contiguous books to M students minimizing max pages.", url: "https://leetcode.com/problems/split-array-largest-sum/" },
+        { id: "ac_q79", difficulty: "medium", time: "35m", name: "Q79. Minimum Time to Complete K Tasks", desc: "Task times given, find min time to finish at least K tasks.", url: "https://leetcode.com/problems/minimum-time-to-complete-trips/" },
+        { id: "ac_q80", difficulty: "hard", time: "40m", name: "Q80. Aggressive Cows", desc: "Place C cows in N stalls to maximize minimum distance.", url: "https://leetcode.com/problems/magnetic-force-between-two-balls/" },
+        { id: "ac_q81", difficulty: "medium", time: "30m", name: "Q81. Smallest Divisor", desc: "Find smallest divisor D such that sum(ceil(arr[i]/D)) <= S.", url: "https://leetcode.com/problems/find-the-smallest-divisor-given-a-threshold/" },
+        { id: "ac_q82", difficulty: "medium", time: "30m", name: "Q82. Minimum Reduction Value", desc: "Find min X such that reducing values > X results in sum <= target." },
+        { id: "ac_q83", difficulty: "medium", time: "30m", name: "Q83. Maximum Average Subarray", desc: "Find maximum possible average of subarray of length >= K.", url: "https://leetcode.com/problems/maximum-average-subarray-i/" },
+        { id: "ac_q84", difficulty: "medium", time: "35m", name: "Q84. K-th Smallest Element", desc: "Find K-th smallest element using binary search over value range.", url: "https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/" },
+        { id: "ac_q85", difficulty: "easy", time: "25m", name: "Q85. Equalize Array", desc: "In one op increase N-1 elements by 1. Find min operations to equalize.", url: "https://leetcode.com/problems/minimum-moves-to-equal-array-elements/" }
       ]
     }
   ];
@@ -1331,7 +1342,7 @@ Space Complexity (if code):`;
   let S = {};
   let activeDay = 1;
   let activeTab = 'roadmap';
-  let activeTopic = 'arrays';
+  let activeTopic = 'sec_a';
 
   // Utility to parse any time string into numeric hours
   function parseTimeStrToHours(timeStr) {
@@ -1968,6 +1979,7 @@ Space Complexity (if code):`;
             <button class="btn-toggle-editor" id="btn-editor-coding-${p.id}" onclick="toggleCodingEditor('${p.id}')"><i class="fas fa-edit"></i> Notes &amp; Code</button>
           </div>
         </div>
+        ${p.desc ? `<div style="font-size:12px; color:var(--text2); margin-top:8px; line-height:1.5; padding-left:27px;"><i class="fas fa-info-circle" style="color:var(--accent2); margin-right:4px;"></i>${p.desc}</div>` : ''}
         
         <div class="editor-panel" id="editor-coding-${p.id}">
           <div class="editor-cols">
