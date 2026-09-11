@@ -1452,137 +1452,340 @@ SET sex = CASE
       {
         "id": "assess_q1",
         "name": "Q1. Index-Based Array Transformation",
-        "desc": "Given an array of `N` integers, transform every element at index `i` (0-based): * Subtract `(i % 7) \u00d7 3`. * If the original value is divisible by `11`, add `original value / 11`. Find the sum of the transformed array.",
         "pattern": "Index-Based Transformation & Accumulator",
         "time": "O(N)",
         "difficulty": "medium",
-        "url": "https://leetcode.com/problems/running-sum-of-1d-array/"
+        "url": "https://leetcode.com/problems/running-sum-of-1d-array/",
+        "statement": "Given an array of `N` integers, transform every element at index `i` (0-based):\n* Subtract `(i % 7) \u00d7 3`.\n* If the original value is divisible by `11`, add `original value / 11`.\nFind the sum of the transformed array.",
+        "input_fmt": "* First line: `N`\n* Second line: `N` integers.",
+        "output_fmt": "Print the sum of the transformed array.",
+        "constraints": "`1 \u2264 N \u2264 10^5`",
+        "test_cases": [
+          {
+            "input": "5 11 20 33 40 50",
+            "output": "158"
+          },
+          {
+            "input": "3 22 10 15",
+            "output": "47"
+          }
+        ]
       },
       {
         "id": "assess_q2",
         "name": "Q2. Prefix Number Sum",
-        "desc": "For a positive integer `X`, define `eqSum(X)` as the sum of all prefix numbers of `X`. For example: `X = 123` Prefixes are `1, 12, 123`. Therefore: `eqSum(123) = 1 + 12 + 123 = 136`. Given `N`, count the integers `X` suc",
         "pattern": "Math / Prefix Number Simulation",
         "time": "O(N * log10(N))",
         "difficulty": "hard",
-        "url": "https://leetcode.com/problems/count-primes/"
+        "url": "https://leetcode.com/problems/count-primes/",
+        "statement": "For a positive integer `X`, define `eqSum(X)` as the sum of all prefix numbers of `X`.\nFor example:\n`X = 123`\nPrefixes are `1, 12, 123`.\nTherefore:\n`eqSum(123) = 1 + 12 + 123 = 136`.\nGiven `N`, count the integers `X` such that:\n`1 \u2264 X < N`\nand\n`eqSum(X) > N`.",
+        "input_fmt": "A single integer `N`.",
+        "output_fmt": "Print the count.",
+        "constraints": "`1 \u2264 N \u2264 10^6`",
+        "test_cases": [
+          {
+            "input": "20",
+            "output": "0"
+          },
+          {
+            "input": "10",
+            "output": "0"
+          }
+        ]
       },
       {
         "id": "assess_q3",
         "name": "Q3. Shop Discount",
-        "desc": "A shop applies discounts: * Price > 1000 \u2192 10% discount * Price from 500 to 1000 \u2192 5% discount * Below 500 \u2192 no discount Find the final total price.",
         "pattern": "Tiered Percentage Discount",
         "time": "O(N)",
         "difficulty": "easy",
-        "url": "https://leetcode.com/problems/final-prices-with-a-special-discount-in-a-shop/"
+        "url": "https://leetcode.com/problems/final-prices-with-a-special-discount-in-a-shop/",
+        "statement": "A shop applies discounts:\n* Price > 1000 \u2192 10% discount\n* Price from 500 to 1000 \u2192 5% discount\n* Below 500 \u2192 no discount\nFind the final total price.",
+        "input_fmt": "```text\nN\nprice1 price2 ... priceN\n```",
+        "output_fmt": "Print the final amount with 2 decimal places.",
+        "constraints": "`1 \u2264 N \u2264 10^5`",
+        "test_cases": [
+          {
+            "input": "4 400 600 1000 1500",
+            "output": "3250.00"
+          },
+          {
+            "input": "3 500 1200 200",
+            "output": "1580.00"
+          }
+        ]
       },
       {
         "id": "assess_q4",
         "name": "Q4. Employee Bonus",
-        "desc": "An employee receives a bonus: * Salary < 20000 \u2192 5000 * Salary 20000\u201340000 \u2192 3000 * Salary > 40000 \u2192 1000 Find the total salary including bonuses.",
         "pattern": "Multi-tier Salary Bonus Accumulator",
         "time": "O(N)",
         "difficulty": "easy",
-        "url": "https://leetcode.com/problemset/all/?search=salary"
+        "url": "https://leetcode.com/problemset/all/?search=salary",
+        "statement": "An employee receives a bonus:\n* Salary < 20000 \u2192 5000\n* Salary 20000\u201340000 \u2192 3000\n* Salary > 40000 \u2192 1000\nFind the total salary including bonuses.",
+        "input_fmt": "```text\nN\nsalary1 salary2 ... salaryN\n```",
+        "output_fmt": "Print the total amount.",
+        "constraints": "",
+        "test_cases": [
+          {
+            "input": "4 15000 25000 40000 50000",
+            "output": "148000"
+          },
+          {
+            "input": "3 10000 20000 50000",
+            "output": "88000"
+          }
+        ]
       },
       {
         "id": "assess_q5",
         "name": "Q5. Game Score",
-        "desc": "For each score: * Score >= 80 \u2192 add 10 * Score < 40 \u2192 subtract 5 * Otherwise \u2192 unchanged Find the final total score.",
         "pattern": "Score Adjustment Rules",
         "time": "O(N)",
         "difficulty": "easy",
-        "url": "https://leetcode.com/problems/baseball-game/"
+        "url": "https://leetcode.com/problems/baseball-game/",
+        "statement": "For each score:\n* Score >= 80 \u2192 add 10\n* Score < 40 \u2192 subtract 5\n* Otherwise \u2192 unchanged\nFind the final total score.",
+        "input_fmt": "```text\nN\nscore1 score2 ... scoreN\n```",
+        "output_fmt": "Print the final score.",
+        "constraints": "",
+        "test_cases": [
+          {
+            "input": "5 90 35 60 80 20",
+            "output": "280"
+          },
+          {
+            "input": "4 100 30 50 70",
+            "output": "245"
+          }
+        ]
       },
       {
         "id": "assess_q6",
         "name": "Q6. Bank Transactions",
-        "desc": "Given an initial balance and transactions: * `D amount` \u2192 deposit * `W amount` \u2192 withdrawal After every transaction, if the balance becomes less than `1000`, deduct a penalty of `20`.",
         "pattern": "Sequential Transaction Ledger with Penalty Trigger",
         "time": "O(N)",
         "difficulty": "easy",
-        "url": "https://leetcode.com/problems/count-operations-to-obtain-zero/"
+        "url": "https://leetcode.com/problems/count-operations-to-obtain-zero/",
+        "statement": "Given an initial balance and transactions:\n* `D amount` \u2192 deposit\n* `W amount` \u2192 withdrawal\nAfter every transaction, if the balance becomes less than `1000`, deduct a penalty of `20`.",
+        "input_fmt": "```text\ninitialBalance\nN\ntype amount\ntype amount\n...\n```",
+        "output_fmt": "Print the final balance.",
+        "constraints": "",
+        "test_cases": [
+          {
+            "input": "5000 4 W 3000 D 500 W 1000 D 2000",
+            "output": "3480"
+          },
+          {
+            "input": "1500 2 W 600 D 100",
+            "output": "980"
+          }
+        ]
       },
       {
         "id": "assess_q7",
         "name": "Q7. Delivery Charge",
-        "desc": "For every order: * Amount >= 500 \u2192 free delivery * Amount < 500 \u2192 delivery charge = 40 Find the total amount including delivery charges.",
         "pattern": "Threshold Delivery Fee Logic",
         "time": "O(N)",
         "difficulty": "easy",
-        "url": "https://leetcode.com/problemset/all/?search=array"
+        "url": "https://leetcode.com/problemset/all/?search=array",
+        "statement": "For every order:\n* Amount >= 500 \u2192 free delivery\n* Amount < 500 \u2192 delivery charge = 40\nFind the total amount including delivery charges.",
+        "input_fmt": "```text\nN\namount1 amount2 ... amountN\n```",
+        "output_fmt": "Print the total amount.",
+        "constraints": "",
+        "test_cases": [
+          {
+            "input": "4 600 300 500 200",
+            "output": "1720"
+          },
+          {
+            "input": "3 100 200 700",
+            "output": "1080"
+          }
+        ]
       },
       {
         "id": "assess_q8",
         "name": "Q8. Grace Marks",
-        "desc": "If a student's mark is below `33`, change it to `33`. Find the average after applying the rule.",
         "pattern": "Conditional Floor Transformation & Average",
         "time": "O(N)",
         "difficulty": "easy",
-        "url": "https://leetcode.com/problemset/all/?search=average"
+        "url": "https://leetcode.com/problemset/all/?search=average",
+        "statement": "If a student's mark is below `33`, change it to `33`.\nFind the average after applying the rule.",
+        "input_fmt": "```text\nN\nmark1 mark2 ... markN\n```",
+        "output_fmt": "Print the average with 2 decimal places.",
+        "constraints": "",
+        "test_cases": [
+          {
+            "input": "5 20 30 40 50 60",
+            "output": "43.20"
+          },
+          {
+            "input": "4 10 20 30 40",
+            "output": "34.00"
+          }
+        ]
       },
       {
         "id": "assess_q9",
         "name": "Q9. Sales Incentive",
-        "desc": "A salesperson receives: * Sales <= 10000 \u2192 5% * Sales > 10000 \u2192 10% Find the total incentive.",
         "pattern": "Sales Commission Calculation",
         "time": "O(N)",
         "difficulty": "easy",
-        "url": "https://leetcode.com/problemset/all/?search=sales"
+        "url": "https://leetcode.com/problemset/all/?search=sales",
+        "statement": "A salesperson receives:\n* Sales <= 10000 \u2192 5%\n* Sales > 10000 \u2192 10%\nFind the total incentive.",
+        "input_fmt": "```text\nN\nsales1 sales2 ... salesN\n```",
+        "output_fmt": "Print the total incentive with 2 decimal places.",
+        "constraints": "",
+        "test_cases": [
+          {
+            "input": "3 5000 10000 20000",
+            "output": "2250.00"
+          },
+          {
+            "input": "2 8000 15000",
+            "output": "1900.00"
+          }
+        ]
       },
       {
         "id": "assess_q10",
         "name": "Q10. Buy 2 Get 1 Free",
-        "desc": "For every group of three products, the cheapest product is free. Find the minimum amount that must be paid.",
         "pattern": "Greedy Grouping / Buy 2 Get 1 Free",
         "time": "O(N log N)",
         "difficulty": "medium",
-        "url": "https://leetcode.com/problems/minimum-cost-of-buying-candies-with-discount/"
+        "url": "https://leetcode.com/problems/minimum-cost-of-buying-candies-with-discount/",
+        "statement": "For every group of three products, the cheapest product is free.\nFind the minimum amount that must be paid.",
+        "input_fmt": "```text\nN\nprice1 price2 ... priceN\n```",
+        "output_fmt": "Print the amount to pay.",
+        "constraints": "",
+        "test_cases": [
+          {
+            "input": "6 100 200 300 400 500 600",
+            "output": "1500"
+          },
+          {
+            "input": "3 100 200 300",
+            "output": "500"
+          }
+        ]
       },
       {
         "id": "assess_q11",
         "name": "Q11. Taxi Fare",
-        "desc": "Taxi fare is calculated as: * First 5 km \u2192 50/km * Next 10 km \u2192 40/km * Above 15 km \u2192 30/km Find the total fare.",
         "pattern": "Slab-Based Taxi Fare Calculation",
         "time": "O(1)",
         "difficulty": "medium",
-        "url": "https://leetcode.com/problemset/all/?search=math"
+        "url": "https://leetcode.com/problemset/all/?search=math",
+        "statement": "Taxi fare is calculated as:\n* First 5 km \u2192 50/km\n* Next 10 km \u2192 40/km\n* Above 15 km \u2192 30/km\nFind the total fare.",
+        "input_fmt": "A single integer `D`.",
+        "output_fmt": "Print the fare.",
+        "constraints": "",
+        "test_cases": [
+          {
+            "input": "4",
+            "output": "200"
+          },
+          {
+            "input": "12",
+            "output": "530"
+          },
+          {
+            "input": "20",
+            "output": "770"
+          }
+        ]
       },
       {
         "id": "assess_q12",
         "name": "Q12. Festival Bonus",
-        "desc": "Bonus is based on experience: * > = 5 years \u2192 20% salary * 2\u20134 years \u2192 10% * < 2 years \u2192 5% Find the total bonus.",
         "pattern": "Experience-Based Percentage Bonus",
         "time": "O(N)",
         "difficulty": "easy",
-        "url": "https://leetcode.com/problemset/all/?search=salary"
+        "url": "https://leetcode.com/problemset/all/?search=salary",
+        "statement": "Bonus is based on experience:\n* > = 5 years \u2192 20% salary\n* 2\u20134 years \u2192 10%\n* < 2 years \u2192 5%\nFind the total bonus.",
+        "input_fmt": "```text\nN\nsalary experience\nsalary experience\n...\n```",
+        "output_fmt": "Print total bonus with 2 decimal places.",
+        "constraints": "",
+        "test_cases": [
+          {
+            "input": "3 30000 1 40000 3 50000 6",
+            "output": "14500.00"
+          },
+          {
+            "input": "2 20000 5 30000 1",
+            "output": "5500.00"
+          }
+        ]
       },
       {
         "id": "assess_q13",
         "name": "Q13. Scholarship",
-        "desc": "Scholarship: * Marks >= 90 \u2192 100% fee * Marks 75\u201389 \u2192 50% fee * Below 75 \u2192 no scholarship Find the total scholarship amount.",
         "pattern": "Tiered Fee Scholarship",
         "time": "O(N)",
         "difficulty": "easy",
-        "url": "https://leetcode.com/problemset/all/?search=array"
+        "url": "https://leetcode.com/problemset/all/?search=array",
+        "statement": "Scholarship:\n* Marks >= 90 \u2192 100% fee\n* Marks 75\u201389 \u2192 50% fee\n* Below 75 \u2192 no scholarship\nFind the total scholarship amount.",
+        "input_fmt": "```text\nN\nmarks fee\nmarks fee\n...\n```",
+        "output_fmt": "Print the total scholarship.",
+        "constraints": "",
+        "test_cases": [
+          {
+            "input": "4 95 50000 80 40000 70 30000 90 60000",
+            "output": "130000"
+          },
+          {
+            "input": "2 85 20000 92 30000",
+            "output": "40000"
+          }
+        ]
       },
       {
         "id": "assess_q14",
         "name": "Q14. Target Incentive",
-        "desc": "If sales are greater than or equal to the target, the salesperson gets 10% of sales as incentive. Otherwise, incentive is zero.",
         "pattern": "Sales Target Achievement Commission",
         "time": "O(N)",
         "difficulty": "easy",
-        "url": "https://leetcode.com/problemset/all/?search=sales"
+        "url": "https://leetcode.com/problemset/all/?search=sales",
+        "statement": "If sales are greater than or equal to the target, the salesperson gets 10% of sales as incentive.\nOtherwise, incentive is zero.",
+        "input_fmt": "```text\nN\nsales target\nsales target\n...\n```",
+        "output_fmt": "Print total incentive with 2 decimal places.",
+        "constraints": "",
+        "test_cases": [
+          {
+            "input": "4 10000 9000 8000 10000 15000 15000 5000 4000",
+            "output": "3000.00"
+          },
+          {
+            "input": "2 20000 20000 5000 6000",
+            "output": "2000.00"
+          }
+        ]
       },
       {
         "id": "assess_q15",
         "name": "Q15. Mobile Bill",
-        "desc": "Calculate the bill: * First 100 units \u2192 1/unit * Next 200 units \u2192 0.80/unit * Above 300 \u2192 0.50/unit",
         "pattern": "Graduated Slab Billing",
         "time": "O(1)",
         "difficulty": "medium",
-        "url": "https://leetcode.com/problemset/all/?search=math"
+        "url": "https://leetcode.com/problemset/all/?search=math",
+        "statement": "Calculate the bill:\n* First 100 units \u2192 1/unit\n* Next 200 units \u2192 0.80/unit\n* Above 300 \u2192 0.50/unit",
+        "input_fmt": "A single integer `N`.",
+        "output_fmt": "Print the bill with 2 decimal places.",
+        "constraints": "",
+        "test_cases": [
+          {
+            "input": "80",
+            "output": "80.00"
+          },
+          {
+            "input": "250",
+            "output": "220.00"
+          },
+          {
+            "input": "400",
+            "output": "295.00"
+          }
+        ]
       }
     ]
   },
@@ -1594,155 +1797,316 @@ SET sex = CASE
       {
         "id": "assess_q16",
         "name": "Q16. Gym Discount",
-        "desc": "Monthly gym fee is 1000. If attendance is at least 20 days, give 20% discount.",
         "pattern": "Attendance Threshold Discount",
         "time": "O(N)",
         "difficulty": "easy",
-        "url": "https://leetcode.com/problemset/all/?search=array"
+        "url": "https://leetcode.com/problemset/all/?search=array",
+        "statement": "Monthly gym fee is 1000.\nIf attendance is at least 20 days, give 20% discount.",
+        "input_fmt": "```text\nN\nattendance1 attendance2 ... attendanceN\n```",
+        "output_fmt": "Print the total amount collected.",
+        "constraints": "",
+        "test_cases": [
+          {
+            "input": "4 22 18 20 15",
+            "output": "3800.00"
+          }
+        ]
       },
       {
         "id": "assess_q17",
         "name": "Q17. Adjusted Salary Average",
-        "desc": "Given employee salaries, remove the minimum and maximum salary and calculate the average of the remaining salaries.",
         "pattern": "Trimmed Mean (Remove Min & Max)",
         "time": "O(N)",
         "difficulty": "easy",
-        "url": "https://leetcode.com/problems/average-salary-excluding-the-minimum-and-maximum-salary/"
+        "url": "https://leetcode.com/problems/average-salary-excluding-the-minimum-and-maximum-salary/",
+        "statement": "Given employee salaries, remove the minimum and maximum salary and calculate the average of the remaining salaries.",
+        "input_fmt": "```text\nN\nsalary1 salary2 ... salaryN\n```",
+        "output_fmt": "Print the average with 2 decimal places.",
+        "constraints": "",
+        "test_cases": [
+          {
+            "input": "5 10000 20000 30000 40000 50000",
+            "output": "30000.00"
+          },
+          {
+            "input": "4 10 20 30 40",
+            "output": "25.00"
+          }
+        ]
       },
       {
         "id": "assess_q18",
         "name": "Q18. Second Item Discount",
-        "desc": "For every pair of products, the second item gets 50% discount. For example, prices `100 200` result in payment `100 + 100`.",
         "pattern": "Pairwise Alternate Discount",
         "time": "O(N)",
         "difficulty": "easy",
-        "url": "https://leetcode.com/problemset/all/?search=discount"
+        "url": "https://leetcode.com/problemset/all/?search=discount",
+        "statement": "For every pair of products, the second item gets 50% discount.\nFor example, prices `100 200` result in payment `100 + 100`.",
+        "input_fmt": "```text\nN\nprice1 price2 ... priceN\n```",
+        "output_fmt": "Print the final amount.",
+        "constraints": "",
+        "test_cases": [
+          {
+            "input": "4 100 200 300 400",
+            "output": "400"
+          }
+        ]
       },
       {
         "id": "assess_q19",
         "name": "Q19. Loyalty Points",
-        "desc": "Customers receive 1 loyalty point for every \u20b9100 spent. If total spending is greater than \u20b95000, add 5 extra points.",
         "pattern": "Loyalty Points with Threshold Bonus",
         "time": "O(N)",
         "difficulty": "easy",
-        "url": "https://leetcode.com/problemset/all/?search=points"
+        "url": "https://leetcode.com/problemset/all/?search=points",
+        "statement": "Customers receive 1 loyalty point for every \u20b9100 spent.\nIf total spending is greater than \u20b95000, add 5 extra points.",
+        "input_fmt": "```text\nN\nspending1 spending2 ... spendingN\n```",
+        "output_fmt": "Print total loyalty points.",
+        "constraints": "",
+        "test_cases": [
+          {
+            "input": "3 500 1200 6000",
+            "output": "82"
+          }
+        ]
       },
       {
         "id": "assess_q20",
         "name": "Q20. Bus Fare",
-        "desc": "Fare: * Adult \u2192 100 * Child \u2192 50 * Senior \u2192 70 Given passenger types, calculate total fare.",
         "pattern": "Character Mapping Sum",
         "time": "O(N)",
         "difficulty": "easy",
-        "url": "https://leetcode.com/problems/roman-to-integer/"
+        "url": "https://leetcode.com/problems/roman-to-integer/",
+        "statement": "Fare:\n* Adult \u2192 100\n* Child \u2192 50\n* Senior \u2192 70\nGiven passenger types, calculate total fare.",
+        "input_fmt": "```text\nN\ntype1 type2 ... typeN\n```\nUse `A`, `C`, and `S`.",
+        "output_fmt": "Print total fare.",
+        "constraints": "",
+        "test_cases": [
+          {
+            "input": "5 A C S A C",
+            "output": "370"
+          }
+        ]
       },
       {
         "id": "assess_q21",
         "name": "Q21. Attendance Bonus",
-        "desc": "Employees with attendance >= 90 receive a bonus of 2000. Find the total bonus.",
         "pattern": "Condition Counter & Flat Bonus",
         "time": "O(N)",
         "difficulty": "easy",
-        "url": "https://leetcode.com/problemset/all/?search=bonus"
+        "url": "https://leetcode.com/problemset/all/?search=bonus",
+        "statement": "Employees with attendance >= 90 receive a bonus of 2000.\nFind the total bonus.",
+        "input_fmt": "```text\nN\nattendance1 attendance2 ... attendanceN\n```",
+        "output_fmt": "Print total bonus.",
+        "constraints": "",
+        "test_cases": [
+          {
+            "input": "5 95 80 90 70 100",
+            "output": "6000"
+          }
+        ]
       },
       {
         "id": "assess_q22",
         "name": "Q22. Restaurant Service Charge",
-        "desc": "For each bill: * Bill > 1000 \u2192 10% service charge * Bill > 500 and <= 1000 \u2192 5% * Otherwise \u2192 no charge Find the total service charge.",
         "pattern": "Restaurant Service Surcharge",
         "time": "O(N)",
         "difficulty": "easy",
-        "url": "https://leetcode.com/problemset/all/?search=bill"
+        "url": "https://leetcode.com/problemset/all/?search=bill",
+        "statement": "For each bill:\n* Bill > 1000 \u2192 10% service charge\n* Bill > 500 and <= 1000 \u2192 5%\n* Otherwise \u2192 no charge\nFind the total service charge.",
+        "input_fmt": "```text\nN\nbill1 bill2 ... billN\n```",
+        "output_fmt": "Print service charge with 2 decimal places.",
+        "constraints": "",
+        "test_cases": [
+          {
+            "input": "3 500 800 1500",
+            "output": "190.00"
+          }
+        ]
       },
       {
         "id": "assess_q23",
         "name": "Q23. Filtered Average",
-        "desc": "Ignore all ratings equal to `1` and calculate the average of the remaining ratings.",
         "pattern": "Filtered Mean / Exclude Outliers",
         "time": "O(N)",
         "difficulty": "easy",
-        "url": "https://leetcode.com/problemset/all/?search=average"
+        "url": "https://leetcode.com/problemset/all/?search=average",
+        "statement": "Ignore all ratings equal to `1` and calculate the average of the remaining ratings.",
+        "input_fmt": "```text\nN\nrating1 rating2 ... ratingN\n```",
+        "output_fmt": "Print the average with 2 decimal places.",
+        "constraints": "",
+        "test_cases": [
+          {
+            "input": "5 1 4 5 1 3",
+            "output": "4.00"
+          }
+        ]
       },
       {
         "id": "assess_q24",
         "name": "Q24. Cashback",
-        "desc": "Cashback: * Purchase >= 1000 \u2192 5% * Purchase 500\u2013999 \u2192 2% * Below 500 \u2192 0% Find total cashback.",
         "pattern": "Tiered Percentage Cashback",
         "time": "O(N)",
         "difficulty": "easy",
-        "url": "https://leetcode.com/problemset/all/?search=cashback"
+        "url": "https://leetcode.com/problemset/all/?search=cashback",
+        "statement": "Cashback:\n* Purchase >= 1000 \u2192 5%\n* Purchase 500\u2013999 \u2192 2%\n* Below 500 \u2192 0%\nFind total cashback.",
+        "input_fmt": "```text\nN\npurchase1 purchase2 ... purchaseN\n```",
+        "output_fmt": "Print cashback with 2 decimal places.",
+        "constraints": "",
+        "test_cases": [
+          {
+            "input": "3 1000 700 300",
+            "output": "64.00"
+          }
+        ]
       },
       {
         "id": "assess_q25",
         "name": "Q25. Minimum Guaranteed Salary",
-        "desc": "If salary is less than 15000, replace it with 15000. Find total salary after adjustment.",
         "pattern": "Minimum Floor Value Adjustment",
         "time": "O(N)",
         "difficulty": "easy",
-        "url": "https://leetcode.com/problemset/all/?search=array"
+        "url": "https://leetcode.com/problemset/all/?search=array",
+        "statement": "If salary is less than 15000, replace it with 15000.\nFind total salary after adjustment.",
+        "input_fmt": "```text\nN\nsalary1 salary2 ... salaryN\n```",
+        "output_fmt": "Print total salary.",
+        "constraints": "",
+        "test_cases": [
+          {
+            "input": "4 10000 15000 20000 12000",
+            "output": "62000"
+          }
+        ]
       },
       {
         "id": "assess_q26",
         "name": "Q26. Negative Marking",
-        "desc": "For each answer: * `C` \u2192 +4 * `W` \u2192 -1 * `U` \u2192 0 Find the final score.",
         "pattern": "Exam Negative Marking System",
         "time": "O(L)",
         "difficulty": "easy",
-        "url": "https://leetcode.com/problemset/all/?search=string"
+        "url": "https://leetcode.com/problemset/all/?search=string",
+        "statement": "For each answer:\n* `C` \u2192 +4\n* `W` \u2192 -1\n* `U` \u2192 0\nFind the final score.",
+        "input_fmt": "A string containing `C`, `W`, and `U`.",
+        "output_fmt": "Print the score.",
+        "constraints": "",
+        "test_cases": [
+          {
+            "input": "CCWUW",
+            "output": "6"
+          },
+          {
+            "input": "CCCC",
+            "output": "16"
+          }
+        ]
       },
       {
         "id": "assess_q27",
         "name": "Q27. Project Bonus",
-        "desc": "Bonus per project: * Projects <= 3 \u2192 5000/project * Projects > 3 \u2192 7000/project Find the total bonus.",
         "pattern": "Project Sized Tiered Bonus",
         "time": "O(N)",
         "difficulty": "easy",
-        "url": "https://leetcode.com/problemset/all/?search=bonus"
+        "url": "https://leetcode.com/problemset/all/?search=bonus",
+        "statement": "Bonus per project:\n* Projects <= 3 \u2192 5000/project\n* Projects > 3 \u2192 7000/project\nFind the total bonus.",
+        "input_fmt": "```text\nN\nprojects1 projects2 ... projectsN\n```",
+        "output_fmt": "Print total bonus.",
+        "constraints": "",
+        "test_cases": [
+          {
+            "input": "3 2 4 3",
+            "output": "29000"
+          }
+        ]
       },
       {
         "id": "assess_q28",
         "name": "Q28. Index Transformation",
-        "desc": "For every array element: * Even index \u2192 add 5 * Odd index \u2192 subtract 3 Print the resulting array.",
         "pattern": "Alternating Index Parity Transformation",
         "time": "O(N)",
         "difficulty": "easy",
-        "url": "https://leetcode.com/problemset/all/?search=array"
+        "url": "https://leetcode.com/problemset/all/?search=array",
+        "statement": "For every array element:\n* Even index \u2192 add 5\n* Odd index \u2192 subtract 3\nPrint the resulting array.",
+        "input_fmt": "```text\nN\narray elements\n```",
+        "output_fmt": "Print transformed array.",
+        "constraints": "",
+        "test_cases": [
+          {
+            "input": "5 10 20 30 40 50",
+            "output": "15 17 35 37 55"
+          }
+        ]
       },
       {
         "id": "assess_q29",
         "name": "Q29. Divisibility Transformation",
-        "desc": "For every number: * Divisible by 5 \u2192 multiply by 2 * Otherwise \u2192 subtract 1 Find the sum of transformed values.",
         "pattern": "Divisibility Branching Sum",
         "time": "O(N)",
         "difficulty": "easy",
-        "url": "https://leetcode.com/problemset/all/?search=divisible"
+        "url": "https://leetcode.com/problemset/all/?search=divisible",
+        "statement": "For every number:\n* Divisible by 5 \u2192 multiply by 2\n* Otherwise \u2192 subtract 1\nFind the sum of transformed values.",
+        "input_fmt": "```text\nN\narray\n```",
+        "output_fmt": "Print the sum.",
+        "constraints": "",
+        "test_cases": [
+          {
+            "input": "5 5 7 10 12 15",
+            "output": "49"
+          }
+        ]
       },
       {
         "id": "assess_q30",
         "name": "Q30. Threshold Transformation",
-        "desc": "For every number: * If number > K \u2192 decrease it by 10% * Otherwise \u2192 increase it by 5% Find the final sum.",
         "pattern": "Threshold Scaled Sum",
         "time": "O(N)",
         "difficulty": "easy",
-        "url": "https://leetcode.com/problemset/all/?search=threshold"
+        "url": "https://leetcode.com/problemset/all/?search=threshold",
+        "statement": "For every number:\n* If number > K \u2192 decrease it by 10%\n* Otherwise \u2192 increase it by 5%\nFind the final sum.",
+        "input_fmt": "```text\nN K\narray\n```",
+        "output_fmt": "Print the final sum with 2 decimal places.",
+        "constraints": "",
+        "test_cases": [
+          {
+            "input": "4 50 40 60 50 100",
+            "output": "235.00"
+          }
+        ]
       },
       {
         "id": "assess_q31",
         "name": "Q31. Index-Based Addition",
-        "desc": "For every array element: * If the number is even, add its index. * If the number is odd, subtract its index. Print the transformed array.",
         "pattern": "Value Parity Index Transformation",
         "time": "O(N)",
         "difficulty": "easy",
-        "url": "https://leetcode.com/problemset/all/?search=array"
+        "url": "https://leetcode.com/problemset/all/?search=array",
+        "statement": "For every array element:\n* If the number is even, add its index.\n* If the number is odd, subtract its index.\nPrint the transformed array.",
+        "input_fmt": "```text\nN\narray\n```",
+        "output_fmt": "Print transformed array.",
+        "constraints": "",
+        "test_cases": [
+          {
+            "input": "5 10 11 12 13 14",
+            "output": "10 10 14 10 18"
+          }
+        ]
       },
       {
         "id": "assess_q32",
         "name": "Q32. Multiple Divisibility Rules",
-        "desc": "For each number at index `i`: * If divisible by 3, add `i`. * If divisible by 7, subtract `i`. * If divisible by both, apply both operations. Find the final sum.",
         "pattern": "Compound Divisibility Operations",
         "time": "O(N)",
         "difficulty": "easy",
-        "url": "https://leetcode.com/problemset/all/?search=divisible"
+        "url": "https://leetcode.com/problemset/all/?search=divisible",
+        "statement": "For each number at index `i`:\n* If divisible by 3, add `i`.\n* If divisible by 7, subtract `i`.\n* If divisible by both, apply both operations.\nFind the final sum.",
+        "input_fmt": "```text\nN\narray\n```",
+        "output_fmt": "Print final sum.",
+        "constraints": "",
+        "test_cases": [
+          {
+            "input": "4 3 7 21 10",
+            "output": "-1"
+          }
+        ]
       }
     ]
   },
@@ -1754,164 +2118,350 @@ SET sex = CASE
       {
         "id": "assess_q33",
         "name": "Q33. Frequency of Elements",
-        "desc": "Given an array, print the frequency of every distinct element.",
         "pattern": "Frequency Counting with Order Preservation",
         "time": "O(N)",
         "difficulty": "easy",
-        "url": "https://leetcode.com/problems/first-unique-character-in-a-string/"
+        "url": "https://leetcode.com/problems/first-unique-character-in-a-string/",
+        "statement": "Given an array, print the frequency of every distinct element.",
+        "input_fmt": "```text\nN\narray\n```",
+        "output_fmt": "Print each element and its frequency in order of first occurrence.",
+        "constraints": "",
+        "test_cases": [
+          {
+            "input": "7 2 3 2 4 3 2 5",
+            "output": "2 3 3 2 4 1 5 1"
+          }
+        ]
       },
       {
         "id": "assess_q34",
         "name": "Q34. Find Duplicates",
-        "desc": "Find all elements that occur more than once.",
         "pattern": "Duplicate Elements Ordered Extraction",
         "time": "O(N)",
         "difficulty": "easy",
-        "url": "https://leetcode.com/problems/find-all-duplicates-in-an-array/"
+        "url": "https://leetcode.com/problems/find-all-duplicates-in-an-array/",
+        "statement": "Find all elements that occur more than once.",
+        "input_fmt": "```text\nN\narray\n```",
+        "output_fmt": "Print duplicate elements in order of first occurrence.",
+        "constraints": "",
+        "test_cases": [
+          {
+            "input": "8 1 2 3 2 4 1 5 3",
+            "output": "2 1 3"
+          }
+        ]
       },
       {
         "id": "assess_q35",
         "name": "Q35. Remove Duplicates",
-        "desc": "Remove duplicate elements while preserving the first occurrence.",
         "pattern": "Deduplication Preserving First Appearance",
         "time": "O(N)",
         "difficulty": "easy",
-        "url": "https://leetcode.com/problems/remove-duplicates-from-sorted-array/"
+        "url": "https://leetcode.com/problems/remove-duplicates-from-sorted-array/",
+        "statement": "Remove duplicate elements while preserving the first occurrence.",
+        "input_fmt": "```text\nN\narray\n```",
+        "output_fmt": "Print the resulting array.",
+        "constraints": "",
+        "test_cases": [
+          {
+            "input": "7 1 2 2 3 1 4 3",
+            "output": "1 2 3 4"
+          }
+        ]
       },
       {
         "id": "assess_q36",
         "name": "Q36. First Repeating Element",
-        "desc": "Find the first element that appears more than once.",
         "pattern": "First Element with Count > 1",
         "time": "O(N)",
         "difficulty": "easy",
-        "url": "https://leetcode.com/problems/contains-duplicate/"
+        "url": "https://leetcode.com/problems/contains-duplicate/",
+        "statement": "Find the first element that appears more than once.",
+        "input_fmt": "```text\nN\narray\n```",
+        "output_fmt": "Print the first repeating element. If none exists, print `-1`.",
+        "constraints": "",
+        "test_cases": [
+          {
+            "input": "6 10 5 3 4 3 5",
+            "output": "5"
+          },
+          {
+            "input": "4 1 2 3 4",
+            "output": "-1"
+          }
+        ]
       },
       {
         "id": "assess_q37",
         "name": "Q37. First Non-Repeating Element",
-        "desc": "Find the first element whose frequency is exactly one.",
         "pattern": "First Unique Element",
         "time": "O(N)",
         "difficulty": "easy",
-        "url": "https://leetcode.com/problems/first-unique-character-in-a-string/"
+        "url": "https://leetcode.com/problems/first-unique-character-in-a-string/",
+        "statement": "Find the first element whose frequency is exactly one.",
+        "input_fmt": "```text\nN\narray\n```",
+        "output_fmt": "Print the first non-repeating element or `-1`.",
+        "constraints": "",
+        "test_cases": [
+          {
+            "input": "7 4 5 1 2 1 4 5",
+            "output": "2"
+          }
+        ]
       },
       {
         "id": "assess_q38",
         "name": "Q38. Second Largest",
-        "desc": "Find the second-largest **distinct** element without sorting.",
         "pattern": "Second Largest Distinct in Single Pass",
         "time": "O(N)",
         "difficulty": "medium",
-        "url": "https://leetcode.com/problems/third-maximum-number/"
+        "url": "https://leetcode.com/problems/third-maximum-number/",
+        "statement": "Find the second-largest **distinct** element without sorting.",
+        "input_fmt": "```text\nN\narray\n```",
+        "output_fmt": "Print the second-largest distinct value. If it does not exist, print `-1`.",
+        "constraints": "",
+        "test_cases": [
+          {
+            "input": "6 10 5 20 20 8 15",
+            "output": "15"
+          },
+          {
+            "input": "3 5 5 5",
+            "output": "-1"
+          }
+        ]
       },
       {
         "id": "assess_q39",
         "name": "Q39. Second Smallest",
-        "desc": "Find the second-smallest distinct element without sorting.",
         "pattern": "Second Smallest Distinct in Single Pass",
         "time": "O(N)",
         "difficulty": "medium",
-        "url": "https://leetcode.com/problems/third-maximum-number/"
+        "url": "https://leetcode.com/problems/third-maximum-number/",
+        "statement": "Find the second-smallest distinct element without sorting.",
+        "input_fmt": "```text\nN\narray\n```",
+        "output_fmt": "Print the second-smallest distinct value.",
+        "constraints": "",
+        "test_cases": [
+          {
+            "input": "6 10 5 20 5 8 15",
+            "output": "8"
+          }
+        ]
       },
       {
         "id": "assess_q40",
         "name": "Q40. Two Sum",
-        "desc": "Given an array and target `K`, determine whether two different elements have sum `K`.",
         "pattern": "Two Sum (Hash Set Lookup)",
         "time": "O(N)",
         "difficulty": "easy",
-        "url": "https://leetcode.com/problems/two-sum/"
+        "url": "https://leetcode.com/problems/two-sum/",
+        "statement": "Given an array and target `K`, determine whether two different elements have sum `K`.",
+        "input_fmt": "```text\nN K\narray\n```",
+        "output_fmt": "Print `YES` if a pair exists, otherwise `NO`.",
+        "constraints": "",
+        "test_cases": [
+          {
+            "input": "5 9 2 7 11 15 3",
+            "output": "YES"
+          },
+          {
+            "input": "4 20 1 5 7 10",
+            "output": "NO"
+          }
+        ]
       },
       {
         "id": "assess_q41",
         "name": "Q41. Two Sum Indices",
-        "desc": "Find the indices of two different elements whose sum equals `K`.",
         "pattern": "Two Sum 0-based Indices",
         "time": "O(N)",
         "difficulty": "medium",
-        "url": "https://leetcode.com/problems/two-sum/"
+        "url": "https://leetcode.com/problems/two-sum/",
+        "statement": "Find the indices of two different elements whose sum equals `K`.",
+        "input_fmt": "```text\nN K\narray\n```",
+        "output_fmt": "Print the two indices. If no pair exists, print `-1`.",
+        "constraints": "",
+        "test_cases": [
+          {
+            "input": "5 9 2 7 11 15 3",
+            "output": "0 1"
+          }
+        ]
       },
       {
         "id": "assess_q42",
         "name": "Q42. Move Zeros",
-        "desc": "Move all zero elements to the end while maintaining the relative order of non-zero elements.",
         "pattern": "Two-Pointer Zero Shifting",
         "time": "O(N)",
         "difficulty": "easy",
-        "url": "https://leetcode.com/problems/move-zeroes/"
+        "url": "https://leetcode.com/problems/move-zeroes/",
+        "statement": "Move all zero elements to the end while maintaining the relative order of non-zero elements.",
+        "input_fmt": "```text\nN\narray\n```",
+        "output_fmt": "Print the resulting array.",
+        "constraints": "",
+        "test_cases": [
+          {
+            "input": "7 0 1 0 3 12 0 5",
+            "output": "1 3 12 5 0 0 0"
+          }
+        ]
       },
       {
         "id": "assess_q43",
         "name": "Q43. Separate Positive and Negative",
-        "desc": "Move negative numbers to one side and positive numbers to the other side. For this problem, preserve the relative order.",
         "pattern": "Stable Partition Negatives & Positives",
         "time": "O(N)",
         "difficulty": "easy",
-        "url": "https://leetcode.com/problems/partition-array-according-to-given-pivot/"
+        "url": "https://leetcode.com/problems/partition-array-according-to-given-pivot/",
+        "statement": "Move negative numbers to one side and positive numbers to the other side.\nFor this problem, preserve the relative order.",
+        "input_fmt": "```text\nN\narray\n```",
+        "output_fmt": "Print the rearranged array.",
+        "constraints": "",
+        "test_cases": [
+          {
+            "input": "6 2 -1 4 -3 -5 6",
+            "output": "-1 -3 -5 2 4 6"
+          }
+        ]
       },
       {
         "id": "assess_q44",
         "name": "Q44. Prefix Sum",
-        "desc": "Create a prefix-sum array. For each index `i`, the value is the sum of elements from index `0` to `i`.",
         "pattern": "Running Prefix Sum Accumulation",
         "time": "O(N)",
         "difficulty": "easy",
-        "url": "https://leetcode.com/problems/running-sum-of-1d-array/"
+        "url": "https://leetcode.com/problems/running-sum-of-1d-array/",
+        "statement": "Create a prefix-sum array.\nFor each index `i`, the value is the sum of elements from index `0` to `i`.",
+        "input_fmt": "```text\nN\narray\n```",
+        "output_fmt": "Print the prefix-sum array.",
+        "constraints": "",
+        "test_cases": [
+          {
+            "input": "5 2 4 1 3 5",
+            "output": "2 6 7 10 15"
+          }
+        ]
       },
       {
         "id": "assess_q45",
         "name": "Q45. Range Sum Queries",
-        "desc": "Given an array and `Q` queries, each query contains `L` and `R`. Find the sum of elements from index `L` to `R`, inclusive.",
         "pattern": "Constant Time Range Sum Queries O(1)",
         "time": "O(N + Q)",
         "difficulty": "easy",
-        "url": "https://leetcode.com/problems/range-sum-query-immutable/"
+        "url": "https://leetcode.com/problems/range-sum-query-immutable/",
+        "statement": "Given an array and `Q` queries, each query contains `L` and `R`.\nFind the sum of elements from index `L` to `R`, inclusive.",
+        "input_fmt": "```text\nN\narray\nQ\nL R\nL R\n...\n```",
+        "output_fmt": "Print one answer for each query.",
+        "constraints": "",
+        "test_cases": [
+          {
+            "input": "5 2 4 1 3 5 3 0 2 1 3 2 4",
+            "output": "7 8 9"
+          }
+        ]
       },
       {
         "id": "assess_q46",
         "name": "Q46. Maximum Subarray Sum",
-        "desc": "Find the maximum sum of a contiguous subarray.",
         "pattern": "Kadane's Algorithm",
         "time": "O(N)",
         "difficulty": "medium",
-        "url": "https://leetcode.com/problems/maximum-subarray/"
+        "url": "https://leetcode.com/problems/maximum-subarray/",
+        "statement": "Find the maximum sum of a contiguous subarray.",
+        "input_fmt": "```text\nN\narray\n```",
+        "output_fmt": "Print the maximum subarray sum.",
+        "constraints": "",
+        "test_cases": [
+          {
+            "input": "9 -2 1 -3 4 -1 2 1 -5 4",
+            "output": "6"
+          },
+          {
+            "input": "4 -5 -2 -8 -1",
+            "output": "-1"
+          }
+        ]
       },
       {
         "id": "assess_q47",
         "name": "Q47. Longest Subarray With Sum K",
-        "desc": "Given an array of positive integers and a target `K`, find the length of the longest contiguous subarray whose sum is exactly `K`.",
         "pattern": "Longest Subarray with Sum K (Prefix Map)",
         "time": "O(N)",
         "difficulty": "hard",
-        "url": "https://leetcode.com/problems/subarray-sum-equals-k/"
+        "url": "https://leetcode.com/problems/subarray-sum-equals-k/",
+        "statement": "Given an array of positive integers and a target `K`, find the length of the longest contiguous subarray whose sum is exactly `K`.",
+        "input_fmt": "```text\nN K\narray\n```",
+        "output_fmt": "Print the maximum length. If no subarray exists, print `0`.",
+        "constraints": "",
+        "test_cases": [
+          {
+            "input": "6 7 1 2 3 1 1 1",
+            "output": "4"
+          },
+          {
+            "input": "5 5 1 1 1 1 1",
+            "output": "5"
+          }
+        ]
       },
       {
         "id": "assess_q48",
         "name": "Q48. Maximum Sum Window",
-        "desc": "Given an array and window size `K`, find the maximum sum of any contiguous subarray of size `K`.",
         "pattern": "Fixed-Length Sliding Window Maximum Sum",
         "time": "O(N)",
         "difficulty": "medium",
-        "url": "https://leetcode.com/problems/maximum-average-subarray-i/"
+        "url": "https://leetcode.com/problems/maximum-average-subarray-i/",
+        "statement": "Given an array and window size `K`, find the maximum sum of any contiguous subarray of size `K`.",
+        "input_fmt": "```text\nN K\narray\n```",
+        "output_fmt": "Print the maximum window sum.",
+        "constraints": "",
+        "test_cases": [
+          {
+            "input": "6 3 2 1 5 1 3 2",
+            "output": "9"
+          }
+        ]
       },
       {
         "id": "assess_q49",
         "name": "Q49. Minimum Pair Difference",
-        "desc": "Given an array, find the minimum absolute difference between any two elements.",
         "pattern": "Sorting + Adjacent Scan (Min Pair Difference)",
         "time": "O(N log N)",
         "difficulty": "medium",
-        "url": "https://leetcode.com/problems/minimum-absolute-difference/"
+        "url": "https://leetcode.com/problems/minimum-absolute-difference/",
+        "statement": "Given an array, find the minimum absolute difference between any two elements.",
+        "input_fmt": "```text\nN\narray\n```",
+        "output_fmt": "Print the minimum difference.",
+        "constraints": "",
+        "test_cases": [
+          {
+            "input": "5 10 3 20 8 15",
+            "output": "2"
+          }
+        ]
       },
       {
         "id": "assess_q50",
         "name": "Q50. Missing Number",
-        "desc": "The array contains `N-1` distinct numbers from `1` to `N`. Find the missing number.",
         "pattern": "Sum Formula / Missing Element",
         "time": "O(N)",
         "difficulty": "easy",
-        "url": "https://leetcode.com/problems/missing-number/"
+        "url": "https://leetcode.com/problems/missing-number/",
+        "statement": "The array contains `N-1` distinct numbers from `1` to `N`. Find the missing number.",
+        "input_fmt": "```text\nN\nN-1 numbers\n```",
+        "output_fmt": "Print the missing number.",
+        "constraints": "",
+        "test_cases": [
+          {
+            "input": "5 1 2 4 5",
+            "output": "3"
+          },
+          {
+            "input": "6 1 2 3 5 6",
+            "output": "4"
+          }
+        ]
       }
     ]
   },
@@ -1923,182 +2473,374 @@ SET sex = CASE
       {
         "id": "assess_q51",
         "name": "Q51. Extract Numbers and Sum",
-        "desc": "Given a string containing letters and digits, extract all numbers and calculate their sum.",
         "pattern": "Regex Contiguous Number Extraction & Sum",
         "time": "O(L)",
         "difficulty": "easy",
-        "url": "https://leetcode.com/problems/check-if-numbers-are-ascending-in-a-sentence/"
+        "url": "https://leetcode.com/problems/check-if-numbers-are-ascending-in-a-sentence/",
+        "statement": "Given a string containing letters and digits, extract all numbers and calculate their sum.",
+        "input_fmt": "A single string.",
+        "output_fmt": "Print the sum of extracted numbers.",
+        "constraints": "",
+        "test_cases": [
+          {
+            "input": "A10B20C30",
+            "output": "60"
+          }
+        ]
       },
       {
         "id": "assess_q52",
         "name": "Q52. Count Numbers in String",
-        "desc": "Given a string containing letters and numbers, count how many numeric values appear.",
         "pattern": "Tokenizing / Counting Numeric Sequences",
         "time": "O(L)",
         "difficulty": "easy",
-        "url": "https://leetcode.com/problemset/all/?search=string"
+        "url": "https://leetcode.com/problemset/all/?search=string",
+        "statement": "Given a string containing letters and numbers, count how many numeric values appear.",
+        "input_fmt": "A single string.",
+        "output_fmt": "Print the count.",
+        "constraints": "",
+        "test_cases": [
+          {
+            "input": "A10B20C30",
+            "output": "3"
+          }
+        ]
       },
       {
         "id": "assess_q53",
         "name": "Q53. Maximum Number in String",
-        "desc": "Extract all numbers from the string and print the largest number.",
         "pattern": "Embedded Number Extraction & Max Tracking",
         "time": "O(L)",
         "difficulty": "easy",
-        "url": "https://leetcode.com/problemset/all/?search=string"
+        "url": "https://leetcode.com/problemset/all/?search=string",
+        "statement": "Extract all numbers from the string and print the largest number.",
+        "input_fmt": "A single string.",
+        "output_fmt": "Print the maximum number.",
+        "constraints": "",
+        "test_cases": [
+          {
+            "input": "A10B250C30D75",
+            "output": "250"
+          }
+        ]
       },
       {
         "id": "assess_q54",
         "name": "Q54. Count Even Numbers in String",
-        "desc": "Extract all numbers from the string and count how many are even.",
         "pattern": "Filter & Count Even Tokens",
         "time": "O(L)",
         "difficulty": "easy",
-        "url": "https://leetcode.com/problemset/all/?search=string"
+        "url": "https://leetcode.com/problemset/all/?search=string",
+        "statement": "Extract all numbers from the string and count how many are even.",
+        "input_fmt": "A single string.",
+        "output_fmt": "Print the count of even numbers.",
+        "constraints": "",
+        "test_cases": [
+          {
+            "input": "A10B25C30D41",
+            "output": "2"
+          }
+        ]
       },
       {
         "id": "assess_q55",
         "name": "Q55. Code Processing",
-        "desc": "A string contains operations: * `P` followed by a number \u2192 add the number. * `D` followed by a number \u2192 subtract the number. Calculate the final value starting from zero.",
         "pattern": "String Instruction Decoder",
         "time": "O(L)",
         "difficulty": "easy",
-        "url": "https://leetcode.com/problems/goal-parser-interpretation/"
+        "url": "https://leetcode.com/problems/goal-parser-interpretation/",
+        "statement": "A string contains operations:\n* `P` followed by a number \u2192 add the number.\n* `D` followed by a number \u2192 subtract the number.\nCalculate the final value starting from zero.",
+        "input_fmt": "A string such as:\n`P10D5P20`",
+        "output_fmt": "Print the final value.",
+        "constraints": "",
+        "test_cases": [
+          {
+            "input": "P10D5P20",
+            "output": "25"
+          },
+          {
+            "input": "P50D20D10",
+            "output": "20"
+          }
+        ]
       },
       {
         "id": "assess_q56",
         "name": "Q56. Transaction String",
-        "desc": "A transaction string contains: * `D amount` \u2192 deposit * `W amount` \u2192 withdrawal Calculate the final balance.",
         "pattern": "Compact Transaction String Parser",
         "time": "O(L)",
         "difficulty": "medium",
-        "url": "https://leetcode.com/problemset/all/?search=string"
+        "url": "https://leetcode.com/problemset/all/?search=string",
+        "statement": "A transaction string contains:\n* `D amount` \u2192 deposit\n* `W amount` \u2192 withdrawal\nCalculate the final balance.",
+        "input_fmt": "First line:\n```text\ninitialBalance\n```\nSecond line:\n```text\ntransactionString\n```",
+        "output_fmt": "Print the final balance.",
+        "constraints": "",
+        "test_cases": [
+          {
+            "input": "1000 D500W200D100",
+            "output": "1400"
+          }
+        ]
       },
       {
         "id": "assess_q57",
         "name": "Q57. ID Filtering",
-        "desc": "Each ID begins with either `A` or `B`, followed by a number. Count IDs whose numeric portion is greater than `100`.",
         "pattern": "Identifier Verification & Filtering",
         "time": "O(N * L)",
         "difficulty": "easy",
-        "url": "https://leetcode.com/problemset/all/?search=validation"
+        "url": "https://leetcode.com/problemset/all/?search=validation",
+        "statement": "Each ID begins with either `A` or `B`, followed by a number.\nCount IDs whose numeric portion is greater than `100`.",
+        "input_fmt": "```text\nN\nID1 ID2 ... IDN\n```",
+        "output_fmt": "Print the count.",
+        "constraints": "",
+        "test_cases": [
+          {
+            "input": "5 A120 B90 A150 B200 A50",
+            "output": "3"
+          }
+        ]
       },
       {
         "id": "assess_q58",
         "name": "Q58. Username Validation",
-        "desc": "A username is valid if: * Its length is at least 5. * It contains the substring `\"user\"`. Count the valid usernames.",
         "pattern": "String Predicate Validation",
         "time": "O(L)",
         "difficulty": "easy",
-        "url": "https://leetcode.com/problems/detect-capital/"
+        "url": "https://leetcode.com/problems/detect-capital/",
+        "statement": "A username is valid if:\n* Its length is at least 5.\n* It contains the substring `\"user\"`.\nCount the valid usernames.",
+        "input_fmt": "```text\nN\nusername1\nusername2\n...\n```",
+        "output_fmt": "Print the count.",
+        "constraints": "",
+        "test_cases": [
+          {
+            "input": "5 user myuser user123 admin superuser",
+            "output": "3"
+          }
+        ]
       },
       {
         "id": "assess_q59",
         "name": "Q59. String Multipliers",
-        "desc": "For every character: * `X` \u2192 multiply the current value by 2 * `Y` \u2192 multiply by 3 * `Z` \u2192 multiply by 5 Start with value `1`.",
         "pattern": "Run-Length String Expansion",
         "time": "O(Total Chars)",
         "difficulty": "medium",
-        "url": "https://leetcode.com/problems/decode-string/"
+        "url": "https://leetcode.com/problems/decode-string/",
+        "statement": "For every character:\n* `X` \u2192 multiply the current value by 2\n* `Y` \u2192 multiply by 3\n* `Z` \u2192 multiply by 5\nStart with value `1`.",
+        "input_fmt": "A string containing only `X`, `Y`, and `Z`.",
+        "output_fmt": "Print the final value.",
+        "constraints": "",
+        "test_cases": [
+          {
+            "input": "XYZ",
+            "output": "30"
+          }
+        ]
       },
       {
         "id": "assess_q60",
         "name": "Q60. Status and Marks",
-        "desc": "Each student record contains status and marks. * `PASS` \u2192 include marks * `FAIL` \u2192 ignore marks Find the total marks of passing students.",
         "pattern": "Key-Value Delimited Record Parsing",
         "time": "O(N)",
         "difficulty": "easy",
-        "url": "https://leetcode.com/problemset/all/?search=parsing"
+        "url": "https://leetcode.com/problemset/all/?search=parsing",
+        "statement": "Each student record contains status and marks.\n* `PASS` \u2192 include marks\n* `FAIL` \u2192 ignore marks\nFind the total marks of passing students.",
+        "input_fmt": "```text\nN\nstatus marks\nstatus marks\n...\n```",
+        "output_fmt": "Print total marks.",
+        "constraints": "",
+        "test_cases": [
+          {
+            "input": "4 PASS 80 FAIL 90 PASS 70 FAIL 50",
+            "output": "150"
+          }
+        ]
       },
       {
         "id": "assess_q61",
         "name": "Q61. Price String Discount",
-        "desc": "Prices are provided as strings. Convert each price to a number and apply: * Price >= 1000 \u2192 10% discount * Otherwise \u2192 no discount Find the final total.",
         "pattern": "Price Substring Parsing & Discounting",
         "time": "O(L)",
         "difficulty": "medium",
-        "url": "https://leetcode.com/problems/apply-discount-to-prices/"
+        "url": "https://leetcode.com/problems/apply-discount-to-prices/",
+        "statement": "Prices are provided as strings.\nConvert each price to a number and apply:\n* Price >= 1000 \u2192 10% discount\n* Otherwise \u2192 no discount\nFind the final total.",
+        "input_fmt": "```text\nN\nprice strings\n```",
+        "output_fmt": "Print total with 2 decimal places.",
+        "constraints": "",
+        "test_cases": [
+          {
+            "input": "3 500 1200 1500",
+            "output": "3050.00"
+          }
+        ]
       },
       {
         "id": "assess_q62",
         "name": "Q62. Time Filtering",
-        "desc": "Given times in `HH:MM` format, count how many occur after 12:00 PM.",
         "pattern": "Time String Parser (HH:MM Conversion)",
         "time": "O(N)",
         "difficulty": "easy",
-        "url": "https://leetcode.com/problems/minimum-time-difference/"
+        "url": "https://leetcode.com/problems/minimum-time-difference/",
+        "statement": "Given times in `HH:MM` format, count how many occur after 12:00 PM.",
+        "input_fmt": "```text\nN\ntime1 time2 ... timeN\n```",
+        "output_fmt": "Print the count.",
+        "constraints": "",
+        "test_cases": [
+          {
+            "input": "5 09:30 12:30 14:00 11:45 18:20",
+            "output": "3"
+          }
+        ]
       },
       {
         "id": "assess_q63",
         "name": "Q63. Country Code Filtering",
-        "desc": "Given country codes, count: 1. How many are `IN`. 2. How many are not `IN`.",
         "pattern": "Prefix Phone/Country Code Matcher",
         "time": "O(N)",
         "difficulty": "easy",
-        "url": "https://leetcode.com/problemset/all/?search=string"
+        "url": "https://leetcode.com/problemset/all/?search=string",
+        "statement": "Given country codes, count:\n1. How many are `IN`.\n2. How many are not `IN`.",
+        "input_fmt": "```text\nN\ncode1 code2 ... codeN\n```",
+        "output_fmt": "Print two integers:\n`IN_count OTHER_count`",
+        "constraints": "",
+        "test_cases": [
+          {
+            "input": "6 IN US IN UK IN AU",
+            "output": "3 3"
+          }
+        ]
       },
       {
         "id": "assess_q64",
         "name": "Q64. Character Frequency",
-        "desc": "Given a string, count the frequency of every character.",
         "pattern": "Character Frequency Preservation",
         "time": "O(L)",
         "difficulty": "easy",
-        "url": "https://leetcode.com/problems/sort-characters-by-frequency/"
+        "url": "https://leetcode.com/problems/sort-characters-by-frequency/",
+        "statement": "Given a string, count the frequency of every character.",
+        "input_fmt": "A single string.",
+        "output_fmt": "Print each character and its frequency in order of first occurrence.",
+        "constraints": "",
+        "test_cases": [
+          {
+            "input": "banana",
+            "output": "b 1 a 3 n 2"
+          }
+        ]
       },
       {
         "id": "assess_q65",
         "name": "Q65. Most Frequent Character",
-        "desc": "Find the character that occurs most frequently. If multiple characters have the same maximum frequency, return the character that appears first.",
         "pattern": "Mode Character with First-Occurrence Tiebreaker",
         "time": "O(L)",
         "difficulty": "easy",
-        "url": "https://leetcode.com/problemset/all/?search=frequency"
+        "url": "https://leetcode.com/problemset/all/?search=frequency",
+        "statement": "Find the character that occurs most frequently.\nIf multiple characters have the same maximum frequency, return the character that appears first.",
+        "input_fmt": "A string.",
+        "output_fmt": "Print the character.",
+        "constraints": "",
+        "test_cases": [
+          {
+            "input": "banana",
+            "output": "a"
+          }
+        ]
       },
       {
         "id": "assess_q66",
         "name": "Q66. First Non-Repeating Character",
-        "desc": "Find the first character that appears exactly once.",
         "pattern": "First Non-Repeating Character",
         "time": "O(L)",
         "difficulty": "easy",
-        "url": "https://leetcode.com/problems/first-unique-character-in-a-string/"
+        "url": "https://leetcode.com/problems/first-unique-character-in-a-string/",
+        "statement": "Find the first character that appears exactly once.",
+        "input_fmt": "A string.",
+        "output_fmt": "Print the character or `-1`.",
+        "constraints": "",
+        "test_cases": [
+          {
+            "input": "swiss",
+            "output": "w"
+          },
+          {
+            "input": "aabb",
+            "output": "-1"
+          }
+        ]
       },
       {
         "id": "assess_q67",
         "name": "Q67. Remove Duplicate Characters",
-        "desc": "Remove repeated characters while preserving the first occurrence.",
         "pattern": "Remove Duplicate Chars (Order Preserved)",
         "time": "O(L)",
         "difficulty": "easy",
-        "url": "https://leetcode.com/problems/remove-duplicate-letters/"
+        "url": "https://leetcode.com/problems/remove-duplicate-letters/",
+        "statement": "Remove repeated characters while preserving the first occurrence.",
+        "input_fmt": "A string.",
+        "output_fmt": "Print the resulting string.",
+        "constraints": "",
+        "test_cases": [
+          {
+            "input": "programming",
+            "output": "progamin"
+          }
+        ]
       },
       {
         "id": "assess_q68",
         "name": "Q68. Anagram Check",
-        "desc": "Given two strings, determine whether they are anagrams.",
         "pattern": "Anagram Verification (Frequency Match)",
         "time": "O(L)",
         "difficulty": "easy",
-        "url": "https://leetcode.com/problems/valid-anagram/"
+        "url": "https://leetcode.com/problems/valid-anagram/",
+        "statement": "Given two strings, determine whether they are anagrams.",
+        "input_fmt": "Two strings.",
+        "output_fmt": "Print `YES` or `NO`.",
+        "constraints": "",
+        "test_cases": [
+          {
+            "input": "listen silent",
+            "output": "YES"
+          },
+          {
+            "input": "hello world",
+            "output": "NO"
+          }
+        ]
       },
       {
         "id": "assess_q69",
         "name": "Q69. Duplicate Words",
-        "desc": "Given a sentence, find all words that occur more than once. Comparison should be case-insensitive.",
         "pattern": "Sentence Duplicate Word Finder",
         "time": "O(Words)",
         "difficulty": "easy",
-        "url": "https://leetcode.com/problems/uncommon-words-from-two-sentences/"
+        "url": "https://leetcode.com/problems/uncommon-words-from-two-sentences/",
+        "statement": "Given a sentence, find all words that occur more than once.\nComparison should be case-insensitive.",
+        "input_fmt": "A single sentence.",
+        "output_fmt": "Print duplicate words.",
+        "constraints": "",
+        "test_cases": [
+          {
+            "input": "this is a test this is good",
+            "output": "this is"
+          }
+        ]
       },
       {
         "id": "assess_q70",
         "name": "Q70. Longest Word",
-        "desc": "Given a sentence, find the longest word. If multiple words have the same length, return the first one.",
         "pattern": "Longest Word with First-Occurrence Tiebreaker",
         "time": "O(Words)",
         "difficulty": "easy",
-        "url": "https://leetcode.com/problems/longest-word-in-dictionary-through-deleting/"
+        "url": "https://leetcode.com/problems/longest-word-in-dictionary-through-deleting/",
+        "statement": "Given a sentence, find the longest word.\nIf multiple words have the same length, return the first one.",
+        "input_fmt": "A sentence.",
+        "output_fmt": "Print the longest word.",
+        "constraints": "",
+        "test_cases": [
+          {
+            "input": "I love programming challenges",
+            "output": "programming"
+          }
+        ]
       }
     ]
   },
@@ -2110,51 +2852,114 @@ SET sex = CASE
       {
         "id": "assess_q71",
         "name": "Q71. Linear Search",
-        "desc": "Given an array and target `X`, find the index of `X`. If it does not exist, print `-1`.",
         "pattern": "Linear Search First Index",
         "time": "O(N)",
         "difficulty": "easy",
-        "url": "https://leetcode.com/problems/binary-search/"
+        "url": "https://leetcode.com/problems/binary-search/",
+        "statement": "Given an array and target `X`, find the index of `X`.\nIf it does not exist, print `-1`.",
+        "input_fmt": "```text\nN X\narray\n```",
+        "output_fmt": "Print the first index of `X`.",
+        "constraints": "",
+        "test_cases": [
+          {
+            "input": "5 30 10 20 30 40 50",
+            "output": "2"
+          },
+          {
+            "input": "5 100 10 20 30 40 50",
+            "output": "-1"
+          }
+        ]
       },
       {
         "id": "assess_q72",
         "name": "Q72. Binary Search",
-        "desc": "Given a sorted array and target `X`, determine whether `X` exists using binary search.",
         "pattern": "Binary Search on Sorted Array",
         "time": "O(log N)",
         "difficulty": "medium",
-        "url": "https://leetcode.com/problems/binary-search/"
+        "url": "https://leetcode.com/problems/binary-search/",
+        "statement": "Given a sorted array and target `X`, determine whether `X` exists using binary search.",
+        "input_fmt": "```text\nN X\nsorted array\n```",
+        "output_fmt": "Print the index if found; otherwise print `-1`.",
+        "constraints": "",
+        "test_cases": [
+          {
+            "input": "6 20 5 10 15 20 25 30",
+            "output": "3"
+          },
+          {
+            "input": "6 22 5 10 15 20 25 30",
+            "output": "-1"
+          }
+        ]
       },
       {
         "id": "assess_q73",
         "name": "Q73. Palindrome",
-        "desc": "Determine whether a given string reads the same forwards and backwards.",
         "pattern": "Palindrome Two-Pointer Check",
         "time": "O(L)",
         "difficulty": "easy",
-        "url": "https://leetcode.com/problems/valid-palindrome/"
+        "url": "https://leetcode.com/problems/valid-palindrome/",
+        "statement": "Determine whether a given string reads the same forwards and backwards.",
+        "input_fmt": "A single string.",
+        "output_fmt": "Print `YES` if it is a palindrome; otherwise print `NO`.",
+        "constraints": "",
+        "test_cases": [
+          {
+            "input": "madam",
+            "output": "YES"
+          },
+          {
+            "input": "hello",
+            "output": "NO"
+          }
+        ]
       },
       {
         "id": "assess_q74",
         "name": "Q74. Reverse Array",
-        "desc": "Reverse an array without using a built-in reverse function.",
         "pattern": "In-Place Array Reversal",
         "time": "O(N)",
         "difficulty": "easy",
-        "url": "https://leetcode.com/problems/reverse-string/"
+        "url": "https://leetcode.com/problems/reverse-string/",
+        "statement": "Reverse an array without using a built-in reverse function.",
+        "input_fmt": "```text\nN\narray\n```",
+        "output_fmt": "Print the reversed array.",
+        "constraints": "",
+        "test_cases": [
+          {
+            "input": "5 1 2 3 4 5",
+            "output": "5 4 3 2 1"
+          }
+        ]
       },
       {
         "id": "assess_q75",
         "name": "Q75. Array Equality by Frequency",
-        "desc": "Given two arrays, determine whether they contain exactly the same elements with the same frequencies. The order of elements does not matter.",
         "pattern": "Multiset / Frequency Map Equality",
         "time": "O(N + M)",
         "difficulty": "medium",
-        "url": "https://leetcode.com/problems/valid-anagram/"
+        "url": "https://leetcode.com/problems/valid-anagram/",
+        "statement": "Given two arrays, determine whether they contain exactly the same elements with the same frequencies.\nThe order of elements does not matter.",
+        "input_fmt": "```text\nN\narray1\nM\narray2\n```",
+        "output_fmt": "Print `YES` if the arrays are equal by frequency; otherwise print `NO`.",
+        "constraints": "",
+        "test_cases": [
+          {
+            "input": "5 1 2 2 3 4 5 2 1 4 2 3",
+            "output": "YES"
+          },
+          {
+            "input": "4 1 2 2 3 4 1 2 3 3",
+            "output": "NO"
+          }
+        ]
       }
     ]
   }
 ];
+
+  // 85 Accenture SQL;
 
   // 85 Accenture SQL Practice Questions organized into 12 modules
   const sqlSheetData = [
@@ -3969,6 +4774,7 @@ Space Complexity (if code):`;
     
     topic.problems.forEach(p => {
       const isSolved = !!S.accentureAssessmentChecks[p.id];
+      const hasCode = !!(S.accentureAssessmentCodes[p.id] && S.accentureAssessmentCodes[p.id].trim());
       const card = document.createElement('div');
       card.id = `assess-card-${p.id}`;
       card.className = `problem-card ${isSolved ? 'solved' : ''}`;
@@ -3977,6 +4783,28 @@ Space Complexity (if code):`;
         ? `<a href="${p.url}" target="_blank" class="problem-title">${p.name} <i class="fas fa-external-link-alt" style="font-size:10px; color:var(--accent2);"></i></a>`
         : `<span class="problem-title">${p.name}</span>`;
 
+      // Build test case markup
+      let tcsHtml = '';
+      if (p.test_cases && p.test_cases.length > 0) {
+        tcsHtml = `
+          <div style="margin-top:10px; display:flex; flex-direction:column; gap:8px;">
+            <div style="font-size:11.5px; font-weight:700; color:var(--text2); text-transform:uppercase; letter-spacing:0.5px;">Sample Test Cases:</div>
+            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+              ${p.test_cases.map((tc, idx) => `
+                <div style="flex:1; min-width:200px; background:#08090f; border:1px solid var(--border); border-radius:6px; padding:8px 12px; font-family:'JetBrains Mono', monospace; font-size:11px;">
+                  <div style="color:var(--text2); margin-bottom:3px; display:flex; justify-content:space-between; align-items:center;">
+                    <span>Case ${idx+1}</span>
+                    <button onclick="copyTestInput('${tc.input.replace(/'/g, "\'")}', this)" style="background:none; border:none; color:var(--accent2); font-size:10px; cursor:pointer; padding:0;"><i class="fas fa-copy"></i> Copy Input</button>
+                  </div>
+                  <div style="color:#38bdf8;"><span style="color:var(--text2);">Input:</span> ${tc.input}</div>
+                  <div style="color:#4ade80;"><span style="color:var(--text2);">Output:</span> ${tc.output}</div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }
+
       card.innerHTML = `
         <div class="problem-header">
           <div class="problem-title-wrap">
@@ -3984,24 +4812,42 @@ Space Complexity (if code):`;
             ${titleLink}
           </div>
           <div class="problem-meta">
-            ${p.pattern ? `<span style="padding:3px 8px; border-radius:6px; font-size:10.5px; font-weight:600; background:rgba(108, 99, 255, 0.1); border:1px solid rgba(108, 99, 255, 0.3); color:var(--accent2);">${p.pattern}</span>` : ''}
+            ${p.pattern ? `<span style="padding:3px 8px; border-radius:6px; font-size:10.5px; font-weight:600; background:rgba(108, 99, 255, 0.1); border:1px solid rgba(108, 99, 255, 0.3); color:var(--accent2);"><i class="fas fa-diagram-project"></i> ${p.pattern}</span>` : ''}
             <span class="badge-diff ${p.difficulty}">${p.difficulty}</span>
-            <button class="btn-toggle-editor" id="btn-editor-assess-${p.id}" onclick="toggleAssessmentEditor('${p.id}')"><i class="fas fa-edit"></i> Notes &amp; Code</button>
+            <button class="btn-toggle-editor ${hasCode ? 'has-content' : ''}" id="btn-editor-assess-${p.id}" onclick="toggleAssessmentEditor('${p.id}')">
+              <i class="fas fa-code"></i> ${hasCode ? 'View / Edit Code' : 'Paste VS Code Solution'}
+            </button>
           </div>
         </div>
-        ${p.desc ? `<div style="font-size:12px; color:var(--text2); margin-top:8px; line-height:1.5; padding-left:27px;"><i class="fas fa-info-circle" style="color:var(--accent2); margin-right:4px;"></i>${p.desc}</div>` : ''}
+
+        <!-- Full Problem Statement -->
+        <div style="padding-left:27px; margin-top:8px; display:flex; flex-direction:column; gap:8px;">
+          <div style="font-size:13px; color:#e2e8f0; line-height:1.6; white-space:pre-wrap;">${p.statement}</div>
+          
+          ${p.constraints ? `<div style="font-size:11.5px; color:var(--text2);"><b style="color:#f59e0b;"><i class="fas fa-triangle-exclamation"></i> Constraints:</b> <code style="background:rgba(255,255,255,0.05); padding:1px 5px; border-radius:4px;">${p.constraints}</code></div>` : ''}
+
+          <div style="display:flex; gap:16px; flex-wrap:wrap; font-size:11.5px; color:var(--text2); background:rgba(255,255,255,0.015); border:1px solid var(--border); border-radius:6px; padding:6px 12px;">
+            ${p.input_fmt ? `<div><b style="color:var(--text);">Input:</b> <span>${p.input_fmt.replace(/\n/g, ' ')}</span></div>` : ''}
+            ${p.output_fmt ? `<div><b style="color:var(--text);">Output:</b> <span>${p.output_fmt.replace(/\n/g, ' ')}</span></div>` : ''}
+          </div>
+
+          ${tcsHtml}
+        </div>
         
         <div class="editor-panel" id="editor-assess-${p.id}">
           <div class="editor-cols">
             
-            <div class="editor-col" style="flex:1;">
-              <label>Study Notes</label>
-              <textarea class="editor-textarea" id="notes-assess-textarea-${p.id}" onchange="saveAssessmentNotes('${p.id}', this.value)" placeholder="Write your notes or edge-cases here..."></textarea>
+            <div class="editor-col" style="flex:1.5;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                <label style="margin-bottom:0;"><i class="fab fa-python" style="color:#38bdf8;"></i> My VS Code Solution (Paste Code)</label>
+                <span style="font-size:10.5px; color:var(--accent2);"><i class="fas fa-check-circle"></i> Auto-saved</span>
+              </div>
+              <textarea class="editor-textarea code" id="code-assess-textarea-${p.id}" oninput="saveAssessmentCode('${p.id}', this.value)" placeholder="// Paste your Python / C++ / Java solution from VS Code here..."></textarea>
             </div>
-            
+
             <div class="editor-col" style="flex:1;">
-              <label>Practice Code / Solution</label>
-              <textarea class="editor-textarea code" id="code-assess-textarea-${p.id}" onchange="saveAssessmentCode('${p.id}', this.value)" placeholder="// Paste your code solution here..."></textarea>
+              <label><i class="fas fa-sticky-note" style="color:#f59e0b;"></i> Study Notes &amp; Edge Cases</label>
+              <textarea class="editor-textarea" id="notes-assess-textarea-${p.id}" oninput="saveAssessmentNotes('${p.id}', this.value)" placeholder="Key observations, edge cases handled, or tricky conditions..."></textarea>
             </div>
 
           </div>
@@ -4018,6 +4864,14 @@ Space Complexity (if code):`;
       } else {
         btn.classList.remove('active');
       }
+    });
+  }
+
+  function copyTestInput(inputStr, btn) {
+    navigator.clipboard.writeText(inputStr).then(() => {
+      const orig = btn.innerHTML;
+      btn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+      setTimeout(() => { btn.innerHTML = orig; }, 1500);
     });
   }
 
