@@ -368,6 +368,32 @@
       background: rgba(255, 255, 255, 0.05);
       color: #fff;
     }
+  
+    .btn-copy-sql {
+      background: rgba(56, 189, 248, 0.1);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: #38bdf8;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.2s ease;
+    }
+    .btn-copy-sql:hover {
+      background: rgba(56, 189, 248, 0.2);
+      border-color: #38bdf8;
+      color: #fff;
+    }
+    .btn-copy-sql.copied {
+      background: rgba(34, 197, 94, 0.15) !important;
+      border-color: #22c55e !important;
+      color: #4ade80 !important;
+    }
+
   </style>
 </head>
 <body class="dashboard-body">
@@ -446,10 +472,12 @@
       </div>
 
       <!-- Tab Buttons Group -->
-      <div class="tabs-group">
+      <div class="tabs-group" style="flex-wrap: wrap;">
         <button class="btn-tab active" id="tab-roadmap-btn" onclick="switchTab('roadmap')"><i class="fas fa-calendar-alt"></i> 15-Day Roadmap</button>
-        <button class="btn-tab" id="tab-coding-btn" onclick="switchTab('coding')"><i class="fas fa-code"></i> Accenture Coding Sheet</button>
-        <button class="btn-tab" id="tab-cheatsheet-btn" onclick="switchTab('cheatsheet')"><i class="fas fa-bolt"></i> ⚡ SQL & Assessment Cheat Sheet</button>
+        <button class="btn-tab" id="tab-coding-btn" onclick="switchTab('coding')"><i class="fas fa-code"></i> 85 Coding Practice</button>
+        <button class="btn-tab" id="tab-assessment-btn" onclick="switchTab('assessment')"><i class="fas fa-terminal"></i> 75 Assessment Set</button>
+        <button class="btn-tab" id="tab-sql-btn" onclick="switchTab('sql')"><i class="fas fa-database"></i> 85 SQL Practice</button>
+        <button class="btn-tab" id="tab-cheatsheet-btn" onclick="switchTab('cheatsheet')"><i class="fas fa-bolt"></i> ⚡ Assessment Cheat Sheet</button>
       </div>
 
       <!-- ROADMAP TAB CONTENT -->
@@ -530,8 +558,8 @@
             <!-- Selected Topic Title -->
             <div class="card" style="padding: 20px;">
               <div>
-                <h1 style="font-size:22px; font-weight:700; color:#fff;" id="curr-topic-title">1. Arrays 🔥</h1>
-                <p style="font-size:12.5px; color:var(--text2); margin-top:4px;" id="curr-topic-desc">Basic storage, traversal, and linear scans</p>
+                <h1 style="font-size:22px; font-weight:700; color:#fff;" id="curr-topic-title">A. Important Questions (Q1–Q2) 🔥</h1>
+                <p style="font-size:12.5px; color:var(--text2); margin-top:4px;" id="curr-topic-desc">High-priority array transformations & equivalent prefix sums</p>
               </div>
             </div>
 
@@ -544,6 +572,87 @@
             <!-- Problems container -->
             <div id="coding-problems-container" style="display:flex; flex-direction:column; gap:12px;">
               <!-- Dynamically populated problem cards -->
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      
+      <!-- ASSESSMENT SHEET TAB CONTENT -->
+      <div id="assessment-tab-content" style="display:none;">
+        <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+          
+          <!-- Left Side: Section selector list -->
+          <div style="flex: 1; min-width: 250px; max-width: 320px; display: flex; flex-direction: column; gap: 12px;">
+            <div class="card" style="padding: 12px; display: flex; flex-direction: column; gap: 8px;">
+              <div class="card-header" style="padding-bottom: 8px; border-bottom: 1.5px solid var(--border); font-size:13.5px;"><i class="fas fa-terminal"></i> Assessment Sections</div>
+              <div class="day-selector-card" id="assessment-topic-list">
+                <!-- Dynamically rendered assessment topic buttons -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Side: Selected Section details -->
+          <div style="flex: 2.5; min-width: 320px; display: flex; flex-direction: column; gap: 16px;">
+            
+            <!-- Selected Section Title -->
+            <div class="card" style="padding: 20px;">
+              <div>
+                <h1 style="font-size:22px; font-weight:700; color:#fff;" id="curr-assess-topic-title">A. Array Story Logic (Q1–Q15) 📦</h1>
+                <p style="font-size:12.5px; color:var(--text2); margin-top:4px;" id="curr-assess-topic-desc">Scenario problems, percentage discounts, bonuses &amp; penalty ledgers</p>
+              </div>
+            </div>
+
+            <!-- Problems header -->
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:-4px;">
+              <h2 style="font-size: 15px; font-weight:700; color:#fff; display:flex; align-items:center; gap:6px;"><i class="fas fa-list-check"></i> Assessment Problems</h2>
+              <div style="font-size:12px; color:var(--accent2); font-weight:600;" id="assess-topic-solved-text">0/0 Completed</div>
+            </div>
+
+            <!-- Problems container -->
+            <div id="assessment-problems-container" style="display:flex; flex-direction:column; gap:12px;">
+              <!-- Dynamically populated assessment problem cards -->
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- SQL SHEET TAB CONTENT -->
+      <div id="sql-tab-content" style="display:none;">
+        <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+          
+          <!-- Left Side: Topic selector list -->
+          <div style="flex: 1; min-width: 250px; max-width: 320px; display: flex; flex-direction: column; gap: 12px;">
+            <div class="card" style="padding: 12px; display: flex; flex-direction: column; gap: 8px;">
+              <div class="card-header" style="padding-bottom: 8px; border-bottom: 1.5px solid var(--border); font-size:13.5px;"><i class="fas fa-database"></i> SQL Modules</div>
+              <div class="day-selector-card" id="sql-topic-list">
+                <!-- Dynamically rendered SQL topic buttons -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Side: Selected Topic details -->
+          <div style="flex: 2.5; min-width: 320px; display: flex; flex-direction: column; gap: 16px;">
+            
+            <!-- Selected Topic Title -->
+            <div class="card" style="padding: 20px;">
+              <div>
+                <h1 style="font-size:22px; font-weight:700; color:#fff;" id="curr-sql-topic-title">A. Basic SELECT &amp; Filtering</h1>
+                <p style="font-size:12.5px; color:var(--text2); margin-top:4px;" id="curr-sql-topic-desc">Foundational SELECT, WHERE, operators, NULL checks &amp; DISTINCT</p>
+              </div>
+            </div>
+
+            <!-- Problems header -->
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:-4px;">
+              <h2 style="font-size: 15px; font-weight:700; color:#fff; display:flex; align-items:center; gap:6px;"><i class="fas fa-list-check"></i> Practice SQL Queries</h2>
+              <div style="font-size:12px; color:var(--accent2); font-weight:600;" id="sql-topic-solved-text">0/0 Completed</div>
+            </div>
+
+            <!-- Problems container -->
+            <div id="sql-problems-container" style="display:flex; flex-direction:column; gap:12px;">
+              <!-- Dynamically populated SQL query cards -->
             </div>
 
           </div>
@@ -1332,6 +1441,1489 @@ SET sex = CASE
   ];
 
   // Prefilled study notes template
+  
+  // 75 Accenture Backend / Coding Assessment Questions organized into 5 sections
+  const assessmentSheetData = [
+  {
+    "id": "sec_assess_a",
+    "title": "A. ARRAY STORY / SCENARIO LOGIC \ud83d\udce6",
+    "desc": "High-priority array transformations, equivalent prefix sums & scenario discounts",
+    "problems": [
+      {
+        "id": "assess_q1",
+        "name": "Q1. Index-Based Array Transformation",
+        "desc": "Given an array of `N` integers, transform every element at index `i` (0-based): * Subtract `(i % 7) \u00d7 3`. * If the original value is divisible by `11`, add `original value / 11`. Find the sum of the transformed array.",
+        "pattern": "Index-Based Transformation & Accumulator",
+        "time": "O(N)",
+        "difficulty": "medium",
+        "url": "https://leetcode.com/problems/running-sum-of-1d-array/"
+      },
+      {
+        "id": "assess_q2",
+        "name": "Q2. Prefix Number Sum",
+        "desc": "For a positive integer `X`, define `eqSum(X)` as the sum of all prefix numbers of `X`. For example: `X = 123` Prefixes are `1, 12, 123`. Therefore: `eqSum(123) = 1 + 12 + 123 = 136`. Given `N`, count the integers `X` suc",
+        "pattern": "Math / Prefix Number Simulation",
+        "time": "O(N * log10(N))",
+        "difficulty": "hard",
+        "url": "https://leetcode.com/problems/count-primes/"
+      },
+      {
+        "id": "assess_q3",
+        "name": "Q3. Shop Discount",
+        "desc": "A shop applies discounts: * Price > 1000 \u2192 10% discount * Price from 500 to 1000 \u2192 5% discount * Below 500 \u2192 no discount Find the final total price.",
+        "pattern": "Tiered Percentage Discount",
+        "time": "O(N)",
+        "difficulty": "easy",
+        "url": "https://leetcode.com/problems/final-prices-with-a-special-discount-in-a-shop/"
+      },
+      {
+        "id": "assess_q4",
+        "name": "Q4. Employee Bonus",
+        "desc": "An employee receives a bonus: * Salary < 20000 \u2192 5000 * Salary 20000\u201340000 \u2192 3000 * Salary > 40000 \u2192 1000 Find the total salary including bonuses.",
+        "pattern": "Multi-tier Salary Bonus Accumulator",
+        "time": "O(N)",
+        "difficulty": "easy",
+        "url": "https://leetcode.com/problemset/all/?search=salary"
+      },
+      {
+        "id": "assess_q5",
+        "name": "Q5. Game Score",
+        "desc": "For each score: * Score >= 80 \u2192 add 10 * Score < 40 \u2192 subtract 5 * Otherwise \u2192 unchanged Find the final total score.",
+        "pattern": "Score Adjustment Rules",
+        "time": "O(N)",
+        "difficulty": "easy",
+        "url": "https://leetcode.com/problems/baseball-game/"
+      },
+      {
+        "id": "assess_q6",
+        "name": "Q6. Bank Transactions",
+        "desc": "Given an initial balance and transactions: * `D amount` \u2192 deposit * `W amount` \u2192 withdrawal After every transaction, if the balance becomes less than `1000`, deduct a penalty of `20`.",
+        "pattern": "Sequential Transaction Ledger with Penalty Trigger",
+        "time": "O(N)",
+        "difficulty": "easy",
+        "url": "https://leetcode.com/problems/count-operations-to-obtain-zero/"
+      },
+      {
+        "id": "assess_q7",
+        "name": "Q7. Delivery Charge",
+        "desc": "For every order: * Amount >= 500 \u2192 free delivery * Amount < 500 \u2192 delivery charge = 40 Find the total amount including delivery charges.",
+        "pattern": "Threshold Delivery Fee Logic",
+        "time": "O(N)",
+        "difficulty": "easy",
+        "url": "https://leetcode.com/problemset/all/?search=array"
+      },
+      {
+        "id": "assess_q8",
+        "name": "Q8. Grace Marks",
+        "desc": "If a student's mark is below `33`, change it to `33`. Find the average after applying the rule.",
+        "pattern": "Conditional Floor Transformation & Average",
+        "time": "O(N)",
+        "difficulty": "easy",
+        "url": "https://leetcode.com/problemset/all/?search=average"
+      },
+      {
+        "id": "assess_q9",
+        "name": "Q9. Sales Incentive",
+        "desc": "A salesperson receives: * Sales <= 10000 \u2192 5% * Sales > 10000 \u2192 10% Find the total incentive.",
+        "pattern": "Sales Commission Calculation",
+        "time": "O(N)",
+        "difficulty": "easy",
+        "url": "https://leetcode.com/problemset/all/?search=sales"
+      },
+      {
+        "id": "assess_q10",
+        "name": "Q10. Buy 2 Get 1 Free",
+        "desc": "For every group of three products, the cheapest product is free. Find the minimum amount that must be paid.",
+        "pattern": "Greedy Grouping / Buy 2 Get 1 Free",
+        "time": "O(N log N)",
+        "difficulty": "medium",
+        "url": "https://leetcode.com/problems/minimum-cost-of-buying-candies-with-discount/"
+      },
+      {
+        "id": "assess_q11",
+        "name": "Q11. Taxi Fare",
+        "desc": "Taxi fare is calculated as: * First 5 km \u2192 50/km * Next 10 km \u2192 40/km * Above 15 km \u2192 30/km Find the total fare.",
+        "pattern": "Slab-Based Taxi Fare Calculation",
+        "time": "O(1)",
+        "difficulty": "medium",
+        "url": "https://leetcode.com/problemset/all/?search=math"
+      },
+      {
+        "id": "assess_q12",
+        "name": "Q12. Festival Bonus",
+        "desc": "Bonus is based on experience: * > = 5 years \u2192 20% salary * 2\u20134 years \u2192 10% * < 2 years \u2192 5% Find the total bonus.",
+        "pattern": "Experience-Based Percentage Bonus",
+        "time": "O(N)",
+        "difficulty": "easy",
+        "url": "https://leetcode.com/problemset/all/?search=salary"
+      },
+      {
+        "id": "assess_q13",
+        "name": "Q13. Scholarship",
+        "desc": "Scholarship: * Marks >= 90 \u2192 100% fee * Marks 75\u201389 \u2192 50% fee * Below 75 \u2192 no scholarship Find the total scholarship amount.",
+        "pattern": "Tiered Fee Scholarship",
+        "time": "O(N)",
+        "difficulty": "easy",
+        "url": "https://leetcode.com/problemset/all/?search=array"
+      },
+      {
+        "id": "assess_q14",
+        "name": "Q14. Target Incentive",
+        "desc": "If sales are greater than or equal to the target, the salesperson gets 10% of sales as incentive. Otherwise, incentive is zero.",
+        "pattern": "Sales Target Achievement Commission",
+        "time": "O(N)",
+        "difficulty": "easy",
+        "url": "https://leetcode.com/problemset/all/?search=sales"
+      },
+      {
+        "id": "assess_q15",
+        "name": "Q15. Mobile Bill",
+        "desc": "Calculate the bill: * First 100 units \u2192 1/unit * Next 200 units \u2192 0.80/unit * Above 300 \u2192 0.50/unit",
+        "pattern": "Graduated Slab Billing",
+        "time": "O(1)",
+        "difficulty": "medium",
+        "url": "https://leetcode.com/problemset/all/?search=math"
+      }
+    ]
+  },
+  {
+    "id": "sec_assess_b",
+    "title": "B. MORE ARRAY SCENARIOS \u2699\ufe0f",
+    "desc": "Threshold adjustments, negative marking, attendance bonus & divisibility rules",
+    "problems": [
+      {
+        "id": "assess_q16",
+        "name": "Q16. Gym Discount",
+        "desc": "Monthly gym fee is 1000. If attendance is at least 20 days, give 20% discount.",
+        "pattern": "Attendance Threshold Discount",
+        "time": "O(N)",
+        "difficulty": "easy",
+        "url": "https://leetcode.com/problemset/all/?search=array"
+      },
+      {
+        "id": "assess_q17",
+        "name": "Q17. Adjusted Salary Average",
+        "desc": "Given employee salaries, remove the minimum and maximum salary and calculate the average of the remaining salaries.",
+        "pattern": "Trimmed Mean (Remove Min & Max)",
+        "time": "O(N)",
+        "difficulty": "easy",
+        "url": "https://leetcode.com/problems/average-salary-excluding-the-minimum-and-maximum-salary/"
+      },
+      {
+        "id": "assess_q18",
+        "name": "Q18. Second Item Discount",
+        "desc": "For every pair of products, the second item gets 50% discount. For example, prices `100 200` result in payment `100 + 100`.",
+        "pattern": "Pairwise Alternate Discount",
+        "time": "O(N)",
+        "difficulty": "easy",
+        "url": "https://leetcode.com/problemset/all/?search=discount"
+      },
+      {
+        "id": "assess_q19",
+        "name": "Q19. Loyalty Points",
+        "desc": "Customers receive 1 loyalty point for every \u20b9100 spent. If total spending is greater than \u20b95000, add 5 extra points.",
+        "pattern": "Loyalty Points with Threshold Bonus",
+        "time": "O(N)",
+        "difficulty": "easy",
+        "url": "https://leetcode.com/problemset/all/?search=points"
+      },
+      {
+        "id": "assess_q20",
+        "name": "Q20. Bus Fare",
+        "desc": "Fare: * Adult \u2192 100 * Child \u2192 50 * Senior \u2192 70 Given passenger types, calculate total fare.",
+        "pattern": "Character Mapping Sum",
+        "time": "O(N)",
+        "difficulty": "easy",
+        "url": "https://leetcode.com/problems/roman-to-integer/"
+      },
+      {
+        "id": "assess_q21",
+        "name": "Q21. Attendance Bonus",
+        "desc": "Employees with attendance >= 90 receive a bonus of 2000. Find the total bonus.",
+        "pattern": "Condition Counter & Flat Bonus",
+        "time": "O(N)",
+        "difficulty": "easy",
+        "url": "https://leetcode.com/problemset/all/?search=bonus"
+      },
+      {
+        "id": "assess_q22",
+        "name": "Q22. Restaurant Service Charge",
+        "desc": "For each bill: * Bill > 1000 \u2192 10% service charge * Bill > 500 and <= 1000 \u2192 5% * Otherwise \u2192 no charge Find the total service charge.",
+        "pattern": "Restaurant Service Surcharge",
+        "time": "O(N)",
+        "difficulty": "easy",
+        "url": "https://leetcode.com/problemset/all/?search=bill"
+      },
+      {
+        "id": "assess_q23",
+        "name": "Q23. Filtered Average",
+        "desc": "Ignore all ratings equal to `1` and calculate the average of the remaining ratings.",
+        "pattern": "Filtered Mean / Exclude Outliers",
+        "time": "O(N)",
+        "difficulty": "easy",
+        "url": "https://leetcode.com/problemset/all/?search=average"
+      },
+      {
+        "id": "assess_q24",
+        "name": "Q24. Cashback",
+        "desc": "Cashback: * Purchase >= 1000 \u2192 5% * Purchase 500\u2013999 \u2192 2% * Below 500 \u2192 0% Find total cashback.",
+        "pattern": "Tiered Percentage Cashback",
+        "time": "O(N)",
+        "difficulty": "easy",
+        "url": "https://leetcode.com/problemset/all/?search=cashback"
+      },
+      {
+        "id": "assess_q25",
+        "name": "Q25. Minimum Guaranteed Salary",
+        "desc": "If salary is less than 15000, replace it with 15000. Find total salary after adjustment.",
+        "pattern": "Minimum Floor Value Adjustment",
+        "time": "O(N)",
+        "difficulty": "easy",
+        "url": "https://leetcode.com/problemset/all/?search=array"
+      },
+      {
+        "id": "assess_q26",
+        "name": "Q26. Negative Marking",
+        "desc": "For each answer: * `C` \u2192 +4 * `W` \u2192 -1 * `U` \u2192 0 Find the final score.",
+        "pattern": "Exam Negative Marking System",
+        "time": "O(L)",
+        "difficulty": "easy",
+        "url": "https://leetcode.com/problemset/all/?search=string"
+      },
+      {
+        "id": "assess_q27",
+        "name": "Q27. Project Bonus",
+        "desc": "Bonus per project: * Projects <= 3 \u2192 5000/project * Projects > 3 \u2192 7000/project Find the total bonus.",
+        "pattern": "Project Sized Tiered Bonus",
+        "time": "O(N)",
+        "difficulty": "easy",
+        "url": "https://leetcode.com/problemset/all/?search=bonus"
+      },
+      {
+        "id": "assess_q28",
+        "name": "Q28. Index Transformation",
+        "desc": "For every array element: * Even index \u2192 add 5 * Odd index \u2192 subtract 3 Print the resulting array.",
+        "pattern": "Alternating Index Parity Transformation",
+        "time": "O(N)",
+        "difficulty": "easy",
+        "url": "https://leetcode.com/problemset/all/?search=array"
+      },
+      {
+        "id": "assess_q29",
+        "name": "Q29. Divisibility Transformation",
+        "desc": "For every number: * Divisible by 5 \u2192 multiply by 2 * Otherwise \u2192 subtract 1 Find the sum of transformed values.",
+        "pattern": "Divisibility Branching Sum",
+        "time": "O(N)",
+        "difficulty": "easy",
+        "url": "https://leetcode.com/problemset/all/?search=divisible"
+      },
+      {
+        "id": "assess_q30",
+        "name": "Q30. Threshold Transformation",
+        "desc": "For every number: * If number > K \u2192 decrease it by 10% * Otherwise \u2192 increase it by 5% Find the final sum.",
+        "pattern": "Threshold Scaled Sum",
+        "time": "O(N)",
+        "difficulty": "easy",
+        "url": "https://leetcode.com/problemset/all/?search=threshold"
+      },
+      {
+        "id": "assess_q31",
+        "name": "Q31. Index-Based Addition",
+        "desc": "For every array element: * If the number is even, add its index. * If the number is odd, subtract its index. Print the transformed array.",
+        "pattern": "Value Parity Index Transformation",
+        "time": "O(N)",
+        "difficulty": "easy",
+        "url": "https://leetcode.com/problemset/all/?search=array"
+      },
+      {
+        "id": "assess_q32",
+        "name": "Q32. Multiple Divisibility Rules",
+        "desc": "For each number at index `i`: * If divisible by 3, add `i`. * If divisible by 7, subtract `i`. * If divisible by both, apply both operations. Find the final sum.",
+        "pattern": "Compound Divisibility Operations",
+        "time": "O(N)",
+        "difficulty": "easy",
+        "url": "https://leetcode.com/problemset/all/?search=divisible"
+      }
+    ]
+  },
+  {
+    "id": "sec_assess_c",
+    "title": "C. ARRAY PATTERNS \ud83e\udde9",
+    "desc": "Frequency maps, duplicate detection, Two Sum, Kadane's algorithm & sliding window",
+    "problems": [
+      {
+        "id": "assess_q33",
+        "name": "Q33. Frequency of Elements",
+        "desc": "Given an array, print the frequency of every distinct element.",
+        "pattern": "Frequency Counting with Order Preservation",
+        "time": "O(N)",
+        "difficulty": "easy",
+        "url": "https://leetcode.com/problems/first-unique-character-in-a-string/"
+      },
+      {
+        "id": "assess_q34",
+        "name": "Q34. Find Duplicates",
+        "desc": "Find all elements that occur more than once.",
+        "pattern": "Duplicate Elements Ordered Extraction",
+        "time": "O(N)",
+        "difficulty": "easy",
+        "url": "https://leetcode.com/problems/find-all-duplicates-in-an-array/"
+      },
+      {
+        "id": "assess_q35",
+        "name": "Q35. Remove Duplicates",
+        "desc": "Remove duplicate elements while preserving the first occurrence.",
+        "pattern": "Deduplication Preserving First Appearance",
+        "time": "O(N)",
+        "difficulty": "easy",
+        "url": "https://leetcode.com/problems/remove-duplicates-from-sorted-array/"
+      },
+      {
+        "id": "assess_q36",
+        "name": "Q36. First Repeating Element",
+        "desc": "Find the first element that appears more than once.",
+        "pattern": "First Element with Count > 1",
+        "time": "O(N)",
+        "difficulty": "easy",
+        "url": "https://leetcode.com/problems/contains-duplicate/"
+      },
+      {
+        "id": "assess_q37",
+        "name": "Q37. First Non-Repeating Element",
+        "desc": "Find the first element whose frequency is exactly one.",
+        "pattern": "First Unique Element",
+        "time": "O(N)",
+        "difficulty": "easy",
+        "url": "https://leetcode.com/problems/first-unique-character-in-a-string/"
+      },
+      {
+        "id": "assess_q38",
+        "name": "Q38. Second Largest",
+        "desc": "Find the second-largest **distinct** element without sorting.",
+        "pattern": "Second Largest Distinct in Single Pass",
+        "time": "O(N)",
+        "difficulty": "medium",
+        "url": "https://leetcode.com/problems/third-maximum-number/"
+      },
+      {
+        "id": "assess_q39",
+        "name": "Q39. Second Smallest",
+        "desc": "Find the second-smallest distinct element without sorting.",
+        "pattern": "Second Smallest Distinct in Single Pass",
+        "time": "O(N)",
+        "difficulty": "medium",
+        "url": "https://leetcode.com/problems/third-maximum-number/"
+      },
+      {
+        "id": "assess_q40",
+        "name": "Q40. Two Sum",
+        "desc": "Given an array and target `K`, determine whether two different elements have sum `K`.",
+        "pattern": "Two Sum (Hash Set Lookup)",
+        "time": "O(N)",
+        "difficulty": "easy",
+        "url": "https://leetcode.com/problems/two-sum/"
+      },
+      {
+        "id": "assess_q41",
+        "name": "Q41. Two Sum Indices",
+        "desc": "Find the indices of two different elements whose sum equals `K`.",
+        "pattern": "Two Sum 0-based Indices",
+        "time": "O(N)",
+        "difficulty": "medium",
+        "url": "https://leetcode.com/problems/two-sum/"
+      },
+      {
+        "id": "assess_q42",
+        "name": "Q42. Move Zeros",
+        "desc": "Move all zero elements to the end while maintaining the relative order of non-zero elements.",
+        "pattern": "Two-Pointer Zero Shifting",
+        "time": "O(N)",
+        "difficulty": "easy",
+        "url": "https://leetcode.com/problems/move-zeroes/"
+      },
+      {
+        "id": "assess_q43",
+        "name": "Q43. Separate Positive and Negative",
+        "desc": "Move negative numbers to one side and positive numbers to the other side. For this problem, preserve the relative order.",
+        "pattern": "Stable Partition Negatives & Positives",
+        "time": "O(N)",
+        "difficulty": "easy",
+        "url": "https://leetcode.com/problems/partition-array-according-to-given-pivot/"
+      },
+      {
+        "id": "assess_q44",
+        "name": "Q44. Prefix Sum",
+        "desc": "Create a prefix-sum array. For each index `i`, the value is the sum of elements from index `0` to `i`.",
+        "pattern": "Running Prefix Sum Accumulation",
+        "time": "O(N)",
+        "difficulty": "easy",
+        "url": "https://leetcode.com/problems/running-sum-of-1d-array/"
+      },
+      {
+        "id": "assess_q45",
+        "name": "Q45. Range Sum Queries",
+        "desc": "Given an array and `Q` queries, each query contains `L` and `R`. Find the sum of elements from index `L` to `R`, inclusive.",
+        "pattern": "Constant Time Range Sum Queries O(1)",
+        "time": "O(N + Q)",
+        "difficulty": "easy",
+        "url": "https://leetcode.com/problems/range-sum-query-immutable/"
+      },
+      {
+        "id": "assess_q46",
+        "name": "Q46. Maximum Subarray Sum",
+        "desc": "Find the maximum sum of a contiguous subarray.",
+        "pattern": "Kadane's Algorithm",
+        "time": "O(N)",
+        "difficulty": "medium",
+        "url": "https://leetcode.com/problems/maximum-subarray/"
+      },
+      {
+        "id": "assess_q47",
+        "name": "Q47. Longest Subarray With Sum K",
+        "desc": "Given an array of positive integers and a target `K`, find the length of the longest contiguous subarray whose sum is exactly `K`.",
+        "pattern": "Longest Subarray with Sum K (Prefix Map)",
+        "time": "O(N)",
+        "difficulty": "hard",
+        "url": "https://leetcode.com/problems/subarray-sum-equals-k/"
+      },
+      {
+        "id": "assess_q48",
+        "name": "Q48. Maximum Sum Window",
+        "desc": "Given an array and window size `K`, find the maximum sum of any contiguous subarray of size `K`.",
+        "pattern": "Fixed-Length Sliding Window Maximum Sum",
+        "time": "O(N)",
+        "difficulty": "medium",
+        "url": "https://leetcode.com/problems/maximum-average-subarray-i/"
+      },
+      {
+        "id": "assess_q49",
+        "name": "Q49. Minimum Pair Difference",
+        "desc": "Given an array, find the minimum absolute difference between any two elements.",
+        "pattern": "Sorting + Adjacent Scan (Min Pair Difference)",
+        "time": "O(N log N)",
+        "difficulty": "medium",
+        "url": "https://leetcode.com/problems/minimum-absolute-difference/"
+      },
+      {
+        "id": "assess_q50",
+        "name": "Q50. Missing Number",
+        "desc": "The array contains `N-1` distinct numbers from `1` to `N`. Find the missing number.",
+        "pattern": "Sum Formula / Missing Element",
+        "time": "O(N)",
+        "difficulty": "easy",
+        "url": "https://leetcode.com/problems/missing-number/"
+      }
+    ]
+  },
+  {
+    "id": "sec_assess_d",
+    "title": "D. STRING / PARSING \ud83d\udd24",
+    "desc": "Number token extraction, string command parsing, usernames & character counts",
+    "problems": [
+      {
+        "id": "assess_q51",
+        "name": "Q51. Extract Numbers and Sum",
+        "desc": "Given a string containing letters and digits, extract all numbers and calculate their sum.",
+        "pattern": "Regex Contiguous Number Extraction & Sum",
+        "time": "O(L)",
+        "difficulty": "easy",
+        "url": "https://leetcode.com/problems/check-if-numbers-are-ascending-in-a-sentence/"
+      },
+      {
+        "id": "assess_q52",
+        "name": "Q52. Count Numbers in String",
+        "desc": "Given a string containing letters and numbers, count how many numeric values appear.",
+        "pattern": "Tokenizing / Counting Numeric Sequences",
+        "time": "O(L)",
+        "difficulty": "easy",
+        "url": "https://leetcode.com/problemset/all/?search=string"
+      },
+      {
+        "id": "assess_q53",
+        "name": "Q53. Maximum Number in String",
+        "desc": "Extract all numbers from the string and print the largest number.",
+        "pattern": "Embedded Number Extraction & Max Tracking",
+        "time": "O(L)",
+        "difficulty": "easy",
+        "url": "https://leetcode.com/problemset/all/?search=string"
+      },
+      {
+        "id": "assess_q54",
+        "name": "Q54. Count Even Numbers in String",
+        "desc": "Extract all numbers from the string and count how many are even.",
+        "pattern": "Filter & Count Even Tokens",
+        "time": "O(L)",
+        "difficulty": "easy",
+        "url": "https://leetcode.com/problemset/all/?search=string"
+      },
+      {
+        "id": "assess_q55",
+        "name": "Q55. Code Processing",
+        "desc": "A string contains operations: * `P` followed by a number \u2192 add the number. * `D` followed by a number \u2192 subtract the number. Calculate the final value starting from zero.",
+        "pattern": "String Instruction Decoder",
+        "time": "O(L)",
+        "difficulty": "easy",
+        "url": "https://leetcode.com/problems/goal-parser-interpretation/"
+      },
+      {
+        "id": "assess_q56",
+        "name": "Q56. Transaction String",
+        "desc": "A transaction string contains: * `D amount` \u2192 deposit * `W amount` \u2192 withdrawal Calculate the final balance.",
+        "pattern": "Compact Transaction String Parser",
+        "time": "O(L)",
+        "difficulty": "medium",
+        "url": "https://leetcode.com/problemset/all/?search=string"
+      },
+      {
+        "id": "assess_q57",
+        "name": "Q57. ID Filtering",
+        "desc": "Each ID begins with either `A` or `B`, followed by a number. Count IDs whose numeric portion is greater than `100`.",
+        "pattern": "Identifier Verification & Filtering",
+        "time": "O(N * L)",
+        "difficulty": "easy",
+        "url": "https://leetcode.com/problemset/all/?search=validation"
+      },
+      {
+        "id": "assess_q58",
+        "name": "Q58. Username Validation",
+        "desc": "A username is valid if: * Its length is at least 5. * It contains the substring `\"user\"`. Count the valid usernames.",
+        "pattern": "String Predicate Validation",
+        "time": "O(L)",
+        "difficulty": "easy",
+        "url": "https://leetcode.com/problems/detect-capital/"
+      },
+      {
+        "id": "assess_q59",
+        "name": "Q59. String Multipliers",
+        "desc": "For every character: * `X` \u2192 multiply the current value by 2 * `Y` \u2192 multiply by 3 * `Z` \u2192 multiply by 5 Start with value `1`.",
+        "pattern": "Run-Length String Expansion",
+        "time": "O(Total Chars)",
+        "difficulty": "medium",
+        "url": "https://leetcode.com/problems/decode-string/"
+      },
+      {
+        "id": "assess_q60",
+        "name": "Q60. Status and Marks",
+        "desc": "Each student record contains status and marks. * `PASS` \u2192 include marks * `FAIL` \u2192 ignore marks Find the total marks of passing students.",
+        "pattern": "Key-Value Delimited Record Parsing",
+        "time": "O(N)",
+        "difficulty": "easy",
+        "url": "https://leetcode.com/problemset/all/?search=parsing"
+      },
+      {
+        "id": "assess_q61",
+        "name": "Q61. Price String Discount",
+        "desc": "Prices are provided as strings. Convert each price to a number and apply: * Price >= 1000 \u2192 10% discount * Otherwise \u2192 no discount Find the final total.",
+        "pattern": "Price Substring Parsing & Discounting",
+        "time": "O(L)",
+        "difficulty": "medium",
+        "url": "https://leetcode.com/problems/apply-discount-to-prices/"
+      },
+      {
+        "id": "assess_q62",
+        "name": "Q62. Time Filtering",
+        "desc": "Given times in `HH:MM` format, count how many occur after 12:00 PM.",
+        "pattern": "Time String Parser (HH:MM Conversion)",
+        "time": "O(N)",
+        "difficulty": "easy",
+        "url": "https://leetcode.com/problems/minimum-time-difference/"
+      },
+      {
+        "id": "assess_q63",
+        "name": "Q63. Country Code Filtering",
+        "desc": "Given country codes, count: 1. How many are `IN`. 2. How many are not `IN`.",
+        "pattern": "Prefix Phone/Country Code Matcher",
+        "time": "O(N)",
+        "difficulty": "easy",
+        "url": "https://leetcode.com/problemset/all/?search=string"
+      },
+      {
+        "id": "assess_q64",
+        "name": "Q64. Character Frequency",
+        "desc": "Given a string, count the frequency of every character.",
+        "pattern": "Character Frequency Preservation",
+        "time": "O(L)",
+        "difficulty": "easy",
+        "url": "https://leetcode.com/problems/sort-characters-by-frequency/"
+      },
+      {
+        "id": "assess_q65",
+        "name": "Q65. Most Frequent Character",
+        "desc": "Find the character that occurs most frequently. If multiple characters have the same maximum frequency, return the character that appears first.",
+        "pattern": "Mode Character with First-Occurrence Tiebreaker",
+        "time": "O(L)",
+        "difficulty": "easy",
+        "url": "https://leetcode.com/problemset/all/?search=frequency"
+      },
+      {
+        "id": "assess_q66",
+        "name": "Q66. First Non-Repeating Character",
+        "desc": "Find the first character that appears exactly once.",
+        "pattern": "First Non-Repeating Character",
+        "time": "O(L)",
+        "difficulty": "easy",
+        "url": "https://leetcode.com/problems/first-unique-character-in-a-string/"
+      },
+      {
+        "id": "assess_q67",
+        "name": "Q67. Remove Duplicate Characters",
+        "desc": "Remove repeated characters while preserving the first occurrence.",
+        "pattern": "Remove Duplicate Chars (Order Preserved)",
+        "time": "O(L)",
+        "difficulty": "easy",
+        "url": "https://leetcode.com/problems/remove-duplicate-letters/"
+      },
+      {
+        "id": "assess_q68",
+        "name": "Q68. Anagram Check",
+        "desc": "Given two strings, determine whether they are anagrams.",
+        "pattern": "Anagram Verification (Frequency Match)",
+        "time": "O(L)",
+        "difficulty": "easy",
+        "url": "https://leetcode.com/problems/valid-anagram/"
+      },
+      {
+        "id": "assess_q69",
+        "name": "Q69. Duplicate Words",
+        "desc": "Given a sentence, find all words that occur more than once. Comparison should be case-insensitive.",
+        "pattern": "Sentence Duplicate Word Finder",
+        "time": "O(Words)",
+        "difficulty": "easy",
+        "url": "https://leetcode.com/problems/uncommon-words-from-two-sentences/"
+      },
+      {
+        "id": "assess_q70",
+        "name": "Q70. Longest Word",
+        "desc": "Given a sentence, find the longest word. If multiple words have the same length, return the first one.",
+        "pattern": "Longest Word with First-Occurrence Tiebreaker",
+        "time": "O(Words)",
+        "difficulty": "easy",
+        "url": "https://leetcode.com/problems/longest-word-in-dictionary-through-deleting/"
+      }
+    ]
+  },
+  {
+    "id": "sec_assess_e",
+    "title": "E. SEARCHING & BASIC DSA \ud83d\udd0d",
+    "desc": "Linear search, binary search, palindrome verification & array frequency equality",
+    "problems": [
+      {
+        "id": "assess_q71",
+        "name": "Q71. Linear Search",
+        "desc": "Given an array and target `X`, find the index of `X`. If it does not exist, print `-1`.",
+        "pattern": "Linear Search First Index",
+        "time": "O(N)",
+        "difficulty": "easy",
+        "url": "https://leetcode.com/problems/binary-search/"
+      },
+      {
+        "id": "assess_q72",
+        "name": "Q72. Binary Search",
+        "desc": "Given a sorted array and target `X`, determine whether `X` exists using binary search.",
+        "pattern": "Binary Search on Sorted Array",
+        "time": "O(log N)",
+        "difficulty": "medium",
+        "url": "https://leetcode.com/problems/binary-search/"
+      },
+      {
+        "id": "assess_q73",
+        "name": "Q73. Palindrome",
+        "desc": "Determine whether a given string reads the same forwards and backwards.",
+        "pattern": "Palindrome Two-Pointer Check",
+        "time": "O(L)",
+        "difficulty": "easy",
+        "url": "https://leetcode.com/problems/valid-palindrome/"
+      },
+      {
+        "id": "assess_q74",
+        "name": "Q74. Reverse Array",
+        "desc": "Reverse an array without using a built-in reverse function.",
+        "pattern": "In-Place Array Reversal",
+        "time": "O(N)",
+        "difficulty": "easy",
+        "url": "https://leetcode.com/problems/reverse-string/"
+      },
+      {
+        "id": "assess_q75",
+        "name": "Q75. Array Equality by Frequency",
+        "desc": "Given two arrays, determine whether they contain exactly the same elements with the same frequencies. The order of elements does not matter.",
+        "pattern": "Multiset / Frequency Map Equality",
+        "time": "O(N + M)",
+        "difficulty": "medium",
+        "url": "https://leetcode.com/problems/valid-anagram/"
+      }
+    ]
+  }
+];
+
+  // 85 Accenture SQL Practice Questions organized into 12 modules
+  const sqlSheetData = [
+  {
+    "id": "sec_sql_a",
+    "title": "A. BASIC SELECT, WHERE & FILTERING \ud83d\udfe6",
+    "desc": "Foundational SELECT, WHERE, comparison operators, NULL checks & DISTINCT",
+    "problems": [
+      {
+        "id": "sql_q1",
+        "name": "Q1. Employee Details",
+        "desc": "Display all columns from the `Employees` table.",
+        "query": "SELECT * FROM Employees;",
+        "difficulty": "easy",
+        "url": "https://leetcode.com/problems/recyclable-and-low-fat-products/"
+      },
+      {
+        "id": "sql_q2",
+        "name": "Q2. Employee Names",
+        "desc": "Display only the employee names and salaries from the `Employees` table.",
+        "query": "SELECT name, salary FROM Employees;",
+        "difficulty": "easy",
+        "url": ""
+      },
+      {
+        "id": "sql_q3",
+        "name": "Q3. High Salary Employees",
+        "desc": "Find all employees whose salary is greater than `50000`.",
+        "query": "SELECT * FROM Employees WHERE salary > 50000;",
+        "difficulty": "easy",
+        "url": ""
+      },
+      {
+        "id": "sql_q4",
+        "name": "Q4. Employees from Department",
+        "desc": "Find all employees who belong to the `IT` department.",
+        "query": "-- When department column exists directly:\nSELECT * FROM Employees WHERE department = 'IT';\n\n-- When joining with Departments table:\nSELECT e.* FROM Employees e\nJOIN Departments d ON e.department_id = d.department_id\nWHERE d.department_name = 'IT';",
+        "difficulty": "easy",
+        "url": ""
+      },
+      {
+        "id": "sql_q5",
+        "name": "Q5. Salary Range",
+        "desc": "Find employees whose salary is between `30000` and `60000`.",
+        "query": "SELECT * FROM Employees WHERE salary BETWEEN 30000 AND 60000;",
+        "difficulty": "easy",
+        "url": ""
+      },
+      {
+        "id": "sql_q6",
+        "name": "Q6. Employees Not in IT",
+        "desc": "Find employees who do not belong to the `IT` department.",
+        "query": "SELECT * FROM Employees WHERE department != 'IT' OR department IS NULL;",
+        "difficulty": "easy",
+        "url": ""
+      },
+      {
+        "id": "sql_q7",
+        "name": "Q7. Names Starting with A",
+        "desc": "Find employees whose name starts with the letter `A`.",
+        "query": "SELECT * FROM Employees WHERE name LIKE 'A%';",
+        "difficulty": "easy",
+        "url": "https://leetcode.com/problems/patients-with-a-condition/"
+      },
+      {
+        "id": "sql_q8",
+        "name": "Q8. Names Ending with N",
+        "desc": "Find employees whose name ends with the letter `n`.",
+        "query": "SELECT * FROM Employees WHERE name LIKE '%n';",
+        "difficulty": "easy",
+        "url": ""
+      },
+      {
+        "id": "sql_q9",
+        "name": "Q9. Salary Greater Than 40000",
+        "desc": "Find employees whose salary is greater than `40000`.",
+        "query": "SELECT * FROM Employees WHERE salary > 40000;",
+        "difficulty": "easy",
+        "url": ""
+      },
+      {
+        "id": "sql_q10",
+        "name": "Q10. Multiple Conditions",
+        "desc": "Find employees who belong to the `IT` department and have a salary greater than `50000`.",
+        "query": "SELECT * FROM Employees WHERE department = 'IT' AND salary > 50000;",
+        "difficulty": "easy",
+        "url": ""
+      },
+      {
+        "id": "sql_q11",
+        "name": "Q11. NULL Values",
+        "desc": "Find employees whose department is `NULL`.",
+        "query": "SELECT * FROM Employees WHERE department_id IS NULL;",
+        "difficulty": "easy",
+        "url": "https://leetcode.com/problems/find-customer-referee/"
+      },
+      {
+        "id": "sql_q12",
+        "name": "Q12. DISTINCT Departments",
+        "desc": "Display all unique department names.",
+        "query": "SELECT DISTINCT department_name FROM Departments;",
+        "difficulty": "easy",
+        "url": "https://leetcode.com/problems/article-views-i/"
+      }
+    ]
+  },
+  {
+    "id": "sec_sql_b",
+    "title": "B. AGGREGATE FUNCTIONS \ud83d\udfe8",
+    "desc": "COUNT, SUM, AVG, MIN, MAX, standard aggregations & conditions",
+    "problems": [
+      {
+        "id": "sql_q13",
+        "name": "Q13. Total Salary",
+        "desc": "Find the total salary of all employees.",
+        "query": "SELECT SUM(salary) AS total_salary FROM Employees;",
+        "difficulty": "easy",
+        "url": ""
+      },
+      {
+        "id": "sql_q14",
+        "name": "Q14. Average Salary",
+        "desc": "Find the average salary of all employees.",
+        "query": "SELECT AVG(salary) AS average_salary FROM Employees;",
+        "difficulty": "easy",
+        "url": ""
+      },
+      {
+        "id": "sql_q15",
+        "name": "Q15. Maximum Salary",
+        "desc": "Find the highest salary in the `Employees` table.",
+        "query": "SELECT MAX(salary) AS highest_salary FROM Employees;",
+        "difficulty": "easy",
+        "url": ""
+      },
+      {
+        "id": "sql_q16",
+        "name": "Q16. Minimum Salary",
+        "desc": "Find the lowest salary in the `Employees` table.",
+        "query": "SELECT MIN(salary) AS lowest_salary FROM Employees;",
+        "difficulty": "easy",
+        "url": ""
+      },
+      {
+        "id": "sql_q17",
+        "name": "Q17. Employee Count",
+        "desc": "Find the total number of employees.",
+        "query": "SELECT COUNT(*) AS total_employees FROM Employees;",
+        "difficulty": "easy",
+        "url": ""
+      },
+      {
+        "id": "sql_q18",
+        "name": "Q18. Department Employee Count",
+        "desc": "Find the number of employees in each department.",
+        "query": "SELECT department_id, COUNT(*) AS employee_count\nFROM Employees\nGROUP BY department_id;",
+        "difficulty": "easy",
+        "url": "https://leetcode.com/problems/project-employees-i/"
+      },
+      {
+        "id": "sql_q19",
+        "name": "Q19. Department Average Salary",
+        "desc": "Find the average salary for each department.",
+        "query": "SELECT department_id, ROUND(AVG(salary), 2) AS average_salary\nFROM Employees\nGROUP BY department_id;",
+        "difficulty": "easy",
+        "url": ""
+      },
+      {
+        "id": "sql_q20",
+        "name": "Q20. Department Maximum Salary",
+        "desc": "Find the highest salary in each department.",
+        "query": "SELECT department_id, MAX(salary) AS max_salary\nFROM Employees\nGROUP BY department_id;",
+        "difficulty": "easy",
+        "url": ""
+      },
+      {
+        "id": "sql_q21",
+        "name": "Q21. Department Minimum Salary",
+        "desc": "Find the lowest salary in each department.",
+        "query": "SELECT department_id, MIN(salary) AS min_salary\nFROM Employees\nGROUP BY department_id;",
+        "difficulty": "easy",
+        "url": ""
+      },
+      {
+        "id": "sql_q22",
+        "name": "Q22. Department Total Salary",
+        "desc": "Find the total salary paid by each department.",
+        "query": "SELECT department_id, SUM(salary) AS total_salary\nFROM Employees\nGROUP BY department_id;",
+        "difficulty": "easy",
+        "url": ""
+      }
+    ]
+  },
+  {
+    "id": "sec_sql_c",
+    "title": "C. GROUP BY & HAVING \ud83d\udfe9",
+    "desc": "Aggregations per department, group filtering with HAVING vs WHERE",
+    "problems": [
+      {
+        "id": "sql_q23",
+        "name": "Q23. Departments with More Than 5 Employees",
+        "desc": "",
+        "query": "SELECT department_id, COUNT(*) AS emp_count\nFROM Employees\nGROUP BY department_id\nHAVING COUNT(*) > 5;",
+        "difficulty": "easy",
+        "url": "https://leetcode.com/problems/classes-more-than-5-students/"
+      },
+      {
+        "id": "sql_q24",
+        "name": "Q24. Departments with High Average Salary (> 50000)",
+        "desc": "",
+        "query": "SELECT department_id, AVG(salary) AS avg_salary\nFROM Employees\nGROUP BY department_id\nHAVING AVG(salary) > 50000;",
+        "difficulty": "easy",
+        "url": ""
+      },
+      {
+        "id": "sql_q25",
+        "name": "Q25. Departments with Total Salary (> 500000)",
+        "desc": "",
+        "query": "SELECT department_id, SUM(salary) AS total_payout\nFROM Employees\nGROUP BY department_id\nHAVING SUM(salary) > 500000;",
+        "difficulty": "easy",
+        "url": ""
+      },
+      {
+        "id": "sql_q26",
+        "name": "Q26. Count Employees by Job Role",
+        "desc": "",
+        "query": "SELECT job_role, COUNT(*) AS employee_count\nFROM Employees\nGROUP BY job_role;",
+        "difficulty": "easy",
+        "url": ""
+      },
+      {
+        "id": "sql_q27",
+        "name": "Q27. Job Roles with More Than 3 Employees",
+        "desc": "",
+        "query": "SELECT job_role, COUNT(*) AS count\nFROM Employees\nGROUP BY job_role\nHAVING COUNT(*) > 3;",
+        "difficulty": "easy",
+        "url": ""
+      },
+      {
+        "id": "sql_q28",
+        "name": "Q28. Salary Range Groups",
+        "desc": "Group employees by department and display average, maximum, and minimum salary.",
+        "query": "SELECT department_id,\n       AVG(salary) AS avg_salary,\n       MAX(salary) AS max_salary,\n       MIN(salary) AS min_salary\nFROM Employees\nGROUP BY department_id;",
+        "difficulty": "easy",
+        "url": ""
+      },
+      {
+        "id": "sql_q29",
+        "name": "Q29. Department with Maximum Employees",
+        "desc": "",
+        "query": "SELECT department_id, COUNT(*) AS emp_count\nFROM Employees\nGROUP BY department_id\nORDER BY emp_count DESC\nLIMIT 1;",
+        "difficulty": "easy",
+        "url": ""
+      },
+      {
+        "id": "sql_q30",
+        "name": "Q30. Department with Minimum Employees",
+        "desc": "",
+        "query": "SELECT department_id, COUNT(*) AS emp_count\nFROM Employees\nGROUP BY department_id\nORDER BY emp_count ASC\nLIMIT 1;",
+        "difficulty": "easy",
+        "url": ""
+      }
+    ]
+  },
+  {
+    "id": "sec_sql_d",
+    "title": "D. ORDER BY & RANKING \ud83d\udfe7",
+    "desc": "Sorting with ASC/DESC, multi-column ordering & LIMIT/OFFSET pagination",
+    "problems": [
+      {
+        "id": "sql_q31",
+        "name": "Q31. Employees by Salary Ascending",
+        "desc": "",
+        "query": "SELECT * FROM Employees ORDER BY salary ASC;",
+        "difficulty": "easy",
+        "url": ""
+      },
+      {
+        "id": "sql_q32",
+        "name": "Q32. Employees by Salary Descending",
+        "desc": "",
+        "query": "SELECT * FROM Employees ORDER BY salary DESC;",
+        "difficulty": "easy",
+        "url": ""
+      },
+      {
+        "id": "sql_q33",
+        "name": "Q33. Top 5 Salaries",
+        "desc": "",
+        "query": "SELECT DISTINCT salary FROM Employees ORDER BY salary DESC LIMIT 5;",
+        "difficulty": "easy",
+        "url": ""
+      },
+      {
+        "id": "sql_q34",
+        "name": "Q34. Top 3 Employees",
+        "desc": "",
+        "query": "SELECT * FROM Employees ORDER BY salary DESC LIMIT 3;",
+        "difficulty": "easy",
+        "url": ""
+      },
+      {
+        "id": "sql_q35",
+        "name": "Q35. Lowest 3 Salaries",
+        "desc": "",
+        "query": "SELECT * FROM Employees ORDER BY salary ASC LIMIT 3;",
+        "difficulty": "easy",
+        "url": ""
+      },
+      {
+        "id": "sql_q36",
+        "name": "Q36. Department and Salary Sorting",
+        "desc": "",
+        "query": "SELECT * FROM Employees ORDER BY department_id ASC, salary DESC;",
+        "difficulty": "easy",
+        "url": ""
+      },
+      {
+        "id": "sql_q37",
+        "name": "Q37. Highest Paid Employee",
+        "desc": "",
+        "query": "SELECT * FROM Employees ORDER BY salary DESC LIMIT 1;",
+        "difficulty": "easy",
+        "url": ""
+      },
+      {
+        "id": "sql_q38",
+        "name": "Q38. Lowest Paid Employee",
+        "desc": "",
+        "query": "SELECT * FROM Employees ORDER BY salary ASC LIMIT 1;",
+        "difficulty": "easy",
+        "url": ""
+      }
+    ]
+  },
+  {
+    "id": "sec_sql_e",
+    "title": "E. SECOND / NTH HIGHEST SALARY \ud83d\udfea",
+    "desc": "Classic interview patterns: OFFSET, Correlated Subquery & DENSE_RANK()",
+    "problems": [
+      {
+        "id": "sql_q39",
+        "name": "Q39. Second Highest Salary",
+        "desc": "",
+        "query": "-- Method 1: Subquery\nSELECT MAX(salary) AS SecondHighestSalary\nFROM Employees\nWHERE salary < (SELECT MAX(salary) FROM Employees);\n\n-- Method 2: LIMIT OFFSET\nSELECT DISTINCT salary AS SecondHighestSalary\nFROM Employees\nORDER BY salary DESC\nLIMIT 1 OFFSET 1;",
+        "difficulty": "medium",
+        "url": "https://leetcode.com/problems/second-highest-salary/"
+      },
+      {
+        "id": "sql_q40",
+        "name": "Q40. Third Highest Salary",
+        "desc": "",
+        "query": "SELECT DISTINCT salary AS ThirdHighestSalary\nFROM Employees\nORDER BY salary DESC\nLIMIT 1 OFFSET 2;",
+        "difficulty": "medium",
+        "url": ""
+      },
+      {
+        "id": "sql_q41",
+        "name": "Q41. Nth Highest Salary (Function Template)",
+        "desc": "",
+        "query": "CREATE FUNCTION getNthHighestSalary(N INT) RETURNS INT\nBEGIN\n  DECLARE M INT;\n  SET M = N - 1;\n  RETURN (\n      SELECT DISTINCT salary FROM Employees\n      ORDER BY salary DESC\n      LIMIT 1 OFFSET M\n  );\nEND;",
+        "difficulty": "medium",
+        "url": "https://leetcode.com/problems/nth-highest-salary/"
+      },
+      {
+        "id": "sql_q42",
+        "name": "Q42. Second Highest Employee Record",
+        "desc": "",
+        "query": "SELECT * FROM Employees\nWHERE salary = (\n    SELECT MAX(salary) FROM Employees\n    WHERE salary < (SELECT MAX(salary) FROM Employees)\n);",
+        "difficulty": "hard",
+        "url": ""
+      },
+      {
+        "id": "sql_q43",
+        "name": "Q43. Second Highest Salary per Department",
+        "desc": "",
+        "query": "WITH RankedSalaries AS (\n    SELECT *,\n           DENSE_RANK() OVER (PARTITION BY department_id ORDER BY salary DESC) AS rnk\n    FROM Employees\n)\nSELECT * FROM RankedSalaries WHERE rnk = 2;",
+        "difficulty": "medium",
+        "url": "https://leetcode.com/problems/department-highest-salary/"
+      },
+      {
+        "id": "sql_q44",
+        "name": "Q44. Third Highest Salary per Department",
+        "desc": "",
+        "query": "WITH RankedSalaries AS (\n    SELECT *,\n           DENSE_RANK() OVER (PARTITION BY department_id ORDER BY salary DESC) AS rnk\n    FROM Employees\n)\nSELECT * FROM RankedSalaries WHERE rnk = 3;",
+        "difficulty": "medium",
+        "url": ""
+      },
+      {
+        "id": "sql_q45",
+        "name": "Q45. Employees Above Second Highest Salary",
+        "desc": "",
+        "query": "SELECT * FROM Employees\nWHERE salary > (\n    SELECT MAX(salary) FROM Employees\n    WHERE salary < (SELECT MAX(salary) FROM Employees)\n);",
+        "difficulty": "medium",
+        "url": ""
+      }
+    ]
+  },
+  {
+    "id": "sec_sql_f",
+    "title": "F. DUPLICATE RECORDS \ud83d\udfeb",
+    "desc": "Identifying duplicate rows via HAVING COUNT(*) > 1 & cleaning strategies",
+    "problems": [
+      {
+        "id": "sql_q46",
+        "name": "Q46. Find Duplicate Names",
+        "desc": "",
+        "query": "SELECT name, COUNT(*) AS count\nFROM Employees\nGROUP BY name\nHAVING COUNT(*) > 1;",
+        "difficulty": "easy",
+        "url": "https://leetcode.com/problems/duplicate-emails/"
+      },
+      {
+        "id": "sql_q47",
+        "name": "Q47. Find Duplicate Salaries",
+        "desc": "",
+        "query": "SELECT salary, COUNT(*) AS count\nFROM Employees\nGROUP BY salary\nHAVING COUNT(*) > 1;",
+        "difficulty": "easy",
+        "url": ""
+      },
+      {
+        "id": "sql_q48",
+        "name": "Q48. Find Duplicate Rows (Name + Department)",
+        "desc": "",
+        "query": "SELECT name, department_id, COUNT(*) AS count\nFROM Employees\nGROUP BY name, department_id\nHAVING COUNT(*) > 1;",
+        "difficulty": "easy",
+        "url": ""
+      },
+      {
+        "id": "sql_q49",
+        "name": "Q49. Count Duplicate Records",
+        "desc": "",
+        "query": "SELECT name, department_id, COUNT(*) AS occurrences\nFROM Employees\nGROUP BY name, department_id\nHAVING COUNT(*) > 1;",
+        "difficulty": "easy",
+        "url": ""
+      },
+      {
+        "id": "sql_q50",
+        "name": "Q50. Delete Duplicate Rows (Keep 1 Copy)",
+        "desc": "",
+        "query": "DELETE e1 FROM Employees e1\nINNER JOIN Employees e2\nWHERE e1.name = e2.name\n  AND e1.department_id = e2.department_id\n  AND e1.employee_id > e2.employee_id;",
+        "difficulty": "easy",
+        "url": "https://leetcode.com/problems/delete-duplicate-emails/"
+      },
+      {
+        "id": "sql_q51",
+        "name": "Q51. Delete Duplicates Keeping Minimum ID",
+        "desc": "",
+        "query": "DELETE e1 FROM Employees e1\nJOIN Employees e2\nWHERE e1.name = e2.name AND e1.employee_id > e2.employee_id;",
+        "difficulty": "easy",
+        "url": ""
+      }
+    ]
+  },
+  {
+    "id": "sec_sql_g",
+    "title": "G. JOIN QUESTIONS \ud83d\udfe5",
+    "desc": "INNER, LEFT, RIGHT, FULL OUTER JOINs & cross-table lookups",
+    "problems": [
+      {
+        "id": "sql_q52",
+        "name": "Q52. Employee Department Names",
+        "desc": "",
+        "query": "SELECT e.name AS employee_name, d.department_name\nFROM Employees e\nINNER JOIN Departments d ON e.department_id = d.department_id;",
+        "difficulty": "easy",
+        "url": "https://leetcode.com/problems/replace-employee-id-with-the-unique-identifier/"
+      },
+      {
+        "id": "sql_q53",
+        "name": "Q53. Employees Without Department",
+        "desc": "",
+        "query": "SELECT e.*\nFROM Employees e\nLEFT JOIN Departments d ON e.department_id = d.department_id\nWHERE d.department_id IS NULL;",
+        "difficulty": "easy",
+        "url": ""
+      },
+      {
+        "id": "sql_q54",
+        "name": "Q54. Departments Without Employees",
+        "desc": "",
+        "query": "SELECT d.*\nFROM Departments d\nLEFT JOIN Employees e ON d.department_id = e.department_id\nWHERE e.employee_id IS NULL;",
+        "difficulty": "easy",
+        "url": "https://leetcode.com/problems/customers-who-never-order/"
+      },
+      {
+        "id": "sql_q55",
+        "name": "Q55. Employee Name, Department Name and Salary",
+        "desc": "",
+        "query": "SELECT e.name, d.department_name, e.salary\nFROM Employees e\nLEFT JOIN Departments d ON e.department_id = d.department_id;",
+        "difficulty": "easy",
+        "url": ""
+      },
+      {
+        "id": "sql_q56",
+        "name": "Q56. Department Name and Average Salary",
+        "desc": "",
+        "query": "SELECT d.department_name, ROUND(AVG(e.salary), 2) AS average_salary\nFROM Departments d\nJOIN Employees e ON d.department_id = e.department_id\nGROUP BY d.department_name;",
+        "difficulty": "easy",
+        "url": ""
+      },
+      {
+        "id": "sql_q57",
+        "name": "Q57. Highest Salary by Department",
+        "desc": "",
+        "query": "SELECT d.department_name, e.name, e.salary\nFROM Employees e\nJOIN Departments d ON e.department_id = d.department_id\nWHERE (e.department_id, e.salary) IN (\n    SELECT department_id, MAX(salary)\n    FROM Employees\n    GROUP BY department_id\n);",
+        "difficulty": "easy",
+        "url": ""
+      },
+      {
+        "id": "sql_q58",
+        "name": "Q58. Employees Above Department Average",
+        "desc": "",
+        "query": "SELECT e.name, e.salary, e.department_id\nFROM Employees e\nWHERE e.salary > (\n    SELECT AVG(salary)\n    FROM Employees\n    WHERE department_id = e.department_id\n);",
+        "difficulty": "easy",
+        "url": ""
+      },
+      {
+        "id": "sql_q59",
+        "name": "Q59. Employee and Manager Names",
+        "desc": "",
+        "query": "SELECT e.name AS Employee, m.name AS Manager\nFROM Employees e\nLEFT JOIN Employees m ON e.manager_id = m.employee_id;",
+        "difficulty": "easy",
+        "url": ""
+      },
+      {
+        "id": "sql_q60",
+        "name": "Q60. Employees Without Manager",
+        "desc": "",
+        "query": "SELECT name FROM Employees WHERE manager_id IS NULL;",
+        "difficulty": "easy",
+        "url": ""
+      }
+    ]
+  },
+  {
+    "id": "sec_sql_h",
+    "title": "H. SELF JOIN \ud83d\udc65",
+    "desc": "Hierarchical data: employee-to-manager relationships & self-comparisons",
+    "problems": [
+      {
+        "id": "sql_q61",
+        "name": "Q61. Employee-Manager Relationship via SELF JOIN",
+        "desc": "",
+        "query": "SELECT e.name AS Employee, m.name AS Manager\nFROM Employees e\nINNER JOIN Employees m ON e.manager_id = m.employee_id;",
+        "difficulty": "easy",
+        "url": ""
+      },
+      {
+        "id": "sql_q62",
+        "name": "Q62. Employees Earning More Than Their Manager",
+        "desc": "",
+        "query": "SELECT e.name AS Employee\nFROM Employees e\nINNER JOIN Employees m ON e.manager_id = m.employee_id\nWHERE e.salary > m.salary;",
+        "difficulty": "easy",
+        "url": "https://leetcode.com/problems/employees-earning-more-than-their-managers/"
+      },
+      {
+        "id": "sql_q63",
+        "name": "Q63. Employees with Same Manager (Pairs)",
+        "desc": "",
+        "query": "SELECT e1.name AS Employee1, e2.name AS Employee2, e1.manager_id\nFROM Employees e1\nJOIN Employees e2 ON e1.manager_id = e2.manager_id AND e1.employee_id < e2.employee_id\nWHERE e1.manager_id IS NOT NULL;",
+        "difficulty": "easy",
+        "url": ""
+      },
+      {
+        "id": "sql_q64",
+        "name": "Q64. Employees in Same Department (Pairs)",
+        "desc": "",
+        "query": "SELECT e1.name AS Employee1, e2.name AS Employee2, e1.department_id\nFROM Employees e1\nJOIN Employees e2 ON e1.department_id = e2.department_id AND e1.employee_id < e2.employee_id;",
+        "difficulty": "easy",
+        "url": ""
+      }
+    ]
+  },
+  {
+    "id": "sec_sql_i",
+    "title": "I. SUBQUERIES \ud83c\udfaf",
+    "desc": "Scalar, correlated subqueries, IN, NOT IN, EXISTS & nested SELECTs",
+    "problems": [
+      {
+        "id": "sql_q65",
+        "name": "Q65. Salary Above Overall Average",
+        "desc": "",
+        "query": "SELECT * FROM Employees\nWHERE salary > (SELECT AVG(salary) FROM Employees);",
+        "difficulty": "medium",
+        "url": ""
+      },
+      {
+        "id": "sql_q66",
+        "name": "Q66. Highest Salary via Subquery",
+        "desc": "",
+        "query": "SELECT * FROM Employees\nWHERE salary = (SELECT MAX(salary) FROM Employees);",
+        "difficulty": "medium",
+        "url": ""
+      },
+      {
+        "id": "sql_q67",
+        "name": "Q67. Second Highest Salary via Subquery",
+        "desc": "",
+        "query": "SELECT MAX(salary) AS second_highest\nFROM Employees\nWHERE salary < (SELECT MAX(salary) FROM Employees);",
+        "difficulty": "medium",
+        "url": ""
+      },
+      {
+        "id": "sql_q68",
+        "name": "Q68. Employees in Highest-Paid Department",
+        "desc": "",
+        "query": "SELECT * FROM Employees\nWHERE department_id = (\n    SELECT department_id\n    FROM Employees\n    GROUP BY department_id\n    ORDER BY AVG(salary) DESC\n    LIMIT 1\n);",
+        "difficulty": "medium",
+        "url": ""
+      },
+      {
+        "id": "sql_q69",
+        "name": "Q69. Above Department Average (Correlated Subquery)",
+        "desc": "",
+        "query": "SELECT e.name, e.salary, e.department_id\nFROM Employees e\nWHERE e.salary > (\n    SELECT AVG(salary)\n    FROM Employees\n    WHERE department_id = e.department_id\n);",
+        "difficulty": "medium",
+        "url": ""
+      },
+      {
+        "id": "sql_q70",
+        "name": "Q70. Employees in IT via Subquery",
+        "desc": "",
+        "query": "SELECT * FROM Employees\nWHERE department_id = (\n    SELECT department_id FROM Departments WHERE department_name = 'IT'\n);",
+        "difficulty": "medium",
+        "url": ""
+      }
+    ]
+  },
+  {
+    "id": "sec_sql_j",
+    "title": "J. CASE STATEMENTS & CONDITIONAL SQL \u26a1",
+    "desc": "Conditional logic: IF/ELSE branching, salary brackets & tier labeling",
+    "problems": [
+      {
+        "id": "sql_q71",
+        "name": "Q71. Salary Category (Low, Medium, High)",
+        "desc": "",
+        "query": "SELECT name, salary,\n       CASE\n           WHEN salary < 30000 THEN 'Low'\n           WHEN salary <= 60000 THEN 'Medium'\n           ELSE 'High'\n       END AS salary_category\nFROM Employees;",
+        "difficulty": "easy",
+        "url": "https://leetcode.com/problems/count-salary-categories/"
+      },
+      {
+        "id": "sql_q72",
+        "name": "Q72. Employee Bonus",
+        "desc": "",
+        "query": "SELECT name, salary,\n       CASE\n           WHEN salary < 30000 THEN salary * 0.10\n           WHEN salary <= 60000 THEN salary * 0.05\n           ELSE salary * 0.03\n       END AS bonus_amount\nFROM Employees;",
+        "difficulty": "easy",
+        "url": ""
+      },
+      {
+        "id": "sql_q73",
+        "name": "Q73. Pass or Fail Classification",
+        "desc": "",
+        "query": "SELECT name, score,\n       CASE\n           WHEN score >= 50 THEN 'Pass'\n           ELSE 'Fail'\n       END AS result\nFROM Employees;",
+        "difficulty": "easy",
+        "url": ""
+      },
+      {
+        "id": "sql_q74",
+        "name": "Q74. Salary Grade (A, B, C, D)",
+        "desc": "",
+        "query": "SELECT name, salary,\n       CASE\n           WHEN salary >= 80000 THEN 'A'\n           WHEN salary >= 60000 THEN 'B'\n           WHEN salary >= 40000 THEN 'C'\n           ELSE 'D'\n       END AS salary_grade\nFROM Employees;",
+        "difficulty": "easy",
+        "url": ""
+      },
+      {
+        "id": "sql_q75",
+        "name": "Q75. Department Category by Size",
+        "desc": "",
+        "query": "SELECT d.department_name,\n       COUNT(e.employee_id) AS total_employees,\n       CASE\n           WHEN COUNT(e.employee_id) >= 20 THEN 'Large'\n           WHEN COUNT(e.employee_id) >= 10 THEN 'Medium'\n           ELSE 'Small'\n       END AS department_category\nFROM Departments d\nLEFT JOIN Employees e ON d.department_id = e.department_id\nGROUP BY d.department_name;",
+        "difficulty": "easy",
+        "url": ""
+      }
+    ]
+  },
+  {
+    "id": "sec_sql_k",
+    "title": "K. STRING & DATE SQL \ud83d\udcc5",
+    "desc": "String pattern matching (LIKE, UPPER, LENGTH) & date manipulation (DATEDIFF, YEAR)",
+    "problems": [
+      {
+        "id": "sql_q76",
+        "name": "Q76. Name Length > 5",
+        "desc": "",
+        "query": "SELECT * FROM Employees WHERE LENGTH(name) > 5;",
+        "difficulty": "easy",
+        "url": "https://leetcode.com/problems/invalid-tweets/"
+      },
+      {
+        "id": "sql_q77",
+        "name": "Q77. Uppercase Names",
+        "desc": "",
+        "query": "SELECT UPPER(name) AS uppercase_name FROM Employees;",
+        "difficulty": "easy",
+        "url": "https://leetcode.com/problems/fix-names-in-a-table/"
+      },
+      {
+        "id": "sql_q78",
+        "name": "Q78. Lowercase Departments",
+        "desc": "",
+        "query": "SELECT LOWER(department_name) AS lowercase_dept FROM Departments;",
+        "difficulty": "easy",
+        "url": ""
+      },
+      {
+        "id": "sql_q79",
+        "name": "Q79. First Character of Name",
+        "desc": "",
+        "query": "SELECT name, SUBSTRING(name, 1, 1) AS first_letter FROM Employees;",
+        "difficulty": "easy",
+        "url": ""
+      },
+      {
+        "id": "sql_q80",
+        "name": "Q80. Employees Joined After Date",
+        "desc": "",
+        "query": "SELECT * FROM Employees WHERE joining_date > '2025-01-01';",
+        "difficulty": "easy",
+        "url": ""
+      },
+      {
+        "id": "sql_q81",
+        "name": "Q81. Employees Joined in Current Year",
+        "desc": "",
+        "query": "SELECT * FROM Employees WHERE YEAR(joining_date) = YEAR(CURDATE());",
+        "difficulty": "easy",
+        "url": ""
+      },
+      {
+        "id": "sql_q82",
+        "name": "Q82. Years of Experience",
+        "desc": "",
+        "query": "SELECT name, joining_date,\n       TIMESTAMPDIFF(YEAR, joining_date, CURDATE()) AS years_experience\nFROM Employees;",
+        "difficulty": "easy",
+        "url": ""
+      }
+    ]
+  },
+  {
+    "id": "sec_sql_l",
+    "title": "L. WINDOW FUNCTIONS & ADVANCED SQL \ud83c\udfc6",
+    "desc": "Modern analytics: ROW_NUMBER(), RANK(), DENSE_RANK(), LEAD() & LAG()",
+    "problems": [
+      {
+        "id": "sql_q83",
+        "name": "Q83. Salary Ranking (`RANK` vs `DENSE_RANK`)",
+        "desc": "",
+        "query": "SELECT employee_id, name, salary,\n       RANK() OVER (ORDER BY salary DESC) AS rnk,\n       DENSE_RANK() OVER (ORDER BY salary DESC) AS dense_rnk\nFROM Employees;",
+        "difficulty": "medium",
+        "url": "https://leetcode.com/problems/rank-scores/"
+      },
+      {
+        "id": "sql_q84",
+        "name": "Q84. Department Salary Ranking (`PARTITION BY`)",
+        "desc": "",
+        "query": "SELECT employee_id, name, department_id, salary,\n       DENSE_RANK() OVER (PARTITION BY department_id ORDER BY salary DESC) AS dept_salary_rank\nFROM Employees;",
+        "difficulty": "medium",
+        "url": "https://leetcode.com/problems/department-top-three-salaries/"
+      },
+      {
+        "id": "sql_q85",
+        "name": "Q85. Cumulative Running Total of Salaries",
+        "desc": "",
+        "query": "SELECT employee_id, name, salary,\n       SUM(salary) OVER (ORDER BY employee_id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_total\nFROM Employees;",
+        "difficulty": "hard",
+        "url": "https://leetcode.com/problems/last-person-to-fit-in-the-bus/"
+      }
+    ]
+  }
+];
+
   const NOTE_TEMPLATE = `Topic/Problem:
 Key Concepts:
 Important Notes:
@@ -1343,6 +2935,8 @@ Space Complexity (if code):`;
   let activeDay = 1;
   let activeTab = 'roadmap';
   let activeTopic = 'sec_a';
+  let activeAssessTopic = 'sec_assess_a';
+  let activeSqlTopic = 'sec_sql_a';
 
   // Utility to parse any time string into numeric hours
   function parseTimeStrToHours(timeStr) {
@@ -1383,6 +2977,12 @@ Space Complexity (if code):`;
     if (!S.accentureCodingChecks) S.accentureCodingChecks = {};
     if (!S.accentureCodingNotes) S.accentureCodingNotes = {};
     if (!S.accentureCodingCodes) S.accentureCodingCodes = {};
+    if (!S.accentureAssessmentChecks) S.accentureAssessmentChecks = {};
+    if (!S.accentureAssessmentNotes) S.accentureAssessmentNotes = {};
+    if (!S.accentureAssessmentCodes) S.accentureAssessmentCodes = {};
+    if (!S.accentureSqlChecks) S.accentureSqlChecks = {};
+    if (!S.accentureSqlNotes) S.accentureSqlNotes = {};
+    if (!S.accentureSqlCodes) S.accentureSqlCodes = {};
     
     // Update sidebar XP
     const xp = S.xp || 0;
@@ -1530,11 +3130,46 @@ Space Complexity (if code):`;
     };
   }
 
+  
+  // Calculate overall assessment topic progress
+  function getAssessmentTopicProgress(topicId) {
+    const topic = assessmentSheetData.find(t => t.id === topicId);
+    if (!topic || topic.problems.length === 0) return { solved: 0, total: 0, pct: 0 };
+    
+    let solved = 0;
+    topic.problems.forEach(p => {
+      if (S.accentureAssessmentChecks[p.id]) solved++;
+    });
+    
+    return {
+      solved,
+      total: topic.problems.length,
+      pct: Math.round((solved / topic.problems.length) * 100)
+    };
+  }
+
+  // Calculate overall SQL topic progress
+  function getSqlTopicProgress(topicId) {
+    const topic = sqlSheetData.find(t => t.id === topicId);
+    if (!topic || topic.problems.length === 0) return { solved: 0, total: 0, pct: 0 };
+    
+    let solved = 0;
+    topic.problems.forEach(p => {
+      if (S.accentureSqlChecks[p.id]) solved++;
+    });
+    
+    return {
+      solved,
+      total: topic.problems.length,
+      pct: Math.round((solved / topic.problems.length) * 100)
+    };
+  }
+
   function updateGlobalProgress() {
     let totalProblems = 0;
     let solvedProblems = 0;
     
-    // Roadmap
+    // Roadmap (45)
     planData.forEach(d => {
       totalProblems += d.problems.length;
       d.problems.forEach(p => {
@@ -1542,11 +3177,27 @@ Space Complexity (if code):`;
       });
     });
 
-    // Coding Sheet
+    // 85 Coding Practice
     codingSheetData.forEach(topic => {
       totalProblems += topic.problems.length;
       topic.problems.forEach(p => {
         if (S.accentureCodingChecks[p.id]) solvedProblems++;
+      });
+    });
+
+    // 75 Assessment Practice
+    assessmentSheetData.forEach(topic => {
+      totalProblems += topic.problems.length;
+      topic.problems.forEach(p => {
+        if (S.accentureAssessmentChecks[p.id]) solvedProblems++;
+      });
+    });
+
+    // 85 SQL Practice
+    sqlSheetData.forEach(topic => {
+      totalProblems += topic.problems.length;
+      topic.problems.forEach(p => {
+        if (S.accentureSqlChecks[p.id]) solvedProblems++;
       });
     });
     
@@ -2280,38 +3931,346 @@ Space Complexity (if code):`;
   }
 
   // Switch between tabs
+  
+  // Render Assessment selection list
+  function renderAssessmentTopicsList() {
+    const list = document.getElementById('assessment-topic-list');
+    if (!list) return;
+    list.innerHTML = '';
+    
+    assessmentSheetData.forEach(t => {
+      const prog = getAssessmentTopicProgress(t.id);
+      const btn = document.createElement('button');
+      btn.className = `day-btn ${t.id === activeAssessTopic ? 'active' : ''}`;
+      btn.onclick = () => selectAssessmentTopic(t.id);
+      
+      btn.innerHTML = `
+        <span class="day-title">${t.title}</span>
+        <span class="day-progress">${prog.solved}/${prog.total} Done (${prog.pct}%)</span>
+      `;
+      list.appendChild(btn);
+    });
+  }
+
+  // Load selected topic details (Assessment Sheet)
+  function selectAssessmentTopic(topicId) {
+    activeAssessTopic = topicId;
+    const topic = assessmentSheetData.find(t => t.id === topicId);
+    if (!topic) return;
+    
+    document.getElementById('curr-assess-topic-title').textContent = topic.title;
+    document.getElementById('curr-assess-topic-desc').textContent = topic.desc;
+    
+    const problemsContainer = document.getElementById('assessment-problems-container');
+    problemsContainer.innerHTML = '';
+    
+    const progress = getAssessmentTopicProgress(topicId);
+    document.getElementById('assess-topic-solved-text').textContent = `${progress.solved}/${progress.total} Done`;
+    
+    topic.problems.forEach(p => {
+      const isSolved = !!S.accentureAssessmentChecks[p.id];
+      const card = document.createElement('div');
+      card.id = `assess-card-${p.id}`;
+      card.className = `problem-card ${isSolved ? 'solved' : ''}`;
+      
+      const titleLink = p.url 
+        ? `<a href="${p.url}" target="_blank" class="problem-title">${p.name} <i class="fas fa-external-link-alt" style="font-size:10px; color:var(--accent2);"></i></a>`
+        : `<span class="problem-title">${p.name}</span>`;
+
+      card.innerHTML = `
+        <div class="problem-header">
+          <div class="problem-title-wrap">
+            <input type="checkbox" onchange="toggleAssessmentSolved('${p.id}', this)" ${isSolved ? 'checked' : ''}/>
+            ${titleLink}
+          </div>
+          <div class="problem-meta">
+            ${p.pattern ? `<span style="padding:3px 8px; border-radius:6px; font-size:10.5px; font-weight:600; background:rgba(108, 99, 255, 0.1); border:1px solid rgba(108, 99, 255, 0.3); color:var(--accent2);">${p.pattern}</span>` : ''}
+            <span class="badge-diff ${p.difficulty}">${p.difficulty}</span>
+            <button class="btn-toggle-editor" id="btn-editor-assess-${p.id}" onclick="toggleAssessmentEditor('${p.id}')"><i class="fas fa-edit"></i> Notes &amp; Code</button>
+          </div>
+        </div>
+        ${p.desc ? `<div style="font-size:12px; color:var(--text2); margin-top:8px; line-height:1.5; padding-left:27px;"><i class="fas fa-info-circle" style="color:var(--accent2); margin-right:4px;"></i>${p.desc}</div>` : ''}
+        
+        <div class="editor-panel" id="editor-assess-${p.id}">
+          <div class="editor-cols">
+            
+            <div class="editor-col" style="flex:1;">
+              <label>Study Notes</label>
+              <textarea class="editor-textarea" id="notes-assess-textarea-${p.id}" onchange="saveAssessmentNotes('${p.id}', this.value)" placeholder="Write your notes or edge-cases here..."></textarea>
+            </div>
+            
+            <div class="editor-col" style="flex:1;">
+              <label>Practice Code / Solution</label>
+              <textarea class="editor-textarea code" id="code-assess-textarea-${p.id}" onchange="saveAssessmentCode('${p.id}', this.value)" placeholder="// Paste your code solution here..."></textarea>
+            </div>
+
+          </div>
+        </div>
+      `;
+      
+      problemsContainer.appendChild(card);
+    });
+    
+    // Highlight active in list
+    document.querySelectorAll('#assessment-topic-list .day-btn').forEach((btn, idx) => {
+      if (assessmentSheetData[idx] && assessmentSheetData[idx].id === topicId) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    });
+  }
+
+  function toggleAssessmentSolved(problemId, checkbox) {
+    S.accentureAssessmentChecks[problemId] = checkbox.checked;
+    const card = document.getElementById(`assess-card-${problemId}`);
+    if (checkbox.checked) {
+      if (card) card.classList.add('solved');
+      addXP(10);
+    } else {
+      if (card) card.classList.remove('solved');
+    }
+    save();
+    
+    const progress = getAssessmentTopicProgress(activeAssessTopic);
+    document.getElementById('assess-topic-solved-text').textContent = `${progress.solved}/${progress.total} Done`;
+    renderAssessmentTopicsList();
+  }
+
+  function toggleAssessmentEditor(problemId) {
+    const panel = document.getElementById(`editor-assess-${problemId}`);
+    const btn = document.getElementById(`btn-editor-assess-${problemId}`);
+    if (!panel) return;
+    
+    const isVisible = panel.classList.contains('active');
+    document.querySelectorAll('.editor-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.btn-toggle-editor').forEach(b => b.classList.remove('active'));
+    
+    if (!isVisible) {
+      panel.classList.add('active');
+      if (btn) btn.classList.add('active');
+      
+      const notesArea = document.getElementById(`notes-assess-textarea-${problemId}`);
+      const codeArea = document.getElementById(`code-assess-textarea-${problemId}`);
+      
+      if (notesArea) notesArea.value = S.accentureAssessmentNotes[problemId] || NOTE_TEMPLATE;
+      if (codeArea) codeArea.value = S.accentureAssessmentCodes[problemId] || '';
+    }
+  }
+
+  function saveAssessmentNotes(problemId, value) {
+    S.accentureAssessmentNotes[problemId] = value;
+    save();
+  }
+
+  function saveAssessmentCode(problemId, value) {
+    S.accentureAssessmentCodes[problemId] = value;
+    save();
+  }
+
+  // Render SQL selection list
+  function renderSqlTopicsList() {
+    const list = document.getElementById('sql-topic-list');
+    if (!list) return;
+    list.innerHTML = '';
+    
+    sqlSheetData.forEach(t => {
+      const prog = getSqlTopicProgress(t.id);
+      const btn = document.createElement('button');
+      btn.className = `day-btn ${t.id === activeSqlTopic ? 'active' : ''}`;
+      btn.onclick = () => selectSqlTopic(t.id);
+      
+      btn.innerHTML = `
+        <span class="day-title">${t.title}</span>
+        <span class="day-progress">${prog.solved}/${prog.total} Done (${prog.pct}%)</span>
+      `;
+      list.appendChild(btn);
+    });
+  }
+
+  // Load selected topic details (SQL Sheet)
+  function selectSqlTopic(topicId) {
+    activeSqlTopic = topicId;
+    const topic = sqlSheetData.find(t => t.id === topicId);
+    if (!topic) return;
+    
+    document.getElementById('curr-sql-topic-title').textContent = topic.title;
+    document.getElementById('curr-sql-topic-desc').textContent = topic.desc;
+    
+    const problemsContainer = document.getElementById('sql-problems-container');
+    problemsContainer.innerHTML = '';
+    
+    const progress = getSqlTopicProgress(topicId);
+    document.getElementById('sql-topic-solved-text').textContent = `${progress.solved}/${progress.total} Done`;
+    
+    topic.problems.forEach(p => {
+      const isSolved = !!S.accentureSqlChecks[p.id];
+      const card = document.createElement('div');
+      card.id = `sql-card-${p.id}`;
+      card.className = `problem-card ${isSolved ? 'solved' : ''}`;
+      
+      const titleLink = p.url 
+        ? `<a href="${p.url}" target="_blank" class="problem-title">${p.name} <i class="fas fa-external-link-alt" style="font-size:10px; color:var(--accent2);"></i></a>`
+        : `<span class="problem-title">${p.name}</span>`;
+
+      // Escape quotes for copy function
+      const escapedQuery = p.query.replace(/"/g, '&quot;').replace(/'/g, "\'");
+
+      card.innerHTML = `
+        <div class="problem-header">
+          <div class="problem-title-wrap">
+            <input type="checkbox" onchange="toggleSqlSolved('${p.id}', this)" ${isSolved ? 'checked' : ''}/>
+            ${titleLink}
+          </div>
+          <div class="problem-meta">
+            <span class="badge-diff ${p.difficulty}">${p.difficulty}</span>
+            <button class="btn-copy-sql" onclick="copySqlSnippet('${p.id}', this)"><i class="fas fa-copy"></i> Copy Query</button>
+            <button class="btn-toggle-editor" id="btn-editor-sql-${p.id}" onclick="toggleSqlEditor('${p.id}')"><i class="fas fa-edit"></i> Notes &amp; Query</button>
+          </div>
+        </div>
+        ${p.desc ? `<div style="font-size:12.5px; color:var(--text2); margin-top:8px; line-height:1.5; padding-left:27px;"><b style="color:var(--text);">Task:</b> ${p.desc}</div>` : ''}
+        
+        <div style="margin-top:10px; margin-left:27px; background:#08090f; border:1px solid var(--border); border-radius:6px; padding:10px 14px; font-family:'JetBrains Mono', monospace; font-size:12px; color:#4ade80; overflow-x:auto;">
+          <pre style="margin:0; white-space:pre-wrap; word-break:break-word;">${p.query}</pre>
+        </div>
+
+        <div class="editor-panel" id="editor-sql-${p.id}">
+          <div class="editor-cols">
+            
+            <div class="editor-col" style="flex:1;">
+              <label>Study Notes</label>
+              <textarea class="editor-textarea" id="notes-sql-textarea-${p.id}" onchange="saveSqlNotes('${p.id}', this.value)" placeholder="Write your SQL syntax notes, nuances, or performance tips..."></textarea>
+            </div>
+            
+            <div class="editor-col" style="flex:1;">
+              <label>Custom SQL Query / Solution</label>
+              <textarea class="editor-textarea code" id="code-sql-textarea-${p.id}" onchange="saveSqlCode('${p.id}', this.value)" placeholder="-- Write or test your query here..."></textarea>
+            </div>
+
+          </div>
+        </div>
+      `;
+      
+      problemsContainer.appendChild(card);
+    });
+    
+    // Highlight active topic in list
+    document.querySelectorAll('#sql-topic-list .day-btn').forEach((btn, idx) => {
+      if (sqlSheetData[idx] && sqlSheetData[idx].id === topicId) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    });
+  }
+
+  function toggleSqlSolved(problemId, checkbox) {
+    S.accentureSqlChecks[problemId] = checkbox.checked;
+    const card = document.getElementById(`sql-card-${problemId}`);
+    if (checkbox.checked) {
+      if (card) card.classList.add('solved');
+      addXP(10);
+    } else {
+      if (card) card.classList.remove('solved');
+    }
+    save();
+    
+    const progress = getSqlTopicProgress(activeSqlTopic);
+    document.getElementById('sql-topic-solved-text').textContent = `${progress.solved}/${progress.total} Done`;
+    renderSqlTopicsList();
+  }
+
+  function copySqlSnippet(problemId, btn) {
+    let queryToCopy = "";
+    for (const sec of sqlSheetData) {
+      const p = sec.problems.find(x => x.id === problemId);
+      if (p) { queryToCopy = p.query; break; }
+    }
+    if (!queryToCopy) return;
+    
+    navigator.clipboard.writeText(queryToCopy).then(() => {
+      const origHtml = btn.innerHTML;
+      btn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.innerHTML = origHtml;
+        btn.classList.remove('copied');
+      }, 2000);
+    }).catch(err => {
+      console.error('Clipboard copy failed:', err);
+    });
+  }
+
+  function toggleSqlEditor(problemId) {
+    const panel = document.getElementById(`editor-sql-${problemId}`);
+    const btn = document.getElementById(`btn-editor-sql-${problemId}`);
+    if (!panel) return;
+    
+    const isVisible = panel.classList.contains('active');
+    document.querySelectorAll('.editor-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.btn-toggle-editor').forEach(b => b.classList.remove('active'));
+    
+    if (!isVisible) {
+      panel.classList.add('active');
+      if (btn) btn.classList.add('active');
+      
+      const notesArea = document.getElementById(`notes-sql-textarea-${problemId}`);
+      const codeArea = document.getElementById(`code-sql-textarea-${problemId}`);
+      
+      if (notesArea) notesArea.value = S.accentureSqlNotes[problemId] || NOTE_TEMPLATE;
+      if (codeArea) codeArea.value = S.accentureSqlCodes[problemId] || '';
+    }
+  }
+
+  function saveSqlNotes(problemId, value) {
+    S.accentureSqlNotes[problemId] = value;
+    save();
+  }
+
+  function saveSqlCode(problemId, value) {
+    S.accentureSqlCodes[problemId] = value;
+    save();
+  }
+
   function switchTab(tabId) {
     activeTab = tabId;
     const roadmapBtn = document.getElementById('tab-roadmap-btn');
     const codingBtn = document.getElementById('tab-coding-btn');
+    const assessBtn = document.getElementById('tab-assessment-btn');
+    const sqlBtn = document.getElementById('tab-sql-btn');
     const cheatsheetBtn = document.getElementById('tab-cheatsheet-btn');
+    
     const roadmapContent = document.getElementById('roadmap-tab-content');
     const codingContent = document.getElementById('coding-tab-content');
+    const assessContent = document.getElementById('assessment-tab-content');
+    const sqlContent = document.getElementById('sql-tab-content');
     const cheatsheetContent = document.getElementById('cheatsheet-tab-content');
-    
+
+    // Reset all tabs
+    [roadmapBtn, codingBtn, assessBtn, sqlBtn, cheatsheetBtn].forEach(b => { if (b) b.className = 'btn-tab'; });
+    [roadmapContent, codingContent, assessContent, sqlContent, cheatsheetContent].forEach(c => { if (c) c.style.display = 'none'; });
+
     if (tabId === 'roadmap') {
       if (roadmapBtn) roadmapBtn.className = 'btn-tab active';
-      if (codingBtn) codingBtn.className = 'btn-tab';
-      if (cheatsheetBtn) cheatsheetBtn.className = 'btn-tab';
       if (roadmapContent) roadmapContent.style.display = 'block';
-      if (codingContent) codingContent.style.display = 'none';
-      if (cheatsheetContent) cheatsheetContent.style.display = 'none';
       selectDay(activeDay);
     } else if (tabId === 'coding') {
       if (codingBtn) codingBtn.className = 'btn-tab active';
-      if (roadmapBtn) roadmapBtn.className = 'btn-tab';
-      if (cheatsheetBtn) cheatsheetBtn.className = 'btn-tab';
-      if (roadmapContent) roadmapContent.style.display = 'none';
       if (codingContent) codingContent.style.display = 'block';
-      if (cheatsheetContent) cheatsheetContent.style.display = 'none';
       renderTopicsList();
       selectTopic(activeTopic);
+    } else if (tabId === 'assessment') {
+      if (assessBtn) assessBtn.className = 'btn-tab active';
+      if (assessContent) assessContent.style.display = 'block';
+      renderAssessmentTopicsList();
+      selectAssessmentTopic(activeAssessTopic);
+    } else if (tabId === 'sql') {
+      if (sqlBtn) sqlBtn.className = 'btn-tab active';
+      if (sqlContent) sqlContent.style.display = 'block';
+      renderSqlTopicsList();
+      selectSqlTopic(activeSqlTopic);
     } else if (tabId === 'cheatsheet') {
       if (cheatsheetBtn) cheatsheetBtn.className = 'btn-tab active';
-      if (roadmapBtn) roadmapBtn.className = 'btn-tab';
-      if (codingBtn) codingBtn.className = 'btn-tab';
-      if (roadmapContent) roadmapContent.style.display = 'none';
-      if (codingContent) codingContent.style.display = 'none';
       if (cheatsheetContent) cheatsheetContent.style.display = 'block';
     }
   }
