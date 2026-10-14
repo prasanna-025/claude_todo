@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "placementos-prasanna",
     "public": ".",
     "ignore": [
       "firebase.json",
