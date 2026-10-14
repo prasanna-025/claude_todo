@@ -201,8 +201,8 @@ function switchSection(sec) {
     window.location.href = 'array-plan.html';
     return;
   }
-  if (sec === 'accenture-plan') {
-    window.location.href = 'accenture-plan.html';
+  if (sec === 'pattern-roadmap') {
+    window.location.href = 'pattern-roadmap.html';
     return;
   }
   
@@ -300,6 +300,14 @@ function renderDashboard() {
   document.getElementById('r-streak').textContent = S.streak;
   document.getElementById('r-xp').textContent = S.xp;
   document.getElementById('top-streak').textContent = S.streak;
+
+  // 10 DSA Patterns Progress
+  const patternChecks = S.dsaPatternChecks || {};
+  const patternSolvedCount = Object.values(patternChecks).filter(Boolean).length;
+  const pCountEl = document.getElementById('dash-patterns-count');
+  const pBarEl = document.getElementById('dash-patterns-bar');
+  if (pCountEl) pCountEl.textContent = `${patternSolvedCount} / 131 Solved`;
+  if (pBarEl) pBarEl.style.width = `${Math.min(100, Math.round((patternSolvedCount / 131) * 100))}%`;
 
   const ring = document.getElementById('readiness-ring');
   const circ = 326.7;

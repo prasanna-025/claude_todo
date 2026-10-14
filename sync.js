@@ -87,8 +87,7 @@ function deepMergeStates(local, server) {
     if (server[key]) Object.assign(merged[key], server[key]);
     if (local[key]) Object.assign(merged[key], local[key]);
   };
-  mergeChecks('accenturePlanChecks');
-  mergeChecks('accentureCodingChecks');
+  mergeChecks('dsaPatternChecks');
   mergeChecks('arrayPlanChecks');
   
   // 3. Merge notes and code snippets (keep longer entries to avoid empty overwrites)
@@ -104,10 +103,8 @@ function deepMergeStates(local, server) {
       merged[key][id] = (localVal.length >= serverVal.length) ? localVal : serverVal;
     });
   };
-  mergeTexts('accenturePlanNotes');
-  mergeTexts('accenturePlanCodes');
-  mergeTexts('accentureCodingNotes');
-  mergeTexts('accentureCodingCodes');
+  mergeTexts('dsaPatternNotes');
+  mergeTexts('dsaPatternCodes');
   mergeTexts('arrayPlanNotes');
   mergeTexts('arrayPlanCodes');
   

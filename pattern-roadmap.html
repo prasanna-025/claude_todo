@@ -1,0 +1,1458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>10 Final DSA Patterns Mastery (131 Questions) — PlacementOS</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <style>
+    :root {
+      --bg-dark: #08090f;
+      --card-bg: rgba(16, 19, 28, 0.65);
+      --card-hover: rgba(22, 26, 38, 0.85);
+      --accent: #6c63ff;
+      --accent2: #00d4aa;
+      --border: rgba(255, 255, 255, 0.08);
+      --text: #e8eaf0;
+      --text2: #8b90a0;
+      --easy: #2ecc71;
+      --medium: #f1c40f;
+      --hard: #e74c3c;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text);
+      font-family: 'Space Grotesk', sans-serif;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+    }
+
+    .dashboard-wrapper {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .main-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow-y: auto;
+      padding: 24px 32px 48px;
+    }
+
+    /* Top stats header */
+    .roadmap-hero {
+      background: linear-gradient(135deg, rgba(108, 99, 255, 0.12) 0%, rgba(0, 212, 170, 0.05) 100%);
+      border: 1px solid rgba(108, 99, 255, 0.25);
+      border-radius: 16px;
+      padding: 22px 28px;
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .hero-title-area h1 {
+      font-size: 22px;
+      font-weight: 700;
+      margin: 0 0 6px 0;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .hero-title-area p {
+      font-size: 13.5px;
+      color: var(--text2);
+      margin: 0;
+    }
+
+    .hero-stats-group {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .stat-box {
+      background: rgba(8, 9, 15, 0.6);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 10px 18px;
+      text-align: center;
+    }
+
+    .stat-val {
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--accent2);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .stat-lbl {
+      font-size: 11px;
+      color: var(--text2);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-top: 2px;
+    }
+
+    /* 2-Column Patterns Layout */
+    .pattern-workspace {
+      display: grid;
+      grid-template-columns: 310px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    @media (max-width: 1024px) {
+      .pattern-workspace {
+        grid-template-columns: 1fr;
+      }
+      .main-content {
+        padding: 16px;
+      }
+    }
+
+    /* Left Patterns Drawer */
+    .pattern-nav-col {
+      background: rgba(16, 19, 28, 0.5);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px;
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 140px);
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .pattern-nav-col::-webkit-scrollbar {
+      width: 4px;
+    }
+    .pattern-nav-col::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+    }
+
+    .pattern-item-btn {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      text-align: left;
+      transition: all 0.2s ease;
+      color: var(--text);
+    }
+
+    .pattern-item-btn:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.15);
+      transform: translateX(2px);
+    }
+
+    .pattern-item-btn.active {
+      background: rgba(108, 99, 255, 0.16);
+      border-color: var(--accent);
+      box-shadow: 0 0 16px rgba(108, 99, 255, 0.15);
+    }
+
+    .pattern-item-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .pattern-item-num {
+      font-size: 15px;
+    }
+
+    .pattern-item-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .pattern-item-badge {
+      font-size: 11px;
+      font-family: 'JetBrains Mono', monospace;
+      padding: 3px 7px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text2);
+      border: 1px solid var(--border);
+      white-space: nowrap;
+    }
+
+    .pattern-item-btn.active .pattern-item-badge {
+      background: rgba(0, 212, 170, 0.15);
+      color: var(--accent2);
+      border-color: rgba(0, 212, 170, 0.3);
+    }
+
+    /* Right Pattern Detail Card */
+    .pattern-content-col {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .pattern-info-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 22px 24px;
+      backdrop-filter: blur(12px);
+    }
+
+    .pattern-info-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 12px;
+    }
+
+    .pattern-info-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .pattern-info-goal {
+      font-size: 13.5px;
+      color: var(--text2);
+      line-height: 1.6;
+      margin-bottom: 14px;
+    }
+
+    .learn-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .learn-tag {
+      background: rgba(108, 99, 255, 0.1);
+      border: 1px solid rgba(108, 99, 255, 0.25);
+      color: #a5b4fc;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 11.5px;
+      font-weight: 500;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .pattern-progress-bar-wrap {
+      background: rgba(255, 255, 255, 0.05);
+      height: 8px;
+      border-radius: 4px;
+      overflow: hidden;
+      margin-top: 10px;
+    }
+
+    .pattern-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      border-radius: 4px;
+      transition: width 0.3s ease;
+      width: 0%;
+    }
+
+    /* Action bar */
+    .controls-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      background: rgba(16, 19, 28, 0.5);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 16px;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(8, 9, 15, 0.7);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px 12px;
+      flex: 1;
+      max-width: 320px;
+    }
+
+    .search-box input {
+      background: transparent;
+      border: none;
+      outline: none;
+      color: #fff;
+      font-size: 13px;
+      font-family: inherit;
+      width: 100%;
+    }
+
+    .filter-tabs {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      color: var(--text2);
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 11.5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .filter-btn:hover, .filter-btn.active {
+      background: rgba(108, 99, 255, 0.18);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    .btn-random {
+      background: linear-gradient(135deg, rgba(0, 212, 170, 0.15), rgba(108, 99, 255, 0.15));
+      border: 1px solid rgba(0, 212, 170, 0.3);
+      color: var(--accent2);
+      padding: 7px 14px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-random:hover {
+      background: linear-gradient(135deg, rgba(0, 212, 170, 0.25), rgba(108, 99, 255, 0.25));
+      transform: translateY(-1px);
+    }
+
+    /* Subsections dividers */
+    .subsection-divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 18px 0 10px 0;
+      padding: 4px 0;
+    }
+
+    .subsection-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--accent2);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      white-space: nowrap;
+    }
+
+    .subsection-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(0, 212, 170, 0.4), transparent);
+    }
+
+    /* Problem Card */
+    .problem-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-bottom: 12px;
+      transition: all 0.2s ease;
+    }
+
+    .problem-card:hover {
+      border-color: rgba(255, 255, 255, 0.15);
+      background: var(--card-hover);
+    }
+
+    .problem-card.solved {
+      border-color: rgba(0, 212, 170, 0.3);
+      background: rgba(0, 212, 170, 0.02);
+    }
+
+    .problem-card.flash-highlight {
+      animation: highlightGlow 2s ease;
+    }
+
+    @keyframes highlightGlow {
+      0% { box-shadow: 0 0 25px rgba(0, 212, 170, 0.8); border-color: var(--accent2); }
+      100% { box-shadow: none; }
+    }
+
+    .problem-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .problem-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex: 1;
+      min-width: 250px;
+    }
+
+    .problem-checkbox {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--accent2);
+      cursor: pointer;
+    }
+
+    .problem-link {
+      font-size: 14.5px;
+      font-weight: 600;
+      color: #fff;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.15s ease;
+    }
+
+    .problem-link:hover {
+      color: var(--accent2);
+    }
+
+    .problem-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .diff-badge {
+      padding: 3px 9px;
+      border-radius: 6px;
+      font-size: 10.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .diff-badge.easy { background: rgba(46, 204, 113, 0.15); color: #2ecc71; border: 1px solid rgba(46, 204, 113, 0.3); }
+    .diff-badge.medium { background: rgba(241, 196, 15, 0.15); color: #f1c40f; border: 1px solid rgba(241, 196, 15, 0.3); }
+    .diff-badge.hard { background: rgba(231, 76, 60, 0.15); color: #e74c3c; border: 1px solid rgba(231, 76, 60, 0.3); }
+
+    .btn-toggle-editor {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 11px;
+      padding: 5px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-toggle-editor:hover, .btn-toggle-editor.active {
+      background: rgba(108, 99, 255, 0.15);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    /* Editor Drawer */
+    .editor-drawer {
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px dashed var(--border);
+      display: none;
+    }
+
+    .editor-drawer.open {
+      display: block;
+    }
+
+    .editor-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+    }
+
+    .editor-box {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .editor-box label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text2);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .editor-textarea {
+      background: rgba(8, 9, 15, 0.85);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 12px;
+      color: #fff;
+      font-size: 12.5px;
+      resize: vertical;
+      min-height: 110px;
+      font-family: inherit;
+    }
+
+    .editor-textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .editor-textarea.code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px;
+      background: #05060a;
+      line-height: 1.5;
+    }
+
+    .screenshot-dropzone {
+      border: 1.5px dashed var(--border);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.01);
+      min-height: 110px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: 11.5px;
+      color: var(--text2);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.2s ease;
+    }
+
+    .screenshot-dropzone:hover {
+      border-color: var(--accent);
+      background: rgba(108, 99, 255, 0.05);
+    }
+
+    .screenshot-preview-img {
+      max-width: 100%;
+      max-height: 140px;
+      border-radius: 6px;
+      object-fit: cover;
+    }
+
+    /* Lightbox Modal */
+    .lightbox-modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(8, 9, 15, 0.95);
+      z-index: 10000;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .lightbox-img {
+      max-width: 90%;
+      max-height: 85%;
+      border-radius: 8px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 24px; right: 24px;
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 28px;
+      cursor: pointer;
+    }
+
+    /* Study Guide Modal */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.8);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .guide-modal-content {
+      background: #10131c;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      max-width: 720px;
+      width: 100%;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 28px;
+      position: relative;
+    }
+
+    .guide-step {
+      display: flex;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    .guide-step-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgba(108, 99, 255, 0.2);
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 13px;
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body class="dashboard-body">
+
+<div class="dashboard-wrapper">
+  
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <span class="logo-icon">⚡</span>
+      <span class="logo-text">PlacementOS</span>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="index.html" class="nav-item" data-section="dashboard"><i class="fas fa-th-large"></i><span>Dashboard</span></a>
+      <a href="dsa-problems.html" class="nav-item" data-section="dsa"><i class="fas fa-code"></i><span>DSA Tracker</span></a>
+      <a href="array-plan.html" class="nav-item" data-section="array-plan"><i class="fas fa-list-ol"></i><span>Array Plan</span></a>
+      <a href="pattern-roadmap.html" class="nav-item active" data-section="pattern-roadmap"><i class="fas fa-cubes"></i><span>10 DSA Patterns</span></a>
+      <a href="index.html" class="nav-item" data-section="subjects"><i class="fas fa-book"></i><span>Core Subjects</span></a>
+      <a href="index.html" class="nav-item" data-section="communication"><i class="fas fa-comments"></i><span>Communication</span></a>
+      <a href="index.html" class="nav-item" data-section="softskills"><i class="fas fa-brain"></i><span>Soft Skills</span></a>
+      <a href="index.html" class="nav-item" data-section="projects"><i class="fas fa-folder-open"></i><span>Projects</span></a>
+      <a href="index.html" class="nav-item" data-section="placement"><i class="fas fa-briefcase"></i><span>Placement</span></a>
+      <a href="index.html" class="nav-item" data-section="roadmap"><i class="fas fa-map-signs"></i><span>8-Month Roadmap</span></a>
+      <a href="index.html" class="nav-item" data-section="extraskills"><i class="fas fa-cloud"></i><span>Cloud &amp; Extra Skills</span></a>
+      <a href="index.html" class="nav-item" data-section="analytics"><i class="fas fa-chart-line"></i><span>Analytics</span></a>
+      <a href="focus-todo.html" class="nav-item"><i class="fas fa-hourglass-half"></i><span>Focus Timer</span></a>
+      <a href="motivation.html" class="nav-item"><i class="fas fa-fire"></i><span>Grind Motivation</span></a>
+    </nav>
+    <div class="sidebar-bottom">
+      <div class="xp-bar-wrap">
+        <div class="xp-label">
+          <span>⚔️ Level <span id="sb-level">1</span></span>
+          <span id="sb-xp">0 XP</span>
+        </div>
+        <div class="xp-bar"><div class="xp-fill" id="sb-xp-fill"></div></div>
+        <div class="xp-next" id="sb-xp-next">100 XP to next level</div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- MAIN BODY -->
+  <div class="main-content">
+    
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <div class="topbar-title" id="topbar-title">🧩 10 Final DSA Patterns Mastery</div>
+      <div style="display:flex; align-items:center; gap: 14px;">
+        <span class="save-indicator" id="sync-status" style="font-size:12.5px; color:var(--text2); display:flex; align-items:center; gap:6px;">
+          <i class="fas fa-cloud"></i> Synced
+        </span>
+        <div class="streak-badge">
+          <span class="fire-emoji">🔥</span>
+          <span class="streak-text" id="topbar-streak">0 day streak</span>
+        </div>
+        <button class="btn btn-sm" onclick="openStudyGuide()" style="border: 1px solid var(--accent); background: rgba(108, 99, 255, 0.15); color: #fff; cursor: pointer;">
+          <i class="fas fa-book-open"></i> 8-Step Study Guide
+        </button>
+      </div>
+    </header>
+
+    <!-- HERO PROGRESS BANNER -->
+    <div class="roadmap-hero">
+      <div class="hero-title-area">
+        <h1><span>🎯</span> Final DSA Pattern Roadmap (131 Questions)</h1>
+        <p>Master pattern recognition over rote memorization. Master the 10 foundational paradigms for placements.</p>
+        <div style="margin-top: 14px; max-width: 480px;">
+          <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 6px;">
+            <span style="color: #fff; font-weight: 600;">Overall Progress</span>
+            <span id="hero-pct-text" style="color: var(--accent2); font-weight: 700;">0 / 131 Solved (0%)</span>
+          </div>
+          <div style="background: rgba(255, 255, 255, 0.08); height: 8px; border-radius: 4px; overflow: hidden;">
+            <div id="hero-progress-fill" style="height: 100%; width: 0%; background: linear-gradient(90deg, var(--accent), var(--accent2)); transition: width 0.3s ease;"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-stats-group">
+        <div class="stat-box">
+          <div class="stat-val" id="stat-solved">0</div>
+          <div class="stat-lbl">Solved</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-val" id="stat-easy">0/38</div>
+          <div class="stat-lbl">Easy</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-val" id="stat-medium">0/83</div>
+          <div class="stat-lbl">Medium</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-val" id="stat-hard">0/10</div>
+          <div class="stat-lbl">Hard</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2-COLUMN PATTERNS WORKSPACE -->
+    <div class="pattern-workspace">
+      
+      <!-- LEFT: Patterns Selector Navigation -->
+      <div class="pattern-nav-col" id="patterns-nav-list">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <!-- RIGHT: Current Pattern Detail View -->
+      <div class="pattern-content-col">
+        
+        <!-- Pattern Info Header -->
+        <div class="pattern-info-card">
+          <div class="pattern-info-header">
+            <div class="pattern-info-title">
+              <span id="curr-pattern-icon">1️⃣</span>
+              <span id="curr-pattern-title">Hashing / Hash Map</span>
+            </div>
+            <div style="font-size: 13px; font-weight: 700; color: var(--accent2); font-family: 'JetBrains Mono', monospace;" id="curr-pattern-count-badge">
+              0 / 15 Done
+            </div>
+          </div>
+          
+          <div class="pattern-info-goal" id="curr-pattern-goal">
+            Frequency, lookup, duplicates, index mapping, and combining hashing with other patterns.
+          </div>
+
+          <div style="font-size: 11px; font-weight: 700; color: var(--text2); text-transform: uppercase; margin-bottom: 6px; letter-spacing: 0.5px;">
+            Core Concepts to Master:
+          </div>
+          <div class="learn-tags" id="curr-pattern-learn-tags">
+            <!-- Rendered dynamically -->
+          </div>
+
+          <div class="pattern-progress-bar-wrap">
+            <div class="pattern-progress-fill" id="curr-pattern-progress-fill"></div>
+          </div>
+        </div>
+
+        <!-- Controls Toolbar -->
+        <div class="controls-toolbar">
+          <div class="search-box">
+            <i class="fas fa-search" style="color: var(--text2); font-size: 12px;"></i>
+            <input type="text" id="problem-search" placeholder="Search problem or #..." oninput="handleSearch(this.value)"/>
+          </div>
+
+          <div class="filter-tabs">
+            <button class="filter-btn active" onclick="setDiffFilter('all')">All</button>
+            <button class="filter-btn" onclick="setDiffFilter('easy')">Easy</button>
+            <button class="filter-btn" onclick="setDiffFilter('medium')">Medium</button>
+            <button class="filter-btn" onclick="setDiffFilter('hard')">Hard</button>
+            <button class="filter-btn" onclick="setDiffFilter('unsolved')">Unsolved</button>
+            <button class="filter-btn" onclick="setDiffFilter('solved')">Solved</button>
+          </div>
+
+          <button class="btn-random" onclick="pickRandomProblem()">
+            <i class="fas fa-dice"></i> Pick Random
+          </button>
+        </div>
+
+        <!-- Problems Container -->
+        <div id="problems-container">
+          <!-- Rendered dynamically -->
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- LIGHTBOX MODAL FOR SCREENSHOTS -->
+<div class="lightbox-modal" id="lightboxModal" onclick="this.style.display='none'">
+  <button class="lightbox-close" onclick="document.getElementById('lightboxModal').style.display='none'">&times;</button>
+  <img src="" class="lightbox-img" id="lightboxImg" onclick="event.stopPropagation()"/>
+</div>
+
+<!-- 8-STEP STUDY GUIDE MODAL -->
+<div class="modal-overlay" id="guideModal" onclick="closeStudyGuide()">
+  <div class="guide-modal-content" onclick="event.stopPropagation()">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px;">
+      <h2 style="font-size: 18px; margin: 0; color: #fff; display: flex; align-items: center; gap: 8px;">
+        <i class="fas fa-graduation-cap" style="color: var(--accent);"></i> The 8-Step Problem Solving Rule
+      </h2>
+      <button onclick="closeStudyGuide()" style="background:none; border:none; color:var(--text2); font-size:22px; cursor:pointer;">&times;</button>
+    </div>
+
+    <div class="guide-step">
+      <div class="guide-step-num">1</div>
+      <div>
+        <div style="font-weight: 700; color: #fff; font-size: 13.5px;">Read Carefully Twice</div>
+        <div style="font-size: 12.5px; color: var(--text2); margin-top: 2px;">Notice edge conditions: negatives, empty arrays, single elements, odd/even constraints.</div>
+      </div>
+    </div>
+
+    <div class="guide-step">
+      <div class="guide-step-num">2</div>
+      <div>
+        <div style="font-weight: 700; color: #fff; font-size: 13.5px;">Identify the Pattern &amp; Inputs</div>
+        <div style="font-size: 12.5px; color: var(--text2); margin-top: 2px;">Is it contiguous? (Sliding window / Prefix sum). Sorted? (Two pointers / Binary search). Next greater? (Monotonic stack).</div>
+      </div>
+    </div>
+
+    <div class="guide-step">
+      <div class="guide-step-num">3</div>
+      <div>
+        <div style="font-weight: 700; color: #fff; font-size: 13.5px;">Dry-Run on Paper First</div>
+        <div style="font-size: 12.5px; color: var(--text2); margin-top: 2px;">Trace standard and edge test cases manually before opening the code editor.</div>
+      </div>
+    </div>
+
+    <div class="guide-step">
+      <div class="guide-step-num">4</div>
+      <div>
+        <div style="font-weight: 700; color: #fff; font-size: 13.5px;">State Time &amp; Space Complexity</div>
+        <div style="font-size: 12.5px; color: var(--text2); margin-top: 2px;">Know the target complexity: O(N) or O(N log N). Avoid O(N²) when N ≥ 10⁵.</div>
+      </div>
+    </div>
+
+    <div class="guide-step">
+      <div class="guide-step-num">5</div>
+      <div>
+        <div style="font-weight: 700; color: #fff; font-size: 13.5px;">Write Clean, Modular Code</div>
+        <div style="font-size: 12.5px; color: var(--text2); margin-top: 2px;">Use self-descriptive variable names and write idiomatic Python/C++/Java.</div>
+      </div>
+    </div>
+
+    <div class="guide-step">
+      <div class="guide-step-num">6</div>
+      <div>
+        <div style="font-weight: 700; color: #fff; font-size: 13.5px;">Check Off-By-One Errors</div>
+        <div style="font-size: 12.5px; color: var(--text2); margin-top: 2px;">Verify 0-indexed loops, inclusive/exclusive boundaries in binary search and sliding windows.</div>
+      </div>
+    </div>
+
+    <div class="guide-step">
+      <div class="guide-step-num">7</div>
+      <div>
+        <div style="font-weight: 700; color: #fff; font-size: 13.5px;">Save Notes &amp; Code Proof</div>
+        <div style="font-size: 12.5px; color: var(--text2); margin-top: 2px;">Document the key insight or tricky bug in the Notes drawer so you never forget it during revision.</div>
+      </div>
+    </div>
+
+    <div class="guide-step">
+      <div class="guide-step-num">8</div>
+      <div>
+        <div style="font-weight: 700; color: #fff; font-size: 13.5px;">Repeat Spaced Repetition</div>
+        <div style="font-size: 12.5px; color: var(--text2); margin-top: 2px;">Re-solve tagged difficult problems after 7 days without looking at your solution.</div>
+      </div>
+    </div>
+
+    <div style="text-align: right; margin-top: 20px;">
+      <button class="btn btn-primary" onclick="closeStudyGuide()" style="padding: 8px 20px;">Got It</button>
+    </div>
+  </div>
+</div>
+
+<!-- SCRIPTS -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="sync.js"></script>
+
+<script>
+  // 10 Patterns Dataset
+  const PATTERNS_DATA = [{"id": "pat_1", "num": 1, "name": "Hashing / Hash Map", "icon": "1️⃣", "count": 15, "goal": "Frequency, lookup, duplicates, index mapping, and combining hashing with other patterns.", "learn": ["dict", "set", "frequency map", "index map", "lookup / complement"], "problems": [{"id": "p1_1", "num": 1, "name": "Two Sum", "difficulty": "easy", "url": "https://leetcode.com/problems/two-sum/"}, {"id": "p1_2", "num": 217, "name": "Contains Duplicate", "difficulty": "easy", "url": "https://leetcode.com/problems/contains-duplicate/"}, {"id": "p1_3", "num": 242, "name": "Valid Anagram", "difficulty": "easy", "url": "https://leetcode.com/problems/valid-anagram/"}, {"id": "p1_4", "num": 49, "name": "Group Anagrams", "difficulty": "medium", "url": "https://leetcode.com/problems/group-anagrams/"}, {"id": "p1_5", "num": 169, "name": "Majority Element", "difficulty": "easy", "url": "https://leetcode.com/problems/majority-element/"}, {"id": "p1_6", "num": 205, "name": "Isomorphic Strings", "difficulty": "easy", "url": "https://leetcode.com/problems/isomorphic-strings/"}, {"id": "p1_7", "num": 202, "name": "Happy Number", "difficulty": "easy", "url": "https://leetcode.com/problems/happy-number/"}, {"id": "p1_8", "num": 349, "name": "Intersection of Two Arrays", "difficulty": "easy", "url": "https://leetcode.com/problems/intersection-of-two-arrays/"}, {"id": "p1_9", "num": 347, "name": "Top K Frequent Elements", "difficulty": "medium", "url": "https://leetcode.com/problems/top-k-frequent-elements/"}, {"id": "p1_10", "num": 128, "name": "Longest Consecutive Sequence", "difficulty": "medium", "url": "https://leetcode.com/problems/longest-consecutive-sequence/"}, {"id": "p1_11", "num": 3, "name": "Longest Substring Without Repeating Characters", "difficulty": "medium", "url": "https://leetcode.com/problems/longest-substring-without-repeating-characters/"}, {"id": "p1_12", "num": 438, "name": "Find All Anagrams in a String", "difficulty": "medium", "url": "https://leetcode.com/problems/find-all-anagrams-in-a-string/"}, {"id": "p1_13", "num": 560, "name": "Subarray Sum Equals K", "difficulty": "medium", "url": "https://leetcode.com/problems/subarray-sum-equals-k/"}, {"id": "p1_14", "num": 454, "name": "4Sum II", "difficulty": "medium", "url": "https://leetcode.com/problems/4sum-ii/"}, {"id": "p1_15", "num": 76, "name": "Minimum Window Substring", "difficulty": "hard", "url": "https://leetcode.com/problems/minimum-window-substring/"}]}, {"id": "pat_2", "num": 2, "name": "Prefix Sum", "icon": "2️⃣", "count": 10, "goal": "Turn repeated range/subarray calculations into O(1) lookups and combine prefix sums with Hashing.", "learn": ["prefix array", "prefix + HashMap", "range sums", "difference array"], "problems": [{"id": "p2_1", "num": 1480, "name": "Running Sum of 1d Array", "difficulty": "easy", "url": "https://leetcode.com/problems/running-sum-of-1d-array/"}, {"id": "p2_2", "num": 303, "name": "Range Sum Query - Immutable", "difficulty": "easy", "url": "https://leetcode.com/problems/range-sum-query-immutable/"}, {"id": "p2_3", "num": 724, "name": "Find Pivot Index", "difficulty": "easy", "url": "https://leetcode.com/problems/find-pivot-index/"}, {"id": "p2_4", "num": 2574, "name": "Left and Right Sum Differences", "difficulty": "easy", "url": "https://leetcode.com/problems/left-and-right-sum-differences/"}, {"id": "p2_5", "num": 560, "name": "Subarray Sum Equals K", "difficulty": "medium", "url": "https://leetcode.com/problems/subarray-sum-equals-k/"}, {"id": "p2_6", "num": 525, "name": "Contiguous Array", "difficulty": "medium", "url": "https://leetcode.com/problems/contiguous-array/"}, {"id": "p2_7", "num": 238, "name": "Product of Array Except Self", "difficulty": "medium", "url": "https://leetcode.com/problems/product-of-array-except-self/"}, {"id": "p2_8", "num": 1109, "name": "Corporate Flight Bookings", "difficulty": "medium", "url": "https://leetcode.com/problems/corporate-flight-bookings/"}, {"id": "p2_9", "num": 1094, "name": "Car Pooling", "difficulty": "medium", "url": "https://leetcode.com/problems/car-pooling/"}, {"id": "p2_10", "num": 523, "name": "Continuous Subarray Sum", "difficulty": "medium", "url": "https://leetcode.com/problems/continuous-subarray-sum/"}]}, {"id": "pat_3", "num": 3, "name": "Two Pointers", "icon": "3️⃣", "count": 12, "goal": "Use two indices to reduce O(n²) problems to O(n), especially with sorted arrays.", "learn": ["left/right pointers", "slow/fast positions", "sorted-array technique", "3Sum/4Sum"], "problems": [{"id": "p3_1", "num": 125, "name": "Valid Palindrome", "difficulty": "easy", "url": "https://leetcode.com/problems/valid-palindrome/"}, {"id": "p3_2", "num": 167, "name": "Two Sum II - Input Array Is Sorted", "difficulty": "medium", "url": "https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/"}, {"id": "p3_3", "num": 26, "name": "Remove Duplicates from Sorted Array", "difficulty": "easy", "url": "https://leetcode.com/problems/remove-duplicates-from-sorted-array/"}, {"id": "p3_4", "num": 283, "name": "Move Zeroes", "difficulty": "easy", "url": "https://leetcode.com/problems/move-zeroes/"}, {"id": "p3_5", "num": 88, "name": "Merge Sorted Array", "difficulty": "easy", "url": "https://leetcode.com/problems/merge-sorted-array/"}, {"id": "p3_6", "num": 977, "name": "Squares of a Sorted Array", "difficulty": "easy", "url": "https://leetcode.com/problems/squares-of-a-sorted-array/"}, {"id": "p3_7", "num": 15, "name": "3Sum", "difficulty": "medium", "url": "https://leetcode.com/problems/3sum/"}, {"id": "p3_8", "num": 11, "name": "Container With Most Water", "difficulty": "medium", "url": "https://leetcode.com/problems/container-with-most-water/"}, {"id": "p3_9", "num": 75, "name": "Sort Colors", "difficulty": "medium", "url": "https://leetcode.com/problems/sort-colors/"}, {"id": "p3_10", "num": 881, "name": "Boats to Save People", "difficulty": "medium", "url": "https://leetcode.com/problems/boats-to-save-people/"}, {"id": "p3_11", "num": 18, "name": "4Sum", "difficulty": "medium", "url": "https://leetcode.com/problems/4sum/"}, {"id": "p3_12", "num": 42, "name": "Trapping Rain Water", "difficulty": "hard", "url": "https://leetcode.com/problems/trapping-rain-water/"}]}, {"id": "pat_4", "num": 4, "name": "Sliding Window", "icon": "4️⃣", "count": 12, "goal": "Efficiently process contiguous subarrays/substrings without recomputing overlapping elements.", "learn": ["fixed window", "variable window", "frequency map", "left/right contraction", "monotonic deque"], "problems": [{"id": "p4_1", "num": 643, "name": "Maximum Average Subarray I", "difficulty": "easy", "url": "https://leetcode.com/problems/maximum-average-subarray-i/"}, {"id": "p4_2", "num": 1456, "name": "Maximum Number of Vowels in a Substring of Given Length", "difficulty": "medium", "url": "https://leetcode.com/problems/maximum-number-of-vowels-in-a-substring-of-given-length/"}, {"id": "p4_3", "num": 3, "name": "Longest Substring Without Repeating Characters", "difficulty": "medium", "url": "https://leetcode.com/problems/longest-substring-without-repeating-characters/"}, {"id": "p4_4", "num": 567, "name": "Permutation in String", "difficulty": "medium", "url": "https://leetcode.com/problems/permutation-in-string/"}, {"id": "p4_5", "num": 438, "name": "Find All Anagrams in a String", "difficulty": "medium", "url": "https://leetcode.com/problems/find-all-anagrams-in-a-string/"}, {"id": "p4_6", "num": 424, "name": "Longest Repeating Character Replacement", "difficulty": "medium", "url": "https://leetcode.com/problems/longest-repeating-character-replacement/"}, {"id": "p4_7", "num": 1004, "name": "Max Consecutive Ones III", "difficulty": "medium", "url": "https://leetcode.com/problems/max-consecutive-ones-iii/"}, {"id": "p4_8", "num": 209, "name": "Minimum Size Subarray Sum", "difficulty": "medium", "url": "https://leetcode.com/problems/minimum-size-subarray-sum/"}, {"id": "p4_9", "num": 904, "name": "Fruit Into Baskets", "difficulty": "medium", "url": "https://leetcode.com/problems/fruit-into-baskets/"}, {"id": "p4_10", "num": 76, "name": "Minimum Window Substring", "difficulty": "hard", "url": "https://leetcode.com/problems/minimum-window-substring/"}, {"id": "p4_11", "num": 713, "name": "Subarray Product Less Than K", "difficulty": "medium", "url": "https://leetcode.com/problems/subarray-product-less-than-k/"}, {"id": "p4_12", "num": 239, "name": "Sliding Window Maximum", "difficulty": "hard", "url": "https://leetcode.com/problems/sliding-window-maximum/"}]}, {"id": "pat_5", "num": 5, "name": "Binary Search", "icon": "5️⃣", "count": 12, "goal": "Search a sorted/monotonic search space in O(log n), including binary search on the answer range.", "learn": ["normal BS", "boundary conditions", "rotated arrays", "binary search on answer"], "problems": [{"id": "p5_1", "num": 704, "name": "Binary Search", "difficulty": "easy", "url": "https://leetcode.com/problems/binary-search/"}, {"id": "p5_2", "num": 35, "name": "Search Insert Position", "difficulty": "easy", "url": "https://leetcode.com/problems/search-insert-position/"}, {"id": "p5_3", "num": 278, "name": "First Bad Version", "difficulty": "easy", "url": "https://leetcode.com/problems/first-bad-version/"}, {"id": "p5_4", "num": 69, "name": "Sqrt(x)", "difficulty": "easy", "url": "https://leetcode.com/problems/sqrtx/"}, {"id": "p5_5", "num": 34, "name": "Find First and Last Position of Element in Sorted Array", "difficulty": "medium", "url": "https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/"}, {"id": "p5_6", "num": 33, "name": "Search in Rotated Sorted Array", "difficulty": "medium", "url": "https://leetcode.com/problems/search-in-rotated-sorted-array/"}, {"id": "p5_7", "num": 153, "name": "Find Minimum in Rotated Sorted Array", "difficulty": "medium", "url": "https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/"}, {"id": "p5_8", "num": 74, "name": "Search a 2D Matrix", "difficulty": "medium", "url": "https://leetcode.com/problems/search-a-2d-matrix/"}, {"id": "p5_9", "num": 162, "name": "Find Peak Element", "difficulty": "medium", "url": "https://leetcode.com/problems/find-peak-element/"}, {"id": "p5_10", "num": 875, "name": "Koko Eating Bananas", "difficulty": "medium", "url": "https://leetcode.com/problems/koko-eating-bananas/"}, {"id": "p5_11", "num": 1011, "name": "Capacity To Ship Packages Within D Days", "difficulty": "medium", "url": "https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/"}, {"id": "p5_12", "num": 981, "name": "Time Based Key-Value Store", "difficulty": "medium", "url": "https://leetcode.com/problems/time-based-key-value-store/"}]}, {"id": "pat_6", "num": 6, "name": "Stack / Monotonic Stack", "icon": "6️⃣", "count": 12, "goal": "LIFO operations, parenthesis balancing, and 'next greater/smaller element' using monotonic stacks.", "learn": ["LIFO processing", "nested parsing", "monotonic increasing/decreasing stack", "contribution technique"], "subsections": [{"title": "Normal Stack", "problems": [{"id": "p6_1", "num": 20, "name": "Valid Parentheses", "difficulty": "easy", "url": "https://leetcode.com/problems/valid-parentheses/", "sub": "Normal Stack"}, {"id": "p6_2", "num": 155, "name": "Min Stack", "difficulty": "medium", "url": "https://leetcode.com/problems/min-stack/", "sub": "Normal Stack"}, {"id": "p6_3", "num": 150, "name": "Evaluate Reverse Polish Notation", "difficulty": "medium", "url": "https://leetcode.com/problems/evaluate-reverse-polish-notation/", "sub": "Normal Stack"}, {"id": "p6_4", "num": 844, "name": "Backspace String Compare", "difficulty": "easy", "url": "https://leetcode.com/problems/backspace-string-compare/", "sub": "Normal Stack"}, {"id": "p6_5", "num": 71, "name": "Simplify Path", "difficulty": "medium", "url": "https://leetcode.com/problems/simplify-path/", "sub": "Normal Stack"}, {"id": "p6_6", "num": 394, "name": "Decode String", "difficulty": "medium", "url": "https://leetcode.com/problems/decode-string/", "sub": "Normal Stack"}]}, {"title": "Monotonic Stack", "problems": [{"id": "p6_7", "num": 739, "name": "Daily Temperatures", "difficulty": "medium", "url": "https://leetcode.com/problems/daily-temperatures/", "sub": "Monotonic Stack"}, {"id": "p6_8", "num": 496, "name": "Next Greater Element I", "difficulty": "easy", "url": "https://leetcode.com/problems/next-greater-element-i/", "sub": "Monotonic Stack"}, {"id": "p6_9", "num": 503, "name": "Next Greater Element II", "difficulty": "medium", "url": "https://leetcode.com/problems/next-greater-element-ii/", "sub": "Monotonic Stack"}, {"id": "p6_10", "num": 901, "name": "Online Stock Span", "difficulty": "medium", "url": "https://leetcode.com/problems/online-stock-span/", "sub": "Monotonic Stack"}, {"id": "p6_11", "num": 84, "name": "Largest Rectangle in Histogram", "difficulty": "hard", "url": "https://leetcode.com/problems/largest-rectangle-in-histogram/", "sub": "Monotonic Stack"}, {"id": "p6_12", "num": 907, "name": "Sum of Subarray Minimums", "difficulty": "medium", "url": "https://leetcode.com/problems/sum-of-subarray-minimums/", "sub": "Monotonic Stack"}]}], "problems": [{"id": "p6_1", "num": 20, "name": "Valid Parentheses", "difficulty": "easy", "url": "https://leetcode.com/problems/valid-parentheses/", "sub": "Normal Stack"}, {"id": "p6_2", "num": 155, "name": "Min Stack", "difficulty": "medium", "url": "https://leetcode.com/problems/min-stack/", "sub": "Normal Stack"}, {"id": "p6_3", "num": 150, "name": "Evaluate Reverse Polish Notation", "difficulty": "medium", "url": "https://leetcode.com/problems/evaluate-reverse-polish-notation/", "sub": "Normal Stack"}, {"id": "p6_4", "num": 844, "name": "Backspace String Compare", "difficulty": "easy", "url": "https://leetcode.com/problems/backspace-string-compare/", "sub": "Normal Stack"}, {"id": "p6_5", "num": 71, "name": "Simplify Path", "difficulty": "medium", "url": "https://leetcode.com/problems/simplify-path/", "sub": "Normal Stack"}, {"id": "p6_6", "num": 394, "name": "Decode String", "difficulty": "medium", "url": "https://leetcode.com/problems/decode-string/", "sub": "Normal Stack"}, {"id": "p6_7", "num": 739, "name": "Daily Temperatures", "difficulty": "medium", "url": "https://leetcode.com/problems/daily-temperatures/", "sub": "Monotonic Stack"}, {"id": "p6_8", "num": 496, "name": "Next Greater Element I", "difficulty": "easy", "url": "https://leetcode.com/problems/next-greater-element-i/", "sub": "Monotonic Stack"}, {"id": "p6_9", "num": 503, "name": "Next Greater Element II", "difficulty": "medium", "url": "https://leetcode.com/problems/next-greater-element-ii/", "sub": "Monotonic Stack"}, {"id": "p6_10", "num": 901, "name": "Online Stock Span", "difficulty": "medium", "url": "https://leetcode.com/problems/online-stock-span/", "sub": "Monotonic Stack"}, {"id": "p6_11", "num": 84, "name": "Largest Rectangle in Histogram", "difficulty": "hard", "url": "https://leetcode.com/problems/largest-rectangle-in-histogram/", "sub": "Monotonic Stack"}, {"id": "p6_12", "num": 907, "name": "Sum of Subarray Minimums", "difficulty": "medium", "url": "https://leetcode.com/problems/sum-of-subarray-minimums/", "sub": "Monotonic Stack"}]}, {"id": "pat_7", "num": 7, "name": "Heap / Top-K", "icon": "7️⃣", "count": 8, "goal": "Priority queues, K largest/smallest elements, and continuous streaming data calculations.", "learn": ["min heap", "max heap", "fixed-size heap (size K)", "two heaps (median)"], "problems": [{"id": "p7_1", "num": 215, "name": "Kth Largest Element in an Array", "difficulty": "medium", "url": "https://leetcode.com/problems/kth-largest-element-in-an-array/"}, {"id": "p7_2", "num": 347, "name": "Top K Frequent Elements", "difficulty": "medium", "url": "https://leetcode.com/problems/top-k-frequent-elements/"}, {"id": "p7_3", "num": 973, "name": "K Closest Points to Origin", "difficulty": "medium", "url": "https://leetcode.com/problems/k-closest-points-to-origin/"}, {"id": "p7_4", "num": 1046, "name": "Last Stone Weight", "difficulty": "easy", "url": "https://leetcode.com/problems/last-stone-weight/"}, {"id": "p7_5", "num": 295, "name": "Find Median from Data Stream", "difficulty": "hard", "url": "https://leetcode.com/problems/find-median-from-data-stream/"}, {"id": "p7_6", "num": 621, "name": "Task Scheduler", "difficulty": "medium", "url": "https://leetcode.com/problems/task-scheduler/"}, {"id": "p7_7", "num": 767, "name": "Reorganize String", "difficulty": "medium", "url": "https://leetcode.com/problems/reorganize-string/"}, {"id": "p7_8", "num": 378, "name": "Kth Smallest Element in a Sorted Matrix", "difficulty": "medium", "url": "https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/"}]}, {"id": "pat_8", "num": 8, "name": "Intervals + Greedy", "icon": "8️⃣", "count": 14, "goal": "Overlap resolution, interval merging/scheduling, earliest finish time, and local optimal choices.", "learn": ["sorting intervals", "earliest finish time", "local optimal choice", "resource allocation"], "subsections": [{"title": "Intervals", "problems": [{"id": "p8_1", "num": 56, "name": "Merge Intervals", "difficulty": "medium", "url": "https://leetcode.com/problems/merge-intervals/", "sub": "Intervals"}, {"id": "p8_2", "num": 57, "name": "Insert Interval", "difficulty": "medium", "url": "https://leetcode.com/problems/insert-interval/", "sub": "Intervals"}, {"id": "p8_3", "num": 435, "name": "Non-overlapping Intervals", "difficulty": "medium", "url": "https://leetcode.com/problems/non-overlapping-intervals/", "sub": "Intervals"}, {"id": "p8_4", "num": 252, "name": "Meeting Rooms", "difficulty": "easy", "url": "https://leetcode.com/problems/meeting-rooms/", "sub": "Intervals"}, {"id": "p8_5", "num": 253, "name": "Meeting Rooms II", "difficulty": "medium", "url": "https://leetcode.com/problems/meeting-rooms-ii/", "sub": "Intervals"}, {"id": "p8_6", "num": 452, "name": "Minimum Number of Arrows to Burst Balloons", "difficulty": "medium", "url": "https://leetcode.com/problems/minimum-number-of-arrows-to-burst-balloons/", "sub": "Intervals"}, {"id": "p8_7", "num": 986, "name": "Interval List Intersections", "difficulty": "medium", "url": "https://leetcode.com/problems/interval-list-intersections/", "sub": "Intervals"}]}, {"title": "Greedy", "problems": [{"id": "p8_8", "num": 122, "name": "Best Time to Buy and Sell Stock II", "difficulty": "medium", "url": "https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/", "sub": "Greedy"}, {"id": "p8_9", "num": 55, "name": "Jump Game", "difficulty": "medium", "url": "https://leetcode.com/problems/jump-game/", "sub": "Greedy"}, {"id": "p8_10", "num": 45, "name": "Jump Game II", "difficulty": "medium", "url": "https://leetcode.com/problems/jump-game-ii/", "sub": "Greedy"}, {"id": "p8_11", "num": 134, "name": "Gas Station", "difficulty": "medium", "url": "https://leetcode.com/problems/gas-station/", "sub": "Greedy"}, {"id": "p8_12", "num": 763, "name": "Partition Labels", "difficulty": "medium", "url": "https://leetcode.com/problems/partition-labels/", "sub": "Greedy"}, {"id": "p8_13", "num": 455, "name": "Assign Cookies", "difficulty": "easy", "url": "https://leetcode.com/problems/assign-cookies/", "sub": "Greedy"}, {"id": "p8_14", "num": 860, "name": "Lemonade Change", "difficulty": "easy", "url": "https://leetcode.com/problems/lemonade-change/", "sub": "Greedy"}]}], "problems": [{"id": "p8_1", "num": 56, "name": "Merge Intervals", "difficulty": "medium", "url": "https://leetcode.com/problems/merge-intervals/", "sub": "Intervals"}, {"id": "p8_2", "num": 57, "name": "Insert Interval", "difficulty": "medium", "url": "https://leetcode.com/problems/insert-interval/", "sub": "Intervals"}, {"id": "p8_3", "num": 435, "name": "Non-overlapping Intervals", "difficulty": "medium", "url": "https://leetcode.com/problems/non-overlapping-intervals/", "sub": "Intervals"}, {"id": "p8_4", "num": 252, "name": "Meeting Rooms", "difficulty": "easy", "url": "https://leetcode.com/problems/meeting-rooms/", "sub": "Intervals"}, {"id": "p8_5", "num": 253, "name": "Meeting Rooms II", "difficulty": "medium", "url": "https://leetcode.com/problems/meeting-rooms-ii/", "sub": "Intervals"}, {"id": "p8_6", "num": 452, "name": "Minimum Number of Arrows to Burst Balloons", "difficulty": "medium", "url": "https://leetcode.com/problems/minimum-number-of-arrows-to-burst-balloons/", "sub": "Intervals"}, {"id": "p8_7", "num": 986, "name": "Interval List Intersections", "difficulty": "medium", "url": "https://leetcode.com/problems/interval-list-intersections/", "sub": "Intervals"}, {"id": "p8_8", "num": 122, "name": "Best Time to Buy and Sell Stock II", "difficulty": "medium", "url": "https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/", "sub": "Greedy"}, {"id": "p8_9", "num": 55, "name": "Jump Game", "difficulty": "medium", "url": "https://leetcode.com/problems/jump-game/", "sub": "Greedy"}, {"id": "p8_10", "num": 45, "name": "Jump Game II", "difficulty": "medium", "url": "https://leetcode.com/problems/jump-game-ii/", "sub": "Greedy"}, {"id": "p8_11", "num": 134, "name": "Gas Station", "difficulty": "medium", "url": "https://leetcode.com/problems/gas-station/", "sub": "Greedy"}, {"id": "p8_12", "num": 763, "name": "Partition Labels", "difficulty": "medium", "url": "https://leetcode.com/problems/partition-labels/", "sub": "Greedy"}, {"id": "p8_13", "num": 455, "name": "Assign Cookies", "difficulty": "easy", "url": "https://leetcode.com/problems/assign-cookies/", "sub": "Greedy"}, {"id": "p8_14", "num": 860, "name": "Lemonade Change", "difficulty": "easy", "url": "https://leetcode.com/problems/lemonade-change/", "sub": "Greedy"}]}, {"id": "pat_9", "num": 9, "name": "Trees + DFS/BFS + Basic Graph", "icon": "9️⃣", "count": 18, "goal": "Tree structures, recursive DFS, level-order BFS queues, grid matrix traversals, and cycle detection.", "learn": ["recursive DFS", "BFS queue", "visited set", "tree traversal", "graph traversal", "cycle detection"], "subsections": [{"title": "Tree / DFS", "problems": [{"id": "p9_1", "num": 104, "name": "Maximum Depth of Binary Tree", "difficulty": "easy", "url": "https://leetcode.com/problems/maximum-depth-of-binary-tree/", "sub": "Tree / DFS"}, {"id": "p9_2", "num": 226, "name": "Invert Binary Tree", "difficulty": "easy", "url": "https://leetcode.com/problems/invert-binary-tree/", "sub": "Tree / DFS"}, {"id": "p9_3", "num": 100, "name": "Same Tree", "difficulty": "easy", "url": "https://leetcode.com/problems/same-tree/", "sub": "Tree / DFS"}, {"id": "p9_4", "num": 112, "name": "Path Sum", "difficulty": "easy", "url": "https://leetcode.com/problems/path-sum/", "sub": "Tree / DFS"}, {"id": "p9_5", "num": 543, "name": "Diameter of Binary Tree", "difficulty": "easy", "url": "https://leetcode.com/problems/diameter-of-binary-tree/", "sub": "Tree / DFS"}, {"id": "p9_6", "num": 110, "name": "Balanced Binary Tree", "difficulty": "easy", "url": "https://leetcode.com/problems/balanced-binary-tree/", "sub": "Tree / DFS"}, {"id": "p9_7", "num": 235, "name": "Lowest Common Ancestor of a Binary Search Tree", "difficulty": "medium", "url": "https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/", "sub": "Tree / DFS"}, {"id": "p9_8", "num": 124, "name": "Binary Tree Maximum Path Sum", "difficulty": "hard", "url": "https://leetcode.com/problems/binary-tree-maximum-path-sum/", "sub": "Tree / DFS"}, {"id": "p9_9", "num": 113, "name": "Path Sum II", "difficulty": "medium", "url": "https://leetcode.com/problems/path-sum-ii/", "sub": "Tree / DFS"}]}, {"title": "Tree BFS", "problems": [{"id": "p9_10", "num": 102, "name": "Binary Tree Level Order Traversal", "difficulty": "medium", "url": "https://leetcode.com/problems/binary-tree-level-order-traversal/", "sub": "Tree BFS"}, {"id": "p9_11", "num": 199, "name": "Binary Tree Right Side View", "difficulty": "medium", "url": "https://leetcode.com/problems/binary-tree-right-side-view/", "sub": "Tree BFS"}, {"id": "p9_12", "num": 637, "name": "Average of Levels in Binary Tree", "difficulty": "easy", "url": "https://leetcode.com/problems/average-of-levels-in-binary-tree/", "sub": "Tree BFS"}, {"id": "p9_13", "num": 111, "name": "Minimum Depth of Binary Tree", "difficulty": "easy", "url": "https://leetcode.com/problems/minimum-depth-of-binary-tree/", "sub": "Tree BFS"}, {"id": "p9_14", "num": 103, "name": "Binary Tree Zigzag Level Order Traversal", "difficulty": "medium", "url": "https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/", "sub": "Tree BFS"}]}, {"title": "Graph / Grid", "problems": [{"id": "p9_15", "num": 200, "name": "Number of Islands", "difficulty": "medium", "url": "https://leetcode.com/problems/number-of-islands/", "sub": "Graph / Grid"}, {"id": "p9_16", "num": 133, "name": "Clone Graph", "difficulty": "medium", "url": "https://leetcode.com/problems/clone-graph/", "sub": "Graph / Grid"}, {"id": "p9_17", "num": 207, "name": "Course Schedule", "difficulty": "medium", "url": "https://leetcode.com/problems/course-schedule/", "sub": "Graph / Grid"}, {"id": "p9_18", "num": 994, "name": "Rotting Oranges", "difficulty": "medium", "url": "https://leetcode.com/problems/rotting-oranges/", "sub": "Graph / Grid"}]}], "problems": [{"id": "p9_1", "num": 104, "name": "Maximum Depth of Binary Tree", "difficulty": "easy", "url": "https://leetcode.com/problems/maximum-depth-of-binary-tree/", "sub": "Tree / DFS"}, {"id": "p9_2", "num": 226, "name": "Invert Binary Tree", "difficulty": "easy", "url": "https://leetcode.com/problems/invert-binary-tree/", "sub": "Tree / DFS"}, {"id": "p9_3", "num": 100, "name": "Same Tree", "difficulty": "easy", "url": "https://leetcode.com/problems/same-tree/", "sub": "Tree / DFS"}, {"id": "p9_4", "num": 112, "name": "Path Sum", "difficulty": "easy", "url": "https://leetcode.com/problems/path-sum/", "sub": "Tree / DFS"}, {"id": "p9_5", "num": 543, "name": "Diameter of Binary Tree", "difficulty": "easy", "url": "https://leetcode.com/problems/diameter-of-binary-tree/", "sub": "Tree / DFS"}, {"id": "p9_6", "num": 110, "name": "Balanced Binary Tree", "difficulty": "easy", "url": "https://leetcode.com/problems/balanced-binary-tree/", "sub": "Tree / DFS"}, {"id": "p9_7", "num": 235, "name": "Lowest Common Ancestor of a Binary Search Tree", "difficulty": "medium", "url": "https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/", "sub": "Tree / DFS"}, {"id": "p9_8", "num": 124, "name": "Binary Tree Maximum Path Sum", "difficulty": "hard", "url": "https://leetcode.com/problems/binary-tree-maximum-path-sum/", "sub": "Tree / DFS"}, {"id": "p9_9", "num": 113, "name": "Path Sum II", "difficulty": "medium", "url": "https://leetcode.com/problems/path-sum-ii/", "sub": "Tree / DFS"}, {"id": "p9_10", "num": 102, "name": "Binary Tree Level Order Traversal", "difficulty": "medium", "url": "https://leetcode.com/problems/binary-tree-level-order-traversal/", "sub": "Tree BFS"}, {"id": "p9_11", "num": 199, "name": "Binary Tree Right Side View", "difficulty": "medium", "url": "https://leetcode.com/problems/binary-tree-right-side-view/", "sub": "Tree BFS"}, {"id": "p9_12", "num": 637, "name": "Average of Levels in Binary Tree", "difficulty": "easy", "url": "https://leetcode.com/problems/average-of-levels-in-binary-tree/", "sub": "Tree BFS"}, {"id": "p9_13", "num": 111, "name": "Minimum Depth of Binary Tree", "difficulty": "easy", "url": "https://leetcode.com/problems/minimum-depth-of-binary-tree/", "sub": "Tree BFS"}, {"id": "p9_14", "num": 103, "name": "Binary Tree Zigzag Level Order Traversal", "difficulty": "medium", "url": "https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/", "sub": "Tree BFS"}, {"id": "p9_15", "num": 200, "name": "Number of Islands", "difficulty": "medium", "url": "https://leetcode.com/problems/number-of-islands/", "sub": "Graph / Grid"}, {"id": "p9_16", "num": 133, "name": "Clone Graph", "difficulty": "medium", "url": "https://leetcode.com/problems/clone-graph/", "sub": "Graph / Grid"}, {"id": "p9_17", "num": 207, "name": "Course Schedule", "difficulty": "medium", "url": "https://leetcode.com/problems/course-schedule/", "sub": "Graph / Grid"}, {"id": "p9_18", "num": 994, "name": "Rotting Oranges", "difficulty": "medium", "url": "https://leetcode.com/problems/rotting-oranges/", "sub": "Graph / Grid"}]}, {"id": "pat_10", "num": 10, "name": "Backtracking + Basic DP", "icon": "🔟", "count": 18, "goal": "Exhaustive combinatorial search, pruning decision trees, recursion to memoization, and optimal substructure.", "learn": ["recursion", "decision tree", "memoization", "tabulation", "1D / 2D DP"], "subsections": [{"title": "Backtracking", "problems": [{"id": "p10_1", "num": 78, "name": "Subsets", "difficulty": "medium", "url": "https://leetcode.com/problems/subsets/", "sub": "Backtracking"}, {"id": "p10_2", "num": 90, "name": "Subsets II", "difficulty": "medium", "url": "https://leetcode.com/problems/subsets-ii/", "sub": "Backtracking"}, {"id": "p10_3", "num": 46, "name": "Permutations", "difficulty": "medium", "url": "https://leetcode.com/problems/permutations/", "sub": "Backtracking"}, {"id": "p10_4", "num": 39, "name": "Combination Sum", "difficulty": "medium", "url": "https://leetcode.com/problems/combination-sum/", "sub": "Backtracking"}, {"id": "p10_5", "num": 40, "name": "Combination Sum II", "difficulty": "medium", "url": "https://leetcode.com/problems/combination-sum-ii/", "sub": "Backtracking"}, {"id": "p10_6", "num": 17, "name": "Letter Combinations of a Phone Number", "difficulty": "medium", "url": "https://leetcode.com/problems/letter-combinations-of-a-phone-number/", "sub": "Backtracking"}, {"id": "p10_7", "num": 22, "name": "Generate Parentheses", "difficulty": "medium", "url": "https://leetcode.com/problems/generate-parentheses/", "sub": "Backtracking"}, {"id": "p10_8", "num": 79, "name": "Word Search", "difficulty": "medium", "url": "https://leetcode.com/problems/word-search/", "sub": "Backtracking"}]}, {"title": "Dynamic Programming", "problems": [{"id": "p10_9", "num": 70, "name": "Climbing Stairs", "difficulty": "easy", "url": "https://leetcode.com/problems/climbing-stairs/", "sub": "Dynamic Programming"}, {"id": "p10_10", "num": 746, "name": "Min Cost Climbing Stairs", "difficulty": "easy", "url": "https://leetcode.com/problems/min-cost-climbing-stairs/", "sub": "Dynamic Programming"}, {"id": "p10_11", "num": 198, "name": "House Robber", "difficulty": "medium", "url": "https://leetcode.com/problems/house-robber/", "sub": "Dynamic Programming"}, {"id": "p10_12", "num": 213, "name": "House Robber II", "difficulty": "medium", "url": "https://leetcode.com/problems/house-robber-ii/", "sub": "Dynamic Programming"}, {"id": "p10_13", "num": 322, "name": "Coin Change", "difficulty": "medium", "url": "https://leetcode.com/problems/coin-change/", "sub": "Dynamic Programming"}, {"id": "p10_14", "num": 53, "name": "Maximum Subarray", "difficulty": "medium", "url": "https://leetcode.com/problems/maximum-subarray/", "sub": "Dynamic Programming"}, {"id": "p10_15", "num": 62, "name": "Unique Paths", "difficulty": "medium", "url": "https://leetcode.com/problems/unique-paths/", "sub": "Dynamic Programming"}, {"id": "p10_16", "num": 300, "name": "Longest Increasing Subsequence", "difficulty": "medium", "url": "https://leetcode.com/problems/longest-increasing-subsequence/", "sub": "Dynamic Programming"}, {"id": "p10_17", "num": 416, "name": "Partition Equal Subset Sum", "difficulty": "medium", "url": "https://leetcode.com/problems/partition-equal-subset-sum/", "sub": "Dynamic Programming"}, {"id": "p10_18", "num": 1143, "name": "Longest Common Subsequence", "difficulty": "medium", "url": "https://leetcode.com/problems/longest-common-subsequence/", "sub": "Dynamic Programming"}]}], "problems": [{"id": "p10_1", "num": 78, "name": "Subsets", "difficulty": "medium", "url": "https://leetcode.com/problems/subsets/", "sub": "Backtracking"}, {"id": "p10_2", "num": 90, "name": "Subsets II", "difficulty": "medium", "url": "https://leetcode.com/problems/subsets-ii/", "sub": "Backtracking"}, {"id": "p10_3", "num": 46, "name": "Permutations", "difficulty": "medium", "url": "https://leetcode.com/problems/permutations/", "sub": "Backtracking"}, {"id": "p10_4", "num": 39, "name": "Combination Sum", "difficulty": "medium", "url": "https://leetcode.com/problems/combination-sum/", "sub": "Backtracking"}, {"id": "p10_5", "num": 40, "name": "Combination Sum II", "difficulty": "medium", "url": "https://leetcode.com/problems/combination-sum-ii/", "sub": "Backtracking"}, {"id": "p10_6", "num": 17, "name": "Letter Combinations of a Phone Number", "difficulty": "medium", "url": "https://leetcode.com/problems/letter-combinations-of-a-phone-number/", "sub": "Backtracking"}, {"id": "p10_7", "num": 22, "name": "Generate Parentheses", "difficulty": "medium", "url": "https://leetcode.com/problems/generate-parentheses/", "sub": "Backtracking"}, {"id": "p10_8", "num": 79, "name": "Word Search", "difficulty": "medium", "url": "https://leetcode.com/problems/word-search/", "sub": "Backtracking"}, {"id": "p10_9", "num": 70, "name": "Climbing Stairs", "difficulty": "easy", "url": "https://leetcode.com/problems/climbing-stairs/", "sub": "Dynamic Programming"}, {"id": "p10_10", "num": 746, "name": "Min Cost Climbing Stairs", "difficulty": "easy", "url": "https://leetcode.com/problems/min-cost-climbing-stairs/", "sub": "Dynamic Programming"}, {"id": "p10_11", "num": 198, "name": "House Robber", "difficulty": "medium", "url": "https://leetcode.com/problems/house-robber/", "sub": "Dynamic Programming"}, {"id": "p10_12", "num": 213, "name": "House Robber II", "difficulty": "medium", "url": "https://leetcode.com/problems/house-robber-ii/", "sub": "Dynamic Programming"}, {"id": "p10_13", "num": 322, "name": "Coin Change", "difficulty": "medium", "url": "https://leetcode.com/problems/coin-change/", "sub": "Dynamic Programming"}, {"id": "p10_14", "num": 53, "name": "Maximum Subarray", "difficulty": "medium", "url": "https://leetcode.com/problems/maximum-subarray/", "sub": "Dynamic Programming"}, {"id": "p10_15", "num": 62, "name": "Unique Paths", "difficulty": "medium", "url": "https://leetcode.com/problems/unique-paths/", "sub": "Dynamic Programming"}, {"id": "p10_16", "num": 300, "name": "Longest Increasing Subsequence", "difficulty": "medium", "url": "https://leetcode.com/problems/longest-increasing-subsequence/", "sub": "Dynamic Programming"}, {"id": "p10_17", "num": 416, "name": "Partition Equal Subset Sum", "difficulty": "medium", "url": "https://leetcode.com/problems/partition-equal-subset-sum/", "sub": "Dynamic Programming"}, {"id": "p10_18", "num": 1143, "name": "Longest Common Subsequence", "difficulty": "medium", "url": "https://leetcode.com/problems/longest-common-subsequence/", "sub": "Dynamic Programming"}]}];
+
+  let activePatternId = 'pat_1';
+  let activeDiffFilter = 'all';
+  let searchQuery = '';
+  let S = {};
+
+  const NOTE_TEMPLATE = "💡 Key Intuition:\n- \n\n⚠️ Edge Cases / Tricky Parts:\n- \n\n⏱️ Complexity: Time O() | Space O()";
+
+  // IndexedDB for Screenshots
+  const dbName = "PlacementOS_DSA_DB";
+  const storeName = "screenshots";
+  function getDB() {
+    return new Promise((resolve, reject) => {
+      const request = indexedDB.open(dbName, 1);
+      request.onupgradeneeded = (e) => {
+        const db = e.target.result;
+        if (!db.objectStoreNames.contains(storeName)) {
+          db.createObjectStore(storeName, { keyPath: "problemName" });
+        }
+      };
+      request.onsuccess = (e) => resolve(e.target.result);
+      request.onerror = (e) => reject(e.target.error);
+    });
+  }
+
+  async function saveScreenshot(problemId, base64Data) {
+    const db = await getDB();
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction(storeName, "readwrite");
+      const store = tx.objectStore(storeName);
+      const req = store.put({ problemName: `dsa_pattern_${problemId}`, base64Data });
+      req.onsuccess = () => resolve();
+      req.onerror = (e) => reject(e.target.error);
+    });
+  }
+
+  async function getScreenshot(problemId) {
+    const db = await getDB();
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction(storeName, "readonly");
+      const store = tx.objectStore(storeName);
+      const req = store.get(`dsa_pattern_${problemId}`);
+      req.onsuccess = () => resolve(req.result ? req.result.base64Data : null);
+      req.onerror = (e) => reject(e.target.error);
+    });
+  }
+
+  async function deleteScreenshot(problemId) {
+    const db = await getDB();
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction(storeName, "readwrite");
+      const store = tx.objectStore(storeName);
+      const req = store.delete(`dsa_pattern_${problemId}`);
+      req.onsuccess = () => resolve();
+      req.onerror = (e) => reject(e.target.error);
+    });
+  }
+
+  // State Management
+  function load() {
+    const saved = localStorage.getItem('placementOS_v2');
+    if (saved) {
+      try { S = JSON.parse(saved); } catch(e) { S = {}; }
+    }
+    if (!S.dsaPatternChecks) S.dsaPatternChecks = {};
+    if (!S.dsaPatternNotes) S.dsaPatternNotes = {};
+    if (!S.dsaPatternCodes) S.dsaPatternCodes = {};
+
+    updateSidebarUI();
+    applyDynamicWallpaper();
+  }
+
+  function save() {
+    S.updatedAt = Date.now();
+    const str = JSON.stringify(S);
+    localStorage.setItem('placementOS_v2', str);
+    localStorage.setItem('placementOS_v2_backup', str);
+    if (typeof syncPush === 'function') {
+      syncPush(S);
+    }
+    updateAllProgress();
+  }
+
+  function applyDynamicWallpaper() {
+    const wp = localStorage.getItem('placementos_wallpaper');
+    if (wp) {
+      let style = document.getElementById('dynamic-wallpaper-style');
+      if (!style) {
+        style = document.createElement('style');
+        style.id = 'dynamic-wallpaper-style';
+        document.head.appendChild(style);
+      }
+      style.innerHTML = `
+        body {
+          background-image: url(${wp}) !important;
+          background-size: cover !important;
+          background-position: center !important;
+          background-attachment: fixed !important;
+          background-repeat: no-repeat !important;
+        }
+      `;
+    }
+  }
+
+  function updateSidebarUI() {
+    const xp = S.xp || 0;
+    const level = S.level || 1;
+    const streak = S.streak || 0;
+
+    const sbLevel = document.getElementById('sb-level');
+    if (sbLevel) sbLevel.textContent = level;
+
+    const sbXp = document.getElementById('sb-xp');
+    if (sbXp) sbXp.textContent = `${xp} XP`;
+
+    const tbStreak = document.getElementById('topbar-streak');
+    if (tbStreak) tbStreak.textContent = `${streak} day streak`;
+
+    const xpNeeded = level * 100;
+    const pct = Math.min(100, Math.floor((xp / xpNeeded) * 100));
+    const fill = document.getElementById('sb-xp-fill');
+    if (fill) fill.style.width = `${pct}%`;
+    const next = document.getElementById('sb-xp-next');
+    if (next) next.textContent = `${xpNeeded - xp} XP to next level`;
+  }
+
+  function addXP(pts) {
+    S.xp = (S.xp || 0) + pts;
+    const xpNeeded = (S.level || 1) * 100;
+    if (S.xp >= xpNeeded) {
+      S.xp -= xpNeeded;
+      S.level = (S.level || 1) + 1;
+      alert(`🎉 Level Up! You reached Level ${S.level}!`);
+    }
+    updateSidebarUI();
+  }
+
+  // Progress Calculations
+  function getPatternProgress(pat) {
+    let solved = 0;
+    const total = pat.problems.length;
+    pat.problems.forEach(p => {
+      if (S.dsaPatternChecks[p.id]) solved++;
+    });
+    return {
+      solved,
+      total,
+      pct: total ? Math.round((solved / total) * 100) : 0
+    };
+  }
+
+  function updateAllProgress() {
+    let totalSolved = 0;
+    let easySolved = 0, easyTotal = 0;
+    let medSolved = 0, medTotal = 0;
+    let hardSolved = 0, hardTotal = 0;
+
+    PATTERNS_DATA.forEach(pat => {
+      pat.problems.forEach(p => {
+        const isSolved = !!S.dsaPatternChecks[p.id];
+        if (isSolved) totalSolved++;
+        if (p.difficulty === 'easy') {
+          easyTotal++;
+          if (isSolved) easySolved++;
+        } else if (p.difficulty === 'medium') {
+          medTotal++;
+          if (isSolved) medSolved++;
+        } else if (p.difficulty === 'hard') {
+          hardTotal++;
+          if (isSolved) hardSolved++;
+        }
+      });
+    });
+
+    const totalProblems = 131;
+    const pct = Math.round((totalSolved / totalProblems) * 100);
+
+    const statSolved = document.getElementById('stat-solved');
+    if (statSolved) statSolved.textContent = totalSolved;
+
+    const heroPctText = document.getElementById('hero-pct-text');
+    if (heroPctText) heroPctText.textContent = `${totalSolved} / ${totalProblems} Solved (${pct}%)`;
+
+    const heroProgressFill = document.getElementById('hero-progress-fill');
+    if (heroProgressFill) heroProgressFill.style.width = `${pct}%`;
+
+    const statEasy = document.getElementById('stat-easy');
+    if (statEasy) statEasy.textContent = `${easySolved}/${easyTotal}`;
+
+    const statMed = document.getElementById('stat-medium');
+    if (statMed) statMed.textContent = `${medSolved}/${medTotal}`;
+
+    const statHard = document.getElementById('stat-hard');
+    if (statHard) statHard.textContent = `${hardSolved}/${hardTotal}`;
+
+    // Update active pattern header stats
+    const currentPat = PATTERNS_DATA.find(p => p.id === activePatternId);
+    if (currentPat) {
+      const pProg = getPatternProgress(currentPat);
+      const countBadge = document.getElementById('curr-pattern-count-badge');
+      if (countBadge) countBadge.textContent = `${pProg.solved} / ${pProg.total} Done`;
+
+      const fill = document.getElementById('curr-pattern-progress-fill');
+      if (fill) fill.style.width = `${pProg.pct}%`;
+    }
+
+    renderPatternsNav();
+  }
+
+  // Render Left Patterns Nav
+  function renderPatternsNav() {
+    const list = document.getElementById('patterns-nav-list');
+    if (!list) return;
+
+    list.innerHTML = '';
+    PATTERNS_DATA.forEach(pat => {
+      const prog = getPatternProgress(pat);
+      const btn = document.createElement('button');
+      btn.className = `pattern-item-btn ${pat.id === activePatternId ? 'active' : ''}`;
+      btn.onclick = () => selectPattern(pat.id);
+
+      btn.innerHTML = `
+        <div class="pattern-item-left">
+          <span class="pattern-item-num">${pat.icon}</span>
+          <span class="pattern-item-name">${pat.name}</span>
+        </div>
+        <span class="pattern-item-badge">${prog.solved}/${prog.total}</span>
+      `;
+      list.appendChild(btn);
+    });
+  }
+
+  // Select Active Pattern
+  function selectPattern(patId) {
+    activePatternId = patId;
+    const pat = PATTERNS_DATA.find(p => p.id === patId);
+    if (!pat) return;
+
+    document.getElementById('curr-pattern-icon').textContent = pat.icon;
+    document.getElementById('curr-pattern-title').textContent = `${pat.num}. ${pat.name}`;
+    document.getElementById('curr-pattern-goal').textContent = pat.goal;
+
+    const learnContainer = document.getElementById('curr-pattern-learn-tags');
+    learnContainer.innerHTML = '';
+    pat.learn.forEach(tag => {
+      const span = document.createElement('span');
+      span.className = 'learn-tag';
+      span.textContent = tag;
+      learnContainer.appendChild(span);
+    });
+
+    renderProblems();
+    updateAllProgress();
+  }
+
+  // Render Problems for Active Pattern
+  function renderProblems() {
+    const container = document.getElementById('problems-container');
+    if (!container) return;
+    container.innerHTML = '';
+
+    const pat = PATTERNS_DATA.find(p => p.id === activePatternId);
+    if (!pat) return;
+
+    let currentSubcat = null;
+
+    pat.problems.forEach(p => {
+      // Check filters
+      const isSolved = !!S.dsaPatternChecks[p.id];
+      if (activeDiffFilter === 'easy' && p.difficulty !== 'easy') return;
+      if (activeDiffFilter === 'medium' && p.difficulty !== 'medium') return;
+      if (activeDiffFilter === 'hard' && p.difficulty !== 'hard') return;
+      if (activeDiffFilter === 'solved' && !isSolved) return;
+      if (activeDiffFilter === 'unsolved' && isSolved) return;
+
+      if (searchQuery) {
+        const q = searchQuery.toLowerCase();
+        const matchesName = p.name.toLowerCase().includes(q);
+        const matchesNum = String(p.num).includes(q);
+        const matchesSub = (p.sub || '').toLowerCase().includes(q);
+        if (!matchesName && !matchesNum && !matchesSub) return;
+      }
+
+      // If problem has a subcategory and it's new, insert divider
+      if (p.sub && p.sub !== currentSubcat) {
+        currentSubcat = p.sub;
+        const divider = document.createElement('div');
+        divider.className = 'subsection-divider';
+        divider.innerHTML = `
+          <span class="subsection-title"><i class="fas fa-layer-group" style="margin-right:6px;"></i> ${currentSubcat}</span>
+          <div class="subsection-line"></div>
+        `;
+        container.appendChild(divider);
+      }
+
+      const card = document.createElement('div');
+      card.id = `problem-card-${p.id}`;
+      card.className = `problem-card ${isSolved ? 'solved' : ''}`;
+
+      card.innerHTML = `
+        <div class="problem-header">
+          <div class="problem-left">
+            <input type="checkbox" class="problem-checkbox" id="check-${p.id}" ${isSolved ? 'checked' : ''} onchange="toggleProblem('${p.id}', this.checked)"/>
+            <a href="${p.url}" target="_blank" class="problem-link">
+              <span>#${p.num} ${p.name}</span>
+              <i class="fas fa-external-link-alt" style="font-size:11px; color:var(--accent2);"></i>
+            </a>
+          </div>
+          <div class="problem-meta">
+            <span class="diff-badge ${p.difficulty}">${p.difficulty}</span>
+            <button class="btn-toggle-editor" id="btn-editor-${p.id}" onclick="toggleEditor('${p.id}')">
+              <i class="fas fa-edit"></i> Notes &amp; Proof
+            </button>
+          </div>
+        </div>
+
+        <div class="editor-drawer" id="editor-${p.id}">
+          <div class="editor-grid">
+            <div class="editor-box">
+              <label><i class="fas fa-sticky-note" style="color:var(--accent2);"></i> Study Notes &amp; Edge Cases</label>
+              <textarea class="editor-textarea" id="notes-${p.id}" onchange="saveNotes('${p.id}', this.value)" placeholder="Write your intuition, key invariants, or mistake logs here..."></textarea>
+            </div>
+
+            <div class="editor-box">
+              <label><i class="fas fa-code" style="color:var(--accent);"></i> Clean Solution Code</label>
+              <textarea class="editor-textarea code" id="code-${p.id}" onchange="saveCode('${p.id}', this.value)" placeholder="// Paste your working Python, C++, or Java solution here..."></textarea>
+            </div>
+
+            <div class="editor-box">
+              <label><i class="fas fa-camera" style="color:var(--accent2);"></i> Screenshot / Submission Proof</label>
+              <div class="screenshot-dropzone" id="dropzone-${p.id}" onclick="triggerFileInput('${p.id}')" onpaste="handlePasteScreenshot(event, '${p.id}')" tabindex="0">
+                <i class="fas fa-cloud-upload-alt" style="font-size:22px; margin-bottom:6px; color:var(--accent);"></i>
+                <span>Paste (Ctrl+V) or click to upload proof</span>
+              </div>
+              <input type="file" id="file-${p.id}" accept="image/*" style="display:none;" onchange="handleUploadScreenshot(event, '${p.id}')"/>
+            </div>
+          </div>
+        </div>
+      `;
+
+      container.appendChild(card);
+    });
+
+    if (container.children.length === 0) {
+      container.innerHTML = `
+        <div style="text-align:center; padding:48px; color:var(--text2); background:var(--card-bg); border-radius:12px; border:1px dashed var(--border);">
+          <i class="fas fa-filter" style="font-size:28px; margin-bottom:12px; color:var(--text2);"></i>
+          <p style="margin:0; font-size:14px;">No problems match your current search or filter criteria.</p>
+        </div>
+      `;
+    }
+  }
+
+  // Toggle Solved Status
+  function toggleProblem(problemId, isChecked) {
+    S.dsaPatternChecks[problemId] = isChecked;
+    const card = document.getElementById(`problem-card-${problemId}`);
+    if (isChecked) {
+      if (card) card.classList.add('solved');
+      addXP(10);
+    } else {
+      if (card) card.classList.remove('solved');
+    }
+    save();
+  }
+
+  // Toggle Editor
+  function toggleEditor(problemId) {
+    const drawer = document.getElementById(`editor-${problemId}`);
+    const btn = document.getElementById(`btn-editor-${problemId}`);
+    if (!drawer) return;
+
+    const isOpen = drawer.classList.contains('open');
+
+    // Close others
+    document.querySelectorAll('.editor-drawer').forEach(d => d.classList.remove('open'));
+    document.querySelectorAll('.btn-toggle-editor').forEach(b => b.classList.remove('active'));
+
+    if (!isOpen) {
+      drawer.classList.add('open');
+      if (btn) btn.classList.add('active');
+
+      const notesEl = document.getElementById(`notes-${problemId}`);
+      if (notesEl) {
+        notesEl.value = S.dsaPatternNotes[problemId] || NOTE_TEMPLATE;
+      }
+
+      const codeEl = document.getElementById(`code-${problemId}`);
+      if (codeEl) {
+        codeEl.value = S.dsaPatternCodes[problemId] || '';
+      }
+
+      loadDropzone(problemId);
+    }
+  }
+
+  function saveNotes(problemId, val) {
+    S.dsaPatternNotes[problemId] = val;
+    save();
+  }
+
+  function saveCode(problemId, val) {
+    S.dsaPatternCodes[problemId] = val;
+    save();
+  }
+
+  // Screenshot Upload & Paste
+  function triggerFileInput(problemId) {
+    const inp = document.getElementById(`file-${problemId}`);
+    if (inp) inp.click();
+  }
+
+  function handleUploadScreenshot(e, problemId) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = async function(evt) {
+      await saveScreenshot(problemId, evt.target.result);
+      loadDropzone(problemId);
+    };
+    reader.readAsDataURL(file);
+  }
+
+  async function handlePasteScreenshot(e, problemId) {
+    const items = (e.clipboardData || e.originalEvent.clipboardData).items;
+    for (const item of items) {
+      if (item.type.indexOf("image") !== -1) {
+        const file = item.getAsFile();
+        const reader = new FileReader();
+        reader.onload = async function(evt) {
+          await saveScreenshot(problemId, evt.target.result);
+          loadDropzone(problemId);
+        };
+        reader.readAsDataURL(file);
+        e.preventDefault();
+        break;
+      }
+    }
+  }
+
+  async function loadDropzone(problemId) {
+    const dropzone = document.getElementById(`dropzone-${problemId}`);
+    if (!dropzone) return;
+
+    try {
+      const base64 = await getScreenshot(problemId);
+      if (base64) {
+        dropzone.innerHTML = `
+          <img src="${base64}" class="screenshot-preview-img" onclick="event.stopPropagation(); zoomScreenshot('${base64}')"/>
+          <button class="btn btn-sm" onclick="event.stopPropagation(); removeScreenshotProof('${problemId}')" style="position:absolute; bottom:6px; right:6px; font-size:10px; background:rgba(231,76,60,0.85); color:#fff; border:none; padding:3px 8px; border-radius:4px; cursor:pointer;">
+            <i class="fas fa-trash-alt"></i> Delete
+          </button>
+        `;
+      } else {
+        dropzone.innerHTML = `
+          <i class="fas fa-cloud-upload-alt" style="font-size:22px; margin-bottom:6px; color:var(--accent);"></i>
+          <span>Paste (Ctrl+V) or click to upload proof</span>
+        `;
+      }
+    } catch(err) {
+      console.error(err);
+    }
+  }
+
+  async function removeScreenshotProof(problemId) {
+    if (confirm("Remove this screenshot proof?")) {
+      await deleteScreenshot(problemId);
+      loadDropzone(problemId);
+    }
+  }
+
+  function zoomScreenshot(base64) {
+    const modal = document.getElementById('lightboxModal');
+    const img = document.getElementById('lightboxImg');
+    if (modal && img) {
+      img.src = base64;
+      modal.style.display = 'flex';
+    }
+  }
+
+  // Filters & Search
+  function setDiffFilter(diff) {
+    activeDiffFilter = diff;
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.textContent.toLowerCase() === diff);
+    });
+    renderProblems();
+  }
+
+  function handleSearch(q) {
+    searchQuery = q.trim();
+    renderProblems();
+  }
+
+  // Random Problem Picker
+  function pickRandomProblem() {
+    const pat = PATTERNS_DATA.find(p => p.id === activePatternId);
+    if (!pat) return;
+
+    const unsolved = pat.problems.filter(p => !S.dsaPatternChecks[p.id]);
+    const pool = unsolved.length > 0 ? unsolved : pat.problems;
+    const randomChoice = pool[Math.floor(Math.random() * pool.length)];
+
+    // Clear filters if needed
+    if (activeDiffFilter !== 'all') setDiffFilter('all');
+    if (searchQuery) {
+      searchQuery = '';
+      document.getElementById('problem-search').value = '';
+      renderProblems();
+    }
+
+    const card = document.getElementById(`problem-card-${randomChoice.id}`);
+    if (card) {
+      card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      card.classList.add('flash-highlight');
+      setTimeout(() => card.classList.remove('flash-highlight'), 2200);
+    }
+  }
+
+  // Study Guide Modal
+  function openStudyGuide() {
+    document.getElementById('guideModal').style.display = 'flex';
+  }
+
+  function closeStudyGuide() {
+    document.getElementById('guideModal').style.display = 'none';
+  }
+
+  // Init
+  function init() {
+    load();
+    renderPatternsNav();
+    selectPattern('pat_1');
+  }
+
+  init();
+</script>
+</body>
+</html>
