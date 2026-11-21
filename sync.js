@@ -87,6 +87,7 @@ function deepMergeStates(local, server) {
     if (server[key]) Object.assign(merged[key], server[key]);
     if (local[key]) Object.assign(merged[key], local[key]);
   };
+  mergeChecks('dsaMasterChecks');
   mergeChecks('dsaPatternChecks');
   mergeChecks('arrayPlanChecks');
   
@@ -103,6 +104,9 @@ function deepMergeStates(local, server) {
       merged[key][id] = (localVal.length >= serverVal.length) ? localVal : serverVal;
     });
   };
+  mergeTexts('dsaMasterDates');
+  mergeTexts('dsaMasterNotes');
+  mergeTexts('dsaMasterCodes');
   mergeTexts('dsaPatternNotes');
   mergeTexts('dsaPatternCodes');
   mergeTexts('arrayPlanNotes');

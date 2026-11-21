@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DSA Master Checklist (13 Weeks — 157 Problems) — PlacementOS</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <style>
+    :root {
+      --bg-dark: #08090f;
+      --card-bg: rgba(16, 19, 28, 0.65);
+      --card-hover: rgba(22, 26, 38, 0.85);
+      --accent: #6c63ff;
+      --accent2: #00d4aa;
+      --border: rgba(255, 255, 255, 0.08);
+      --text: #e8eaf0;
+      --text2: #8b90a0;
+      --easy: #2ecc71;
+      --medium: #f1c40f;
+      --hard: #e74c3c;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text);
+      font-family: 'Space Grotesk', sans-serif;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+    }
+
+    .dashboard-wrapper {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .main-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow-y: auto;
+      padding: 24px 32px 48px;
+    }
+
+    /* Top stats hero */
+    .master-hero {
+      background: linear-gradient(135deg, rgba(108, 99, 255, 0.12) 0%, rgba(0, 212, 170, 0.05) 100%);
+      border: 1px solid rgba(108, 99, 255, 0.25);
+      border-radius: 16px;
+      padding: 22px 28px;
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .hero-title-area h1 {
+      font-size: 22px;
+      font-weight: 700;
+      margin: 0 0 6px 0;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .hero-title-area p {
+      font-size: 13.5px;
+      color: var(--text2);
+      margin: 0;
+    }
+
+    .hero-stats-group {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .stat-box {
+      background: rgba(8, 9, 15, 0.6);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 10px 16px;
+      text-align: center;
+      min-width: 80px;
+    }
+
+    .stat-val {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--accent2);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .stat-lbl {
+      font-size: 11px;
+      color: var(--text2);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-top: 2px;
+    }
+
+    /* Week Filter Tabs */
+    .week-tabs-scroll {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      margin-bottom: 16px;
+      scrollbar-width: thin;
+    }
+
+    .week-tabs-scroll::-webkit-scrollbar {
+      height: 4px;
+    }
+    .week-tabs-scroll::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+    }
+
+    .week-tab-btn {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 8px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text2);
+      cursor: pointer;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .week-tab-btn:hover {
+      background: rgba(255, 255, 255, 0.06);
+      color: #fff;
+    }
+
+    .week-tab-btn.active {
+      background: rgba(108, 99, 255, 0.18);
+      border-color: var(--accent);
+      color: #fff;
+      box-shadow: 0 0 12px rgba(108, 99, 255, 0.2);
+    }
+
+    .week-badge {
+      font-size: 10.5px;
+      font-family: 'JetBrains Mono', monospace;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .week-tab-btn.active .week-badge {
+      background: rgba(0, 212, 170, 0.2);
+      color: var(--accent2);
+    }
+
+    /* Toolbar */
+    .controls-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      background: rgba(16, 19, 28, 0.5);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 18px;
+      margin-bottom: 20px;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(8, 9, 15, 0.7);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px 14px;
+      flex: 1;
+      max-width: 320px;
+    }
+
+    .search-box input {
+      background: transparent;
+      border: none;
+      outline: none;
+      color: #fff;
+      font-size: 13px;
+      font-family: inherit;
+      width: 100%;
+    }
+
+    .filter-group {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .filter-select {
+      background: rgba(8, 9, 15, 0.85);
+      border: 1px solid var(--border);
+      color: #fff;
+      padding: 7px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-family: inherit;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .btn-random {
+      background: linear-gradient(135deg, rgba(0, 212, 170, 0.15), rgba(108, 99, 255, 0.15));
+      border: 1px solid rgba(0, 212, 170, 0.3);
+      color: var(--accent2);
+      padding: 7px 14px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-random:hover {
+      background: linear-gradient(135deg, rgba(0, 212, 170, 0.25), rgba(108, 99, 255, 0.25));
+      transform: translateY(-1px);
+    }
+
+    /* Problem Card */
+    .problem-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-bottom: 12px;
+      transition: all 0.2s ease;
+    }
+
+    .problem-card:hover {
+      border-color: rgba(255, 255, 255, 0.15);
+      background: var(--card-hover);
+    }
+
+    .problem-card.solved {
+      border-color: rgba(0, 212, 170, 0.3);
+      background: rgba(0, 212, 170, 0.02);
+    }
+
+    .problem-card.flash-highlight {
+      animation: highlightGlow 2s ease;
+    }
+
+    @keyframes highlightGlow {
+      0% { box-shadow: 0 0 25px rgba(0, 212, 170, 0.8); border-color: var(--accent2); }
+      100% { box-shadow: none; }
+    }
+
+    .problem-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .problem-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex: 1;
+      min-width: 250px;
+    }
+
+    .problem-checkbox {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--accent2);
+      cursor: pointer;
+    }
+
+    .problem-link {
+      font-size: 14.5px;
+      font-weight: 600;
+      color: #fff;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.15s ease;
+    }
+
+    .problem-link:hover {
+      color: var(--accent2);
+    }
+
+    .problem-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .badge-pill {
+      font-size: 10.5px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+      color: var(--text2);
+    }
+
+    .diff-badge {
+      padding: 3px 9px;
+      border-radius: 6px;
+      font-size: 10.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .diff-badge.easy { background: rgba(46, 204, 113, 0.15); color: #2ecc71; border: 1px solid rgba(46, 204, 113, 0.3); }
+    .diff-badge.medium { background: rgba(241, 196, 15, 0.15); color: #f1c40f; border: 1px solid rgba(241, 196, 15, 0.3); }
+    .diff-badge.hard { background: rgba(231, 76, 60, 0.15); color: #e74c3c; border: 1px solid rgba(231, 76, 60, 0.3); }
+
+    .date-badge {
+      font-size: 10.5px;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--accent2);
+      background: rgba(0, 212, 170, 0.1);
+      padding: 2px 7px;
+      border-radius: 4px;
+      border: 1px solid rgba(0, 212, 170, 0.25);
+    }
+
+    .pattern-desc {
+      font-size: 12px;
+      color: var(--text2);
+      margin-top: 8px;
+      line-height: 1.5;
+      padding-left: 30px;
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+    }
+
+    .btn-toggle-editor {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 11px;
+      padding: 5px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-toggle-editor:hover, .btn-toggle-editor.active {
+      background: rgba(108, 99, 255, 0.15);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    /* Editor Drawer */
+    .editor-drawer {
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px dashed var(--border);
+      display: none;
+    }
+
+    .editor-drawer.open {
+      display: block;
+    }
+
+    .editor-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+    }
+
+    .editor-box {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .editor-box label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text2);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .editor-textarea {
+      background: rgba(8, 9, 15, 0.85);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 12px;
+      color: #fff;
+      font-size: 12.5px;
+      resize: vertical;
+      min-height: 110px;
+      font-family: inherit;
+    }
+
+    .editor-textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .editor-textarea.code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px;
+      background: #05060a;
+      line-height: 1.5;
+    }
+
+    .screenshot-dropzone {
+      border: 1.5px dashed var(--border);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.01);
+      min-height: 110px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: 11.5px;
+      color: var(--text2);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.2s ease;
+    }
+
+    .screenshot-dropzone:hover {
+      border-color: var(--accent);
+      background: rgba(108, 99, 255, 0.05);
+    }
+
+    .screenshot-preview-img {
+      max-width: 100%;
+      max-height: 140px;
+      border-radius: 6px;
+      object-fit: cover;
+    }
+
+    /* Lightbox Modal */
+    .lightbox-modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(8, 9, 15, 0.95);
+      z-index: 10000;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .lightbox-img {
+      max-width: 90%;
+      max-height: 85%;
+      border-radius: 8px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 24px; right: 24px;
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 28px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body class="dashboard-body">
+
+<div class="dashboard-wrapper">
+  
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <span class="logo-icon">⚡</span>
+      <span class="logo-text">PlacementOS</span>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="index.html" class="nav-item" data-section="dashboard"><i class="fas fa-th-large"></i><span>Dashboard</span></a>
+      <a href="dsa-master.html" class="nav-item active" data-section="dsa-master"><i class="fas fa-tasks"></i><span>DSA Master Checklist</span></a>
+      <a href="pattern-roadmap.html" class="nav-item" data-section="pattern-roadmap"><i class="fas fa-cubes"></i><span>10 DSA Patterns</span></a>
+      <a href="array-plan.html" class="nav-item" data-section="array-plan"><i class="fas fa-list-ol"></i><span>Array Plan</span></a>
+      <a href="dsa-problems.html" class="nav-item" data-section="dsa"><i class="fas fa-code"></i><span>DSA Tracker</span></a>
+      <a href="index.html" class="nav-item" data-section="subjects"><i class="fas fa-book"></i><span>Core Subjects</span></a>
+      <a href="index.html" class="nav-item" data-section="communication"><i class="fas fa-comments"></i><span>Communication</span></a>
+      <a href="index.html" class="nav-item" data-section="softskills"><i class="fas fa-brain"></i><span>Soft Skills</span></a>
+      <a href="index.html" class="nav-item" data-section="projects"><i class="fas fa-folder-open"></i><span>Projects</span></a>
+      <a href="index.html" class="nav-item" data-section="placement"><i class="fas fa-briefcase"></i><span>Placement</span></a>
+      <a href="index.html" class="nav-item" data-section="roadmap"><i class="fas fa-map-signs"></i><span>8-Month Roadmap</span></a>
+      <a href="index.html" class="nav-item" data-section="extraskills"><i class="fas fa-cloud"></i><span>Cloud &amp; Extra Skills</span></a>
+      <a href="index.html" class="nav-item" data-section="analytics"><i class="fas fa-chart-line"></i><span>Analytics</span></a>
+      <a href="focus-todo.html" class="nav-item"><i class="fas fa-hourglass-half"></i><span>Focus Timer</span></a>
+      <a href="motivation.html" class="nav-item"><i class="fas fa-fire"></i><span>Grind Motivation</span></a>
+    </nav>
+    <div class="sidebar-bottom">
+      <div class="xp-bar-wrap">
+        <div class="xp-label">
+          <span>⚔️ Level <span id="sb-level">1</span></span>
+          <span id="sb-xp">0 XP</span>
+        </div>
+        <div class="xp-bar"><div class="xp-fill" id="sb-xp-fill"></div></div>
+        <div class="xp-next" id="sb-xp-next">100 XP to next level</div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- MAIN BODY -->
+  <div class="main-content">
+    
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <div class="topbar-title" id="topbar-title">📋 DSA Master Checklist</div>
+      <div style="display:flex; align-items:center; gap: 14px;">
+        <span class="save-indicator" id="sync-status" style="font-size:12.5px; color:var(--text2); display:flex; align-items:center; gap:6px;">
+          <i class="fas fa-cloud"></i> Synced
+        </span>
+        <div class="streak-badge">
+          <span class="fire-emoji">🔥</span>
+          <span class="streak-text" id="topbar-streak">0 day streak</span>
+        </div>
+        <a href="dsa_master_checklist.md" target="_blank" class="btn btn-sm" style="border: 1px solid var(--border); background: rgba(255, 255, 255, 0.05); color: #fff; text-decoration: none;">
+          <i class="fas fa-file-alt"></i> Markdown View
+        </a>
+      </div>
+    </header>
+
+    <!-- HERO PROGRESS BANNER -->
+    <div class="master-hero">
+      <div class="hero-title-area">
+        <h1><span>🎯</span> DSA Master Checklist (13 Weeks — 157 Problems)</h1>
+        <p>Mark completion only after solving independently. Filter by week, topic, or difficulty.</p>
+        <div style="margin-top: 14px; max-width: 480px;">
+          <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 6px;">
+            <span style="color: #fff; font-weight: 600;">Overall Progress</span>
+            <span id="hero-pct-text" style="color: var(--accent2); font-weight: 700;">0 / 157 Solved (0%)</span>
+          </div>
+          <div style="background: rgba(255, 255, 255, 0.08); height: 8px; border-radius: 4px; overflow: hidden;">
+            <div id="hero-progress-fill" style="height: 100%; width: 0%; background: linear-gradient(90deg, var(--accent), var(--accent2)); transition: width 0.3s ease;"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-stats-group">
+        <div class="stat-box">
+          <div class="stat-val" id="stat-solved">0</div>
+          <div class="stat-lbl">Solved</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-val" id="stat-easy">0/39</div>
+          <div class="stat-lbl">Easy</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-val" id="stat-medium">0/97</div>
+          <div class="stat-lbl">Medium</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-val" id="stat-hard">0/21</div>
+          <div class="stat-lbl">Hard</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WEEK FILTER TABS -->
+    <div class="week-tabs-scroll" id="week-tabs-container">
+      <!-- Rendered dynamically -->
+    </div>
+
+    <!-- CONTROLS TOOLBAR -->
+    <div class="controls-toolbar">
+      <div class="search-box">
+        <i class="fas fa-search" style="color: var(--text2); font-size: 12px;"></i>
+        <input type="text" id="master-search" placeholder="Search problem, pattern, or topic..." oninput="handleSearch(this.value)"/>
+      </div>
+
+      <div class="filter-group">
+        <select class="filter-select" id="filter-topic" onchange="setTopicFilter(this.value)">
+          <option value="all">All Topics (15)</option>
+        </select>
+
+        <select class="filter-select" id="filter-diff" onchange="setDiffFilter(this.value)">
+          <option value="all">All Difficulties</option>
+          <option value="easy">Easy</option>
+          <option value="medium">Medium</option>
+          <option value="hard">Hard</option>
+        </select>
+
+        <select class="filter-select" id="filter-status" onchange="setStatusFilter(this.value)">
+          <option value="all">All Status</option>
+          <option value="solved">Completed (Yes)</option>
+          <option value="unsolved">Incomplete (No)</option>
+        </select>
+
+        <button class="btn-random" onclick="pickRandomProblem()">
+          <i class="fas fa-dice"></i> Pick Random
+        </button>
+      </div>
+    </div>
+
+    <!-- PROBLEMS LIST -->
+    <div id="master-problems-container">
+      <!-- Rendered dynamically -->
+    </div>
+
+  </div>
+
+</div>
+
+<!-- LIGHTBOX MODAL FOR SCREENSHOTS -->
+<div class="lightbox-modal" id="lightboxModal" onclick="this.style.display='none'">
+  <button class="lightbox-close" onclick="document.getElementById('lightboxModal').style.display='none'">&times;</button>
+  <img src="" class="lightbox-img" id="lightboxImg" onclick="event.stopPropagation()"/>
+</div>
+
+<!-- SCRIPTS -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="sync.js"></script>
+
+<script>
+  const MASTER_PROBLEMS = [{"id": "w1_1_two_sum", "index": 1, "week": 1, "topic": "Arrays", "pattern": "Array traversal; in-place modification; prefix sum; difference array; Kadane's algorithm; matrix traversal; intervals; cyclic sort", "name": "Two Sum", "difficulty": "easy", "url": "https://leetcode.com/problems/two-sum/"}, {"id": "w1_2_best_time_to_buy_and", "index": 2, "week": 1, "topic": "Arrays", "pattern": "Two pointers; array traversal", "name": "Best Time to Buy and Sell Stock", "difficulty": "easy", "url": "https://leetcode.com/problems/best-time-to-buy-and-sell-stock/"}, {"id": "w1_3_contains_duplicate", "index": 3, "week": 1, "topic": "Arrays", "pattern": "Hashing; duplicate detection", "name": "Contains Duplicate", "difficulty": "easy", "url": "https://leetcode.com/problems/contains-duplicate/"}, {"id": "w1_4_maximum_subarray", "index": 4, "week": 1, "topic": "Arrays", "pattern": "Kadane's algorithm", "name": "Maximum Subarray", "difficulty": "medium", "url": "https://leetcode.com/problems/maximum-subarray/"}, {"id": "w1_5_product_of_array_exc", "index": 5, "week": 1, "topic": "Arrays", "pattern": "Prefix/suffix products", "name": "Product of Array Except Self", "difficulty": "medium", "url": "https://leetcode.com/problems/product-of-array-except-self/"}, {"id": "w1_6_3sum", "index": 6, "week": 1, "topic": "Arrays", "pattern": "Two pointers; sorting", "name": "3Sum", "difficulty": "medium", "url": "https://leetcode.com/problems/3sum/"}, {"id": "w1_7_container_with_most_", "index": 7, "week": 1, "topic": "Arrays", "pattern": "Two pointers", "name": "Container With Most Water", "difficulty": "medium", "url": "https://leetcode.com/problems/container-with-most-water/"}, {"id": "w1_8_subarray_sum_equals_", "index": 8, "week": 1, "topic": "Arrays", "pattern": "Prefix sum + hashmap", "name": "Subarray Sum Equals K", "difficulty": "medium", "url": "https://leetcode.com/problems/subarray-sum-equals-k/"}, {"id": "w1_9_set_matrix_zeroes", "index": 9, "week": 1, "topic": "Arrays", "pattern": "In-place matrix modification", "name": "Set Matrix Zeroes", "difficulty": "medium", "url": "https://leetcode.com/problems/set-matrix-zeroes/"}, {"id": "w1_10_spiral_matrix", "index": 10, "week": 1, "topic": "Arrays", "pattern": "Matrix traversal", "name": "Spiral Matrix", "difficulty": "medium", "url": "https://leetcode.com/problems/spiral-matrix/"}, {"id": "w1_11_move_zeroes", "index": 11, "week": 1, "topic": "Arrays", "pattern": "Two pointers; in-place modification", "name": "Move Zeroes", "difficulty": "easy", "url": "https://leetcode.com/problems/move-zeroes/"}, {"id": "w1_12_rotate_array", "index": 12, "week": 1, "topic": "Arrays", "pattern": "Array rotation", "name": "Rotate Array", "difficulty": "medium", "url": "https://leetcode.com/problems/rotate-array/"}, {"id": "w1_13_trapping_rain_water", "index": 13, "week": 1, "topic": "Arrays", "pattern": "Two pointers; prefix/suffix maxima", "name": "Trapping Rain Water", "difficulty": "hard", "url": "https://leetcode.com/problems/trapping-rain-water/"}, {"id": "w1_14_first_missing_positi", "index": 14, "week": 1, "topic": "Arrays", "pattern": "Cyclic sort / index placement", "name": "First Missing Positive", "difficulty": "hard", "url": "https://leetcode.com/problems/first-missing-positive/"}, {"id": "w2_15_two_sum", "index": 15, "week": 2, "topic": "Hashing", "pattern": "HashMap; value-to-index mapping", "name": "Two Sum", "difficulty": "easy", "url": "https://leetcode.com/problems/two-sum/"}, {"id": "w2_16_contains_duplicate", "index": 16, "week": 2, "topic": "Hashing", "pattern": "HashSet; duplicate detection", "name": "Contains Duplicate", "difficulty": "easy", "url": "https://leetcode.com/problems/contains-duplicate/"}, {"id": "w2_17_valid_anagram", "index": 17, "week": 2, "topic": "Hashing", "pattern": "Frequency counting", "name": "Valid Anagram", "difficulty": "easy", "url": "https://leetcode.com/problems/valid-anagram/"}, {"id": "w2_18_group_anagrams", "index": 18, "week": 2, "topic": "Hashing", "pattern": "Grouping; canonical keys", "name": "Group Anagrams", "difficulty": "medium", "url": "https://leetcode.com/problems/group-anagrams/"}, {"id": "w2_19_longest_consecutive_", "index": 19, "week": 2, "topic": "Hashing", "pattern": "HashSet; sequence expansion", "name": "Longest Consecutive Sequence", "difficulty": "medium", "url": "https://leetcode.com/problems/longest-consecutive-sequence/"}, {"id": "w2_20_subarray_sum_equals_", "index": 20, "week": 2, "topic": "Hashing", "pattern": "Prefix sum + hashmap", "name": "Subarray Sum Equals K", "difficulty": "medium", "url": "https://leetcode.com/problems/subarray-sum-equals-k/"}, {"id": "w2_21_isomorphic_strings", "index": 21, "week": 2, "topic": "Hashing", "pattern": "Bidirectional mapping", "name": "Isomorphic Strings", "difficulty": "easy", "url": "https://leetcode.com/problems/isomorphic-strings/"}, {"id": "w2_22_top_k_frequent_eleme", "index": 22, "week": 2, "topic": "Hashing", "pattern": "Frequency counting + heap/bucket", "name": "Top K Frequent Elements", "difficulty": "medium", "url": "https://leetcode.com/problems/top-k-frequent-elements/"}, {"id": "w2_23_valid_anagram", "index": 23, "week": 2, "topic": "Strings", "pattern": "Character frequency counting", "name": "Valid Anagram", "difficulty": "easy", "url": "https://leetcode.com/problems/valid-anagram/"}, {"id": "w2_24_valid_palindrome", "index": 24, "week": 2, "topic": "Strings", "pattern": "Two pointers; palindrome checking", "name": "Valid Palindrome", "difficulty": "easy", "url": "https://leetcode.com/problems/valid-palindrome/"}, {"id": "w2_25_longest_common_prefi", "index": 25, "week": 2, "topic": "Strings", "pattern": "Prefix comparison", "name": "Longest Common Prefix", "difficulty": "easy", "url": "https://leetcode.com/problems/longest-common-prefix/"}, {"id": "w2_26_longest_substring_wi", "index": 26, "week": 2, "topic": "Strings", "pattern": "Variable sliding window", "name": "Longest Substring Without Repeating Characters", "difficulty": "medium", "url": "https://leetcode.com/problems/longest-substring-without-repeating-characters/"}, {"id": "w2_27_group_anagrams", "index": 27, "week": 2, "topic": "Strings", "pattern": "Frequency counting; grouping", "name": "Group Anagrams", "difficulty": "medium", "url": "https://leetcode.com/problems/group-anagrams/"}, {"id": "w2_28_longest_repeating_ch", "index": 28, "week": 2, "topic": "Strings", "pattern": "Sliding window; frequency counting", "name": "Longest Repeating Character Replacement", "difficulty": "medium", "url": "https://leetcode.com/problems/longest-repeating-character-replacement/"}, {"id": "w2_29_longest_palindromic_", "index": 29, "week": 2, "topic": "Strings", "pattern": "Expand around center", "name": "Longest Palindromic Substring", "difficulty": "medium", "url": "https://leetcode.com/problems/longest-palindromic-substring/"}, {"id": "w2_30_palindromic_substrin", "index": 30, "week": 2, "topic": "Strings", "pattern": "Expand around center", "name": "Palindromic Substrings", "difficulty": "medium", "url": "https://leetcode.com/problems/palindromic-substrings/"}, {"id": "w2_31_string_to_integer_(a", "index": 31, "week": 2, "topic": "Strings", "pattern": "String parsing", "name": "String to Integer (atoi)", "difficulty": "medium", "url": "https://leetcode.com/problems/string-to-integer-atoi/"}, {"id": "w2_32_minimum_window_subst", "index": 32, "week": 2, "topic": "Strings", "pattern": "Variable sliding window", "name": "Minimum Window Substring", "difficulty": "hard", "url": "https://leetcode.com/problems/minimum-window-substring/"}, {"id": "w2_33_edit_distance", "index": 33, "week": 2, "topic": "Strings", "pattern": "Dynamic programming; string DP", "name": "Edit Distance", "difficulty": "hard", "url": "https://leetcode.com/problems/edit-distance/"}, {"id": "w3_34_two_sum_ii___input_a", "index": 34, "week": 3, "topic": "Two Pointers & Sliding Window", "pattern": "Opposite-direction pointers", "name": "Two Sum II - Input Array Is Sorted", "difficulty": "medium", "url": "https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/"}, {"id": "w3_35_remove_duplicates_fr", "index": 35, "week": 3, "topic": "Two Pointers & Sliding Window", "pattern": "Same-direction pointers; in-place", "name": "Remove Duplicates from Sorted Array", "difficulty": "easy", "url": "https://leetcode.com/problems/remove-duplicates-from-sorted-array/"}, {"id": "w3_36_move_zeroes", "index": 36, "week": 3, "topic": "Two Pointers & Sliding Window", "pattern": "Same-direction pointers; in-place", "name": "Move Zeroes", "difficulty": "easy", "url": "https://leetcode.com/problems/move-zeroes/"}, {"id": "w3_37_container_with_most_", "index": 37, "week": 3, "topic": "Two Pointers & Sliding Window", "pattern": "Opposite-direction pointers", "name": "Container With Most Water", "difficulty": "medium", "url": "https://leetcode.com/problems/container-with-most-water/"}, {"id": "w3_38_3sum", "index": 38, "week": 3, "topic": "Two Pointers & Sliding Window", "pattern": "Sorting + two pointers", "name": "3Sum", "difficulty": "medium", "url": "https://leetcode.com/problems/3sum/"}, {"id": "w3_39_maximum_average_suba", "index": 39, "week": 3, "topic": "Two Pointers & Sliding Window", "pattern": "Fixed-size sliding window", "name": "Maximum Average Subarray I", "difficulty": "easy", "url": "https://leetcode.com/problems/maximum-average-subarray-i/"}, {"id": "w3_40_permutation_in_strin", "index": 40, "week": 3, "topic": "Two Pointers & Sliding Window", "pattern": "Sliding window; character counts", "name": "Permutation in String", "difficulty": "medium", "url": "https://leetcode.com/problems/permutation-in-string/"}, {"id": "w3_41_max_consecutive_ones", "index": 41, "week": 3, "topic": "Two Pointers & Sliding Window", "pattern": "Variable-size sliding window", "name": "Max Consecutive Ones III", "difficulty": "medium", "url": "https://leetcode.com/problems/max-consecutive-ones-iii/"}, {"id": "w3_42_longest_substring_wi", "index": 42, "week": 3, "topic": "Two Pointers & Sliding Window", "pattern": "Variable-size sliding window", "name": "Longest Substring Without Repeating Characters", "difficulty": "medium", "url": "https://leetcode.com/problems/longest-substring-without-repeating-characters/"}, {"id": "w3_43_minimum_window_subst", "index": 43, "week": 3, "topic": "Two Pointers & Sliding Window", "pattern": "Variable-size sliding window", "name": "Minimum Window Substring", "difficulty": "hard", "url": "https://leetcode.com/problems/minimum-window-substring/"}, {"id": "w4_44_binary_search", "index": 44, "week": 4, "topic": "Searching / Binary Search", "pattern": "Binary search; boundaries", "name": "Binary Search", "difficulty": "easy", "url": "https://leetcode.com/problems/binary-search/"}, {"id": "w4_45_search_insert_positi", "index": 45, "week": 4, "topic": "Searching / Binary Search", "pattern": "Insertion position; lower bound", "name": "Search Insert Position", "difficulty": "easy", "url": "https://leetcode.com/problems/search-insert-position/"}, {"id": "w4_46_first_bad_version", "index": 46, "week": 4, "topic": "Searching / Binary Search", "pattern": "Binary search on answer", "name": "First Bad Version", "difficulty": "easy", "url": "https://leetcode.com/problems/first-bad-version/"}, {"id": "w4_47_search_in_rotated_so", "index": 47, "week": 4, "topic": "Searching / Binary Search", "pattern": "Rotated sorted array", "name": "Search in Rotated Sorted Array", "difficulty": "medium", "url": "https://leetcode.com/problems/search-in-rotated-sorted-array/"}, {"id": "w4_48_find_minimum_in_rota", "index": 48, "week": 4, "topic": "Searching / Binary Search", "pattern": "Rotated sorted array", "name": "Find Minimum in Rotated Sorted Array", "difficulty": "medium", "url": "https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/"}, {"id": "w4_49_search_a_2d_matrix", "index": 49, "week": 4, "topic": "Searching / Binary Search", "pattern": "Matrix search", "name": "Search a 2D Matrix", "difficulty": "medium", "url": "https://leetcode.com/problems/search-a-2d-matrix/"}, {"id": "w4_50_koko_eating_bananas", "index": 50, "week": 4, "topic": "Searching / Binary Search", "pattern": "Binary search on answer", "name": "Koko Eating Bananas", "difficulty": "medium", "url": "https://leetcode.com/problems/koko-eating-bananas/"}, {"id": "w4_51_find_first_and_last_", "index": 51, "week": 4, "topic": "Searching / Binary Search", "pattern": "Lower/upper bound", "name": "Find First and Last Position of Element in Sorted Array", "difficulty": "medium", "url": "https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/"}, {"id": "w4_52_find_peak_element", "index": 52, "week": 4, "topic": "Searching / Binary Search", "pattern": "Peak finding", "name": "Find Peak Element", "difficulty": "medium", "url": "https://leetcode.com/problems/find-peak-element/"}, {"id": "w4_53_capacity_to_ship_pac", "index": 53, "week": 4, "topic": "Searching / Binary Search", "pattern": "Binary search on answer", "name": "Capacity To Ship Packages Within D Days", "difficulty": "medium", "url": "https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/"}, {"id": "w4_54_median_of_two_sorted", "index": 54, "week": 4, "topic": "Searching / Binary Search", "pattern": "Advanced binary search / partitioning", "name": "Median of Two Sorted Arrays", "difficulty": "hard", "url": "https://leetcode.com/problems/median-of-two-sorted-arrays/"}, {"id": "w4_55_sort_an_array", "index": 55, "week": 4, "topic": "Sorting", "pattern": "Merge sort; quicksort; heap sort; counting sort; custom comparator; interval sorting; quickselect", "name": "Sort an Array", "difficulty": "medium", "url": "https://leetcode.com/problems/sort-an-array/"}, {"id": "w4_56_merge_sorted_array", "index": 56, "week": 4, "topic": "Sorting", "pattern": "Two pointers; merge", "name": "Merge Sorted Array", "difficulty": "easy", "url": "https://leetcode.com/problems/merge-sorted-array/"}, {"id": "w4_57_sort_colors", "index": 57, "week": 4, "topic": "Sorting", "pattern": "Three-way partitioning", "name": "Sort Colors", "difficulty": "medium", "url": "https://leetcode.com/problems/sort-colors/"}, {"id": "w4_58_squares_of_a_sorted_", "index": 58, "week": 4, "topic": "Sorting", "pattern": "Sorting + two pointers", "name": "Squares of a Sorted Array", "difficulty": "easy", "url": "https://leetcode.com/problems/squares-of-a-sorted-array/"}, {"id": "w4_59_merge_intervals", "index": 59, "week": 4, "topic": "Sorting", "pattern": "Interval sorting", "name": "Merge Intervals", "difficulty": "medium", "url": "https://leetcode.com/problems/merge-intervals/"}, {"id": "w4_60_insert_interval", "index": 60, "week": 4, "topic": "Sorting", "pattern": "Interval insertion", "name": "Insert Interval", "difficulty": "medium", "url": "https://leetcode.com/problems/insert-interval/"}, {"id": "w4_61_meeting_rooms_ii", "index": 61, "week": 4, "topic": "Sorting", "pattern": "Interval scheduling / heap", "name": "Meeting Rooms II", "difficulty": "medium", "url": "https://leetcode.com/problems/meeting-rooms-ii/"}, {"id": "w4_62_largest_number", "index": 62, "week": 4, "topic": "Sorting", "pattern": "Custom comparator", "name": "Largest Number", "difficulty": "medium", "url": "https://leetcode.com/problems/largest-number/"}, {"id": "w4_63_reverse_pairs", "index": 63, "week": 4, "topic": "Sorting", "pattern": "Merge sort / counting smaller values", "name": "Reverse Pairs", "difficulty": "hard", "url": "https://leetcode.com/problems/reverse-pairs/"}, {"id": "w5_64_reverse_linked_list", "index": 64, "week": 5, "topic": "Linked Lists", "pattern": "Pointer reversal", "name": "Reverse Linked List", "difficulty": "easy", "url": "https://leetcode.com/problems/reverse-linked-list/"}, {"id": "w5_65_merge_two_sorted_lis", "index": 65, "week": 5, "topic": "Linked Lists", "pattern": "Dummy node; merge", "name": "Merge Two Sorted Lists", "difficulty": "easy", "url": "https://leetcode.com/problems/merge-two-sorted-lists/"}, {"id": "w5_66_linked_list_cycle", "index": 66, "week": 5, "topic": "Linked Lists", "pattern": "Fast and slow pointers; cycle detection", "name": "Linked List Cycle", "difficulty": "easy", "url": "https://leetcode.com/problems/linked-list-cycle/"}, {"id": "w5_67_middle_of_the_linked", "index": 67, "week": 5, "topic": "Linked Lists", "pattern": "Fast and slow pointers", "name": "Middle of the Linked List", "difficulty": "easy", "url": "https://leetcode.com/problems/middle-of-the-linked-list/"}, {"id": "w5_68_remove_nth_node_from", "index": 68, "week": 5, "topic": "Linked Lists", "pattern": "Two pointers; dummy node", "name": "Remove Nth Node From End of List", "difficulty": "medium", "url": "https://leetcode.com/problems/remove-nth-node-from-end-of-list/"}, {"id": "w5_69_reorder_list", "index": 69, "week": 5, "topic": "Linked Lists", "pattern": "Reverse + merge; pointer manipulation", "name": "Reorder List", "difficulty": "medium", "url": "https://leetcode.com/problems/reorder-list/"}, {"id": "w5_70_add_two_numbers", "index": 70, "week": 5, "topic": "Linked Lists", "pattern": "Carry handling; linked-list traversal", "name": "Add Two Numbers", "difficulty": "medium", "url": "https://leetcode.com/problems/add-two-numbers/"}, {"id": "w5_71_copy_list_with_rando", "index": 71, "week": 5, "topic": "Linked Lists", "pattern": "HashMap / interleaving nodes", "name": "Copy List with Random Pointer", "difficulty": "medium", "url": "https://leetcode.com/problems/copy-list-with-random-pointer/"}, {"id": "w5_72_swap_nodes_in_pairs", "index": 72, "week": 5, "topic": "Linked Lists", "pattern": "Pointer manipulation", "name": "Swap Nodes in Pairs", "difficulty": "medium", "url": "https://leetcode.com/problems/swap-nodes-in-pairs/"}, {"id": "w5_73_sort_list", "index": 73, "week": 5, "topic": "Linked Lists", "pattern": "Merge sort on linked list", "name": "Sort List", "difficulty": "medium", "url": "https://leetcode.com/problems/sort-list/"}, {"id": "w5_74_reverse_nodes_in_k_g", "index": 74, "week": 5, "topic": "Linked Lists", "pattern": "K-group reversal", "name": "Reverse Nodes in K-Group", "difficulty": "hard", "url": "https://leetcode.com/problems/reverse-nodes-in-k-group/"}, {"id": "w6_75_valid_parentheses", "index": 75, "week": 6, "topic": "Stacks & Queues", "pattern": "Stack; parentheses matching", "name": "Valid Parentheses", "difficulty": "easy", "url": "https://leetcode.com/problems/valid-parentheses/"}, {"id": "w6_76_min_stack", "index": 76, "week": 6, "topic": "Stacks & Queues", "pattern": "Stack design; min tracking", "name": "Min Stack", "difficulty": "medium", "url": "https://leetcode.com/problems/min-stack/"}, {"id": "w6_77_implement_queue_usin", "index": 77, "week": 6, "topic": "Stacks & Queues", "pattern": "Queue using stacks", "name": "Implement Queue using Stacks", "difficulty": "easy", "url": "https://leetcode.com/problems/implement-queue-using-stacks/"}, {"id": "w6_78_implement_stack_usin", "index": 78, "week": 6, "topic": "Stacks & Queues", "pattern": "Stack using queues", "name": "Implement Stack using Queues", "difficulty": "easy", "url": "https://leetcode.com/problems/implement-stack-using-queues/"}, {"id": "w6_79_evaluate_reverse_pol", "index": 79, "week": 6, "topic": "Stacks & Queues", "pattern": "Expression evaluation", "name": "Evaluate Reverse Polish Notation", "difficulty": "medium", "url": "https://leetcode.com/problems/evaluate-reverse-polish-notation/"}, {"id": "w6_80_daily_temperatures", "index": 80, "week": 6, "topic": "Stacks & Queues", "pattern": "Monotonic stack", "name": "Daily Temperatures", "difficulty": "medium", "url": "https://leetcode.com/problems/daily-temperatures/"}, {"id": "w6_81_decode_string", "index": 81, "week": 6, "topic": "Stacks & Queues", "pattern": "Nested decoding; stack", "name": "Decode String", "difficulty": "medium", "url": "https://leetcode.com/problems/decode-string/"}, {"id": "w6_82_asteroid_collision", "index": 82, "week": 6, "topic": "Stacks & Queues", "pattern": "Monotonic stack", "name": "Asteroid Collision", "difficulty": "medium", "url": "https://leetcode.com/problems/asteroid-collision/"}, {"id": "w6_83_car_fleet", "index": 83, "week": 6, "topic": "Stacks & Queues", "pattern": "Stack; greedy ordering", "name": "Car Fleet", "difficulty": "medium", "url": "https://leetcode.com/problems/car-fleet/"}, {"id": "w6_84_largest_rectangle_in", "index": 84, "week": 6, "topic": "Stacks & Queues", "pattern": "Monotonic stack", "name": "Largest Rectangle in Histogram", "difficulty": "hard", "url": "https://leetcode.com/problems/largest-rectangle-in-histogram/"}, {"id": "w6_85_sliding_window_maxim", "index": 85, "week": 6, "topic": "Stacks & Queues", "pattern": "Monotonic deque", "name": "Sliding Window Maximum", "difficulty": "hard", "url": "https://leetcode.com/problems/sliding-window-maximum/"}, {"id": "w7_86_subsets", "index": 86, "week": 7, "topic": "Recursion & Backtracking", "pattern": "Recursion; base cases; decision tree; pruning", "name": "Subsets", "difficulty": "medium", "url": "https://leetcode.com/problems/subsets/"}, {"id": "w7_87_permutations", "index": 87, "week": 7, "topic": "Recursion & Backtracking", "pattern": "Backtracking; permutations", "name": "Permutations", "difficulty": "medium", "url": "https://leetcode.com/problems/permutations/"}, {"id": "w7_88_combination_sum", "index": 88, "week": 7, "topic": "Recursion & Backtracking", "pattern": "Backtracking; combinations", "name": "Combination Sum", "difficulty": "medium", "url": "https://leetcode.com/problems/combination-sum/"}, {"id": "w7_89_combination_sum_ii", "index": 89, "week": 7, "topic": "Recursion & Backtracking", "pattern": "Backtracking; duplicate handling", "name": "Combination Sum II", "difficulty": "medium", "url": "https://leetcode.com/problems/combination-sum-ii/"}, {"id": "w7_90_generate_parentheses", "index": 90, "week": 7, "topic": "Recursion & Backtracking", "pattern": "Backtracking; parentheses", "name": "Generate Parentheses", "difficulty": "medium", "url": "https://leetcode.com/problems/generate-parentheses/"}, {"id": "w7_91_letter_combinations_", "index": 91, "week": 7, "topic": "Recursion & Backtracking", "pattern": "Backtracking; choices", "name": "Letter Combinations of a Phone Number", "difficulty": "medium", "url": "https://leetcode.com/problems/letter-combinations-of-a-phone-number/"}, {"id": "w7_92_word_search", "index": 92, "week": 7, "topic": "Recursion & Backtracking", "pattern": "Grid DFS; backtracking", "name": "Word Search", "difficulty": "medium", "url": "https://leetcode.com/problems/word-search/"}, {"id": "w7_93_n_queens", "index": 93, "week": 7, "topic": "Recursion & Backtracking", "pattern": "Constraint-based backtracking", "name": "N-Queens", "difficulty": "hard", "url": "https://leetcode.com/problems/n-queens/"}, {"id": "w8_94_maximum_depth_of_bin", "index": 94, "week": 8, "topic": "Trees & Tries", "pattern": "DFS; height/depth", "name": "Maximum Depth of Binary Tree", "difficulty": "easy", "url": "https://leetcode.com/problems/maximum-depth-of-binary-tree/"}, {"id": "w8_95_invert_binary_tree", "index": 95, "week": 8, "topic": "Trees & Tries", "pattern": "Tree recursion", "name": "Invert Binary Tree", "difficulty": "easy", "url": "https://leetcode.com/problems/invert-binary-tree/"}, {"id": "w8_96_same_tree", "index": 96, "week": 8, "topic": "Trees & Tries", "pattern": "Tree comparison", "name": "Same Tree", "difficulty": "easy", "url": "https://leetcode.com/problems/same-tree/"}, {"id": "w8_97_subtree_of_another_t", "index": 97, "week": 8, "topic": "Trees & Tries", "pattern": "DFS; subtree matching", "name": "Subtree of Another Tree", "difficulty": "easy", "url": "https://leetcode.com/problems/subtree-of-another-tree/"}, {"id": "w8_98_binary_tree_level_or", "index": 98, "week": 8, "topic": "Trees & Tries", "pattern": "BFS; level-order traversal", "name": "Binary Tree Level Order Traversal", "difficulty": "medium", "url": "https://leetcode.com/problems/binary-tree-level-order-traversal/"}, {"id": "w8_99_validate_binary_sear", "index": 99, "week": 8, "topic": "Trees & Tries", "pattern": "BST; inorder / bounds", "name": "Validate Binary Search Tree", "difficulty": "medium", "url": "https://leetcode.com/problems/validate-binary-search-tree/"}, {"id": "w8_100_lowest_common_ancest", "index": 100, "week": 8, "topic": "Trees & Tries", "pattern": "Lowest common ancestor", "name": "Lowest Common Ancestor of a BST", "difficulty": "medium", "url": "https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/"}, {"id": "w8_101_diameter_of_binary_t", "index": 101, "week": 8, "topic": "Trees & Tries", "pattern": "DFS; tree diameter", "name": "Diameter of Binary Tree", "difficulty": "easy", "url": "https://leetcode.com/problems/diameter-of-binary-tree/"}, {"id": "w8_102_kth_smallest_element", "index": 102, "week": 8, "topic": "Trees & Tries", "pattern": "BST; inorder traversal", "name": "Kth Smallest Element in a BST", "difficulty": "medium", "url": "https://leetcode.com/problems/kth-smallest-element-in-a-bst/"}, {"id": "w8_103_construct_binary_tre", "index": 103, "week": 8, "topic": "Trees & Tries", "pattern": "Tree construction; traversals", "name": "Construct Binary Tree from Preorder and Inorder Traversal", "difficulty": "medium", "url": "https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/"}, {"id": "w8_104_implement_trie", "index": 104, "week": 8, "topic": "Trees & Tries", "pattern": "Trie insertion; prefix search", "name": "Implement Trie", "difficulty": "medium", "url": "https://leetcode.com/problems/implement-trie-prefix-tree/"}, {"id": "w8_105_binary_tree_maximum_", "index": 105, "week": 8, "topic": "Trees & Tries", "pattern": "Tree DP; DFS", "name": "Binary Tree Maximum Path Sum", "difficulty": "hard", "url": "https://leetcode.com/problems/binary-tree-maximum-path-sum/"}, {"id": "w8_106_word_search_ii", "index": 106, "week": 8, "topic": "Trees & Tries", "pattern": "Trie + DFS; word search", "name": "Word Search II", "difficulty": "hard", "url": "https://leetcode.com/problems/word-search-ii/"}, {"id": "w9_107_last_stone_weight", "index": 107, "week": 9, "topic": "Heaps & Priority Queues", "pattern": "Min/max heap; heap operations", "name": "Last Stone Weight", "difficulty": "easy", "url": "https://leetcode.com/problems/last-stone-weight/"}, {"id": "w9_108_kth_largest_element_", "index": 108, "week": 9, "topic": "Heaps & Priority Queues", "pattern": "Heap; streaming data", "name": "Kth Largest Element in a Stream", "difficulty": "easy", "url": "https://leetcode.com/problems/kth-largest-element-in-a-stream/"}, {"id": "w9_109_kth_largest_element_", "index": 109, "week": 9, "topic": "Heaps & Priority Queues", "pattern": "Top K; quickselect / heap", "name": "Kth Largest Element in an Array", "difficulty": "medium", "url": "https://leetcode.com/problems/kth-largest-element-in-an-array/"}, {"id": "w9_110_top_k_frequent_eleme", "index": 110, "week": 9, "topic": "Heaps & Priority Queues", "pattern": "Frequency + heap/bucket", "name": "Top K Frequent Elements", "difficulty": "medium", "url": "https://leetcode.com/problems/top-k-frequent-elements/"}, {"id": "w9_111_k_closest_points_to_", "index": 111, "week": 9, "topic": "Heaps & Priority Queues", "pattern": "Distance + heap", "name": "K Closest Points to Origin", "difficulty": "medium", "url": "https://leetcode.com/problems/k-closest-points-to-origin/"}, {"id": "w9_112_task_scheduler", "index": 112, "week": 9, "topic": "Heaps & Priority Queues", "pattern": "Greedy + priority queue", "name": "Task Scheduler", "difficulty": "medium", "url": "https://leetcode.com/problems/task-scheduler/"}, {"id": "w9_113_reorganize_string", "index": 113, "week": 9, "topic": "Heaps & Priority Queues", "pattern": "Max heap / frequency", "name": "Reorganize String", "difficulty": "medium", "url": "https://leetcode.com/problems/reorganize-string/"}, {"id": "w9_114_find_k_pairs_with_sm", "index": 114, "week": 9, "topic": "Heaps & Priority Queues", "pattern": "Heap; pair enumeration", "name": "Find K Pairs with Smallest Sums", "difficulty": "medium", "url": "https://leetcode.com/problems/find-k-pairs-with-smallest-sums/"}, {"id": "w9_115_find_median_from_dat", "index": 115, "week": 9, "topic": "Heaps & Priority Queues", "pattern": "Two heaps; running median", "name": "Find Median from Data Stream", "difficulty": "hard", "url": "https://leetcode.com/problems/find-median-from-data-stream/"}, {"id": "w9_116_merge_k_sorted_lists", "index": 116, "week": 9, "topic": "Heaps & Priority Queues", "pattern": "K-way merge", "name": "Merge K Sorted Lists", "difficulty": "hard", "url": "https://leetcode.com/problems/merge-k-sorted-lists/"}, {"id": "w10_117_flood_fill", "index": 117, "week": 10, "topic": "Graphs", "pattern": "BFS; DFS; graph representation", "name": "Flood Fill", "difficulty": "easy", "url": "https://leetcode.com/problems/flood-fill/"}, {"id": "w10_118_number_of_islands", "index": 118, "week": 10, "topic": "Graphs", "pattern": "Grid DFS/BFS; connected components", "name": "Number of Islands", "difficulty": "medium", "url": "https://leetcode.com/problems/number-of-islands/"}, {"id": "w10_119_clone_graph", "index": 119, "week": 10, "topic": "Graphs", "pattern": "Graph traversal; cloning", "name": "Clone Graph", "difficulty": "medium", "url": "https://leetcode.com/problems/clone-graph/"}, {"id": "w10_120_rotting_oranges", "index": 120, "week": 10, "topic": "Graphs", "pattern": "Multi-source BFS", "name": "Rotting Oranges", "difficulty": "medium", "url": "https://leetcode.com/problems/rotting-oranges/"}, {"id": "w10_121_course_schedule", "index": 121, "week": 10, "topic": "Graphs", "pattern": "Topological sort; cycle detection", "name": "Course Schedule", "difficulty": "medium", "url": "https://leetcode.com/problems/course-schedule/"}, {"id": "w10_122_course_schedule_ii", "index": 122, "week": 10, "topic": "Graphs", "pattern": "Topological sort", "name": "Course Schedule II", "difficulty": "medium", "url": "https://leetcode.com/problems/course-schedule-ii/"}, {"id": "w10_123_pacific_atlantic_wat", "index": 123, "week": 10, "topic": "Graphs", "pattern": "DFS; multi-source traversal", "name": "Pacific Atlantic Water Flow", "difficulty": "medium", "url": "https://leetcode.com/problems/pacific-atlantic-water-flow/"}, {"id": "w10_124_redundant_connection", "index": 124, "week": 10, "topic": "Graphs", "pattern": "Union Find / DSU", "name": "Redundant Connection", "difficulty": "medium", "url": "https://leetcode.com/problems/redundant-connection/"}, {"id": "w10_125_accounts_merge", "index": 125, "week": 10, "topic": "Graphs", "pattern": "Union Find / DSU", "name": "Accounts Merge", "difficulty": "medium", "url": "https://leetcode.com/problems/accounts-merge/"}, {"id": "w10_126_network_delay_time", "index": 126, "week": 10, "topic": "Graphs", "pattern": "Dijkstra's algorithm", "name": "Network Delay Time", "difficulty": "medium", "url": "https://leetcode.com/problems/network-delay-time/"}, {"id": "w10_127_word_ladder", "index": 127, "week": 10, "topic": "Graphs", "pattern": "BFS shortest path", "name": "Word Ladder", "difficulty": "hard", "url": "https://leetcode.com/problems/word-ladder/"}, {"id": "w10_128_swim_in_rising_water", "index": 128, "week": 10, "topic": "Graphs", "pattern": "Dijkstra / binary search on answer", "name": "Swim in Rising Water", "difficulty": "hard", "url": "https://leetcode.com/problems/swim-in-rising-water/"}, {"id": "w10_129_cheapest_flights_wit", "index": 129, "week": 10, "topic": "Graphs", "pattern": "Shortest path with stop constraint", "name": "Cheapest Flights Within K Stops", "difficulty": "medium", "url": "https://leetcode.com/problems/cheapest-flights-within-k-stops/"}, {"id": "w11_130_jump_game", "index": 130, "week": 11, "topic": "Greedy", "pattern": "Greedy choice; reachability", "name": "Jump Game", "difficulty": "medium", "url": "https://leetcode.com/problems/jump-game/"}, {"id": "w11_131_jump_game_ii", "index": 131, "week": 11, "topic": "Greedy", "pattern": "Greedy range expansion", "name": "Jump Game II", "difficulty": "medium", "url": "https://leetcode.com/problems/jump-game-ii/"}, {"id": "w11_132_gas_station", "index": 132, "week": 11, "topic": "Greedy", "pattern": "Greedy; running surplus", "name": "Gas Station", "difficulty": "medium", "url": "https://leetcode.com/problems/gas-station/"}, {"id": "w11_133_non_overlapping_inte", "index": 133, "week": 11, "topic": "Greedy", "pattern": "Interval scheduling", "name": "Non-overlapping Intervals", "difficulty": "medium", "url": "https://leetcode.com/problems/non-overlapping-intervals/"}, {"id": "w11_134_partition_labels", "index": 134, "week": 11, "topic": "Greedy", "pattern": "Greedy partitioning", "name": "Partition Labels", "difficulty": "medium", "url": "https://leetcode.com/problems/partition-labels/"}, {"id": "w11_135_assign_cookies", "index": 135, "week": 11, "topic": "Greedy", "pattern": "Sorting + greedy matching", "name": "Assign Cookies", "difficulty": "easy", "url": "https://leetcode.com/problems/assign-cookies/"}, {"id": "w11_136_hand_of_straights", "index": 136, "week": 11, "topic": "Greedy", "pattern": "Frequency + greedy grouping", "name": "Hand of Straights", "difficulty": "medium", "url": "https://leetcode.com/problems/hand-of-straights/"}, {"id": "w12_137_climbing_stairs", "index": 137, "week": 12, "topic": "Dynamic Programming", "pattern": "1D DP; recurrence", "name": "Climbing Stairs", "difficulty": "easy", "url": "https://leetcode.com/problems/climbing-stairs/"}, {"id": "w12_138_min_cost_climbing_st", "index": 138, "week": 12, "topic": "Dynamic Programming", "pattern": "1D DP", "name": "Min Cost Climbing Stairs", "difficulty": "easy", "url": "https://leetcode.com/problems/min-cost-climbing-stairs/"}, {"id": "w12_139_house_robber", "index": 139, "week": 12, "topic": "Dynamic Programming", "pattern": "1D DP; take/skip", "name": "House Robber", "difficulty": "medium", "url": "https://leetcode.com/problems/house-robber/"}, {"id": "w12_140_house_robber_ii", "index": 140, "week": 12, "topic": "Dynamic Programming", "pattern": "Circular DP", "name": "House Robber II", "difficulty": "medium", "url": "https://leetcode.com/problems/house-robber-ii/"}, {"id": "w12_141_coin_change", "index": 141, "week": 12, "topic": "Dynamic Programming", "pattern": "1D DP; coin change", "name": "Coin Change", "difficulty": "medium", "url": "https://leetcode.com/problems/coin-change/"}, {"id": "w12_142_longest_increasing_s", "index": 142, "week": 12, "topic": "Dynamic Programming", "pattern": "Subsequence DP", "name": "Longest Increasing Subsequence", "difficulty": "medium", "url": "https://leetcode.com/problems/longest-increasing-subsequence/"}, {"id": "w12_143_longest_common_subse", "index": 143, "week": 12, "topic": "Dynamic Programming", "pattern": "2D string DP", "name": "Longest Common Subsequence", "difficulty": "medium", "url": "https://leetcode.com/problems/longest-common-subsequence/"}, {"id": "w12_144_unique_paths", "index": 144, "week": 12, "topic": "Dynamic Programming", "pattern": "Grid DP", "name": "Unique Paths", "difficulty": "medium", "url": "https://leetcode.com/problems/unique-paths/"}, {"id": "w12_145_partition_equal_subs", "index": 145, "week": 12, "topic": "Dynamic Programming", "pattern": "0/1 knapsack", "name": "Partition Equal Subset Sum", "difficulty": "medium", "url": "https://leetcode.com/problems/partition-equal-subset-sum/"}, {"id": "w12_146_word_break", "index": 146, "week": 12, "topic": "Dynamic Programming", "pattern": "String DP; segmentation", "name": "Word Break", "difficulty": "medium", "url": "https://leetcode.com/problems/word-break/"}, {"id": "w12_147_edit_distance", "index": 147, "week": 12, "topic": "Dynamic Programming", "pattern": "String DP", "name": "Edit Distance", "difficulty": "medium", "url": "https://leetcode.com/problems/edit-distance/"}, {"id": "w12_148_burst_balloons", "index": 148, "week": 12, "topic": "Dynamic Programming", "pattern": "Interval DP", "name": "Burst Balloons", "difficulty": "hard", "url": "https://leetcode.com/problems/burst-balloons/"}, {"id": "w13_149_single_number", "index": 149, "week": 13, "topic": "Bit Manipulation", "pattern": "XOR cancellation", "name": "Single Number", "difficulty": "easy", "url": "https://leetcode.com/problems/single-number/"}, {"id": "w13_150_number_of_1_bits", "index": 150, "week": 13, "topic": "Bit Manipulation", "pattern": "Counting set bits", "name": "Number of 1 Bits", "difficulty": "easy", "url": "https://leetcode.com/problems/number-of-1-bits/"}, {"id": "w13_151_counting_bits", "index": 151, "week": 13, "topic": "Bit Manipulation", "pattern": "DP + bit counting", "name": "Counting Bits", "difficulty": "easy", "url": "https://leetcode.com/problems/counting-bits/"}, {"id": "w13_152_reverse_bits", "index": 152, "week": 13, "topic": "Bit Manipulation", "pattern": "Bit reversal", "name": "Reverse Bits", "difficulty": "easy", "url": "https://leetcode.com/problems/reverse-bits/"}, {"id": "w13_153_missing_number", "index": 153, "week": 13, "topic": "Bit Manipulation", "pattern": "XOR / bit properties", "name": "Missing Number", "difficulty": "easy", "url": "https://leetcode.com/problems/missing-number/"}, {"id": "w13_154_sum_of_two_integers", "index": 154, "week": 13, "topic": "Bit Manipulation", "pattern": "Bitwise arithmetic", "name": "Sum of Two Integers", "difficulty": "medium", "url": "https://leetcode.com/problems/sum-of-two-integers/"}, {"id": "w13_155_single_number_ii", "index": 155, "week": 13, "topic": "Bit Manipulation", "pattern": "Bit counting", "name": "Single Number II", "difficulty": "medium", "url": "https://leetcode.com/problems/single-number-ii/"}, {"id": "w13_156_bitwise_and_of_numbe", "index": 156, "week": 13, "topic": "Bit Manipulation", "pattern": "Bitwise AND; common prefix", "name": "Bitwise AND of Numbers Range", "difficulty": "medium", "url": "https://leetcode.com/problems/bitwise-and-of-numbers-range/"}, {"id": "w13_157_maximum_xor_of_two_n", "index": 157, "week": 13, "topic": "Bit Manipulation", "pattern": "Bitwise trie / XOR", "name": "Maximum XOR of Two Numbers in an Array", "difficulty": "hard", "url": "https://leetcode.com/problems/maximum-xor-of-two-numbers-in-an-array/"}];
+
+  let activeWeek = 'all';
+  let activeTopic = 'all';
+  let activeDiff = 'all';
+  let activeStatus = 'all';
+  let searchQuery = '';
+  let S = {};
+
+  const NOTE_TEMPLATE = "💡 Key Intuition:\n- \n\n⚠️ Edge Cases / Tricky Parts:\n- \n\n⏱️ Complexity: Time O() | Space O()";
+
+  // IndexedDB for Screenshots
+  const dbName = "PlacementOS_DSA_DB";
+  const storeName = "screenshots";
+  function getDB() {
+    return new Promise((resolve, reject) => {
+      const request = indexedDB.open(dbName, 1);
+      request.onupgradeneeded = (e) => {
+        const db = e.target.result;
+        if (!db.objectStoreNames.contains(storeName)) {
+          db.createObjectStore(storeName, { keyPath: "problemName" });
+        }
+      };
+      request.onsuccess = (e) => resolve(e.target.result);
+      request.onerror = (e) => reject(e.target.error);
+    });
+  }
+
+  async function saveScreenshot(problemId, base64Data) {
+    const db = await getDB();
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction(storeName, "readwrite");
+      const store = tx.objectStore(storeName);
+      const req = store.put({ problemName: `dsa_master_${problemId}`, base64Data });
+      req.onsuccess = () => resolve();
+      req.onerror = (e) => reject(e.target.error);
+    });
+  }
+
+  async function getScreenshot(problemId) {
+    const db = await getDB();
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction(storeName, "readonly");
+      const store = tx.objectStore(storeName);
+      const req = store.get(`dsa_master_${problemId}`);
+      req.onsuccess = () => resolve(req.result ? req.result.base64Data : null);
+      req.onerror = (e) => reject(e.target.error);
+    });
+  }
+
+  async function deleteScreenshot(problemId) {
+    const db = await getDB();
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction(storeName, "readwrite");
+      const store = tx.objectStore(storeName);
+      const req = store.delete(`dsa_master_${problemId}`);
+      req.onsuccess = () => resolve();
+      req.onerror = (e) => reject(e.target.error);
+    });
+  }
+
+  // State Management
+  function load() {
+    const saved = localStorage.getItem('placementOS_v2');
+    if (saved) {
+      try { S = JSON.parse(saved); } catch(e) { S = {}; }
+    }
+    if (!S.dsaMasterChecks) S.dsaMasterChecks = {};
+    if (!S.dsaMasterDates) S.dsaMasterDates = {};
+    if (!S.dsaMasterNotes) S.dsaMasterNotes = {};
+    if (!S.dsaMasterCodes) S.dsaMasterCodes = {};
+
+    updateSidebarUI();
+    applyDynamicWallpaper();
+  }
+
+  function save() {
+    S.updatedAt = Date.now();
+    const str = JSON.stringify(S);
+    localStorage.setItem('placementOS_v2', str);
+    localStorage.setItem('placementOS_v2_backup', str);
+    if (typeof syncPush === 'function') {
+      syncPush(S);
+    }
+    updateAllProgress();
+  }
+
+  function applyDynamicWallpaper() {
+    const wp = localStorage.getItem('placementos_wallpaper');
+    if (wp) {
+      let style = document.getElementById('dynamic-wallpaper-style');
+      if (!style) {
+        style = document.createElement('style');
+        style.id = 'dynamic-wallpaper-style';
+        document.head.appendChild(style);
+      }
+      style.innerHTML = `
+        body {
+          background-image: url(${wp}) !important;
+          background-size: cover !important;
+          background-position: center !important;
+          background-attachment: fixed !important;
+          background-repeat: no-repeat !important;
+        }
+      `;
+    }
+  }
+
+  function updateSidebarUI() {
+    const xp = S.xp || 0;
+    const level = S.level || 1;
+    const streak = S.streak || 0;
+
+    const sbLevel = document.getElementById('sb-level');
+    if (sbLevel) sbLevel.textContent = level;
+
+    const sbXp = document.getElementById('sb-xp');
+    if (sbXp) sbXp.textContent = `${xp} XP`;
+
+    const tbStreak = document.getElementById('topbar-streak');
+    if (tbStreak) tbStreak.textContent = `${streak} day streak`;
+
+    const xpNeeded = level * 100;
+    const pct = Math.min(100, Math.floor((xp / xpNeeded) * 100));
+    const fill = document.getElementById('sb-xp-fill');
+    if (fill) fill.style.width = `${pct}%`;
+    const next = document.getElementById('sb-xp-next');
+    if (next) next.textContent = `${xpNeeded - xp} XP to next level`;
+  }
+
+  function addXP(pts) {
+    S.xp = (S.xp || 0) + pts;
+    const xpNeeded = (S.level || 1) * 100;
+    if (S.xp >= xpNeeded) {
+      S.xp -= xpNeeded;
+      S.level = (S.level || 1) + 1;
+      alert(`🎉 Level Up! You reached Level ${S.level}!`);
+    }
+    updateSidebarUI();
+  }
+
+  // Calculations
+  function updateAllProgress() {
+    let totalSolved = 0;
+    let easySolved = 0, easyTotal = 0;
+    let medSolved = 0, medTotal = 0;
+    let hardSolved = 0, hardTotal = 0;
+
+    MASTER_PROBLEMS.forEach(p => {
+      const isSolved = !!S.dsaMasterChecks[p.id];
+      if (isSolved) totalSolved++;
+      if (p.difficulty === 'easy') {
+        easyTotal++;
+        if (isSolved) easySolved++;
+      } else if (p.difficulty === 'medium') {
+        medTotal++;
+        if (isSolved) medSolved++;
+      } else if (p.difficulty === 'hard') {
+        hardTotal++;
+        if (isSolved) hardSolved++;
+      }
+    });
+
+    const totalProblems = MASTER_PROBLEMS.length;
+    const pct = Math.round((totalSolved / totalProblems) * 100);
+
+    const statSolved = document.getElementById('stat-solved');
+    if (statSolved) statSolved.textContent = totalSolved;
+
+    const heroPctText = document.getElementById('hero-pct-text');
+    if (heroPctText) heroPctText.textContent = `${totalSolved} / ${totalProblems} Solved (${pct}%)`;
+
+    const heroProgressFill = document.getElementById('hero-progress-fill');
+    if (heroProgressFill) heroProgressFill.style.width = `${pct}%`;
+
+    const statEasy = document.getElementById('stat-easy');
+    if (statEasy) statEasy.textContent = `${easySolved}/${easyTotal}`;
+
+    const statMed = document.getElementById('stat-medium');
+    if (statMed) statMed.textContent = `${medSolved}/${medTotal}`;
+
+    const statHard = document.getElementById('stat-hard');
+    if (statHard) statHard.textContent = `${hardSolved}/${hardTotal}`;
+
+    renderWeekTabs();
+  }
+
+  function getWeekProgress(wk) {
+    const list = MASTER_PROBLEMS.filter(p => p.week === wk);
+    const solved = list.filter(p => !!S.dsaMasterChecks[p.id]).length;
+    return { solved, total: list.length };
+  }
+
+  // Render Week Tabs
+  function renderWeekTabs() {
+    const container = document.getElementById('week-tabs-container');
+    if (!container) return;
+
+    container.innerHTML = '';
+
+    // "All Weeks" tab
+    const allTotal = MASTER_PROBLEMS.length;
+    const allSolved = MASTER_PROBLEMS.filter(p => !!S.dsaMasterChecks[p.id]).length;
+    const allBtn = document.createElement('button');
+    allBtn.className = `week-tab-btn ${activeWeek === 'all' ? 'active' : ''}`;
+    allBtn.onclick = () => selectWeek('all');
+    allBtn.innerHTML = `All Weeks <span class="week-badge">${allSolved}/${allTotal}</span>`;
+    container.appendChild(allBtn);
+
+    const weekNames = {
+      1: "Arrays",
+      2: "Hashing & Strings",
+      3: "Two Pointers & Sliding Window",
+      4: "Searching & Sorting",
+      5: "Linked Lists",
+      6: "Stacks & Queues",
+      7: "Recursion & Backtracking",
+      8: "Trees & Tries",
+      9: "Heaps",
+      10: "Graphs",
+      11: "Greedy",
+      12: "Dynamic Programming",
+      13: "Bit Manipulation"
+    };
+
+    for (let wk = 1; wk <= 13; wk++) {
+      const prog = getWeekProgress(wk);
+      const btn = document.createElement('button');
+      btn.className = `week-tab-btn ${activeWeek === wk ? 'active' : ''}`;
+      btn.onclick = () => selectWeek(wk);
+      btn.innerHTML = `W${wk}: ${weekNames[wk] || ''} <span class="week-badge">${prog.solved}/${prog.total}</span>`;
+      container.appendChild(btn);
+    }
+  }
+
+  function selectWeek(wk) {
+    activeWeek = wk;
+    renderWeekTabs();
+    renderProblems();
+  }
+
+  // Populate Topic Filter Dropdown
+  function populateTopicDropdown() {
+    const select = document.getElementById('filter-topic');
+    if (!select) return;
+
+    const topics = Array.from(new Set(MASTER_PROBLEMS.map(p => p.topic))).sort();
+    select.innerHTML = '<option value="all">All Topics (15)</option>';
+    topics.forEach(t => {
+      const opt = document.createElement('option');
+      opt.value = t;
+      opt.textContent = t;
+      select.appendChild(opt);
+    });
+  }
+
+  // Filters
+  function setTopicFilter(top) {
+    activeTopic = top;
+    renderProblems();
+  }
+
+  function setDiffFilter(diff) {
+    activeDiff = diff;
+    renderProblems();
+  }
+
+  function setStatusFilter(st) {
+    activeStatus = st;
+    renderProblems();
+  }
+
+  function handleSearch(q) {
+    searchQuery = q.trim().toLowerCase();
+    renderProblems();
+  }
+
+  // Render Problems List
+  function renderProblems() {
+    const container = document.getElementById('master-problems-container');
+    if (!container) return;
+    container.innerHTML = '';
+
+    const filtered = MASTER_PROBLEMS.filter(p => {
+      if (activeWeek !== 'all' && p.week !== activeWeek) return false;
+      if (activeTopic !== 'all' && p.topic !== activeTopic) return false;
+      if (activeDiff !== 'all' && p.difficulty !== activeDiff) return false;
+      
+      const isSolved = !!S.dsaMasterChecks[p.id];
+      if (activeStatus === 'solved' && !isSolved) return false;
+      if (activeStatus === 'unsolved' && isSolved) return false;
+
+      if (searchQuery) {
+        const matchesName = p.name.toLowerCase().includes(searchQuery);
+        const matchesPattern = p.pattern.toLowerCase().includes(searchQuery);
+        const matchesTopic = p.topic.toLowerCase().includes(searchQuery);
+        const matchesNum = String(p.index).includes(searchQuery);
+        if (!matchesName && !matchesPattern && !matchesTopic && !matchesNum) return false;
+      }
+      return true;
+    });
+
+    if (filtered.length === 0) {
+      container.innerHTML = `
+        <div style="text-align:center; padding:56px; color:var(--text2); background:var(--card-bg); border-radius:12px; border:1px dashed var(--border);">
+          <i class="fas fa-search" style="font-size:32px; margin-bottom:12px; color:var(--text2);"></i>
+          <p style="margin:0; font-size:14px;">No problems match your current search or filter combination.</p>
+        </div>
+      `;
+      return;
+    }
+
+    filtered.forEach(p => {
+      const isSolved = !!S.dsaMasterChecks[p.id];
+      const completedDate = S.dsaMasterDates[p.id] || '';
+
+      const card = document.createElement('div');
+      card.id = `master-card-${p.id}`;
+      card.className = `problem-card ${isSolved ? 'solved' : ''}`;
+
+      card.innerHTML = `
+        <div class="problem-header">
+          <div class="problem-left">
+            <input type="checkbox" class="problem-checkbox" id="check-${p.id}" ${isSolved ? 'checked' : ''} onchange="toggleProblem('${p.id}', this.checked)" title="Mark as Completed (Yes/No)"/>
+            <a href="${p.url}" target="_blank" class="problem-link">
+              <span>#${p.index}. ${p.name}</span>
+              <i class="fas fa-external-link-alt" style="font-size:11px; color:var(--accent2);"></i>
+            </a>
+          </div>
+
+          <div class="problem-meta">
+            <span class="badge-pill"><i class="fas fa-calendar-alt"></i> W${p.week}</span>
+            <span class="badge-pill"><i class="fas fa-folder"></i> ${p.topic}</span>
+            <span class="diff-badge ${p.difficulty}">${p.difficulty}</span>
+            ${completedDate ? `<span class="date-badge"><i class="fas fa-check-circle"></i> ${completedDate}</span>` : ''}
+            <button class="btn-toggle-editor" id="btn-editor-${p.id}" onclick="toggleEditor('${p.id}')">
+              <i class="fas fa-edit"></i> Notes &amp; Proof
+            </button>
+          </div>
+        </div>
+
+        <div class="pattern-desc">
+          <i class="fas fa-sitemap" style="color:var(--accent2); font-size:11px;"></i>
+          <span><strong>Pattern / Subtopics:</strong> ${p.pattern}</span>
+        </div>
+
+        <div class="editor-drawer" id="editor-${p.id}">
+          <div class="editor-grid">
+            <div class="editor-box">
+              <label><i class="fas fa-sticky-note" style="color:var(--accent2);"></i> Study Notes &amp; Mistakes Log</label>
+              <textarea class="editor-textarea" id="notes-${p.id}" onchange="saveNotes('${p.id}', this.value)" placeholder="Write your intuition, mistakes made, or key edge cases..."></textarea>
+            </div>
+
+            <div class="editor-box">
+              <label><i class="fas fa-code" style="color:var(--accent);"></i> Clean Working Solution</label>
+              <textarea class="editor-textarea code" id="code-${p.id}" onchange="saveCode('${p.id}', this.value)" placeholder="// Paste your working Python, C++, or Java solution here..."></textarea>
+            </div>
+
+            <div class="editor-box">
+              <label><i class="fas fa-camera" style="color:var(--accent2);"></i> Screenshot / Submission Proof</label>
+              <div class="screenshot-dropzone" id="dropzone-${p.id}" onclick="triggerFileInput('${p.id}')" onpaste="handlePasteScreenshot(event, '${p.id}')" tabindex="0">
+                <i class="fas fa-cloud-upload-alt" style="font-size:22px; margin-bottom:6px; color:var(--accent);"></i>
+                <span>Paste (Ctrl+V) or click to upload proof</span>
+              </div>
+              <input type="file" id="file-${p.id}" accept="image/*" style="display:none;" onchange="handleUploadScreenshot(event, '${p.id}')"/>
+            </div>
+          </div>
+        </div>
+      `;
+
+      container.appendChild(card);
+    });
+  }
+
+  // Toggle Problem Solved
+  function toggleProblem(problemId, isChecked) {
+    S.dsaMasterChecks[problemId] = isChecked;
+    if (isChecked) {
+      const today = new Date().toISOString().split('T')[0];
+      S.dsaMasterDates[problemId] = today;
+      addXP(10);
+    } else {
+      delete S.dsaMasterDates[problemId];
+    }
+    save();
+    renderProblems();
+  }
+
+  // Toggle Editor
+  function toggleEditor(problemId) {
+    const drawer = document.getElementById(`editor-${problemId}`);
+    const btn = document.getElementById(`btn-editor-${problemId}`);
+    if (!drawer) return;
+
+    const isOpen = drawer.classList.contains('open');
+
+    // Close others
+    document.querySelectorAll('.editor-drawer').forEach(d => d.classList.remove('open'));
+    document.querySelectorAll('.btn-toggle-editor').forEach(b => b.classList.remove('active'));
+
+    if (!isOpen) {
+      drawer.classList.add('open');
+      if (btn) btn.classList.add('active');
+
+      const notesEl = document.getElementById(`notes-${problemId}`);
+      if (notesEl) notesEl.value = S.dsaMasterNotes[problemId] || NOTE_TEMPLATE;
+
+      const codeEl = document.getElementById(`code-${problemId}`);
+      if (codeEl) codeEl.value = S.dsaMasterCodes[problemId] || '';
+
+      loadDropzone(problemId);
+    }
+  }
+
+  function saveNotes(problemId, val) {
+    S.dsaMasterNotes[problemId] = val;
+    save();
+  }
+
+  function saveCode(problemId, val) {
+    S.dsaMasterCodes[problemId] = val;
+    save();
+  }
+
+  // Screenshots handling
+  function triggerFileInput(problemId) {
+    const inp = document.getElementById(`file-${problemId}`);
+    if (inp) inp.click();
+  }
+
+  function handleUploadScreenshot(e, problemId) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = async function(evt) {
+      await saveScreenshot(problemId, evt.target.result);
+      loadDropzone(problemId);
+    };
+    reader.readAsDataURL(file);
+  }
+
+  async function handlePasteScreenshot(e, problemId) {
+    const items = (e.clipboardData || e.originalEvent.clipboardData).items;
+    for (const item of items) {
+      if (item.type.indexOf("image") !== -1) {
+        const file = item.getAsFile();
+        const reader = new FileReader();
+        reader.onload = async function(evt) {
+          await saveScreenshot(problemId, evt.target.result);
+          loadDropzone(problemId);
+        };
+        reader.readAsDataURL(file);
+        e.preventDefault();
+        break;
+      }
+    }
+  }
+
+  async function loadDropzone(problemId) {
+    const dropzone = document.getElementById(`dropzone-${problemId}`);
+    if (!dropzone) return;
+
+    try {
+      const base64 = await getScreenshot(problemId);
+      if (base64) {
+        dropzone.innerHTML = `
+          <img src="${base64}" class="screenshot-preview-img" onclick="event.stopPropagation(); zoomScreenshot('${base64}')"/>
+          <button class="btn btn-sm" onclick="event.stopPropagation(); removeScreenshotProof('${problemId}')" style="position:absolute; bottom:6px; right:6px; font-size:10px; background:rgba(231,76,60,0.85); color:#fff; border:none; padding:3px 8px; border-radius:4px; cursor:pointer;">
+            <i class="fas fa-trash-alt"></i> Delete
+          </button>
+        `;
+      } else {
+        dropzone.innerHTML = `
+          <i class="fas fa-cloud-upload-alt" style="font-size:22px; margin-bottom:6px; color:var(--accent);"></i>
+          <span>Paste (Ctrl+V) or click to upload proof</span>
+        `;
+      }
+    } catch(err) {
+      console.error(err);
+    }
+  }
+
+  async function removeScreenshotProof(problemId) {
+    if (confirm("Remove this screenshot proof?")) {
+      await deleteScreenshot(problemId);
+      loadDropzone(problemId);
+    }
+  }
+
+  function zoomScreenshot(base64) {
+    const modal = document.getElementById('lightboxModal');
+    const img = document.getElementById('lightboxImg');
+    if (modal && img) {
+      img.src = base64;
+      modal.style.display = 'flex';
+    }
+  }
+
+  // Random Problem Picker
+  function pickRandomProblem() {
+    const unsolved = MASTER_PROBLEMS.filter(p => {
+      if (activeWeek !== 'all' && p.week !== activeWeek) return false;
+      if (activeTopic !== 'all' && p.topic !== activeTopic) return false;
+      return !S.dsaMasterChecks[p.id];
+    });
+
+    const pool = unsolved.length > 0 ? unsolved : MASTER_PROBLEMS;
+    const randomChoice = pool[Math.floor(Math.random() * pool.length)];
+
+    if (activeDiff !== 'all') {
+      activeDiff = 'all';
+      document.getElementById('filter-diff').value = 'all';
+    }
+    if (activeStatus !== 'all') {
+      activeStatus = 'all';
+      document.getElementById('filter-status').value = 'all';
+    }
+    if (searchQuery) {
+      searchQuery = '';
+      document.getElementById('master-search').value = '';
+    }
+    if (activeWeek !== 'all' && randomChoice.week !== activeWeek) {
+      activeWeek = randomChoice.week;
+      renderWeekTabs();
+    }
+    renderProblems();
+
+    const card = document.getElementById(`master-card-${randomChoice.id}`);
+    if (card) {
+      card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      card.classList.add('flash-highlight');
+      setTimeout(() => card.classList.remove('flash-highlight'), 2200);
+    }
+  }
+
+  // Init
+  function init() {
+    load();
+    populateTopicDropdown();
+    renderWeekTabs();
+    renderProblems();
+    updateAllProgress();
+  }
+
+  init();
+</script>
+</body>
+</html>

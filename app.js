@@ -201,6 +201,10 @@ function switchSection(sec) {
     window.location.href = 'array-plan.html';
     return;
   }
+  if (sec === 'dsa-master') {
+    window.location.href = 'dsa-master.html';
+    return;
+  }
   if (sec === 'pattern-roadmap') {
     window.location.href = 'pattern-roadmap.html';
     return;
@@ -300,6 +304,14 @@ function renderDashboard() {
   document.getElementById('r-streak').textContent = S.streak;
   document.getElementById('r-xp').textContent = S.xp;
   document.getElementById('top-streak').textContent = S.streak;
+
+  // DSA Master Checklist Progress (157 Problems)
+  const masterChecks = S.dsaMasterChecks || {};
+  const masterSolvedCount = Object.values(masterChecks).filter(Boolean).length;
+  const mCountEl = document.getElementById('dash-master-count');
+  const mBarEl = document.getElementById('dash-master-bar');
+  if (mCountEl) mCountEl.textContent = `${masterSolvedCount} / 157 Solved`;
+  if (mBarEl) mBarEl.style.width = `${Math.min(100, Math.round((masterSolvedCount / 157) * 100))}%`;
 
   // 10 DSA Patterns Progress
   const patternChecks = S.dsaPatternChecks || {};
